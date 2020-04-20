@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const patientModel = mongoose.model("patient");
 const bcrypt = require("bcrypt");
 const dotenv = require("dotenv");
+const jwt = require("jsonwebtoken");
 
 exports.registration = async function(req, res) 
 {
@@ -30,6 +31,43 @@ exports.registration = async function(req, res)
                     new_patient.save((err, doc)=>
                     {
                         res.send(doc);
+                    });
+                }
+            });
+        }
+    });
+}
+
+exports.login = async function(req, res)
+{
+    patientModel.findOne({mobile_no: req.body.mobile_no}, (err, docs)=>
+    {
+        if (err)
+            res.send(err);
+        else if (!docs)
+            res.send("No user found in this mobile no");
+        else
+        {
+            bcrypt.compare(req.body.password, docs.password, (err, result)=>
+            {
+                if (err)
+                    res.send(err);
+                else
+                {
+                    const payload = {
+                        mobile_no: req.body.mobile_no,
+                        name: docs.name,
+                        age: docs.age
+                    };
+        
+                    const token = jwt.sign(payload, process.env.SECRET);
+
+                    patientModel.updateOne({mobile_no: req.body.mobile_no}, {session_token: token}, (err, docs)=>
+                    {
+                        if (err)
+                            res.send(err);
+                        else
+                            res.send(token);
                     });
                 }
             });

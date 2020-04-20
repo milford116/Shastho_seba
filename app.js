@@ -6,17 +6,13 @@ const bodyParser = require("body-parser");
 const jwt = require("jsonwebtoken");
 const cors = require("cors");
 dotenv.config();
+const patientRoutes = require("./routes/patient");
 
 mongoose.set('useCreateIndex', true);
 
 const options = {
     useUnifiedTopology: true, 
     useNewUrlParser: true
-}
-
-const payload = {
-    name: "Imran",
-    pass: "123456"
 }
 
 mongoose.connect(process.env.DB_URL, options, (err)=>{
@@ -32,11 +28,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
 
 //add your route here
-app.get("/token", (req, res)=>{
-    const token = jwt.sign(payload, process.env.SECRET);
-    res.send(token);
-});
-const patientRoutes = require("./routes/patient");
 app.use(patientRoutes);
 
 app.listen(process.env.PORT, ()=>

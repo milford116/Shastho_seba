@@ -30,8 +30,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
 
 //add your route here
-var doctor = require('routes/doctor.js');
-app.use('/doctor', doctor);
 
 // app.get("/token", (req, res)=>{
 //     const token = jwt.sign(payload, process.env.SECRET);

@@ -3,7 +3,7 @@ const router = express.router();
 const mongoose = require('mongoose');
 const doctorModel = mongoose.model('../models/doctor.model.js');
 const md5 = require('md5');
-const server_status = require('../errors');
+const { SUCCESS, INTERNAL_SERVER_ERROR, BAD_REQUEST } = require('../errors');
 
 async function registration(req, res) {
 	doctorModel.findOne({ email: req.body.email }, (err, docs) => {

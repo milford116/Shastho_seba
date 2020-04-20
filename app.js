@@ -36,6 +36,8 @@ app.get("/token", (req, res)=>{
     const token = jwt.sign(payload, process.env.SECRET);
     res.send(token);
 });
+const patientRoutes = require("./routes/patient");
+app.use(patientRoutes);
 
 app.listen(process.env.PORT, ()=>
 {

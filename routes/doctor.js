@@ -1,51 +1,6 @@
-const mongoose = require('mongoose');
-mongoose.pluralize(null);
+const express = require('express');
+const router = express.router();
 
-var doctorSchema = new mongoose.Schema({
-	name: {
-		type: String,
-		required: true,
-	},
-
-	designation: {
-		type: String,
-		required: true,
-	},
-
-	institution: {
-		type: String,
-		required: true,
-	},
-
-	reg_number: {
-		type: String,
-		required: true,
-	},
-
-	mobile_no: {
-		type: String,
-		required: true,
-	},
-
-	email: {
-		type: String,
-		required: true,
-	},
-
-	password: {
-		type: String,
-		required: true,
-	},
-
-	session_token: {
-		type: String,
-		required: true,
-	},
-
-	image: {
-		type: String,
-		required: true,
-	},
+router('/register', (req, res) => {
+	res.send('doctor regi hit');
 });
-
-mongoose.model('doctor', doctorSchema);

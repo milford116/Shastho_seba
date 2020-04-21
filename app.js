@@ -6,6 +6,7 @@ const bodyParser = require('body-parser');
 const jwt = require('jsonwebtoken');
 const cors = require('cors');
 dotenv.config();
+const patientRoutes = require('./routes/patient');
 
 mongoose.set('useCreateIndex', true);
 
@@ -13,11 +14,6 @@ const options = {
 	useUnifiedTopology: true,
 	useNewUrlParser: true,
 };
-
-// const payload = {
-//     name: "Imran",
-//     pass: "123456"
-// }
 
 mongoose.connect(process.env.DB_URL, options, (err) => {
 	if (!err) console.log('Successfully connected to database');
@@ -30,11 +26,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
 
 //add your route here
-
-// app.get("/token", (req, res)=>{
-//     const token = jwt.sign(payload, process.env.SECRET);
-//     res.send(token);
-// });
+app.use(patientRoutes);
 
 app.listen(process.env.PORT, () => {
 	console.log('Server started at port ' + process.env.PORT);

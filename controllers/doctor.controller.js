@@ -1,11 +1,9 @@
-const express = require('express');
-const router = express.router();
 const mongoose = require('mongoose');
 const doctorModel = mongoose.model('../models/doctor.model.js');
-const md5 = require('md5');
+const bcrypt = require('bcrypt');
 const { SUCCESS, INTERNAL_SERVER_ERROR, BAD_REQUEST } = require('../errors');
 
-async function registration(req, res) {
+exports.registration = async function (req, res) {
 	doctorModel.findOne({ email: req.body.email }, (err, docs) => {
 		if (docs)
 			res.send(BAD_REQUEST, 'An account with this email already exists');
@@ -13,7 +11,7 @@ async function registration(req, res) {
 			var new_doctor = new userModel();
 			new_doctor.name = req.body.name;
 			new_doctor.email = req.body.email;
-			new_doctor.phone = req.body.phone;
+			new_doctor.mobile_no = req.body.mobile_no;
 			new_doctor.password = md5(req.body.password);
 			new_doctor.institution = req.body.institution;
 			new_doctor.designation = req.body.designation;
@@ -26,10 +24,20 @@ async function registration(req, res) {
 
 			new_doctor.session_token = jwt.sign(payload, process.env.SECRET);
 
-			new_doctor.save((err, docs) => {
-				if (err) res.send(INTERNAL_SERVER_ERROR, 'something went wrong');
-				else res.send(SUCCESS, 'Successfully registered');
-			});
+			bcrypt.hash(
+				req.body.password,
+				parseInt(process.env.SALT_ROUNDS, 10),
+				(err, hash) => {
+					if (err) res.send(err);
+					else {
+						new_doctor.password = hash;
+						new_doctor.save((err, docs) => {
+							if (err) res.send(INTERNAL_SERVER_ERROR, 'something went wrong');
+							else res.send(SUCCESS, 'Successfully registered');
+						});
+					}
+				}
+			);
 		}
 	});
-}
+};

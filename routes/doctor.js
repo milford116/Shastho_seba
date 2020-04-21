@@ -1,6 +1,8 @@
+const doctorController = require('../controllers/doctor.controller');
 const express = require('express');
-const router = express.router();
+const router = express.Router();
 
-router('/register', (req, res) => {
-	res.send('doctor regi hit');
-});
+// router.post('/doctor/login', patientController.login);
+router.post('/doctor/register', patientController.registration);
+
+module.exports = router;

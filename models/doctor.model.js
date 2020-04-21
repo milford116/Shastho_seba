@@ -22,9 +22,10 @@ var doctorSchema = new mongoose.Schema({
 		required: true,
 	},
 
-	phone: {
+	mobile_no: {
 		type: String,
 		required: true,
+		unique: true,
 	},
 
 	email: {

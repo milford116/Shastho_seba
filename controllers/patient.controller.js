@@ -4,13 +4,14 @@ const patientModel = mongoose.model("patient");
 const bcrypt = require("bcrypt");
 const dotenv = require("dotenv");
 const jwt = require("jsonwebtoken");
+const {SUCCESS, INTERNAL_SERVER_ERROR, BAD_REQUEST, DATA_NOT_FOUND} = require("../errors");
 
 exports.registration = async function (req, res) {
 	patientModel.findOne({mobile_no: req.body.mobile_no}, (err, docs) => {
 		if (err) {
-			res.send(err);
+			res.status(INTERNAL_SERVER_ERROR).send("Internal server error");
 		} else if (docs) {
-			res.send("This mobile number has been already registered");
+			res.status(BAD_REQUEST).send("An account with this mobile no already exists");
 		} else {
 			var new_patient = new patientModel();
 			new_patient.mobile_no = req.body.mobile_no;
@@ -19,12 +20,16 @@ exports.registration = async function (req, res) {
 
 			bcrypt.hash(req.body.password, parseInt(process.env.SALT_ROUNDS, 10), (err, hash) => {
 				if (err) {
-					res.send(err);
+					res.status(INTERNAL_SERVER_ERROR).send("Internal server error");
 				} else {
 					new_patient.password = hash;
 
 					new_patient.save((err, doc) => {
-						res.send(doc);
+						if (err) {
+							res.status(INTERNAL_SERVER_ERROR).send("Internal server error");
+						} else {
+							res.status(SUCCESS).send("Successful registration");
+						}
 					});
 				}
 			});
@@ -35,13 +40,13 @@ exports.registration = async function (req, res) {
 exports.login = async function (req, res) {
 	patientModel.findOne({mobile_no: req.body.mobile_no}, (err, docs) => {
 		if (err) {
-			res.send(err);
+			res.status(INTERNAL_SERVER_ERROR).send("Internal server error");
 		} else if (!docs) {
-			res.send("No user found in this mobile no");
+			res.status(DATA_NOT_FOUND).send("No user found in this mobile no");
 		} else {
 			bcrypt.compare(req.body.password, docs.password, (err, result) => {
 				if (err) {
-					res.send(err);
+					res.status(INTERNAL_SERVER_ERROR).send("Internal server error");
 				} else {
 					const payload = {
 						mobile_no: req.body.mobile_no,
@@ -56,9 +61,9 @@ exports.login = async function (req, res) {
 						{session_token: token},
 						(err, docs) => {
 							if (err) {
-								res.send(err);
+								res.status(INTERNAL_SERVER_ERROR).send("Internal server error");
 							} else {
-								res.send(token);
+								res.status(SUCCESS).send(token);
 							}
 						}
 					);

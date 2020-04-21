@@ -3,6 +3,6 @@ const express = require('express');
 const router = express.Router();
 
 // router.post('/doctor/login', patientController.login);
-router.post('/doctor/register', patientController.registration);
+router.post('/doctor/register', doctorController.registration);
 
 module.exports = router;

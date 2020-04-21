@@ -40,7 +40,7 @@ var doctorSchema = new mongoose.Schema({
 
 	session_token: {
 		type: String,
-		required: true,
+		required: false,
 	},
 
 	image: {

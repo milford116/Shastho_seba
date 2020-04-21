@@ -6,8 +6,8 @@ const jwt = require("jsonwebtoken");
 const {SUCCESS, INTERNAL_SERVER_ERROR, BAD_REQUEST, DATA_NOT_FOUND} = require("../errors");
 
 exports.registration = async function (req, res) {
-	doctorModel.findOne({email: req.body.email}, (err, docs) => {
-		if (docs) res.status(BAD_REQUEST).send("An account with this email already exists");
+	doctorModel.findOne({mobile_no: req.body.mobile_no}, (err, docs) => {
+		if (docs) res.status(BAD_REQUEST).send("An account with this number already exists");
 		else {
 			var new_doctor = new doctorModel();
 			new_doctor.name = req.body.name;

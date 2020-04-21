@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 mongoose.pluralize(null);
 
 var doctorSchema = new mongoose.Schema({
@@ -47,6 +47,11 @@ var doctorSchema = new mongoose.Schema({
 		type: String,
 		required: false,
 	},
+
+	referrer: {
+		type: String,
+		required: true,
+	},
 });
 
-mongoose.model('doctor', doctorSchema);
+mongoose.model("doctor", doctorSchema);

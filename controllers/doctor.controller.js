@@ -66,3 +66,5 @@ exports.login = async function (req, res) {
 		}
 	});
 };
+
+exports.reference = async function (req, res) {};

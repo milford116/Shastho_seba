@@ -1,21 +1,20 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 mongoose.pluralize(null);
 const schema = mongoose.Schema;
- 
-var patientSchema = new mongoose.Schema(
-{
+
+var patientSchema = new mongoose.Schema({
     mobile_no: {
         type: String,
         required: true,
-        unique: true
+        unique: true,
     },
     name: {
         type: String,
-        required: true
+        required: true,
     },
     password: {
         type: String,
-        required: true
+        required: true,
     },
     age: {
         type: Number,
@@ -23,12 +22,12 @@ var patientSchema = new mongoose.Schema(
     },
     session_token: {
         type: String,
-        required: false
+        required: false,
     },
     image_link: {
         type: String,
-        required: false
-    }
+        required: false,
+    },
 });
 
-mongoose.model('patient', patientSchema);
+mongoose.model("patient", patientSchema);

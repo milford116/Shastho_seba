@@ -6,6 +6,8 @@ const bodyParser = require('body-parser');
 const jwt = require('jsonwebtoken');
 const cors = require('cors');
 dotenv.config();
+
+const doctorRoutes = require('./routes/doctor');
 const patientRoutes = require('./routes/patient');
 
 mongoose.set('useCreateIndex', true);
@@ -26,6 +28,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
 
 //add your route here
+app.use(doctorRoutes);
 app.use(patientRoutes);
 
 app.listen(process.env.PORT, () => {

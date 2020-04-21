@@ -12,4 +12,4 @@ var referenceSchema = new mongoose.Schema({
 	},
 });
 
-mongoose.model("reference", doctorSchema);
+mongoose.model("reference", referenceSchema);

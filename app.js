@@ -13,15 +13,6 @@ const patientRoutes = require('./routes/patient');
 mongoose.set("useCreateIndex", true);
 
 const options = {
-<<<<<<< HEAD
-    useUnifiedTopology: true,
-    useNewUrlParser: true,
-};
-
-mongoose.connect(process.env.DB_URL, options, (err) => {
-    if (!err) console.log("Successfully connected to database");
-    else console.log("Error occurred during database connection");
-=======
 	useUnifiedTopology: true,
 	useNewUrlParser: true,
 };
@@ -29,7 +20,6 @@ mongoose.connect(process.env.DB_URL, options, (err) => {
 mongoose.connect(process.env.DB_URL, options, (err) => {
 	if (!err) console.log('Successfully connected to database');
 	else console.log('Error occurred during database connection');
->>>>>>> 5fece5a12ecca515dcb123ee6dff432bc387cba9
 });
 
 app.use(cors());
@@ -42,9 +32,5 @@ app.use(doctorRoutes);
 app.use(patientRoutes);
 
 app.listen(process.env.PORT, () => {
-<<<<<<< HEAD
-    console.log("Server started at port " + process.env.PORT);
-=======
 	console.log('Server started at port ' + process.env.PORT);
->>>>>>> 5fece5a12ecca515dcb123ee6dff432bc387cba9
 });

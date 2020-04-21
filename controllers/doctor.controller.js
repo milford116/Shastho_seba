@@ -7,7 +7,7 @@ const {SUCCESS, INTERNAL_SERVER_ERROR, BAD_REQUEST, DATA_NOT_FOUND} = require(".
 
 exports.registration = async function (req, res) {
 	doctorModel.findOne({email: req.body.email}, (err, docs) => {
-		if (docs) res.send(BAD_REQUEST, "An account with this email already exists");
+		if (docs) res.status(BAD_REQUEST).send("An account with this email already exists");
 		else {
 			var new_doctor = new doctorModel();
 			new_doctor.name = req.body.name;
@@ -25,12 +25,12 @@ exports.registration = async function (req, res) {
 			new_doctor.session_token = jwt.sign(payload, process.env.SECRET);
 
 			bcrypt.hash(req.body.password, parseInt(process.env.SALT_ROUNDS, 10), (err, hash) => {
-				if (err) res.send(err);
+				if (err) res.status(INTERNAL_SERVER_ERROR).send("something went wrong");
 				else {
 					new_doctor.password = hash;
 					new_doctor.save((err, docs) => {
-						if (err) res.send(INTERNAL_SERVER_ERROR, "something went wrong");
-						else res.send(SUCCESS, token);
+						if (err) res.status(INTERNAL_SERVER_ERROR).send("something went wrong");
+						else res.status(SUCCESS).send(token);
 					});
 				}
 			});
@@ -40,11 +40,11 @@ exports.registration = async function (req, res) {
 
 exports.login = async function (req, res) {
 	doctorModel.findOne({mobile_no: req.body.mobile_no}, (err, docs) => {
-		if (err) res.send(INTERNAL_SERVER_ERROR, "something went wrong");
-		else if (!docs) res.send(DATA_NOT_FOUND, "no such user found");
+		if (err) res.status(INTERNAL_SERVER_ERROR).send("something went wrong");
+		else if (!docs) res.status(DATA_NOT_FOUND).send("no such user found");
 		else {
 			bcrypt.compare(req.body.password, docs.password, (err, result) => {
-				if (err) res.send(err);
+				if (err) res.status(INTERNAL_SERVER_ERROR).send("something went wrong");
 				else {
 					const payload = {
 						name: docs.name,
@@ -57,8 +57,8 @@ exports.login = async function (req, res) {
 						{mobile_no: req.body.mobile_no},
 						{session_token: token},
 						(err, docs) => {
-							if (err) res.send(INTERNAL_SERVER_ERROR, "something went wrong");
-							else res.send(SUCCESS, token);
+							if (err) res.status(INTERNAL_SERVER_ERROR).send("something went wrong");
+							else res.status(SUCCESS).send(token);
 						}
 					);
 				}

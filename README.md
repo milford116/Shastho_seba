@@ -5,3 +5,5 @@
 3. Create a .env file and set variables listed below
     * PORT
     * DB_URL
+    * SECRET
+    * SALT_ROUNDS

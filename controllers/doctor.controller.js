@@ -3,7 +3,12 @@ const doctor = require('../models/doctor.model');
 const doctorModel = mongoose.model('doctor');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const { SUCCESS, INTERNAL_SERVER_ERROR, BAD_REQUEST } = require('../errors');
+const {
+	SUCCESS,
+	INTERNAL_SERVER_ERROR,
+	BAD_REQUEST,
+	DATA_NOT_FOUND,
+} = require('../errors');
 
 exports.registration = async function (req, res) {
 	doctorModel.findOne({ email: req.body.email }, (err, docs) => {
@@ -34,11 +39,40 @@ exports.registration = async function (req, res) {
 						new_doctor.password = hash;
 						new_doctor.save((err, docs) => {
 							if (err) res.send(INTERNAL_SERVER_ERROR, 'something went wrong');
-							else res.send(SUCCESS, 'Successfully registered');
+							else res.send(SUCCESS, token);
 						});
 					}
 				}
 			);
+		}
+	});
+};
+
+exports.login = async function (req, res) {
+	doctorModel.findOne({ mobile_no: req.body.mobile_no }, (err, docs) => {
+		if (err) res.send(INTERNAL_SERVER_ERROR, 'something went wrong');
+		else if (!docs) res.send(DATA_NOT_FOUND, 'no such user found');
+		else {
+			bcrypt.compare(req.body.password, docs.password, (err, result) => {
+				if (err) res.send(err);
+				else {
+					const payload = {
+						name: docs.name,
+						reg_number: docs.reg_number,
+					};
+
+					const token = jwt.sign(payload, process.env.SECRET);
+
+					doctorModel.updateOne(
+						{ mobile_no: req.body.mobile_no },
+						{ session_token: token },
+						(err, docs) => {
+							if (err) res.send(INTERNAL_SERVER_ERROR, 'something went wrong');
+							else res.send(SUCCESS, token);
+						}
+					);
+				}
+			});
 		}
 	});
 };

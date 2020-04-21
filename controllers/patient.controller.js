@@ -72,3 +72,7 @@ exports.login = async function (req, res) {
 		}
 	});
 };
+
+exports.editProfile = async function (req, res) {
+	res.send("SUCCESS");
+};

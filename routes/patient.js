@@ -3,8 +3,7 @@ const patientMiddleware = require("../middlewares/auth.patient.middleware");
 const express = require("express");
 const router = express.Router();
 
-router.post("/patient/login", patientController.login);
-router.post("/patient/register", patientController.registration);
-router.get("/patient/refer", patientMiddleware.middleware, patientController.editProfile);
+router.post("/patient/post/login", patientController.login);
+router.post("/patient/post/register", patientController.registration);
 
 module.exports = router;

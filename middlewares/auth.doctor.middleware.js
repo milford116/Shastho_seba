@@ -18,6 +18,7 @@ exports.middleware = async function (req, res, next) {
 						if (err) {
 							res.status(INTERNAL_SERVER_ERROR).send("Internal server error");
 						} else {
+							req.mobile_no = docs.mobile_no;
 							next();
 						}
 					}

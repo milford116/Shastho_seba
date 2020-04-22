@@ -116,3 +116,5 @@ exports.reference = async function (req, res) {
 		}
 	});
 };
+
+exports.appointment = async function (req, res) {};

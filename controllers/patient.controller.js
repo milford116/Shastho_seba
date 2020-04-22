@@ -58,23 +58,43 @@ exports.login = async function (req, res) {
 
 					const token = jwt.sign(payload, process.env.SECRET);
 
-					patientModel.updateOne(
-						{mobile_no: req.body.mobile_no},
-						{session_token: token},
-						(err, docs) => {
-							if (err) {
-								res.status(INTERNAL_SERVER_ERROR).send("Internal server error");
-							} else {
-								res.status(SUCCESS).send(token);
-							}
+					patientModel.updateOne({mobile_no: req.body.mobile_no}, {session_token: token}, (err, docs) => {
+						if (err) {
+							res.status(INTERNAL_SERVER_ERROR).send("Internal server error");
+						} else {
+							res.status(SUCCESS).send(token);
 						}
-					);
+					});
 				}
 			});
 		}
 	});
 };
 
-exports.appointment = async function (req, res) {
-	res.status(SUCCESS).send("Success");
+exports.postAppointment = async function (req, res) {
+	var appointment = new appointmentModel();
+	appointment.doc_mobile_no = req.body.doc_mobile_no;
+	appointment.patient_mobile_no = req.mobile_no;
+	appointment.status = false;
+	appointment.appointment_time = req.body.appointment_time;
+	appointment.appointment_date = req.body.appointment_date;
+
+	appointment.save((err, docs) => {
+		if (err) {
+			res.status(INTERNAL_SERVER_ERROR).send("Internal server error");
+		} else {
+			res.status(SUCCESS).send("Success");
+		}
+	});
+};
+
+exports.getAppointment = async function (req, res) {
+	var today = new Date();
+	appointmentModel.find({patient_mobile_no: req.mobile_no, appointment_date: today}, (err, docs) => {
+		if (err) {
+			res.status(INTERNAL_SERVER_ERROR).send("Internal server error");
+		} else {
+			res.status(SUCCESS).send(docs);
+		}
+	});
 };

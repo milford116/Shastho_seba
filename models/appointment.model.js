@@ -16,7 +16,7 @@ var appointmentSchema = new mongoose.Schema({
 	},
 	prescription_img: {
 		type: String,
-		required: true,
+		required: false,
 	},
 	appointment_time: {
 		type: Date,

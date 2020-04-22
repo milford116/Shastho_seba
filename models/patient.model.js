@@ -16,8 +16,12 @@ var patientSchema = new mongoose.Schema({
 		type: String,
 		required: true,
 	},
-	age: {
-		type: Number,
+	date_of_birth: {
+		type: Date,
+		required: true,
+	},
+	sex: {
+		type: String,
 		required: true,
 	},
 	session_token: {

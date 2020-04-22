@@ -18,7 +18,8 @@ exports.registration = async function (req, res) {
 			var new_patient = new patientModel();
 			new_patient.mobile_no = req.body.mobile_no;
 			new_patient.name = req.body.name;
-			new_patient.age = req.body.age;
+			new_patient.date_of_birth = req.body.date_of_birth;
+			new_patient.sex = req.body.sex;
 
 			bcrypt.hash(req.body.password, parseInt(process.env.SALT_ROUNDS, 10), (err, hash) => {
 				if (err) {

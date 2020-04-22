@@ -1,8 +1,10 @@
 const mongoose = require("mongoose");
 const doctor = require("../models/doctor.model");
 const reference = require("../models/reference.model");
+const appointment = require("../models/appointment.model");
 const doctorModel = mongoose.model("doctor");
 const referenceModel = mongoose.model("reference");
+const appointmentModel = mongoose.model("appointment");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const {SUCCESS, INTERNAL_SERVER_ERROR, BAD_REQUEST, DATA_NOT_FOUND} = require("../errors");
@@ -117,4 +119,13 @@ exports.reference = async function (req, res) {
 	});
 };
 
-exports.appointment = async function (req, res) {};
+exports.appointment = async function (req, res) {
+	var today = new Date();
+	appointmentModel.find({doc_mobile_no: req.mobile_no, appointment_date: today}, (err, docs) => {
+		if (err) {
+			res.status(INTERNAL_SERVER_ERROR).send("Internal server error");
+		} else {
+			res.status(SUCCESS).send(docs);
+		}
+	});
+};

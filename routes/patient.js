@@ -5,5 +5,6 @@ const router = express.Router();
 
 router.post("/patient/post/login", patientController.login);
 router.post("/patient/post/register", patientController.registration);
+router.post("/patient/post/appointment", patientMiddleware.middleware, patientController.appointment);
 
 module.exports = router;

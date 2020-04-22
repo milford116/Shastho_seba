@@ -1,6 +1,8 @@
 const patient = require("../models/patient.model");
+const appointment = require("../models/appointment.model");
 const mongoose = require("mongoose");
 const patientModel = mongoose.model("patient");
+const appointmentModel = mongoose.model("appointment");
 const bcrypt = require("bcrypt");
 const dotenv = require("dotenv");
 const jwt = require("jsonwebtoken");
@@ -73,6 +75,6 @@ exports.login = async function (req, res) {
 	});
 };
 
-exports.editProfile = async function (req, res) {
-	res.send("SUCCESS");
+exports.appointment = async function (req, res) {
+	res.status(SUCCESS).send("Success");
 };

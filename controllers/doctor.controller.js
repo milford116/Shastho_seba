@@ -35,26 +35,20 @@ exports.registration = async function (req, res) {
 
 					new_doctor.session_token = jwt.sign(payload, process.env.SECRET);
 
-					bcrypt.hash(
-						req.body.password,
-						parseInt(process.env.SALT_ROUNDS, 10),
-						(err, hash) => {
-							if (err) {
-								res.status(INTERNAL_SERVER_ERROR).send("Something went wrong");
-							} else {
-								new_doctor.password = hash;
-								new_doctor.save((err, docs) => {
-									if (err) {
-										res.status(INTERNAL_SERVER_ERROR).send(
-											"Something went wrong"
-										);
-									} else {
-										res.status(SUCCESS).send(token);
-									}
-								});
-							}
+					bcrypt.hash(req.body.password, parseInt(process.env.SALT_ROUNDS, 10), (err, hash) => {
+						if (err) {
+							res.status(INTERNAL_SERVER_ERROR).send("Something went wrong");
+						} else {
+							new_doctor.password = hash;
+							new_doctor.save((err, docs) => {
+								if (err) {
+									res.status(INTERNAL_SERVER_ERROR).send("Something went wrong");
+								} else {
+									res.status(SUCCESS).send(token);
+								}
+							});
 						}
-					);
+					});
 				}
 			});
 		}
@@ -80,17 +74,13 @@ exports.login = async function (req, res) {
 
 					const token = jwt.sign(payload, process.env.SECRET);
 
-					doctorModel.updateOne(
-						{mobile_no: req.body.mobile_no},
-						{session_token: token},
-						(err, docs) => {
-							if (err) {
-								res.status(INTERNAL_SERVER_ERROR).send("Something went wrong");
-							} else {
-								res.status(SUCCESS).send(token);
-							}
+					doctorModel.updateOne({mobile_no: req.body.mobile_no}, {session_token: token}, (err, docs) => {
+						if (err) {
+							res.status(INTERNAL_SERVER_ERROR).send("Something went wrong");
+						} else {
+							res.status(SUCCESS).send(token);
 						}
-					);
+					});
 				}
 			});
 		}
@@ -105,7 +95,7 @@ exports.reference = async function (req, res) {
 			res.status(BAD_REQUEST).send("The doctor has already registered");
 		} else {
 			var new_reference = new referenceModel();
-			new_reference.referrer = req.body.referrer;
+			new_reference.referrer = req.mobile_no;
 			new_reference.doctor = req.body.doctor;
 
 			new_reference.save((err, docs) => {

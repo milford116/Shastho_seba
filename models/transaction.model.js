@@ -3,7 +3,7 @@ mongoose.pluralize(null);
 
 var transactionSchema = new mongoose.Schema({
 	appointment_id: {
-		type: ObjectId,
+		type: String,
 		required: true,
 	},
 	amount: {

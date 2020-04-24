@@ -47,5 +47,5 @@ var doctorSchema = new mongoose.Schema({
 	},
 });
 
-paperSchema.plugin(paginate);
+doctorSchema.plugin(paginate);
 mongoose.model("doctor", doctorSchema);

@@ -123,7 +123,7 @@ exports.appointment = async function(req, res) {
 // Searching part starts
 
 exports.searchByName = async function(req, res) {
-    doctorModel.find({ name: req.doctor_name }, (err, docs) => {
+    doctorModel.find({ name: req.params.name }, (err, docs) => {
         if (err) {
             res.status(INTERNAL_SERVER_ERROR).send("Internal server error");
         } else {
@@ -131,7 +131,44 @@ exports.searchByName = async function(req, res) {
         }
     });
 };
-exports.searchByEmail = async function(req, res) {};
-exports.searchByPhoneNo = async function(req, res) {};
-exports.searchByHospital = async function(req, res) {};
-exports.searchBySpeciality = async function(req, res) {};
+
+exports.searchByEmail = async function(req, res) {
+    doctorModel.find({ email: req.params.email }, (err, docs) => {
+        if (err) {
+            res.status(INTERNAL_SERVER_ERROR).send("Internal server error");
+        } else {
+            res.status(SUCCESS).send(docs);
+        }
+    });
+};
+
+
+exports.searchByMobileNo = async function(req, res) {
+    doctorModel.find({ mobile_no: req.params.mobile_no }, (err, docs) => {
+        if (err) {
+            res.status(INTERNAL_SERVER_ERROR).send("Internal server error");
+        } else {
+            res.status(SUCCESS).send(docs);
+        }
+    });
+};
+
+exports.searchByHospital = async function(req, res) {
+    doctorModel.find({ institution: req.params.hospital_name }, (err, docs) => {
+        if (err) {
+            res.status(INTERNAL_SERVER_ERROR).send("Internal server error");
+        } else {
+            res.status(SUCCESS).send(docs);
+        }
+    });
+};
+
+// exports.searchBySpeciality = async function(req, res) {
+//     doctorModel.find({ institution: req.params.speciality }, (err, docs) => {
+//         if (err) {
+//             res.status(INTERNAL_SERVER_ERROR).send("Internal server error");
+//         } else {
+//             res.status(SUCCESS).send(docs);
+//         }
+//     });
+// };

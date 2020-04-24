@@ -8,10 +8,10 @@ router.post("/doctor/post/register", doctorController.registration);
 router.post("/doctor/post/reference", doctorMiddleware.middleware, doctorController.reference);
 router.get("/doctor/get/appointment", doctorMiddleware.middleware, doctorController.appointment);
 
-router.get("/doctor/search/name", doctorController.searchByName);
-router.get("/doctor/search/email", doctorController.searchByEmail);
-router.get("/doctor/search/phone_no", doctorController.searchByPhoneNo);
-router.get("/doctor/search/hospital_name", doctorController.searchByHospital);
-router.get("/doctor/search/speciality", doctorController.searchBySpeciality);
+router.get("/doctor/search/name/:name", doctorController.searchByName);
+router.get("/doctor/search/email/:email", doctorController.searchByEmail);
+router.get("/doctor/search/mobile_no/:mobile_no", doctorController.searchByMobileNo);
+router.get("/doctor/search/hospital_name/:hospital_name", doctorController.searchByHospital);
+router.get("/doctor/search/speciality/:speciality", doctorController.searchBySpeciality);
 
 module.exports = router;

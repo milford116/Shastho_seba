@@ -121,7 +121,12 @@ exports.appointment = async function (req, res) {
 };
 
 exports.searchByName = async function (req, res) {
-	doctorModel.find({name: req.params.name}, (err, docs) => {
+	var options = {
+		page: parseInt(req.params.page, 10),
+		limit: parseInt(req.params.limit, 10),
+	};
+	//use paginate() function instead of find(). they have same functionality
+	doctorModel.paginate({name: req.params.name}, options, (err, docs) => {
 		if (err) {
 			res.status(INTERNAL_SERVER_ERROR).send("Internal server error");
 		} else {

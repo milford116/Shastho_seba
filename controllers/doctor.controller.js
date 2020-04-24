@@ -16,7 +16,9 @@ exports.registration = async function (req, res) {
 		} else {
 			referenceModel.findOneAndDelete({doctor: req.body.mobile_no}, (err, docs) => {
 				if (err) {
-					res.status(BAD_REQUEST).send("No referreral found for this mobile no");
+					res.status(INTERNAL_SERVER_ERROR).send("Internal server error");
+				} else if (!docs) {
+					res.status(BAD_REQUEST).send("Bad request");
 				} else {
 					var new_doctor = new doctorModel();
 					new_doctor.name = req.body.name;
@@ -27,14 +29,6 @@ exports.registration = async function (req, res) {
 					new_doctor.reg_number = req.body.reg_number;
 					new_doctor.referrer = docs.referrer;
 
-					const payload = {
-						mobile_no: new_doctor.mobile_no,
-						name: new_doctor.name,
-						reg_number: new_doctor.reg_number,
-					};
-
-					new_doctor.session_token = jwt.sign(payload, process.env.SECRET);
-
 					bcrypt.hash(req.body.password, parseInt(process.env.SALT_ROUNDS, 10), (err, hash) => {
 						if (err) {
 							res.status(INTERNAL_SERVER_ERROR).send("Something went wrong");
@@ -44,7 +38,7 @@ exports.registration = async function (req, res) {
 								if (err) {
 									res.status(INTERNAL_SERVER_ERROR).send("Something went wrong");
 								} else {
-									res.status(SUCCESS).send(token);
+									res.status(SUCCESS).send("Success");
 								}
 							});
 						}

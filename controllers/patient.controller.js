@@ -94,8 +94,7 @@ exports.postAppointment = async function (req, res) {
 };
 
 exports.getAppointment = async function (req, res) {
-	var today = new Date();
-	appointmentModel.find({patient_mobile_no: req.mobile_no, appointment_date: req.header.date}, (err, docs) => {
+	appointmentModel.find({patient_mobile_no: req.mobile_no, appointment_date: req.params.date}, (err, docs) => {
 		if (err) {
 			res.status(INTERNAL_SERVER_ERROR).send("Internal server error");
 		} else {

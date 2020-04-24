@@ -1,8 +1,10 @@
 const patient = require("../models/patient.model");
 const appointment = require("../models/appointment.model");
+const transaction = require("../models/transaction.model");
 const mongoose = require("mongoose");
 const patientModel = mongoose.model("patient");
 const appointmentModel = mongoose.model("appointment");
+const transactionModel = mongoose.model("transaction");
 const bcrypt = require("bcrypt");
 const dotenv = require("dotenv");
 const jwt = require("jsonwebtoken");
@@ -91,11 +93,25 @@ exports.postAppointment = async function (req, res) {
 
 exports.getAppointment = async function (req, res) {
 	var today = new Date();
-	appointmentModel.find({patient_mobile_no: req.mobile_no, appointment_date: today}, (err, docs) => {
+	appointmentModel.find({patient_mobile_no: req.mobile_no, appointment_date: req.header.date}, (err, docs) => {
 		if (err) {
 			res.status(INTERNAL_SERVER_ERROR).send("Internal server error");
 		} else {
 			res.status(SUCCESS).send(docs);
+		}
+	});
+};
+
+exports.addTransaction = async function (req, res) {
+	var transaction = new transactionModel();
+	transaction.appointment_id = req.body.appointment_id;
+	transaction.amount = req.body.amount;
+
+	transaction.save((err, docs) => {
+		if (err) {
+			res.status(INTERNAL_SERVER_ERROR).send("Internal server error");
+		} else {
+			res.status(SUCCESS).send("Success");
 		}
 	});
 };

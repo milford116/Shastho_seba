@@ -163,12 +163,12 @@ exports.searchByHospital = async function(req, res) {
     });
 };
 
-exports.searchBySpeciality = async function(req, res) {
-    doctorModel.find({ institution: req.params.speciality }, (err, docs) => {
-        if (err) {
-            res.status(INTERNAL_SERVER_ERROR).send("Internal server error");
-        } else {
-            res.status(SUCCESS).send(docs);
-        }
-    });
-};
+// exports.searchBySpeciality = async function(req, res) {
+//     doctorModel.find({ institution: req.params.speciality }, (err, docs) => {
+//         if (err) {
+//             res.status(INTERNAL_SERVER_ERROR).send("Internal server error");
+//         } else {
+//             res.status(SUCCESS).send(docs);
+//         }
+//     });
+// };

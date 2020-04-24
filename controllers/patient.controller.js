@@ -52,6 +52,8 @@ exports.login = async function (req, res) {
 			bcrypt.compare(req.body.password, docs.password, (err, result) => {
 				if (err) {
 					res.status(INTERNAL_SERVER_ERROR).send("Internal server error");
+				} else if (!result) {
+					res.status(BAD_REQUEST).send("Bad request");
 				} else {
 					const payload = {
 						mobile_no: req.body.mobile_no,

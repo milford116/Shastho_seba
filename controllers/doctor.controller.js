@@ -1,10 +1,14 @@
 const mongoose = require("mongoose");
+
 const doctor = require("../models/doctor.model");
 const reference = require("../models/reference.model");
 const appointment = require("../models/appointment.model");
+const specialization = require("../models/specialization.model");
+
 const doctorModel = mongoose.model("doctor");
 const referenceModel = mongoose.model("reference");
 const appointmentModel = mongoose.model("appointment");
+
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const {SUCCESS, INTERNAL_SERVER_ERROR, BAD_REQUEST, DATA_NOT_FOUND} = require("../errors");
@@ -162,12 +166,21 @@ exports.searchByHospital = async function (req, res) {
 	});
 };
 
-// exports.searchBySpeciality = async function(req, res) {
-//     doctorModel.find({ institution: req.params.speciality }, (err, docs) => {
-//         if (err) {
-//             res.status(INTERNAL_SERVER_ERROR).send("Internal server error");
-//         } else {
-//             res.status(SUCCESS).send(docs);
-//         }
-//     });
-// };
+exports.searchBySpecialization = async function (req, res) {
+	var query = {
+		specialization: {$in: req.params.speciality.toLowerCase()},
+	};
+
+	var options = {
+		page: parseInt(req.params.page, 10),
+		limit: parseInt(req.params.limit, 10),
+	};
+
+	doctorModel.paginate(query, options, (err, docs) => {
+		if (err) res.status(INTERNAL_SERVER_ERROR).send("something went wrong");
+		else {
+			const doctors = docs.docs;
+			res.status(SUCCESS).send(doctors);
+		}
+	});
+};

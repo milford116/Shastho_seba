@@ -11,5 +11,6 @@ router.get("/doctor/search/name/:name/:limit/:page", doctorController.searchByNa
 router.get("/doctor/search/email/:email", doctorController.searchByEmail);
 router.get("/doctor/search/mobile_no/:mobile_no", doctorController.searchByMobileNo);
 router.get("/doctor/search/hospital_name/:hospital_name", doctorController.searchByHospital);
+router.get("/doctor/search/specialization/:speciality/:page/:limit", doctorController.searchBySpecialization);
 
 module.exports = router;

@@ -29,7 +29,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.json());
 
-//add your route here
 app.use(doctorRoutes);
 app.use(patientRoutes);
 

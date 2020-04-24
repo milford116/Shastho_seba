@@ -14,6 +14,7 @@ exports.registration = async function (req, res) {
 		if (docs) {
 			res.status(BAD_REQUEST).send("An account with this mobile no. already exists");
 		} else {
+			//console.log(req.body);
 			referenceModel.findOneAndDelete({doctor: req.body.mobile_no}, (err, docs) => {
 				if (err) {
 					res.status(INTERNAL_SERVER_ERROR).send("Internal server error");
@@ -31,12 +32,12 @@ exports.registration = async function (req, res) {
 
 					bcrypt.hash(req.body.password, parseInt(process.env.SALT_ROUNDS, 10), (err, hash) => {
 						if (err) {
-							res.status(INTERNAL_SERVER_ERROR).send("Something went wrong");
+							res.status(INTERNAL_SERVER_ERROR).send("Something went wrong1");
 						} else {
 							new_doctor.password = hash;
 							new_doctor.save((err, docs) => {
 								if (err) {
-									res.status(INTERNAL_SERVER_ERROR).send("Something went wrong");
+									res.status(INTERNAL_SERVER_ERROR).send("Something went wrong2");
 								} else {
 									res.status(SUCCESS).send("Success");
 								}

@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const paginate = require("mongoose-paginate-v2");
+//const paginate = require("mongoose-paginate-v2");
 mongoose.pluralize(null);
 
 var doctorSchema = new mongoose.Schema({
@@ -47,5 +47,5 @@ var doctorSchema = new mongoose.Schema({
 	},
 });
 
-doctorSchema.plugin(paginate);
+//doctorSchema.plugin(paginate);
 mongoose.model("doctor", doctorSchema);

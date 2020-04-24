@@ -45,6 +45,11 @@ var doctorSchema = new mongoose.Schema({
 		type: String,
 		required: true,
 	},
+
+	specialization: {
+		type: Array,
+		required: false,
+	},
 });
 
 doctorSchema.plugin(paginate);

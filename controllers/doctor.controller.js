@@ -119,3 +119,19 @@ exports.appointment = async function(req, res) {
         }
     });
 };
+
+// Searching part starts
+
+exports.searchByName = async function(req, res) {
+    doctorModel.find({ name: req.doctor_name }, (err, docs) => {
+        if (err) {
+            res.status(INTERNAL_SERVER_ERROR).send("Internal server error");
+        } else {
+            res.status(SUCCESS).send(docs);
+        }
+    });
+};
+exports.searchByEmail = async function(req, res) {};
+exports.searchByPhoneNo = async function(req, res) {};
+exports.searchByHospital = async function(req, res) {};
+exports.searchBySpeciality = async function(req, res) {};

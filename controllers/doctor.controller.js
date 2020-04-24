@@ -1,8 +1,10 @@
 const mongoose = require("mongoose");
 const doctor = require("../models/doctor.model");
+const doctor_specialization = require("../models/doctor_specialization.model.js");
 const reference = require("../models/reference.model");
 const appointment = require("../models/appointment.model");
 const doctorModel = mongoose.model("doctor");
+const doctor_specializationModel = mongoose.model("doctor_specialization");
 const referenceModel = mongoose.model("reference");
 const appointmentModel = mongoose.model("appointment");
 const bcrypt = require("bcrypt");
@@ -116,6 +118,36 @@ exports.appointment = async function (req, res) {
 	});
 };
 
+exports.setSpecialization = async function (req, res) {
+	doctor_specializationModel.findOne({doctor_id: req.body.doctor_id}, (err, docs) => {
+		if (err) res.status(INTERNAL_SERVER_ERROR).send("Internal server error");
+		// update - ****NEED TO RECHECK
+		else if (docs) {
+			var speciality = new doctor_specialization();
+
+			speciality.doctor_id = req.body.doctor_id;
+			speciality.specialization_id = req.body.specialization_id;
+			doctor_specializationModel.updateOne({doctor_id: req.body.doctor_id}, speciality);
+		}
+
+		// create
+		else {
+			var speciality = new doctor_specialization();
+
+			speciality.doctor_id = req.body.doctor_id;
+			speciality.specialization_id = req.body.specialization_id;
+
+			speciality.save((err2, docs2) => {
+				if (err2) {
+					res.status(INTERNAL_SERVER_ERROR).send("Something went wrong");
+				} else {
+					res.status(SUCCESS).send("Success");
+				}
+			});
+		}
+	});
+};
+
 exports.searchByName = async function (req, res) {
 	var options = {
 		page: parseInt(req.params.page, 10),
@@ -161,12 +193,12 @@ exports.searchByHospital = async function (req, res) {
 	});
 };
 
-// exports.searchBySpeciality = async function(req, res) {
-//     doctorModel.find({ institution: req.params.speciality }, (err, docs) => {
-//         if (err) {
-//             res.status(INTERNAL_SERVER_ERROR).send("Internal server error");
-//         } else {
-//             res.status(SUCCESS).send(docs);
-//         }
-//     });
-// };
+exports.searchBySpeciality = async function (req, res) {
+	doctorModel.find({institution: req.params.speciality}, (err, docs) => {
+		if (err) {
+			res.status(INTERNAL_SERVER_ERROR).send("Internal server error");
+		} else {
+			res.status(SUCCESS).send(docs);
+		}
+	});
+};

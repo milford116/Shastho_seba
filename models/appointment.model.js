@@ -6,6 +6,10 @@ var appointmentSchema = new mongoose.Schema({
 		type: String,
 		required: true,
 	},
+	doc_name: {
+		type: String,
+		required: true,
+	},
 	patient_mobile_no: {
 		type: String,
 		required: true,

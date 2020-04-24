@@ -80,6 +80,7 @@ exports.postAppointment = async function (req, res) {
 	var appointment = new appointmentModel();
 	appointment.doc_mobile_no = req.body.doc_mobile_no;
 	appointment.patient_mobile_no = req.mobile_no;
+	appointment.doc_name = req.body.doc_name;
 	appointment.status = false;
 	appointment.appointment_time = req.body.appointment_time;
 	appointment.appointment_date = req.body.appointment_date;

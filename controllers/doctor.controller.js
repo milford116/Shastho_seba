@@ -126,7 +126,7 @@ exports.searchByName = async function (req, res) {
 		page: parseInt(req.params.page, 10),
 		limit: parseInt(req.params.limit, 10),
 	};
-	//use paginate() function instead of find(). they have same functionality
+
 	doctorModel.paginate({name: req.params.name}, options, (err, docs) => {
 		if (err) {
 			res.status(INTERNAL_SERVER_ERROR).send("Internal server error");
@@ -136,28 +136,13 @@ exports.searchByName = async function (req, res) {
 	});
 };
 
-exports.searchByEmail = async function (req, res) {
-	doctorModel.find({email: req.params.email}, (err, docs) => {
-		if (err) {
-			res.status(INTERNAL_SERVER_ERROR).send("Internal server error");
-		} else {
-			res.status(SUCCESS).send(docs);
-		}
-	});
-};
-
-exports.searchByMobileNo = async function (req, res) {
-	doctorModel.find({mobile_no: req.params.mobile_no}, (err, docs) => {
-		if (err) {
-			res.status(INTERNAL_SERVER_ERROR).send("Internal server error");
-		} else {
-			res.status(SUCCESS).send(docs);
-		}
-	});
-};
-
 exports.searchByHospital = async function (req, res) {
-	doctorModel.find({institution: req.params.hospital_name}, (err, docs) => {
+	var options = {
+		page: parseInt(req.params.page, 10),
+		limit: parseInt(req.params.limit, 10),
+	};
+
+	doctorModel.paginate({institution: req.params.hospital_name}, options, (err, docs) => {
 		if (err) {
 			res.status(INTERNAL_SERVER_ERROR).send("Internal server error");
 		} else {
@@ -177,8 +162,9 @@ exports.searchBySpecialization = async function (req, res) {
 	};
 
 	doctorModel.paginate(query, options, (err, docs) => {
-		if (err) res.status(INTERNAL_SERVER_ERROR).send("something went wrong");
-		else {
+		if (err) {
+			res.status(INTERNAL_SERVER_ERROR).send("something went wrong");
+		} else {
 			const doctors = docs.docs;
 			res.status(SUCCESS).send(doctors);
 		}

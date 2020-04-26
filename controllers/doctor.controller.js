@@ -131,7 +131,7 @@ exports.appointment = async function (req, res) {
 };
 
 exports.appointmentDetail = async function (req, res) {
-	appointmentModel.find({doc_mobile_no: req.mobile_no}, (err, docs) => {
+	appointmentModel.findOne({doc_mobile_no: req.mobile_no}, (err, docs) => {
 		if (err) res.status(INTERNAL_SERVER_ERROR).send("something went wrong");
 		else {
 			let data = {
@@ -139,12 +139,14 @@ exports.appointmentDetail = async function (req, res) {
 				patient: {},
 			};
 
-			patientModel.find({mobile_no: docs.patient_mobile_no}, (err, obj) => {
-				if (!err) {
-					data.patient = obj;
-					res.status(SUCCESS).send(data);
-				} else res.status(INTERNAL_SERVER_ERROR).send("something went wrong");
-			});
+			if (docs) {
+				patientModel.find({mobile_no: docs.patient_mobile_no}, (err, obj) => {
+					if (!err) {
+						data.patient = obj;
+						res.status(SUCCESS).send(data);
+					} else res.status(INTERNAL_SERVER_ERROR).send("something went wrong");
+				});
+			} else res.status(SUCCESS).send(data);
 		}
 	});
 };

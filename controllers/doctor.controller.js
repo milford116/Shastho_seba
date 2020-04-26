@@ -20,7 +20,6 @@ exports.registration = async function (req, res) {
 		if (docs) {
 			res.status(BAD_REQUEST).send("An account with this mobile no. already exists");
 		} else {
-			//console.log(req.body);
 			referenceModel.findOneAndDelete({doctor: req.body.mobile_no}, (err, docs) => {
 				if (err) {
 					res.status(INTERNAL_SERVER_ERROR).send("Internal server error");
@@ -133,7 +132,7 @@ exports.appointment = async function (req, res) {
 
 	let appointments = [];
 
-	appointmentModel.find(query, (err, docs) => {
+	appointmentModel.find(query, async (err, docs) => {
 		if (err) {
 			res.status(INTERNAL_SERVER_ERROR).send("something went wrong");
 		} else {
@@ -162,25 +161,19 @@ exports.getFutureAppointment = async function (req, res) {
 
 	let appointments = [];
 
-	appointmentModel.find(query, (err, docs) => {
+	appointmentModel.find(query, async (err, docs) => {
 		if (err) {
 			res.status(INTERNAL_SERVER_ERROR).send("something went wrong");
 		} else {
 			for (let i = 0; i < docs.length; i++) {
-				patientModel.findOne({mobile_no: docs[i].patient_mobile_no}, (err, obj) => {
-					if (err) res.status(INTERNAL_SERVER_ERROR).send("something went wrong");
-					else {
-						obj.session_token = null;
-						let data = {
-							appointment_detail: docs[i],
-							patient_detail: obj,
-						};
-
-						appointments.push(data);
-						if (appointments.length === docs.length) res.status(SUCCESS).send(appointments);
-					}
-				});
+				let obj = await patientModel.findOne({mobile_no: docs[i].patient_mobile_no}).exec();
+				let data = {
+					appointment_detail: docs[i],
+					patient_detail: obj,
+				};
+				appointments.push(data);
 			}
+			res.status(SUCCESS).send(appointments);
 		}
 	});
 };

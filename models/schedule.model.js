@@ -6,22 +6,18 @@ var doctor_scheduleSchema = new mongoose.Schema({
 		type: String,
 		required: true,
 	},
-
 	time_start: {
 		type: Date,
 		required: true,
 	},
-
 	time_end: {
 		type: Date,
 		required: true,
 	},
-
 	days: {
 		type: Array,
 		required: true,
 	},
-
 	fee: {
 		type: Number,
 		required: true,

@@ -120,12 +120,71 @@ exports.reference = async function (req, res) {
 };
 
 exports.appointment = async function (req, res) {
-	var today = new Date();
-	appointmentModel.find({doc_mobile_no: req.mobile_no, appointment_date_time: today}, (err, docs) => {
+	let st = new Date(Date.now());
+	st.setHours(23, 59, 59, 999);
+	st.setHours(st.getHours() + 6);
+
+	const query = {
+		doc_mobile_no: req.mobile_no,
+		appointment_date_time: st,
+	};
+
+	let appointments = [];
+
+	appointmentModel.find(query, (err, docs) => {
 		if (err) {
-			res.status(INTERNAL_SERVER_ERROR).send("Internal server error");
+			res.status(INTERNAL_SERVER_ERROR).send("something went wrong");
 		} else {
-			res.status(SUCCESS).send(docs);
+			for (let i = 0; i < docs.length; i++) {
+				patientModel.findOne({mobile_no: docs[i].patient_mobile_no}, (err, obj) => {
+					if (err) res.status(INTERNAL_SERVER_ERROR).send("something went wrong");
+					else {
+						obj.session_token = null;
+						let data = {
+							appointment_detail: docs[i],
+							patient_detail: obj,
+						};
+
+						appointments.push(data);
+						if (appointments.length === docs.length) res.status(SUCCESS).send(appointments);
+					}
+				});
+			}
+		}
+	});
+};
+
+exports.getFutureAppointment = async function (req, res) {
+	let st = new Date(Date.now());
+	st.setHours(23, 59, 59, 999);
+	st.setHours(st.getHours() + 6);
+
+	const query = {
+		doc_mobile_no: req.mobile_no,
+		appointment_date_time: {$gt: st},
+	};
+
+	let appointments = [];
+
+	appointmentModel.find(query, (err, docs) => {
+		if (err) {
+			res.status(INTERNAL_SERVER_ERROR).send("something went wrong");
+		} else {
+			for (let i = 0; i < docs.length; i++) {
+				patientModel.findOne({mobile_no: docs[i].patient_mobile_no}, (err, obj) => {
+					if (err) res.status(INTERNAL_SERVER_ERROR).send("something went wrong");
+					else {
+						obj.session_token = null;
+						let data = {
+							appointment_detail: docs[i],
+							patient_detail: obj,
+						};
+
+						appointments.push(data);
+						if (appointments.length === docs.length) res.status(SUCCESS).send(appointments);
+					}
+				});
+			}
 		}
 	});
 };

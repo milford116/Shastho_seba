@@ -124,7 +124,6 @@ exports.getAppointment = async function (req, res) {
 
 exports.getPastAppointment = async function (req, res) {
 	let st = new Date(Date.now());
-	st.setHours(0, 0, 0, 0);
 	st.setHours(st.getHours() + 6);
 	var query = {
 		patient_mobile_no: req.mobile_no,

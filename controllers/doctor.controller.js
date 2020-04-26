@@ -131,14 +131,15 @@ exports.appointment = async function (req, res) {
 };
 
 exports.appointmentDetail = async function (req, res) {
-	appointmentModel.findOne({doc_mobile_no: req.mobile_no}, (err, docs) => {
+	let data = {
+		appointment_detail: {},
+		patient: {},
+	};
+
+	appointmentModel.findOne({_id: req.body.appointment_id}, (err, docs) => {
 		if (err) res.status(INTERNAL_SERVER_ERROR).send("something went wrong");
 		else {
-			let data = {
-				appointment_detail: docs,
-				patient: {},
-			};
-
+			data.appointment_detail = docs;
 			if (docs) {
 				patientModel.find({mobile_no: docs.patient_mobile_no}, (err, obj) => {
 					if (!err) {

@@ -88,7 +88,7 @@ exports.postAppointment = async function (req, res) {
 		appointment.doc_name = docs.name;
 		appointment.patient_mobile_no = req.mobile_no;
 		appointment.status = false;
-		appointment.appointment_date = req.body.appointment_date;
+		appointment.appointment_date_time = req.body.appointment_date_time;
 
 		console.log(appointment);
 
@@ -111,7 +111,7 @@ exports.getAppointment = async function (req, res) {
 	en.setHours(en.getHours() + 6);
 	var query = {
 		patient_mobile_no: req.mobile_no,
-		appointment_date: {$lte: en, $gte: st},
+		appointment_date_time: {$lte: en, $gte: st},
 	};
 	appointmentModel.find(query, (err, docs) => {
 		if (err) {

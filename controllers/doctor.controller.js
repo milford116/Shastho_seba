@@ -112,7 +112,7 @@ exports.reference = async function (req, res) {
 
 exports.appointment = async function (req, res) {
 	var today = new Date();
-	appointmentModel.find({doc_mobile_no: req.mobile_no, appointment_date: today}, (err, docs) => {
+	appointmentModel.find({doc_mobile_no: req.mobile_no, appointment_date_time: today}, (err, docs) => {
 		if (err) {
 			res.status(INTERNAL_SERVER_ERROR).send("Internal server error");
 		} else {

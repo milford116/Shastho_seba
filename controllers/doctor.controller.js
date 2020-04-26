@@ -4,10 +4,12 @@ const doctor = require("../models/doctor.model");
 const reference = require("../models/reference.model");
 const appointment = require("../models/appointment.model");
 const specialization = require("../models/specialization.model");
+const patient = require("../models/patient.model");
 
 const doctorModel = mongoose.model("doctor");
 const referenceModel = mongoose.model("reference");
 const appointmentModel = mongoose.model("appointment");
+const patientModel = mongoose.model("patient");
 
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
@@ -124,6 +126,25 @@ exports.appointment = async function (req, res) {
 			res.status(INTERNAL_SERVER_ERROR).send("Internal server error");
 		} else {
 			res.status(SUCCESS).send(docs);
+		}
+	});
+};
+
+exports.appointmentDetail = async function (req, res) {
+	appointmentModel.find({doc_mobile_no: req.mobile_no}, (err, docs) => {
+		if (err) res.status(INTERNAL_SERVER_ERROR).send("something went wrong");
+		else {
+			let data = {
+				appointment_detail: docs,
+				patient: {},
+			};
+
+			patientModel.find({mobile_no: docs.patient_mobile_no}, (err, obj) => {
+				if (!err) {
+					data.patient = obj;
+					res.status(SUCCESS).send(data);
+				} else res.status(INTERNAL_SERVER_ERROR).send("something went wrong");
+			});
 		}
 	});
 };

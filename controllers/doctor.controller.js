@@ -73,13 +73,20 @@ exports.login = async function (req, res) {
 						reg_number: docs.reg_number,
 					};
 
+					const doctor_detail = docs;
+
 					const token = jwt.sign(payload, process.env.SECRET);
 
 					doctorModel.updateOne({mobile_no: req.body.mobile_no}, {session_token: token}, (err, docs) => {
 						if (err) {
 							res.status(INTERNAL_SERVER_ERROR).send("Something went wrong");
 						} else {
-							res.status(SUCCESS).send(token);
+							const ret = {
+								token: token,
+								doctor_detail: doctor_detail,
+							};
+
+							res.status(SUCCESS).send(ret);
 						}
 					});
 				}

@@ -107,6 +107,7 @@ exports.getAppointment = async function (req, res) {
 exports.addTransaction = async function (req, res) {
 	var transaction = new transactionModel();
 	transaction.appointment_id = req.body.appointment_id;
+	transaction.transaction_id = req.body.transaction_id;
 	transaction.amount = req.body.amount;
 
 	transaction.save((err, docs) => {

@@ -121,12 +121,14 @@ exports.reference = async function (req, res) {
 
 exports.appointment = async function (req, res) {
 	let st = new Date(Date.now());
-	st.setHours(23, 59, 59, 999);
+	let en = new Date(Date.now());
+	st.setHours(0, 0, 0, 0);
+	en.setHours(23, 59, 59, 999);
 	st.setHours(st.getHours() + 6);
-
+	en.setHours(en.getHours() + 6);
 	const query = {
 		doc_mobile_no: req.mobile_no,
-		appointment_date_time: st,
+		appointment_date_time: {$lte: en, $gte: st},
 	};
 
 	let appointments = [];
@@ -136,20 +138,14 @@ exports.appointment = async function (req, res) {
 			res.status(INTERNAL_SERVER_ERROR).send("something went wrong");
 		} else {
 			for (let i = 0; i < docs.length; i++) {
-				patientModel.findOne({mobile_no: docs[i].patient_mobile_no}, (err, obj) => {
-					if (err) res.status(INTERNAL_SERVER_ERROR).send("something went wrong");
-					else {
-						obj.session_token = null;
-						let data = {
-							appointment_detail: docs[i],
-							patient_detail: obj,
-						};
-
-						appointments.push(data);
-						if (appointments.length === docs.length) res.status(SUCCESS).send(appointments);
-					}
-				});
+				let obj = await patientModel.findOne({mobile_no: docs[i].patient_mobile_no}).exec();
+				let data = {
+					appointment_detail: docs[i],
+					patient_detail: obj,
+				};
+				appointments.push(data);
 			}
+			res.status(SUCCESS).send(appointments);
 		}
 	});
 };

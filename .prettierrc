@@ -7,6 +7,6 @@
 	"htmlWhitespaceSensitivity": "strict",
 	"jsxBracketSameLine": true,
 	"semi": true,
-	"singleQuote": false,
+	"singleQuote": true,
 	"arrowParens": "always"
 }

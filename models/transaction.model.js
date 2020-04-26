@@ -6,6 +6,10 @@ var transactionSchema = new mongoose.Schema({
 		type: String,
 		required: true,
 	},
+	transaction_id: {
+		type: String,
+		required: true,
+	},
 	amount: {
 		type: Number,
 		required: true,

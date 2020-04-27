@@ -231,7 +231,7 @@ exports.searchByHospital = async function (req, res) {
 };
 
 exports.searchBySpecialization = async function (req, res) {
-	let re = new RegExp("^" + req.params.speciality, "i");
+	let re = new RegExp("" + req.params.speciality, "i");
 
 	var query = {
 		specialization: {$in: re},

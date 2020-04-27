@@ -12,5 +12,6 @@ router.get("/doctor/get/appointmentDetail", doctorMiddleware.middleware, doctorC
 router.get("/doctor/search/name/:name/:limit/:page", doctorController.searchByName);
 router.get("/doctor/search/hospital_name/:hospital_name/:limit/:page", doctorController.searchByHospital);
 router.get("/doctor/search/specialization/:speciality/:page/:limit", doctorController.searchBySpecialization);
+router.get("/doctor/list/all/doctor/:limit/:page", doctorController.doctorList);
 
 module.exports = router;

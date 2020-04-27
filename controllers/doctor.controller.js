@@ -249,3 +249,18 @@ exports.searchBySpecialization = async function (req, res) {
 		}
 	});
 };
+
+exports.doctorList = async function (req, res) {
+	var options = {
+		page: parseInt(req.params.page, 10),
+		limit: parseInt(req.params.limit, 10),
+	};
+
+	doctorModel.paginate({}, options, (err, docs) => {
+		if (err) {
+			res.status(INTERNAL_SERVER_ERROR).send("Internal server error");
+		} else {
+			res.status(SUCCESS).send(docs);
+		}
+	});
+};

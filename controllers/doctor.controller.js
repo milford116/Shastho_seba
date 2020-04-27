@@ -206,7 +206,7 @@ exports.searchByName = async function (req, res) {
 		limit: parseInt(req.params.limit, 10),
 	};
 
-	doctorModel.paginate({name: { $regex: req.params.name, $options: 'i'}}, options, (err, docs) => {
+	doctorModel.paginate({name: {$regex: req.params.name, $options: "i"}}, options, (err, docs) => {
 		if (err) {
 			res.status(INTERNAL_SERVER_ERROR).send("Internal server error");
 		} else {
@@ -221,7 +221,7 @@ exports.searchByHospital = async function (req, res) {
 		limit: parseInt(req.params.limit, 10),
 	};
 
-	doctorModel.paginate({institution: { $regex: req.params.hospital_name, $options: 'i'}}, options, (err, docs) => {
+	doctorModel.paginate({institution: {$regex: req.params.hospital_name, $options: "i"}}, options, (err, docs) => {
 		if (err) {
 			res.status(INTERNAL_SERVER_ERROR).send("Internal server error");
 		} else {
@@ -231,14 +231,18 @@ exports.searchByHospital = async function (req, res) {
 };
 
 exports.searchBySpecialization = async function (req, res) {
+	let re = new RegExp("^" + req.params.speciality, "i");
+
 	var query = {
-		specialization: {$in: req.params.speciality.toLowerCase()},
+		specialization: {$in: re},
 	};
 
 	var options = {
 		page: parseInt(req.params.page, 10),
 		limit: parseInt(req.params.limit, 10),
 	};
+
+	console.log(query);
 
 	doctorModel.paginate(query, options, (err, docs) => {
 		if (err) {

@@ -246,8 +246,7 @@ exports.searchBySpecialization = async function (req, res) {
 		if (err) {
 			res.status(INTERNAL_SERVER_ERROR).send("something went wrong");
 		} else {
-			const doctors = docs.docs;
-			res.status(SUCCESS).send(doctors);
+			res.status(SUCCESS).send(docs);
 		}
 	});
 };

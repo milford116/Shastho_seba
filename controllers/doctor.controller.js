@@ -242,8 +242,6 @@ exports.searchBySpecialization = async function (req, res) {
 		limit: parseInt(req.params.limit, 10),
 	};
 
-	console.log(query);
-
 	doctorModel.paginate(query, options, (err, docs) => {
 		if (err) {
 			res.status(INTERNAL_SERVER_ERROR).send("something went wrong");

@@ -16,10 +16,12 @@ exports.registration = async function (req, res) {
 		} else if (docs) {
 			res.status(BAD_REQUEST).send("An account with this mobile no already exists");
 		} else {
+			var dob = new Date(req.body.date_of_birth);
+			dob.setHours(dob.getHours() + 6);
 			var new_patient = new patientModel();
 			new_patient.mobile_no = req.body.mobile_no;
 			new_patient.name = req.body.name;
-			new_patient.date_of_birth = req.body.date_of_birth;
+			new_patient.date_of_birth = dob;
 			new_patient.sex = req.body.sex;
 
 			bcrypt.hash(req.body.password, parseInt(process.env.SALT_ROUNDS, 10), (err, hash) => {

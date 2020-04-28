@@ -1,6 +1,7 @@
 const patientController = require("../controllers/patient.controller");
 const appointmentController = require("../controllers/patient.appointment.controller");
 const transactionController = require("../controllers/transaction.controller");
+const scheduleController = require("../controllers/patient.schedule.controller");
 const patientMiddleware = require("../middlewares/auth.patient.middleware");
 const express = require("express");
 const router = express.Router();
@@ -13,5 +14,6 @@ router.get("/patient/get/past/appointment", patientMiddleware.middleware, appoin
 router.get("/patient/get/future/appointment", patientMiddleware.middleware, appointmentController.getFutureAppointment);
 router.post("/patient/add/transaction", patientMiddleware.middleware, transactionController.addTransaction);
 router.post("/patient/get/transaction", patientMiddleware.middleware, transactionController.getTransaction);
+router.post("/patient/get/schedule", patientMiddleware.middleware, scheduleController.getSchedule);
 
 module.exports = router;

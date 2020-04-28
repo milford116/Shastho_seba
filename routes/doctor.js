@@ -1,5 +1,5 @@
 const doctorController = require("../controllers/doctor.controller");
-const scheduleController = require("../controllers/schedule.controller");
+const scheduleController = require("../controllers/doctor.schedule.controller");
 const transactionController = require("../controllers/transaction.controller");
 const appointmentController = require("../controllers/doctor.appointment.controller");
 const doctorMiddleware = require("../middlewares/auth.doctor.middleware");
@@ -19,6 +19,6 @@ router.get("/doctor/search/hospital_name/:hospital_name/:limit/:page", doctorCon
 router.get("/doctor/search/specialization/:speciality/:limit/:page", doctorController.searchBySpecialization);
 router.get("/doctor/list/all/:limit/:page", doctorController.doctorList);
 router.get("/doctor/get/schedule", doctorMiddleware.middleware, scheduleController.getSchedule);
-router.post("/patient/get/transaction", doctorMiddleware.middleware, transactionController.getTransaction);
+router.post("/doctor/get/transaction", doctorMiddleware.middleware, transactionController.getTransaction);
 
 module.exports = router;

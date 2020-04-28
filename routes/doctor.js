@@ -1,5 +1,7 @@
 const doctorController = require("../controllers/doctor.controller");
 const scheduleController = require("../controllers/schedule.controller");
+const transactionController = require("../controllers/transaction.controller");
+const appointmentController = require("../controllers/doctor.appointment.controller");
 const doctorMiddleware = require("../middlewares/auth.doctor.middleware");
 const express = require("express");
 const router = express.Router();
@@ -7,7 +9,8 @@ const router = express.Router();
 router.post("/doctor/post/login", doctorController.login);
 router.post("/doctor/post/register", doctorController.registration);
 router.post("/doctor/post/reference", doctorMiddleware.middleware, doctorController.reference);
-router.post("doctor/post/schedule", doctorMiddleware.middleware, scheduleController.addSchedule);
+router.post("/doctor/post/schedule", doctorMiddleware.middleware, scheduleController.addSchedule);
+router.post("/doctor/update/appointment", doctorMiddleware.middleware, appointmentController.updateAppointment);
 router.get("/doctor/get/appointment", doctorMiddleware.middleware, doctorController.appointment);
 router.get("/doctor/get/futureAppointment", doctorMiddleware.middleware, doctorController.getFutureAppointment);
 router.get("/doctor/get/appointmentDetail", doctorMiddleware.middleware, doctorController.appointmentDetail);
@@ -15,6 +18,7 @@ router.get("/doctor/search/name/:name/:limit/:page", doctorController.searchByNa
 router.get("/doctor/search/hospital_name/:hospital_name/:limit/:page", doctorController.searchByHospital);
 router.get("/doctor/search/specialization/:speciality/:limit/:page", doctorController.searchBySpecialization);
 router.get("/doctor/list/all/:limit/:page", doctorController.doctorList);
-router.get("doctor/get/schedule", doctorMiddleware.middleware, scheduleController.getSchedule);
+router.get("/doctor/get/schedule", doctorMiddleware.middleware, scheduleController.getSchedule);
+router.post("/patient/get/transaction", doctorMiddleware.middleware, transactionController.getTransaction);
 
 module.exports = router;

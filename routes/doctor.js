@@ -1,4 +1,5 @@
 const doctorController = require("../controllers/doctor.controller");
+const searchController = require("../controllers/search.controller");
 const scheduleController = require("../controllers/doctor.schedule.controller");
 const transactionController = require("../controllers/transaction.controller");
 const appointmentController = require("../controllers/doctor.appointment.controller");
@@ -14,9 +15,9 @@ router.post("/doctor/update/appointment", doctorMiddleware.middleware, appointme
 router.get("/doctor/get/appointment", doctorMiddleware.middleware, doctorController.appointment);
 router.get("/doctor/get/futureAppointment", doctorMiddleware.middleware, doctorController.getFutureAppointment);
 router.get("/doctor/get/appointmentDetail", doctorMiddleware.middleware, doctorController.appointmentDetail);
-router.get("/doctor/search/name/:name/:limit/:page", doctorController.searchByName);
-router.get("/doctor/search/hospital_name/:hospital_name/:limit/:page", doctorController.searchByHospital);
-router.get("/doctor/search/specialization/:speciality/:limit/:page", doctorController.searchBySpecialization);
+router.get("/doctor/search/name/:name/:limit/:page", searchController.searchByName);
+router.get("/doctor/search/hospital_name/:hospital_name/:limit/:page", searchController.searchByHospital);
+router.get("/doctor/search/specialization/:speciality/:limit/:page", searchController.searchBySpecialization);
 router.get("/doctor/list/all/:limit/:page", doctorController.doctorList);
 router.get("/doctor/get/schedule", doctorMiddleware.middleware, scheduleController.getSchedule);
 router.post("/doctor/get/transaction", doctorMiddleware.middleware, transactionController.getTransaction);

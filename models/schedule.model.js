@@ -1,8 +1,8 @@
 const mongoose = require("mongoose");
 mongoose.pluralize(null);
 
-var doctor_scheduleSchema = new mongoose.Schema({
-	doctor_id: {
+var scheduleSchema = new mongoose.Schema({
+	doc_mobile_no: {
 		type: String,
 		required: true,
 	},
@@ -14,8 +14,8 @@ var doctor_scheduleSchema = new mongoose.Schema({
 		type: Date,
 		required: true,
 	},
-	days: {
-		type: Array,
+	day: {
+		type: String,
 		required: true,
 	},
 	fee: {
@@ -24,4 +24,4 @@ var doctor_scheduleSchema = new mongoose.Schema({
 	},
 });
 
-mongoose.model("doctor_schedule", doctor_scheduleSchema);
+mongoose.model("schedule", scheduleSchema);

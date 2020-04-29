@@ -11,11 +11,13 @@ const appointmentModel = mongoose.model("appointment");
 const {SUCCESS, INTERNAL_SERVER_ERROR, BAD_REQUEST, DATA_NOT_FOUND} = require("../errors");
 
 exports.updateAppointment = async function (req, res) {
-	appointmentModel.updateOne({appointment_id: req.body.appointment_id}, {status: true}, (err, docs) => {
+	appointmentModel.updateOne({_id: req.body.appointment_id}, {status: true}, (err, docs) => {
 		if (err) {
 			res.status(INTERNAL_SERVER_ERROR).send("Internal server error");
+		} else if (!docs) {
+			res.status(BAD_REQUEST).send("Bad request");
 		} else {
-			res.status(SUCCESS).send("Sucees");
+			res.status(SUCCESS).send(docs);
 		}
 	});
 };

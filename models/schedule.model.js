@@ -15,7 +15,7 @@ var scheduleSchema = new mongoose.Schema({
 		required: true,
 	},
 	day: {
-		type: String,
+		type: Number,
 		required: true,
 	},
 	fee: {

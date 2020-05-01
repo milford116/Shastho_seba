@@ -15,12 +15,15 @@ exports.postAppointment = async function (req, res) {
 		} else if (!docs) {
 			res.status(BAD_REQUEST).send("Bad request");
 		} else {
+			var date = new Date(req.body.appointment_date_time);
+			date.setHours(date.getHours() + 6);
+
 			var appointment = new appointmentModel();
 			appointment.doc_mobile_no = req.body.doc_mobile_no;
 			appointment.doc_name = docs.name;
 			appointment.patient_mobile_no = req.mobile_no;
 			appointment.status = false;
-			appointment.appointment_date_time = req.body.appointment_date_time;
+			appointment.appointment_date_time = date;
 
 			console.log(appointment);
 

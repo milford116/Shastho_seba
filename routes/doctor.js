@@ -22,5 +22,6 @@ router.get("/doctor/list/all/:limit/:page", doctorController.doctorList);
 router.get("/doctor/get/schedule", doctorMiddleware.middleware, scheduleController.getSchedule);
 router.post("/doctor/get/transaction", doctorMiddleware.middleware, transactionController.getTransaction);
 router.post("/doctor/edit/profile", doctorMiddleware.middleware, doctorController.editDoctor);
+router.post("/doctor/edit/schedule", doctorMiddleware.middleware, scheduleController.editSchedule);
 
 module.exports = router;

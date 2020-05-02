@@ -53,3 +53,39 @@ exports.getSchedule = async function (req, res) {
 		}
 	});
 };
+
+exports.editSchedule = async function (req, res) {
+	var st = new Date(req.body.time_start);
+	var en = new Date(req.body.time_end);
+	st.setHours(st.getHours() + 6);
+	en.setHours(en.getHours() + 6);
+	st.setDate(1), st.setMonth(1), st.setFullYear(2000);
+	en.setDate(1), en.setMonth(1), en.setFullYear(2000);
+	var query = {
+		doc_mobile_no: req.mobile_no,
+		time_start: {$lte: st},
+		time_end: {$gte: en},
+		day: req.body.day,
+	};
+
+	scheduleModel.findOne(query, (err, docs) => {
+		if (err) {
+			res.status(INTERNAL_SERVER_ERROR).send("Internal server error");
+		} else if (docs) {
+			res.status(BAD_REQUEST).send("Bad request");
+		} else {
+			let data = {
+				doc_mobile_no: req.body.doc_mobile_no,
+				time_start: req.body.time_start,
+				time_end: req.body.time_end,
+				day: req.body.day,
+				fee: req.body.fee,
+			};
+
+			scheduleModel.updateOne({_id: req.body.id}, data, (errU, docU) => {
+				if (errU) res.status(INTERNAL_SERVER_ERROR).send("unable to update schedule");
+				else res.status(SUCCESS).send("updated schedule successfully");
+			});
+		}
+	});
+};

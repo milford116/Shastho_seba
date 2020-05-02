@@ -56,8 +56,6 @@ exports.login = async function (req, res) {
 				} else if (!result) {
 					res.status(BAD_REQUEST).send("Bad request");
 				} else {
-					var patient = new patientModel();
-					patient = docs;
 					const payload = {
 						mobile_no: req.body.mobile_no,
 						name: docs.name,
@@ -70,10 +68,39 @@ exports.login = async function (req, res) {
 						if (err) {
 							res.status(INTERNAL_SERVER_ERROR).send("Internal server error");
 						} else {
-							patient.session_token = token;
-							res.status(SUCCESS).send(patient);
+							res.status(SUCCESS).send(token);
 						}
 					});
+				}
+			});
+		}
+	});
+};
+
+exports.details = async function (req, res) {
+	patientModel.findOne({mobile_no: req.mobile_no}, (err, docs) => {
+		if (err) {
+			res.status(INTERNAL_SERVER_ERROR).send("Internal server error");
+		} else if (!docs) {
+			res.status(BAD_REQUEST).send("Bad request");
+		} else {
+			res.status(SUCCESS).send(docs);
+		}
+	});
+};
+
+exports.logout = async function (req, res) {
+	patientModel.findOne({mobile_no: req.mobile_no}, (err, docs) => {
+		if (err) {
+			res.status(INTERNAL_SERVER_ERROR).send("Internal server error");
+		} else if (!docs) {
+			res.status(DATA_NOT_FOUND).send("No user found in this mobile no");
+		} else {
+			patientModel.updateOne({mobile_no: req.mobile_no}, {$unset: {session_token: null}}, (err, docs) => {
+				if (err) {
+					res.status(INTERNAL_SERVER_ERROR).send("Internal server error");
+				} else {
+					res.status(SUCCESS).send(docs);
 				}
 			});
 		}

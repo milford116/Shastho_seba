@@ -25,8 +25,6 @@ exports.postAppointment = async function (req, res) {
 			appointment.status = false;
 			appointment.appointment_date_time = date;
 
-			console.log(appointment);
-
 			appointment.save((err, docs) => {
 				if (err) {
 					res.status(INTERNAL_SERVER_ERROR).send("Internal server error");
@@ -65,7 +63,12 @@ exports.getPastAppointment = async function (req, res) {
 		patient_mobile_no: req.mobile_no,
 		appointment_date_time: {$lt: st},
 	};
-	appointmentModel.find(query, (err, docs) => {
+	var options = {
+		sort: {
+			appointment_date_time: -1,
+		},
+	};
+	appointmentModel.find(query, null, options, (err, docs) => {
 		if (err) {
 			res.status(INTERNAL_SERVER_ERROR).send("Internal server error");
 		} else {
@@ -82,7 +85,12 @@ exports.getFutureAppointment = async function (req, res) {
 		patient_mobile_no: req.mobile_no,
 		appointment_date_time: {$gt: st},
 	};
-	appointmentModel.find(query, (err, docs) => {
+	var options = {
+		sort: {
+			appointment_date_time: 1,
+		},
+	};
+	appointmentModel.find(query, null, options, (err, docs) => {
 		if (err) {
 			res.status(INTERNAL_SERVER_ERROR).send("Internal server error");
 		} else {

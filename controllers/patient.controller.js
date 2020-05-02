@@ -56,6 +56,8 @@ exports.login = async function (req, res) {
 				} else if (!result) {
 					res.status(BAD_REQUEST).send("Bad request");
 				} else {
+					var patient = new patientModel();
+					patient = docs;
 					const payload = {
 						mobile_no: req.body.mobile_no,
 						name: docs.name,
@@ -68,7 +70,8 @@ exports.login = async function (req, res) {
 						if (err) {
 							res.status(INTERNAL_SERVER_ERROR).send("Internal server error");
 						} else {
-							res.status(SUCCESS).send(docs);
+							patient.session_token = token;
+							res.status(SUCCESS).send(patient);
 						}
 					});
 				}

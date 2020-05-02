@@ -21,5 +21,6 @@ router.get("/doctor/search/specialization/:speciality/:limit/:page", searchContr
 router.get("/doctor/list/all/:limit/:page", doctorController.doctorList);
 router.get("/doctor/get/schedule", doctorMiddleware.middleware, scheduleController.getSchedule);
 router.post("/doctor/get/transaction", doctorMiddleware.middleware, transactionController.getTransaction);
+router.post("/doctor/edit", doctorMiddleware.middleware, doctorController.editDoctor);
 
 module.exports = router;

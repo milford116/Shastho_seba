@@ -68,7 +68,7 @@ exports.login = async function (req, res) {
 						if (err) {
 							res.status(INTERNAL_SERVER_ERROR).send("Internal server error");
 						} else {
-							res.status(SUCCESS).send(token);
+							res.status(SUCCESS).send(docs);
 						}
 					});
 				}

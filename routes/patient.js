@@ -19,7 +19,7 @@ router.post("/patient/add/transaction", patientMiddleware.middleware, transactio
 router.post("/patient/get/transaction", patientMiddleware.middleware, transactionController.getTransaction);
 router.post("/patient/get/schedule", patientMiddleware.middleware, scheduleController.getSchedule);
 router.post("/patient/set/token", patientMiddleware.middleware, tokenController.setToken);
-router.get("/patient/get/token", doctorMiddleware.middleware, tokenController.getToken);
+router.post("/patient/get/token", doctorMiddleware.middleware, tokenController.getToken);
 router.get("/patient/get/details", patientMiddleware.middleware, patientController.details);
 router.post("/patient/post/logout", patientMiddleware.middleware, patientController.logout);
 

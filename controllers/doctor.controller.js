@@ -132,3 +132,10 @@ exports.doctorList = async function (req, res) {
 		}
 	});
 };
+
+exports.editDoctor = async function (req, res) {
+	doctorModel.updateOne({_id: req.body.doctor_id}, req.body.updates, (err, docs) => {
+		if (err) res.status(INTERNAL_SERVER_ERROR).send("something went wrong");
+		else res.status(SUCCESS).send("edited successfully");
+	});
+};

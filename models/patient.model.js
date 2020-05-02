@@ -32,6 +32,10 @@ var patientSchema = new mongoose.Schema({
 		type: String,
 		required: false,
 	},
+	registration_token: {
+		type: String,
+		required: false,
+	},
 });
 
 mongoose.model("patient", patientSchema);

@@ -7,13 +7,14 @@ const doctorModel = mongoose.model("doctor");
 const appointmentModel = mongoose.model("appointment");
 
 const {SUCCESS, INTERNAL_SERVER_ERROR, BAD_REQUEST, DATA_NOT_FOUND} = require("../errors");
+const error_message = require("../error.messages");
 
 exports.postAppointment = async function (req, res) {
 	doctorModel.findOne({mobile_no: req.body.doc_mobile_no}, (err, docs) => {
 		if (err) {
-			res.status(INTERNAL_SERVER_ERROR).send("Internal server error");
+			res.status(INTERNAL_SERVER_ERROR).send(error_message.INTERNAL_SERVER_ERROR);
 		} else if (!docs) {
-			res.status(BAD_REQUEST).send("Bad request");
+			res.status(BAD_REQUEST).send(error_message.BAD_REQUEST);
 		} else {
 			var date = new Date(req.body.appointment_date_time);
 			date.setHours(date.getHours() + 6);
@@ -27,9 +28,9 @@ exports.postAppointment = async function (req, res) {
 
 			appointment.save((err, docs) => {
 				if (err) {
-					res.status(INTERNAL_SERVER_ERROR).send("Internal server error");
+					res.status(INTERNAL_SERVER_ERROR).send(error_message.INTERNAL_SERVER_ERROR);
 				} else {
-					res.status(SUCCESS).send("Success");
+					res.status(SUCCESS).send(error_message.SUCCESS);
 				}
 			});
 		}
@@ -49,7 +50,7 @@ exports.getAppointment = async function (req, res) {
 	};
 	appointmentModel.find(query, (err, docs) => {
 		if (err) {
-			res.status(INTERNAL_SERVER_ERROR).send("Internal server error");
+			res.status(INTERNAL_SERVER_ERROR).send(error_message.INTERNAL_SERVER_ERROR);
 		} else {
 			res.status(SUCCESS).send(docs);
 		}
@@ -70,7 +71,7 @@ exports.getPastAppointment = async function (req, res) {
 	};
 	appointmentModel.find(query, null, options, (err, docs) => {
 		if (err) {
-			res.status(INTERNAL_SERVER_ERROR).send("Internal server error");
+			res.status(INTERNAL_SERVER_ERROR).send(error_message.INTERNAL_SERVER_ERROR);
 		} else {
 			res.status(SUCCESS).send(docs);
 		}
@@ -92,7 +93,7 @@ exports.getFutureAppointment = async function (req, res) {
 	};
 	appointmentModel.find(query, null, options, (err, docs) => {
 		if (err) {
-			res.status(INTERNAL_SERVER_ERROR).send("Internal server error");
+			res.status(INTERNAL_SERVER_ERROR).send(error_message.INTERNAL_SERVER_ERROR);
 		} else {
 			res.status(SUCCESS).send(docs);
 		}

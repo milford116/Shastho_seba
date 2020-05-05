@@ -12,6 +12,7 @@ const bcrypt = require("bcrypt");
 const dotenv = require("dotenv");
 const jwt = require("jsonwebtoken");
 const {SUCCESS, INTERNAL_SERVER_ERROR, BAD_REQUEST, DATA_NOT_FOUND} = require("../errors");
+const error_message = require("../error.messages");
 
 exports.addTransaction = async function (req, res) {
 	var transaction = new transactionModel();
@@ -21,9 +22,9 @@ exports.addTransaction = async function (req, res) {
 
 	transaction.save((err, docs) => {
 		if (err) {
-			res.status(INTERNAL_SERVER_ERROR).send("Internal server error");
+			res.status(INTERNAL_SERVER_ERROR).send(error_message.INTERNAL_SERVER_ERROR);
 		} else {
-			res.status(SUCCESS).send("Success");
+			res.status(SUCCESS).send(error_message.SUCCESS);
 		}
 	});
 };
@@ -31,7 +32,7 @@ exports.addTransaction = async function (req, res) {
 exports.getTransaction = async function (req, res) {
 	transactionModel.find({appointment_id: req.body.appointment_id}, (err, docs) => {
 		if (err) {
-			res.status(INTERNAL_SERVER_ERROR).send("Internal server error");
+			res.status(INTERNAL_SERVER_ERROR).send(error_message.INTERNAL_SERVER_ERROR);
 		} else {
 			res.status(SUCCESS).send(docs);
 		}

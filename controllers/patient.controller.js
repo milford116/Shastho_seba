@@ -104,7 +104,7 @@ exports.logout = async function (req, res) {
 				if (err) {
 					res.status(INTERNAL_SERVER_ERROR).send(error_message.INTERNAL_SERVER_ERROR);
 				} else {
-					res.status(SUCCESS).send(docs);
+					res.status(SUCCESS).send(error_message.SUCCESS);
 				}
 			});
 		}

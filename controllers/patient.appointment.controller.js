@@ -99,3 +99,15 @@ exports.getFutureAppointment = async function (req, res) {
 		}
 	});
 };
+
+exports.cancelAppointment = async function (req, res) {
+	appointmentModel.deleteOne({_id: req.body.id}, (err, docs) => {
+		if (err) {
+			res.status(INTERNAL_SERVER_ERROR).send(error_message.INTERNAL_SERVER_ERROR);
+		} else if (docs.deletedCount === 0) {
+			res.status(BAD_REQUEST).send(error_message.BAD_REQUEST);
+		} else {
+			res.status(SUCCESS).send(error_message.SUCCESS);
+		}
+	});
+};

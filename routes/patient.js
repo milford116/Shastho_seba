@@ -22,5 +22,6 @@ router.post("/patient/set/token", patientMiddleware.middleware, tokenController.
 router.post("/patient/get/token", doctorMiddleware.middleware, tokenController.getToken);
 router.get("/patient/get/details", patientMiddleware.middleware, patientController.details);
 router.post("/patient/post/logout", patientMiddleware.middleware, patientController.logout);
+router.post("/patient/cancel/appointment", patientMiddleware.middleware, appointmentController.cancelAppointment);
 
 module.exports = router;

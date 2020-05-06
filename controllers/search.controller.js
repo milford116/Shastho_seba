@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 const doctor = require("../models/doctor.model");
 const doctorModel = mongoose.model("doctor");
 const {SUCCESS, INTERNAL_SERVER_ERROR, BAD_REQUEST, DATA_NOT_FOUND} = require("../errors");
+const error_message = require("../error.messages");
 
 exports.searchByName = async function (req, res) {
 	var options = {
@@ -11,7 +12,7 @@ exports.searchByName = async function (req, res) {
 
 	doctorModel.paginate({name: {$regex: req.params.name, $options: "i"}}, options, (err, docs) => {
 		if (err) {
-			res.status(INTERNAL_SERVER_ERROR).send("Internal server error");
+			res.status(INTERNAL_SERVER_ERROR).send(error_message.INTERNAL_SERVER_ERROR);
 		} else {
 			res.status(SUCCESS).send(docs);
 		}
@@ -26,7 +27,7 @@ exports.searchByHospital = async function (req, res) {
 
 	doctorModel.paginate({institution: {$regex: req.params.hospital_name, $options: "i"}}, options, (err, docs) => {
 		if (err) {
-			res.status(INTERNAL_SERVER_ERROR).send("Internal server error");
+			res.status(INTERNAL_SERVER_ERROR).send(error_message.INTERNAL_SERVER_ERROR);
 		} else {
 			res.status(SUCCESS).send(docs);
 		}
@@ -47,7 +48,7 @@ exports.searchBySpecialization = async function (req, res) {
 
 	doctorModel.paginate(query, options, (err, docs) => {
 		if (err) {
-			res.status(INTERNAL_SERVER_ERROR).send("something went wrong");
+			res.status(INTERNAL_SERVER_ERROR).send(error_message.INTERNAL_SERVER_ERROR);
 		} else {
 			res.status(SUCCESS).send(docs);
 		}

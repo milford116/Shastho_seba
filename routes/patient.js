@@ -3,7 +3,6 @@ const appointmentController = require("../controllers/patient.appointment.contro
 const transactionController = require("../controllers/transaction.controller");
 const scheduleController = require("../controllers/patient.schedule.controller");
 const patientMiddleware = require("../middlewares/auth.patient.middleware");
-const doctorMiddleware = require("../middlewares/auth.doctor.middleware");
 const tokenController = require("../controllers/token.controller");
 
 const express = require("express");
@@ -19,7 +18,6 @@ router.post("/patient/add/transaction", patientMiddleware.middleware, transactio
 router.post("/patient/get/transaction", patientMiddleware.middleware, transactionController.getTransaction);
 router.post("/patient/get/schedule", patientMiddleware.middleware, scheduleController.getSchedule);
 router.post("/patient/set/token", patientMiddleware.middleware, tokenController.setToken);
-router.post("/patient/get/token", doctorMiddleware.middleware, tokenController.getToken);
 router.get("/patient/get/details", patientMiddleware.middleware, patientController.details);
 router.post("/patient/post/logout", patientMiddleware.middleware, patientController.logout);
 router.post("/patient/cancel/appointment", patientMiddleware.middleware, appointmentController.cancelAppointment);

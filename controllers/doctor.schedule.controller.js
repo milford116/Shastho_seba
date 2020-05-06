@@ -1,10 +1,8 @@
 const mongoose = require("mongoose");
-
 const schedule = require("../models/schedule.model");
-
 const scheduleModel = mongoose.model("schedule");
-
 const {SUCCESS, INTERNAL_SERVER_ERROR, BAD_REQUEST, DATA_NOT_FOUND} = require("../errors");
+const error_message = require("../error.messages");
 
 exports.addSchedule = async function (req, res) {
 	var st = new Date(req.body.time_start);
@@ -22,9 +20,9 @@ exports.addSchedule = async function (req, res) {
 
 	scheduleModel.findOne(query, (err, docs) => {
 		if (err) {
-			res.status(INTERNAL_SERVER_ERROR).send("Internal server error");
+			res.status(INTERNAL_SERVER_ERROR).send(error_message.INTERNAL_SERVER_ERROR);
 		} else if (docs) {
-			res.status(BAD_REQUEST).send("Bad request");
+			res.status(BAD_REQUEST).send(error_message.BAD_REQUEST);
 		} else {
 			var new_schedule = new scheduleModel();
 			new_schedule.doc_mobile_no = req.mobile_no;
@@ -35,9 +33,9 @@ exports.addSchedule = async function (req, res) {
 
 			new_schedule.save((err, docs) => {
 				if (err) {
-					res.status(INTERNAL_SERVER_ERROR).send("Internal server error");
+					res.status(INTERNAL_SERVER_ERROR).send(error_message.INTERNAL_SERVER_ERROR);
 				} else {
-					res.status(SUCCESS).send("Success");
+					res.status(SUCCESS).send(error_message.SUCCESS);
 				}
 			});
 		}
@@ -47,7 +45,7 @@ exports.addSchedule = async function (req, res) {
 exports.getSchedule = async function (req, res) {
 	scheduleModel.find({doc_mobile_no: req.mobile_no}, (err, docs) => {
 		if (err) {
-			res.status(INTERNAL_SERVER_ERROR).send("Internal server error");
+			res.status(INTERNAL_SERVER_ERROR).send(error_message.INTERNAL_SERVER_ERROR);
 		} else {
 			res.status(SUCCESS).send(docs);
 		}
@@ -79,13 +77,13 @@ exports.editSchedule = async function (req, res) {
 
 	scheduleModel.findOne(query, (err, docs) => {
 		if (err) {
-			res.status(INTERNAL_SERVER_ERROR).send("Internal server error");
+			res.status(INTERNAL_SERVER_ERROR).send(error_message.INTERNAL_SERVER_ERROR);
 		} else if (docs) {
-			res.status(BAD_REQUEST).send("Bad request");
+			res.status(BAD_REQUEST).send(error_message.BAD_REQUEST);
 		} else {
 			scheduleModel.updateOne({_id: req.body.id}, data, (errU, docU) => {
-				if (errU) res.status(INTERNAL_SERVER_ERROR).send("unable to update schedule");
-				else res.status(SUCCESS).send("updated schedule successfully");
+				if (errU) res.status(INTERNAL_SERVER_ERROR).send(error_message.INTERNAL_SERVER_ERROR);
+				else res.status(SUCCESS).send(error_message.SUCCESS);
 			});
 		}
 	});

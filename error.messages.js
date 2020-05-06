@@ -21,3 +21,23 @@ exports.UNAUTHORIZED = {
 exports.FORBIDDEN = {
 	message: "Forbidden",
 };
+
+exports.noRef = {
+	message: "you need to be reffered by someone already registered",
+};
+
+exports.duplicateAcc = {
+	message: "an account with this phone no. already exists",
+};
+
+exports.noUserFound = {
+	message: "no user with the given phone no. found",
+};
+
+exports.passwordMismatch = {
+	message: "wrong password",
+};
+
+exports.noScheduleFound = {
+	message: "no such schedule found",
+};

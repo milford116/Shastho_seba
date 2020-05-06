@@ -4,6 +4,7 @@ const scheduleController = require("../controllers/doctor.schedule.controller");
 const transactionController = require("../controllers/transaction.controller");
 const appointmentController = require("../controllers/doctor.appointment.controller");
 const doctorMiddleware = require("../middlewares/auth.doctor.middleware");
+const tokenController = require("../controllers/token.controller");
 const express = require("express");
 const router = express.Router();
 
@@ -23,5 +24,6 @@ router.get("/doctor/get/schedule", doctorMiddleware.middleware, scheduleControll
 router.post("/doctor/get/transaction", doctorMiddleware.middleware, transactionController.getTransaction);
 router.post("/doctor/edit/profile", doctorMiddleware.middleware, doctorController.editDoctor);
 router.post("/doctor/edit/schedule", doctorMiddleware.middleware, scheduleController.editSchedule);
+router.post("/patient/get/token", doctorMiddleware.middleware, tokenController.getToken);
 
 module.exports = router;

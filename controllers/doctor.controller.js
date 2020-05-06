@@ -14,17 +14,18 @@ const patientModel = mongoose.model("patient");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const {SUCCESS, INTERNAL_SERVER_ERROR, BAD_REQUEST, DATA_NOT_FOUND} = require("../errors");
+const error_message = require("../error.messages");
 
 exports.registration = async function (req, res) {
 	doctorModel.findOne({mobile_no: req.body.mobile_no}, (err, docs) => {
 		if (docs) {
-			res.status(BAD_REQUEST).send("An account with this mobile no. already exists");
+			res.status(BAD_REQUEST).send(error_message.duplicateAcc);
 		} else {
 			referenceModel.findOneAndDelete({doctor: req.body.mobile_no}, (err, docs) => {
 				if (err) {
-					res.status(INTERNAL_SERVER_ERROR).send("Internal server error");
+					res.status(INTERNAL_SERVER_ERROR).send(error_message.INTERNAL_SERVER_ERROR);
 				} else if (!docs) {
-					res.status(BAD_REQUEST).send("Bad request");
+					res.status(BAD_REQUEST).send(error_message.noRef);
 				} else {
 					var new_doctor = new doctorModel();
 					new_doctor.name = req.body.name;
@@ -37,14 +38,14 @@ exports.registration = async function (req, res) {
 
 					bcrypt.hash(req.body.password, parseInt(process.env.SALT_ROUNDS, 10), (err, hash) => {
 						if (err) {
-							res.status(INTERNAL_SERVER_ERROR).send("Something went wrong1");
+							res.status(INTERNAL_SERVER_ERROR).send(error_message.INTERNAL_SERVER_ERROR);
 						} else {
 							new_doctor.password = hash;
 							new_doctor.save((err, docs) => {
 								if (err) {
-									res.status(INTERNAL_SERVER_ERROR).send("Something went wrong2");
+									res.status(INTERNAL_SERVER_ERROR).send(error_message.INTERNAL_SERVER_ERROR);
 								} else {
-									res.status(SUCCESS).send("Success");
+									res.status(SUCCESS).send(error_message.SUCCESS);
 								}
 							});
 						}
@@ -58,15 +59,15 @@ exports.registration = async function (req, res) {
 exports.login = async function (req, res) {
 	doctorModel.findOne({mobile_no: req.body.mobile_no}, (err, docs) => {
 		if (err) {
-			res.status(INTERNAL_SERVER_ERROR).send("Something went wrong");
+			res.status(INTERNAL_SERVER_ERROR).send(error_message.INTERNAL_SERVER_ERROR);
 		} else if (!docs) {
-			res.status(DATA_NOT_FOUND).send("No such user found");
+			res.status(DATA_NOT_FOUND).send(error_message.noUserFound);
 		} else {
 			bcrypt.compare(req.body.password, docs.password, (err, result) => {
 				if (err) {
-					res.status(INTERNAL_SERVER_ERROR).send("Something went wrong");
+					res.status(INTERNAL_SERVER_ERROR).send(error_message.INTERNAL_SERVER_ERROR);
 				} else if (!result) {
-					res.status(BAD_REQUEST).send("Bad request");
+					res.status(BAD_REQUEST).send(error_message.passwordMismatch);
 				} else {
 					const payload = {
 						mobile_no: docs.mobile_no,
@@ -80,7 +81,7 @@ exports.login = async function (req, res) {
 
 					doctorModel.updateOne({mobile_no: req.body.mobile_no}, {session_token: token}, (err, docs) => {
 						if (err) {
-							res.status(INTERNAL_SERVER_ERROR).send("Something went wrong");
+							res.status(INTERNAL_SERVER_ERROR).send(error_message.INTERNAL_SERVER_ERROR);
 						} else {
 							const ret = {
 								token: token,
@@ -99,9 +100,9 @@ exports.login = async function (req, res) {
 exports.reference = async function (req, res) {
 	doctorModel.findOne({mobile_no: req.body.doctor}, (err, docs) => {
 		if (err) {
-			res.status(INTERNAL_SERVER_ERROR).send("Something went wrong");
+			res.status(INTERNAL_SERVER_ERROR).send(error_message.INTERNAL_SERVER_ERROR);
 		} else if (docs) {
-			res.status(BAD_REQUEST).send("The doctor has already registered");
+			res.status(BAD_REQUEST).send(error_message.duplicateAcc);
 		} else {
 			var new_reference = new referenceModel();
 			new_reference.referrer = req.mobile_no;
@@ -109,9 +110,9 @@ exports.reference = async function (req, res) {
 
 			new_reference.save((err, docs) => {
 				if (err) {
-					res.status(INTERNAL_SERVER_ERROR).send("Something went wrong");
+					res.status(INTERNAL_SERVER_ERROR).send(error_message.INTERNAL_SERVER_ERROR);
 				} else {
-					res.status(SUCCESS).send("Successfully referred");
+					res.status(SUCCESS).send(error_message.SUCCESS);
 				}
 			});
 		}
@@ -126,7 +127,7 @@ exports.doctorList = async function (req, res) {
 
 	doctorModel.paginate({}, options, (err, docs) => {
 		if (err) {
-			res.status(INTERNAL_SERVER_ERROR).send("Internal server error");
+			res.status(INTERNAL_SERVER_ERROR).send(error_message.INTERNAL_SERVER_ERROR);
 		} else {
 			res.status(SUCCESS).send(docs);
 		}
@@ -135,7 +136,7 @@ exports.doctorList = async function (req, res) {
 
 exports.editDoctor = async function (req, res) {
 	doctorModel.updateOne({_id: req.body.doctor_id}, req.body.updates, (err, docs) => {
-		if (err) res.status(INTERNAL_SERVER_ERROR).send("something went wrong");
-		else res.status(SUCCESS).send("edited successfully");
+		if (err) res.status(INTERNAL_SERVER_ERROR).send(error_message.INTERNAL_SERVER_ERROR);
+		else res.status(SUCCESS).send(error_message.SUCCESS);
 	});
 };

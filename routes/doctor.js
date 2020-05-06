@@ -24,6 +24,6 @@ router.get("/doctor/get/schedule", doctorMiddleware.middleware, scheduleControll
 router.post("/doctor/get/transaction", doctorMiddleware.middleware, transactionController.getTransaction);
 router.post("/doctor/edit/profile", doctorMiddleware.middleware, doctorController.editDoctor);
 router.post("/doctor/edit/schedule", doctorMiddleware.middleware, scheduleController.editSchedule);
-router.post("/patient/get/token", doctorMiddleware.middleware, tokenController.getToken);
+router.post("/doctor/get/token", doctorMiddleware.middleware, tokenController.getToken);
 
 module.exports = router;

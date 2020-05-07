@@ -15,7 +15,7 @@ const storage = multer.diskStorage({
 		cb(null, "./storage/prescription/");
 	},
 	filename: function (req, file, cb) {
-		cb(null, file.originalname);
+		cb(null, req.body.image_title + ".png");
 	},
 });
 

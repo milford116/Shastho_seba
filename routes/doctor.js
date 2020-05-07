@@ -9,6 +9,18 @@ const tokenController = require("../controllers/token.controller");
 const express = require("express");
 const router = express.Router();
 
+const multer = require("multer");
+const storage = multer.diskStorage({
+	destination: function (req, file, cb) {
+		cb(null, "./storage/prescription/");
+	},
+	filename: function (req, file, cb) {
+		cb(null, file.originalname);
+	},
+});
+
+const upload = multer({storage: storage});
+
 router.post("/doctor/post/login", doctorController.login);
 router.post("/doctor/post/register", doctorController.registration);
 router.post("/doctor/post/reference", doctorMiddleware.middleware, doctorController.reference);
@@ -26,6 +38,7 @@ router.post("/doctor/get/transaction", doctorMiddleware.middleware, transactionC
 router.post("/doctor/edit/profile", doctorMiddleware.middleware, doctorController.editDoctor);
 router.post("/doctor/edit/schedule", doctorMiddleware.middleware, scheduleController.editSchedule);
 router.post("/doctor/get/token", doctorMiddleware.middleware, tokenController.getToken);
-router.post("/doctor/save/prescription", doctorMiddleware.middleware, prescriptionController.postPrescription);
+
+router.post("/doctor/save/prescription", doctorMiddleware.middleware, upload.single("file"), prescriptionController.postPrescription);
 
 module.exports = router;

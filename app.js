@@ -29,9 +29,9 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.json());
 
+app.use(express.static("storage"));
 app.use(doctorRoutes);
 app.use(patientRoutes);
-app.use(express.static("storage"));
 
 app.listen(process.env.PORT, () => {
 	console.log("Server started at port " + process.env.PORT);

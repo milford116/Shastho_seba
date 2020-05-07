@@ -9,7 +9,7 @@ const error_message = require("../error.messages");
 const multer = require("multer");
 const storage = multer.diskStorage({
 	destination: function (req, file, cb) {
-		cb(null, "./uploads/prescription/");
+		cb(null, "./storage/prescription/");
 	},
 	filename: function (req, file, cb) {
 		cb(null, file.originalname);

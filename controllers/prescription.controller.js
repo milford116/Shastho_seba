@@ -26,9 +26,8 @@ exports.postPrescription = async function (req, res) {
 		} else if (!docs) res.status(DATA_NOT_FOUND).send(error_message.DATA_NOT_FOUND);
 		else {
 			// upload the image
-
 			console.log(image_title);
-			appointmentModel.updateOne({_id: req.body.id}, {prescription_img: image_title}, (err, docs) => {
+			appointmentModel.updateOne({_id: req.body.id}, {prescription_img: image_title, status: 2}, (err, docs) => {
 				if (err) res.status(INTERNAL_SERVER_ERROR).send(error_message.INTERNAL_SERVER_ERROR);
 				else res.status(SUCCESS).send(error_message.SUCCESS);
 			});

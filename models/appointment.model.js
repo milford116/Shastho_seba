@@ -23,7 +23,7 @@ var appointmentSchema = new mongoose.Schema({
 		required: true,
 	},
 	status: {
-		type: Boolean,
+		type: Number,
 		required: true,
 	},
 	prescription_img: {

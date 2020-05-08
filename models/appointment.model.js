@@ -2,6 +2,14 @@ const mongoose = require("mongoose");
 mongoose.pluralize(null);
 
 var appointmentSchema = new mongoose.Schema({
+	serial_no: {
+		type: Number,
+		required: true,
+	},
+	schedule_id: {
+		type: String,
+		required: true,
+	},
 	doc_mobile_no: {
 		type: String,
 		required: true,

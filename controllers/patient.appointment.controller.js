@@ -10,21 +10,29 @@ const {SUCCESS, INTERNAL_SERVER_ERROR, BAD_REQUEST, DATA_NOT_FOUND} = require(".
 const error_message = require("../error.messages");
 
 exports.postAppointment = async function (req, res) {
-	doctorModel.findOne({mobile_no: req.body.doc_mobile_no}, (err, docs) => {
+	doctorModel.findOne({mobile_no: req.body.doc_mobile_no}, async (err, docs) => {
 		if (err) {
 			res.status(INTERNAL_SERVER_ERROR).send(error_message.INTERNAL_SERVER_ERROR);
 		} else if (!docs) {
 			res.status(BAD_REQUEST).send(error_message.BAD_REQUEST);
 		} else {
+			var max_collection = await appointmentModel.find({schdedule_id: req.body.schdedule_id}).sort({serial_no: -1}).limit(1).exec();
 			var date = new Date(req.body.appointment_date_time);
 			date.setHours(date.getHours() + 6);
 
 			var appointment = new appointmentModel();
+			appointment.schedule_id = req.body.schedule_id;
 			appointment.doc_mobile_no = req.body.doc_mobile_no;
 			appointment.doc_name = docs.name;
 			appointment.patient_mobile_no = req.mobile_no;
 			appointment.status = false;
 			appointment.appointment_date_time = date;
+
+			if (max_collection.length != 0) {
+				appointment.serial_no = parseInt(max_collection[0].serial_no) + parseInt(1);
+			} else {
+				appointment.serial_no = 1;
+			}
 
 			appointment.save((err, docs) => {
 				if (err) {

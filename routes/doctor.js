@@ -5,6 +5,8 @@ const transactionController = require("../controllers/transaction.controller");
 const appointmentController = require("../controllers/doctor.appointment.controller");
 const prescriptionController = require("../controllers/prescription.controller");
 const doctorMiddleware = require("../middlewares/auth.doctor.middleware");
+const validatorMiddleWare = require("../middlewares/validator.middleware");
+const doctorValidator = require("../validators/doctor.validator");
 const tokenController = require("../controllers/token.controller");
 const express = require("express");
 const router = express.Router();
@@ -21,8 +23,8 @@ const storage = multer.diskStorage({
 
 const upload = multer({storage: storage});
 
-router.post("/doctor/post/login", doctorController.login);
-router.post("/doctor/post/register", doctorController.registration);
+router.post("/doctor/post/login", validatorMiddleWare(doctorValidator.login), doctorController.login);
+router.post("/doctor/post/register", validatorMiddleWare(doctorValidator.registration), doctorController.registration);
 router.post("/doctor/post/reference", doctorMiddleware.middleware, doctorController.reference);
 router.post("/doctor/post/schedule", doctorMiddleware.middleware, scheduleController.addSchedule);
 router.post("/doctor/update/appointment", doctorMiddleware.middleware, appointmentController.updateAppointment);

@@ -25,7 +25,7 @@ const upload = multer({storage: storage});
 
 router.post("/doctor/post/login", validatorMiddleWare(doctorValidator.login), doctorController.login);
 router.post("/doctor/post/register", validatorMiddleWare(doctorValidator.registration), doctorController.registration);
-router.post("/doctor/post/reference", doctorMiddleware.middleware, doctorController.reference);
+router.post("/doctor/post/reference", validatorMiddleWare(doctorValidator.referrer), doctorMiddleware.middleware, doctorController.reference);
 router.post("/doctor/post/schedule", doctorMiddleware.middleware, scheduleController.addSchedule);
 router.post("/doctor/update/appointment", doctorMiddleware.middleware, appointmentController.updateAppointment);
 router.get("/doctor/get/appointment", doctorMiddleware.middleware, appointmentController.appointment);

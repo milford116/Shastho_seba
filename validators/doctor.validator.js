@@ -58,3 +58,28 @@ module.exports.registration = (data) => {
 		isValid: checker.isEmpty(errors),
 	};
 };
+
+module.exports.referrer = (data) => {
+	let errors = {};
+
+	if (validator.isEmpty(data.referrer)) {
+		errors.referrer = "mobile number of referrer is required";
+	}
+
+	if (validator.isEmpty(data.doctor)) {
+		errors.doctor = "mobile number of the doctor you are referring is required";
+	}
+
+	if (!checker.bangladeshiPhone(data.referrer)) {
+		errors.referrer = "mobile number of referrer is not valid";
+	}
+
+	if (!checker.bangladeshiPhone(data.doctor)) {
+		errors.doctor = "mobile number of the doctor you are referring is not valid";
+	}
+
+	return {
+		errors,
+		isValid: checker.isEmpty(errors),
+	};
+};

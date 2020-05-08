@@ -87,6 +87,10 @@ module.exports.referrer = (data) => {
 module.exports.profileEdit = (data) => {
 	let errors = {};
 
+	if (!validator.isMongoId(data.doctor_id)) {
+		errors.doctor_id = "invalid doctor id";
+	}
+
 	if (data.updates.name !== undefined && validator.isEmpty(data.updates.name)) {
 		errors.name = "name cannot be empty";
 	}
@@ -122,6 +126,77 @@ module.exports.token = (data) => {
 
 	if (validator.isEmpty(data.mobile_no)) {
 		errors.mobile_no = "mobile number is required";
+	}
+
+	return {
+		errors,
+		isValid: checker.isEmpty(errors),
+	};
+};
+
+module.exports.postSchedule = (data) => {
+	let errors = {};
+
+	if (!validator.isMongoId(data.id)) {
+		errors.id = "invalid schedule id";
+	}
+
+	if (!checker.isDate(data.time_start)) {
+		errors.time_start = "starting time is required";
+	}
+
+	if (!checker.isDate(data.time_end)) {
+		errors.time_end = "ending time is required";
+	}
+
+	if (validator.isEmpty(data.day)) {
+		errors.day = "day is required";
+	}
+
+	if (validator.isEmpty(data.fee)) {
+		errors.fee = "fee is required";
+	}
+
+	return {
+		errors,
+		isValid: checker.isEmpty(errors),
+	};
+};
+
+module.exports.editSchedule = (data) => {
+	let errors = {};
+
+	if (validator.isEmpty(data.doc_mobile_no)) {
+		errors.doc_mobile_no = "mobile number is required";
+	}
+
+	if (!checker.isDate(data.time_start)) {
+		errors.time_start = "starting time is required";
+	}
+
+	if (!checker.isDate(data.time_end)) {
+		errors.time_end = "ending time is required";
+	}
+
+	if (validator.isEmpty(data.day)) {
+		errors.day = "day is required";
+	}
+
+	if (validator.isEmpty(data.fee)) {
+		errors.fee = "fee is required";
+	}
+
+	return {
+		errors,
+		isValid: checker.isEmpty(errors),
+	};
+};
+
+module.exports.getSchedule = (data) => {
+	let errors = {};
+
+	if (validator.isEmpty(data.doc_mobile_no)) {
+		errors.doc_mobile_no = "doctors mobile number is required";
 	}
 
 	return {

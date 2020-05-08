@@ -28,9 +28,9 @@ router.post("/doctor/post/register", validatorMiddleWare(doctorValidator.registr
 router.post("/doctor/post/reference", validatorMiddleWare(doctorValidator.referrer), doctorMiddleware.middleware, doctorController.reference);
 router.post("/doctor/edit/profile", validatorMiddleWare(doctorValidator.profileEdit), doctorMiddleware.middleware, doctorController.editDoctor);
 
-router.post("/doctor/post/schedule", doctorMiddleware.middleware, scheduleController.addSchedule);
-router.get("/doctor/get/schedule", doctorMiddleware.middleware, scheduleController.getSchedule);
-router.post("/doctor/edit/schedule", doctorMiddleware.middleware, scheduleController.editSchedule);
+router.post("/doctor/post/schedule", validatorMiddleWare(doctorValidator.postSchedule), doctorMiddleware.middleware, scheduleController.addSchedule);
+router.get("/doctor/get/schedule", validatorMiddleWare(doctorValidator.getSchedule), doctorMiddleware.middleware, scheduleController.getSchedule);
+router.post("/doctor/edit/schedule", validatorMiddleWare(doctorValidator.editSchedule), doctorMiddleware.middleware, scheduleController.editSchedule);
 
 router.post("/doctor/update/appointment", doctorMiddleware.middleware, appointmentController.updateAppointment);
 router.get("/doctor/get/appointment", doctorMiddleware.middleware, appointmentController.appointment);

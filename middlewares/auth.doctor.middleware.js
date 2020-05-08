@@ -15,6 +15,8 @@ exports.middleware = async function (req, res, next) {
 				doctorModel.findOne({mobile_no: decode.mobile_no, name: decode.name}, (err, docs) => {
 					if (err) {
 						res.status(INTERNAL_SERVER_ERROR).send("Internal server error");
+					} else if (!docs) {
+						res.status(BAD_REQUEST).send("Bad request");
 					} else {
 						req.mobile_no = docs.mobile_no;
 						req.name = docs.name;

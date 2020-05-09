@@ -145,11 +145,11 @@ module.exports.postSchedule = (data) => {
 		errors.time_end = "ending time is required";
 	}
 
-	if (validator.isEmpty(data.day)) {
+	if (!checker.isNumber(data.day)) {
 		errors.day = "day is required";
 	}
 
-	if (validator.isEmpty(data.fee)) {
+	if (!checker.isNumber(data.fee)) {
 		errors.fee = "fee is required";
 	}
 
@@ -174,11 +174,11 @@ module.exports.editSchedule = (data) => {
 		errors.time_end = "ending time is required";
 	}
 
-	if (validator.isEmpty(data.day)) {
+	if (!checker.isNumber(data.day)) {
 		errors.day = "day is required";
 	}
 
-	if (validator.isEmpty(data.fee)) {
+	if (!checker.isNumber(data.fee)) {
 		errors.fee = "fee is required";
 	}
 

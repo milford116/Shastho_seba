@@ -23,14 +23,14 @@ const storage = multer.diskStorage({
 
 const upload = multer({storage: storage});
 
-router.post("/doctor/post/login", doctorController.login);
-router.post("/doctor/post/register", doctorController.registration);
-router.post("/doctor/post/reference", doctorMiddleware.middleware, doctorController.reference);
-router.post("/doctor/edit/profile", doctorMiddleware.middleware, doctorController.editDoctor);
+router.post("/doctor/post/login", validatorMiddleWare(doctorValidator.login), doctorController.login);
+router.post("/doctor/post/register", validatorMiddleWare(doctorValidator.registration), doctorController.registration);
+router.post("/doctor/post/reference", validatorMiddleWare(doctorValidator.referrer), doctorMiddleware.middleware, doctorController.reference);
+router.post("/doctor/edit/profile", validatorMiddleWare(doctorValidator.profileEdit), doctorMiddleware.middleware, doctorController.editDoctor);
 
-router.post("/doctor/post/schedule", doctorMiddleware.middleware, scheduleController.addSchedule);
+router.post("/doctor/post/schedule", validatorMiddleWare(doctorValidator.postSchedule), doctorMiddleware.middleware, scheduleController.addSchedule);
 router.get("/doctor/get/schedule", doctorMiddleware.middleware, scheduleController.getSchedule);
-router.post("/doctor/edit/schedule", doctorMiddleware.middleware, scheduleController.editSchedule);
+router.post("/doctor/edit/schedule", validatorMiddleWare(doctorValidator.editSchedule), doctorMiddleware.middleware, scheduleController.editSchedule);
 
 router.post("/doctor/update/appointment", doctorMiddleware.middleware, appointmentController.updateAppointment);
 router.get("/doctor/get/appointment", doctorMiddleware.middleware, appointmentController.appointment);
@@ -45,8 +45,8 @@ router.get("/doctor/list/all/:limit/:page", doctorController.doctorList);
 
 router.post("/doctor/get/transaction", doctorMiddleware.middleware, transactionController.getTransaction);
 
-router.post("/doctor/get/token", doctorMiddleware.middleware, tokenController.getToken);
+router.post("/doctor/get/token", validatorMiddleWare(doctorValidator.token), doctorMiddleware.middleware, tokenController.getToken);
 
-router.post("/doctor/save/prescription", doctorMiddleware.middleware, upload.single("file"), prescriptionController.postPrescription);
+router.post("/doctor/save/prescription", doctorMiddleware.middleware, upload.single("file"), validatorMiddleWare(doctorValidator.postPrescription), prescriptionController.postPrescription);
 
 module.exports = router;

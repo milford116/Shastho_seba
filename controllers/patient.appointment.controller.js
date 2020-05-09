@@ -2,12 +2,21 @@ const mongoose = require("mongoose");
 
 const doctor = require("../models/doctor.model");
 const appointment = require("../models/appointment.model");
+const schedule = require("../models/schedule.model");
 
 const doctorModel = mongoose.model("doctor");
 const appointmentModel = mongoose.model("appointment");
+const scheduleModel = mongoose.model("schedule");
 
 const {SUCCESS, INTERNAL_SERVER_ERROR, BAD_REQUEST, DATA_NOT_FOUND} = require("../errors");
 const error_message = require("../error.messages");
+
+function setDateTime(cur, date) {
+	cur.setFullYear(date.getFullYear());
+	cur.setMonth(date.getMonth());
+	cur.setDate(date.getDate());
+	return cur;
+}
 
 exports.postAppointment = async function (req, res) {
 	doctorModel.findOne({mobile_no: req.body.doc_mobile_no}, async (err, docs) => {
@@ -16,9 +25,19 @@ exports.postAppointment = async function (req, res) {
 		} else if (!docs) {
 			res.status(BAD_REQUEST).send(error_message.BAD_REQUEST);
 		} else {
-			var max_collection = await appointmentModel.find({schdedule_id: req.body.schdedule_id}).sort({serial_no: -1}).limit(1).exec();
 			var date = new Date(req.body.appointment_date_time);
 			date.setHours(date.getHours() + 6);
+
+			var schedule = await scheduleModel.findOne({_id: req.body.schedule_id}).exec();
+			schedule.time_start = setDateTime(schedule.time_start, date);
+			schedule.time_end = setDateTime(schedule.time_end, date);
+
+			var query = {
+				schdedule_id: req.body.schdedule_id,
+				appointment_date_time: {$lte: schedule.time_end, $gte: schedule.time_start},
+			};
+
+			var max_collection = await appointmentModel.find(query).sort({serial_no: -1}).limit(1).exec();
 
 			var appointment = new appointmentModel();
 			appointment.schedule_id = req.body.schedule_id;

@@ -192,11 +192,11 @@ module.exports.editSchedule = (data) => {
 	};
 };
 
-module.exports.getSchedule = (data) => {
+module.exports.getAppointment = (data) => {
 	let errors = {};
 
-	if (validator.isEmpty(data.doc_mobile_no)) {
-		errors.doc_mobile_no = "doctors mobile number is required";
+	if (!validator.isMongoId(data.appointment_id)) {
+		errors.appointment_id = "invaid id";
 	}
 
 	return {
@@ -205,7 +205,28 @@ module.exports.getSchedule = (data) => {
 	};
 };
 
-module.exports.getAppointment = (data) => {
+module.exports.postPrescription = (data) => {
+	let errors = {};
+
+	if (!validator.isMongoId(data.id)) {
+		errors.id = "invaid id";
+	}
+
+	if (validator.isEmpty(data.image_title)) {
+		errors.image_title = "image title should not be empty";
+	}
+
+	// if (checker.isEmpty(data.file)) {
+	// 	errors.file = "prescription not sent!!!";
+	// }
+
+	return {
+		errors,
+		isValid: checker.isEmpty(errors),
+	};
+};
+
+module.exports.getTransaction = (data) => {
 	let errors = {};
 
 	if (!validator.isMongoId(data.appointment_id)) {

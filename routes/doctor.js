@@ -29,7 +29,7 @@ router.post("/doctor/post/reference", validatorMiddleWare(doctorValidator.referr
 router.post("/doctor/edit/profile", validatorMiddleWare(doctorValidator.profileEdit), doctorMiddleware.middleware, doctorController.editDoctor);
 
 router.post("/doctor/post/schedule", validatorMiddleWare(doctorValidator.postSchedule), doctorMiddleware.middleware, scheduleController.addSchedule);
-router.get("/doctor/get/schedule", validatorMiddleWare(doctorValidator.getSchedule), doctorMiddleware.middleware, scheduleController.getSchedule);
+router.get("/doctor/get/schedule", doctorMiddleware.middleware, scheduleController.getSchedule);
 router.post("/doctor/edit/schedule", validatorMiddleWare(doctorValidator.editSchedule), doctorMiddleware.middleware, scheduleController.editSchedule);
 
 router.post("/doctor/update/appointment", validatorMiddleWare(doctorValidator.getAppointment), doctorMiddleware.middleware, appointmentController.updateAppointment);
@@ -43,10 +43,10 @@ router.get("/doctor/search/specialization/:speciality/:limit/:page", searchContr
 
 router.get("/doctor/list/all/:limit/:page", doctorController.doctorList);
 
-router.post("/doctor/get/transaction", doctorMiddleware.middleware, transactionController.getTransaction);
+router.post("/doctor/get/transaction", validatorMiddleWare(doctorValidator.getTransaction), doctorMiddleware.middleware, transactionController.getTransaction);
 
 router.post("/doctor/get/token", validatorMiddleWare(doctorValidator.token), doctorMiddleware.middleware, tokenController.getToken);
 
-router.post("/doctor/save/prescription", doctorMiddleware.middleware, upload.single("file"), prescriptionController.postPrescription);
+router.post("/doctor/save/prescription", doctorMiddleware.middleware, upload.single("file"), validatorMiddleWare(doctorValidator.postPrescription), prescriptionController.postPrescription);
 
 module.exports = router;

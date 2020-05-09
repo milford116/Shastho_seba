@@ -234,3 +234,5 @@ module.exports.getTransaction = (data) => {
 		isValid: checker.isEmpty(errors),
 	};
 };
+
+// validators for doc

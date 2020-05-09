@@ -62,8 +62,7 @@ exports.editSchedule = async function (req, res) {
 
 	var query = {
 		doc_mobile_no: req.mobile_no,
-		time_start: {$lte: st},
-		time_end: {$gte: en},
+		$or: [{time_start: {$lte: st, $gte: en}}, {time_end: {$lte: st, $gte: en}}],
 		day: req.body.day,
 	};
 

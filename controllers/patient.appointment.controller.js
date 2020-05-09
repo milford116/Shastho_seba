@@ -38,7 +38,10 @@ exports.postAppointment = async function (req, res) {
 				if (err) {
 					res.status(INTERNAL_SERVER_ERROR).send(error_message.INTERNAL_SERVER_ERROR);
 				} else {
-					res.status(SUCCESS).send(error_message.SUCCESS);
+					var ret = {
+						serial_no: appointment.serial_no,
+					};
+					res.status(SUCCESS).send(ret);
 				}
 			});
 		}

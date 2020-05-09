@@ -36,6 +36,7 @@ exports.postAppointment = async function (req, res) {
 				schedule_id: req.body.schedule_id,
 				patient_mobile_no: req.mobile_no,
 				status: {$lt: 2},
+				appointment_date_time: {$lte: schedule.time_end, $gte: schedule.time_start},
 			};
 
 			appointmentModel.findOne(query1, async (err, doc) => {

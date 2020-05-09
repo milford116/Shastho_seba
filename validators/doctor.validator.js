@@ -238,9 +238,9 @@ module.exports.getTransaction = (data) => {
 module.exports.getPreviousPrescriptions = (data) => {
 	let errors = {};
 
-	if (validator.isEmpty(data.patient_mobile_no)) {
-		errors.patient_mobile_no = "patient mobile is required";
-	}
+	// if (validator.isEmpty(data.patient_mobile_no)) {
+	// 	errors.patient_mobile_no = "patient mobile is required";
+	// }
 
 	return {
 		errors,

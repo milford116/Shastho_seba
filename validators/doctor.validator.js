@@ -162,8 +162,8 @@ module.exports.postSchedule = (data) => {
 module.exports.editSchedule = (data) => {
 	let errors = {};
 
-	if (validator.isEmpty(data.doc_mobile_no)) {
-		errors.doc_mobile_no = "mobile number is required";
+	if (!validator.isMongoId(data.id)) {
+		errors.id = "invalid id";
 	}
 
 	if (!checker.isDate(data.time_start)) {

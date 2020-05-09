@@ -48,5 +48,6 @@ router.post("/doctor/get/transaction", doctorMiddleware.middleware, transactionC
 router.post("/doctor/get/token", validatorMiddleWare(doctorValidator.token), doctorMiddleware.middleware, tokenController.getToken);
 
 router.post("/doctor/save/prescription", doctorMiddleware.middleware, upload.single("file"), validatorMiddleWare(doctorValidator.postPrescription), prescriptionController.postPrescription);
+router.post("/doctor/get/prevPrescription", validatorMiddleWare(doctorValidator.getPreviousPrescriptions), doctorMiddleware.middleware, prescriptionController.getPreviousPrescription);
 
 module.exports = router;

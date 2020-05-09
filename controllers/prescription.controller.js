@@ -33,3 +33,10 @@ exports.postPrescription = async function (req, res) {
 		}
 	});
 };
+
+exports.getPreviousPrescription = async function (req, res) {
+	appointmentModel.find({patient_mobile_no: req.body.patient_mobile_no, status: 2}, (err, docs) => {
+		if (err) res.status(INTERNAL_SERVER_ERROR).send(error_message.INTERNAL_SERVER_ERROR);
+		else res.status(SUCCESS).send(docs);
+	});
+};

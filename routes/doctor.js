@@ -32,7 +32,7 @@ router.post("/doctor/post/schedule", validatorMiddleWare(doctorValidator.postSch
 router.get("/doctor/get/schedule", validatorMiddleWare(doctorValidator.getSchedule), doctorMiddleware.middleware, scheduleController.getSchedule);
 router.post("/doctor/edit/schedule", validatorMiddleWare(doctorValidator.editSchedule), doctorMiddleware.middleware, scheduleController.editSchedule);
 
-router.post("/doctor/update/appointment", doctorMiddleware.middleware, appointmentController.updateAppointment);
+router.post("/doctor/update/appointment", validatorMiddleWare(doctorValidator.getAppointment), doctorMiddleware.middleware, appointmentController.updateAppointment);
 router.get("/doctor/get/appointment", doctorMiddleware.middleware, appointmentController.appointment);
 router.get("/doctor/get/futureAppointment", doctorMiddleware.middleware, appointmentController.getFutureAppointment);
 router.get("/doctor/get/appointmentDetail", doctorMiddleware.middleware, appointmentController.appointmentDetail);

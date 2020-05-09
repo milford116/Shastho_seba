@@ -204,3 +204,16 @@ module.exports.getSchedule = (data) => {
 		isValid: checker.isEmpty(errors),
 	};
 };
+
+module.exports.getAppointment = (data) => {
+	let errors = {};
+
+	if (!validator.isMongoId(data.appointment_id)) {
+		errors.appointment_id = "invaid id";
+	}
+
+	return {
+		errors,
+		isValid: checker.isEmpty(errors),
+	};
+};

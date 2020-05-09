@@ -137,10 +137,6 @@ module.exports.token = (data) => {
 module.exports.postSchedule = (data) => {
 	let errors = {};
 
-	if (!validator.isMongoId(data.id)) {
-		errors.id = "invalid schedule id";
-	}
-
 	if (!checker.isDate(data.time_start)) {
 		errors.time_start = "starting time is required";
 	}

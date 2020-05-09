@@ -2,3 +2,4 @@
 .env
 */dist/
 storage/prescription/
+ngrok.exe

@@ -13,7 +13,7 @@ exports.addSchedule = async function (req, res) {
 	en.setDate(1), en.setMonth(1), en.setFullYear(2000);
 	var query = {
 		doc_mobile_no: req.mobile_no,
-		$or: [{time_start: {$lte: st, $gte: en}}, {time_end: {$lte: st, $gte: en}}],
+		$or: [{time_start: {$lte: en, $gte: st}}, {time_end: {$lte: st, $gte: en}}],
 		day: req.body.day,
 	};
 

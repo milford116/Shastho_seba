@@ -4,7 +4,7 @@ const patient = require("../models/patient.model");
 
 const patientModel = mongoose.model("patient");
 
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 const dotenv = require("dotenv");
 const jwt = require("jsonwebtoken");
 const {SUCCESS, INTERNAL_SERVER_ERROR, BAD_REQUEST, DATA_NOT_FOUND} = require("../errors");

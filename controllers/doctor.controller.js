@@ -11,7 +11,7 @@ const referenceModel = mongoose.model("reference");
 const appointmentModel = mongoose.model("appointment");
 const patientModel = mongoose.model("patient");
 
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const {SUCCESS, INTERNAL_SERVER_ERROR, BAD_REQUEST, DATA_NOT_FOUND} = require("../errors");
 const error_message = require("../error.messages");

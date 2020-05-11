@@ -8,7 +8,6 @@ const doctorModel = mongoose.model("doctor");
 const appointmentModel = mongoose.model("appointment");
 const transactionModel = mongoose.model("transaction");
 
-const bcrypt = require("bcrypt");
 const dotenv = require("dotenv");
 const jwt = require("jsonwebtoken");
 const {SUCCESS, INTERNAL_SERVER_ERROR, BAD_REQUEST, DATA_NOT_FOUND} = require("../errors");

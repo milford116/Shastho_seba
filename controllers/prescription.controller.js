@@ -7,17 +7,6 @@ const prescriptionModel = mongoose.model("prescription");
 
 const {SUCCESS, INTERNAL_SERVER_ERROR, BAD_REQUEST, DATA_NOT_FOUND} = require("../errors");
 const error_message = require("../error.messages");
-const multer = require("multer");
-const storage = multer.diskStorage({
-	destination: function (req, file, cb) {
-		cb(null, "./storage/prescription/");
-	},
-	filename: function (req, file, cb) {
-		cb(null, req.body.image_title + ".png");
-	},
-});
-
-const upload = multer({storage: storage});
 
 exports.postPrescription = async function (req, res) {
 	var newPrescription = new prescriptionModel();

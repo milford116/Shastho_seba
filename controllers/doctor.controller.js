@@ -142,7 +142,7 @@ exports.editDoctor = async function (req, res) {
 };
 
 exports.uploadDP = async function (req, res) {
-	doctorModel.updateOne({mobile_no: req.mobile_no}, {image: req.fileName}, (err, docs) => {
+	doctorModel.updateOne({mobile_no: req.mobile_no}, {image: "/profilePicture/doctor/" + req.fileName}, (err, docs) => {
 		if (err) res.status(INTERNAL_SERVER_ERROR).send(error_message.INTERNAL_SERVER_ERROR);
 		else res.status(SUCCESS).send(error_message.SUCCESS);
 	});

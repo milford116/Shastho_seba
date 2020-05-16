@@ -26,7 +26,7 @@ const uploadPrescription = multer({storage: prescriptionStorage});
 
 const doctorDPStorage = multer.diskStorage({
 	destination: function (req, file, cb) {
-		cb(null, "./storage/profile picture/doctor/");
+		cb(null, "./storage/profilePicture/doctor/");
 	},
 	filename: function (req, file, cb) {
 		const today = new Date();

@@ -135,7 +135,14 @@ exports.doctorList = async function (req, res) {
 };
 
 exports.editDoctor = async function (req, res) {
-	doctorModel.updateOne({_id: req.body.doctor_id}, req.body.updates, (err, docs) => {
+	let upd = {
+		name: req.body.name,
+		email: req.body.email,
+		institution: req.body.institution,
+		designation: req.body.designation,
+	};
+
+	doctorModel.updateOne({_id: req.mobile_no}, upd, (err, docs) => {
 		if (err) res.status(INTERNAL_SERVER_ERROR).send(error_message.INTERNAL_SERVER_ERROR);
 		else res.status(SUCCESS).send(error_message.SUCCESS);
 	});

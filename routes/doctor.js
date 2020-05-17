@@ -40,7 +40,7 @@ const uploadDoctorDP = multer({storage: doctorDPStorage});
 router.post("/doctor/post/login", validatorMiddleWare(doctorValidator.login), doctorController.login);
 router.post("/doctor/post/register", validatorMiddleWare(doctorValidator.registration), doctorController.registration);
 router.post("/doctor/post/reference", validatorMiddleWare(doctorValidator.referrer), doctorMiddleware.middleware, doctorController.reference);
-router.post("/doctor/edit/profile", validatorMiddleWare(doctorValidator.profileEdit), doctorMiddleware.middleware, doctorController.editDoctor);
+router.post("/doctor/edit/profile", doctorMiddleware.middleware, doctorController.editDoctor);
 router.post("/doctor/upload/profile_picture", doctorMiddleware.middleware, uploadDoctorDP.single("file"), doctorController.uploadDP);
 router.get("/doctor/get/profile", doctorMiddleware.middleware, doctorController.getProfile);
 

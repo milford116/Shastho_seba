@@ -147,3 +147,10 @@ exports.uploadDP = async function (req, res) {
 		else res.status(SUCCESS).send(error_message.SUCCESS);
 	});
 };
+
+exports.getProfile = async function (req, res) {
+	doctorModel.findOne({mobile_no: req.mobile_no}, (err, docs) => {
+		if (err) res.status(INTERNAL_SERVER_ERROR).send(error_message.INTERNAL_SERVER_ERROR);
+		else res.status(SUCCESS).send(docs);
+	});
+};

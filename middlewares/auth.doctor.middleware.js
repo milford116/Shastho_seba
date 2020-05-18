@@ -13,6 +13,7 @@ exports.middleware = async function (req, res, next) {
 			if (err) {
 				res.status(BAD_REQUEST).send(error_message.jwtErr);
 			} else {
+				console.log("from doc mid", decode.mobile_no, decode.name);
 				doctorModel.findOne({mobile_no: decode.mobile_no, name: decode.name}, (err, docs) => {
 					if (err) {
 						res.status(INTERNAL_SERVER_ERROR).send(error_message.INTERNAL_SERVER_ERROR);

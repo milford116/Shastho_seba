@@ -41,3 +41,7 @@ exports.passwordMismatch = {
 exports.noScheduleFound = {
 	message: "no such schedule found",
 };
+
+exports.jwtErr = {
+	message: "jwt error",
+};

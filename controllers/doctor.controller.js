@@ -146,7 +146,6 @@ exports.editDoctor = async function (req, res) {
 
 	doctorModel.updateOne({mobile_no: req.mobile_no}, upd, (err, docs) => {
 		if (err) {
-			console.log(err);
 			res.status(INTERNAL_SERVER_ERROR).send(error_message.INTERNAL_SERVER_ERROR);
 		} else res.status(SUCCESS).send(error_message.SUCCESS);
 	});

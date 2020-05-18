@@ -71,8 +71,6 @@ exports.login = async function (req, res) {
 				} else {
 					const payload = {
 						mobile_no: docs.mobile_no,
-						name: docs.name,
-						reg_number: docs.reg_number,
 					};
 
 					const doctor_detail = docs;
@@ -141,8 +139,6 @@ exports.editDoctor = async function (req, res) {
 		institution: req.body.institution,
 		designation: req.body.designation,
 	};
-
-	console.log("from controller", req.mobile_no);
 
 	doctorModel.updateOne({mobile_no: req.mobile_no}, upd, (err, docs) => {
 		if (err) {

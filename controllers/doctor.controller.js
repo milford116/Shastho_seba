@@ -142,7 +142,7 @@ exports.editDoctor = async function (req, res) {
 		designation: req.body.designation,
 	};
 
-	console.log(req.mobile_no);
+	console.log("from controller", req.mobile_no);
 
 	doctorModel.updateOne({mobile_no: req.mobile_no}, upd, (err, docs) => {
 		if (err) {

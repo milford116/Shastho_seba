@@ -15,6 +15,7 @@
 !/android/app/src/main/AndroidManifest.xml
 
 !/lib
+!/images
 !/.gitignore
 !/pubspec.yaml
 !/readme.md

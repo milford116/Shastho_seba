@@ -25,7 +25,7 @@ class _SplashScreenState extends State<SplashScreen> {
     return Container(
       decoration: BoxDecoration(
         image: DecorationImage(
-          image: AssetImage("images/patient_background.jpg"),
+          image: AssetImage('images/patient_background.jpg'),
           fit: BoxFit.cover,
           // colorFilter: ColorFilter.mode(Colors.black.withOpacity(0.5), BlendMode.dstATop),
         ),

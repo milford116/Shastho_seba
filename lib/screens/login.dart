@@ -9,7 +9,7 @@ class LoginScreen extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         image: DecorationImage(
-          image: AssetImage("images/patient_background_low_opacity.png"),
+          image: AssetImage('images/patient_background_low_opacity.png'),
           fit: BoxFit.cover,
         ),
       ),
@@ -25,7 +25,7 @@ class LoginScreen extends StatelessWidget {
           child: Center(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: LoginForm(),
+              child: _LoginForm(),
             ),
           ),
         ),
@@ -34,12 +34,12 @@ class LoginScreen extends StatelessWidget {
   }
 }
 
-class LoginForm extends StatefulWidget {
+class _LoginForm extends StatefulWidget {
   @override
   _LoginFormState createState() => _LoginFormState();
 }
 
-class _LoginFormState extends State<LoginForm> {
+class _LoginFormState extends State<_LoginForm> {
   final _formKey = GlobalKey<FormState>();
 
   @override

@@ -9,7 +9,7 @@ class HomeScreen extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         image: DecorationImage(
-          image: AssetImage("images/patient_background_low_opacity.png"),
+          image: AssetImage('images/patient_background_low_opacity.png'),
           fit: BoxFit.cover,
         ),
       ),
@@ -33,10 +33,10 @@ class HomeScreen extends StatelessWidget {
                   shrinkWrap: true,
                   crossAxisCount: 2,
                   children: <Widget>[
-                    _Tile("Appointments Today", Icons.schedule),
-                    _Tile("Find Doctors", Icons.search),
-                    _Tile("Appointments", Icons.insert_invitation),
-                    _Tile("Prescriptions", Icons.content_paste),
+                    _Tile('Appointments Today', Icons.schedule),
+                    _Tile('Find Doctors', Icons.search),
+                    _Tile('Appointments', Icons.insert_invitation),
+                    _Tile('Prescriptions', Icons.content_paste),
                   ],
                 ),
               ),

@@ -34,31 +34,47 @@ class MyDrawer extends StatelessWidget {
               color: Colors.white,
               thickness: 2.0,
             ),
-            _Tile('Home', Icons.home, selected == Selected.home),
-            Divider(
-              color: Colors.white,
-              thickness: 2.0,
+            _Tile(
+              'Home',
+              Icons.home,
+              selected == Selected.home,
             ),
-            _Tile('Appointments Today', Icons.schedule,
-                selected == Selected.appointmentsToday),
             Divider(
               color: Colors.white,
               thickness: 2.0,
             ),
             _Tile(
-                'Find Doctors', Icons.search, selected == Selected.findDoctors),
+              'Appointments Today',
+              Icons.schedule,
+              selected == Selected.appointmentsToday,
+            ),
             Divider(
               color: Colors.white,
               thickness: 2.0,
             ),
-            _Tile('Appointments', Icons.insert_invitation,
-                selected == Selected.appointments),
+            _Tile(
+              'Find Doctors',
+              Icons.search,
+              selected == Selected.findDoctors,
+            ),
             Divider(
               color: Colors.white,
               thickness: 2.0,
             ),
-            _Tile('Prescriptions', Icons.content_paste,
-                selected == Selected.prescriptions),
+            _Tile(
+              'Appointments',
+              Icons.insert_invitation,
+              selected == Selected.appointments,
+            ),
+            Divider(
+              color: Colors.white,
+              thickness: 2.0,
+            ),
+            _Tile(
+              'Prescriptions',
+              Icons.content_paste,
+              selected == Selected.prescriptions,
+            ),
             Divider(
               color: Colors.white,
               thickness: 2.0,

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../utils.dart';
-import '../routes.dart';
 
 class Registration extends StatefulWidget {
   @override

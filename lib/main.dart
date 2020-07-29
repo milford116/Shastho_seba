@@ -1,4 +1,3 @@
-import 'package:Shastho_Sheba/screens/registration.dart';
 import 'package:flutter/material.dart';
 
 import 'screens/splash.dart';
@@ -6,6 +5,7 @@ import 'screens/login.dart';
 import 'screens/home.dart';
 import 'screens/prescriptions/prescriptions.dart';
 import 'screens/appointments/appointments.dart';
+import 'screens/registration.dart';
 import 'routes.dart';
 import 'utils.dart';
 
@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
         splashScreen: (context) => SplashScreen(),
         loginScreen: (context) => LoginScreen(),
         homeScreen: (context) => HomeScreen(),
-        registration: (context) => Registration(),
+        registrationScreen: (context) => Registration(),
         prescriptionsScreen: (context) => PrescriptionsScreen(),
         appointmentsScreen: (context) => AppointmentsScreen(),
       },

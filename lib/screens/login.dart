@@ -98,7 +98,7 @@ class _LoginFormState extends State<_LoginForm> {
                   ),
                   color: blue,
                   onPressed: () {
-                    Navigator.pushNamed(context, registration);
+                    Navigator.pushNamed(context, registrationScreen);
                   },
                 ),
               ],

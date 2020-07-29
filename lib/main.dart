@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'screens/splash.dart';
 import 'screens/login.dart';
 import 'screens/home.dart';
+import 'screens/prescriptions/prescriptions.dart';
+import 'screens/appointments/appointments.dart';
 import 'routes.dart';
 import 'utils.dart';
 
@@ -18,6 +20,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
           textTheme: TextTheme(
         bodyText2: TextStyle(color: blue),
+        subtitle1: TextStyle(color: blue),
       )),
       initialRoute: splashScreen,
       routes: {
@@ -25,6 +28,8 @@ class MyApp extends StatelessWidget {
         loginScreen: (context) => LoginScreen(),
         homeScreen: (context) => HomeScreen(),
         registration: (context) => Registration(),
+        prescriptionsScreen: (context) => PrescriptionsScreen(),
+        appointmentsScreen: (context) => AppointmentsScreen(),
       },
     );
   }

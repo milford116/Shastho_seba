@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../utils.dart';
+import '../routes.dart';
 import '../widgets/drawer.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -33,10 +34,10 @@ class HomeScreen extends StatelessWidget {
                   shrinkWrap: true,
                   crossAxisCount: 2,
                   children: <Widget>[
-                    _Tile('Appointments Today', Icons.schedule),
-                    _Tile('Find Doctors', Icons.search),
-                    _Tile('Appointments', Icons.insert_invitation),
-                    _Tile('Prescriptions', Icons.content_paste),
+                    _Tile(title: 'Appointments Today', icon: Icons.schedule),
+                    _Tile(title: 'Find Doctors', icon: Icons.search),
+                    _Tile(title: 'Appointments', icon: Icons.insert_invitation, route: appointmentsScreen),
+                    _Tile(title: 'Prescriptions', icon: Icons.content_paste, route: prescriptionsScreen),
                   ],
                 ),
               ),
@@ -51,13 +52,16 @@ class HomeScreen extends StatelessWidget {
 class _Tile extends StatelessWidget {
   final String title;
   final IconData icon;
+  final String route;
 
-  _Tile(this.title, this.icon);
+  _Tile({this.title, this.icon, this.route});
 
   @override
   Widget build(BuildContext context) {
     return FlatButton(
-      onPressed: () {},
+      onPressed: () {
+        Navigator.of(context).pushReplacementNamed(route);
+      },
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[

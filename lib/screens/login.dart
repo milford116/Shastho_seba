@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../colors.dart';
+import '../utils.dart';
 import '../routes.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -21,10 +21,12 @@ class LoginScreen extends StatelessWidget {
           centerTitle: true,
           title: Text('Login'),
         ),
-        body: Center(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: LoginForm(),
+        body: SafeArea(
+          child: Center(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: LoginForm(),
+            ),
           ),
         ),
       ),

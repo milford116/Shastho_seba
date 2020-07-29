@@ -4,7 +4,7 @@ import 'screens/splash.dart';
 import 'screens/login.dart';
 import 'screens/home.dart';
 import 'routes.dart';
-import 'colors.dart';
+import 'utils.dart';
 
 void main() {
   runApp(MyApp());

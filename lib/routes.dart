@@ -5,3 +5,4 @@ String appointmentsToday = '/appointmentsToday';
 String findDoctors = '/findDoctors';
 String appointments = '/appointments';
 String prescriptions = '/prescriptions';
+String registration = '/registration';

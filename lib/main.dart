@@ -1,3 +1,4 @@
+import 'package:Shastho_Sheba/screens/registration.dart';
 import 'package:flutter/material.dart';
 
 import 'screens/splash.dart';
@@ -15,15 +16,15 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
-        textTheme: TextTheme(
-          bodyText2: TextStyle(color: blue),
-        )
-      ),
+          textTheme: TextTheme(
+        bodyText2: TextStyle(color: blue),
+      )),
       initialRoute: splashScreen,
       routes: {
         splashScreen: (context) => SplashScreen(),
         loginScreen: (context) => LoginScreen(),
         homeScreen: (context) => HomeScreen(),
+        registration: (context) => Registration(),
       },
     );
   }

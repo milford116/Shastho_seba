@@ -88,6 +88,9 @@ class _LoginFormState extends State<LoginForm> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Text('Don\'t have an account?'),
+                SizedBox(
+                  width: 5,
+                ),
                 FlatButton(
                   child: Text(
                     'Register',

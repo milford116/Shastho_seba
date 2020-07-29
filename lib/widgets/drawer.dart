@@ -5,7 +5,7 @@ import '../routes.dart';
 
 enum Selected {
   home,
-  appointmetnsToday,
+  appointmentsToday,
   findDoctors,
   appointments,
   prescriptions,
@@ -58,20 +58,20 @@ class MyDrawer extends StatelessWidget {
               thickness: 2.0,
             ),
             Container(
-              color: selected == Selected.appointmetnsToday
+              color: selected == Selected.appointmentsToday
                   ? Colors.white
                   : Colors.transparent,
               child: ListTile(
                 title: Text(
                   'Appointments Today',
                   style: l.copyWith(
-                    color: selected == Selected.appointmetnsToday
+                    color: selected == Selected.appointmentsToday
                         ? blue
                         : Colors.white,
                   ),
                 ),
                 trailing: Icon(Icons.schedule,
-                    color: selected == Selected.appointmetnsToday
+                    color: selected == Selected.appointmentsToday
                         ? blue
                         : Colors.white,
                     size: 30),

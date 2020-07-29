@@ -67,7 +67,7 @@ class _LoginFormState extends State<_LoginForm> {
             children: <Widget>[
               FlatButton.icon(
                 onPressed: () {
-                  Navigator.of(context).pushNamed(homeScreen);
+                  Navigator.of(context).pushReplacementNamed(homeScreen);
                 },
                 icon: Icon(
                   Icons.exit_to_app,

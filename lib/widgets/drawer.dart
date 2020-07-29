@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../utils.dart';
+import '../routes.dart';
 
 enum Selected {
   home,
@@ -35,45 +36,48 @@ class MyDrawer extends StatelessWidget {
               thickness: 2.0,
             ),
             _Tile(
-              'Home',
-              Icons.home,
-              selected == Selected.home,
+              title: 'Home',
+              icon: Icons.home,
+              selected: selected == Selected.home,
+              route: homeScreen,
             ),
             Divider(
               color: Colors.white,
               thickness: 2.0,
             ),
             _Tile(
-              'Appointments Today',
-              Icons.schedule,
-              selected == Selected.appointmentsToday,
+              title: 'Appointments Today',
+              icon: Icons.schedule,
+              selected: selected == Selected.appointmentsToday,
             ),
             Divider(
               color: Colors.white,
               thickness: 2.0,
             ),
             _Tile(
-              'Find Doctors',
-              Icons.search,
-              selected == Selected.findDoctors,
+              title: 'Find Doctors',
+              icon: Icons.search,
+              selected: selected == Selected.findDoctors,
             ),
             Divider(
               color: Colors.white,
               thickness: 2.0,
             ),
             _Tile(
-              'Appointments',
-              Icons.insert_invitation,
-              selected == Selected.appointments,
+              title: 'Appointments',
+              icon: Icons.insert_invitation,
+              selected: selected == Selected.appointments,
+              route: appointmentsScreen,
             ),
             Divider(
               color: Colors.white,
               thickness: 2.0,
             ),
             _Tile(
-              'Prescriptions',
-              Icons.content_paste,
-              selected == Selected.prescriptions,
+              title: 'Prescriptions',
+              icon: Icons.content_paste,
+              selected: selected == Selected.prescriptions,
+              route: prescriptionsScreen,
             ),
             Divider(
               color: Colors.white,
@@ -90,8 +94,9 @@ class _Tile extends StatelessWidget {
   final String title;
   final IconData icon;
   final bool selected;
+  final String route;
 
-  _Tile(this.title, this.icon, this.selected);
+  _Tile({this.title, this.icon, this.selected, this.route});
 
   @override
   Widget build(BuildContext context) {
@@ -109,9 +114,9 @@ class _Tile extends StatelessWidget {
           color: selected ? blue : Colors.white,
           size: 30,
         ),
-        // onTap: () {
-        //   Navigator.of(context).pushNamed(homeScreen);
-        // },
+        onTap: () {
+          Navigator.of(context).pushReplacementNamed(route);
+        },
       ),
     );
   }

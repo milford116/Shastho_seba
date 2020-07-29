@@ -8,6 +8,7 @@ enum Selected {
   findDoctors,
   appointments,
   prescriptions,
+  logout,
 }
 
 class MyDrawer extends StatelessWidget {
@@ -74,6 +75,24 @@ class MyDrawer extends StatelessWidget {
               'Prescriptions',
               Icons.content_paste,
               selected == Selected.prescriptions,
+            ),
+            Divider(
+              color: Colors.white,
+              thickness: 2.0,
+            ),
+            Expanded(
+              child: SizedBox(
+                height: 250,
+              ),
+            ),
+            Divider(
+              color: Colors.white,
+              thickness: 2.0,
+            ),
+            _Tile(
+              'Logout',
+              Icons.exit_to_app,
+              selected == Selected.logout,
             ),
             Divider(
               color: Colors.white,

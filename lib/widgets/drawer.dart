@@ -9,7 +9,7 @@ enum Selected {
   findDoctors,
   appointments,
   prescriptions,
-  logout,
+  none,
 }
 
 class MyDrawer extends StatelessWidget {
@@ -22,7 +22,7 @@ class MyDrawer extends StatelessWidget {
     return Drawer(
       child: Container(
         color: lightBlue,
-        child: ListView(
+        child: Column(
           children: <Widget>[
             ListTile(
               title: Center(
@@ -85,18 +85,25 @@ class MyDrawer extends StatelessWidget {
               thickness: 2.0,
             ),
             Expanded(
-              child: SizedBox(
-                height: 250,
-              ),
+              child: SizedBox(),
             ),
             Divider(
               color: Colors.white,
               thickness: 2.0,
             ),
-            _Tile(
-              title: 'Logout',
-              icon: Icons.exit_to_app,
-              selected: selected == Selected.logout,
+            ListTile(
+              title: Text(
+                'Logout',
+                style: L.copyWith(
+                  color: Colors.white,
+                ),
+              ),
+              trailing: Icon(
+                Icons.exit_to_app,
+                color: Colors.white,
+                size: 30,
+              ),
+              onTap: () {},
             ),
             Divider(
               color: Colors.white,

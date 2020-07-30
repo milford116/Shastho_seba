@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../utils.dart';
+import '../../routes.dart';
 
 class PreviousAppointments extends StatelessWidget {
   @override
@@ -36,6 +37,10 @@ class PreviousAppointments extends StatelessWidget {
                         color: lightBlue,
                       ),
                       child: ListTile(
+                        onTap: () {
+                          Navigator.of(context)
+                              .pushNamed(appointmentDetailsScreen);
+                        },
                         leading: Icon(Icons.person_pin,
                             size: 30.0, color: Colors.white),
                         title: Center(
@@ -61,4 +66,9 @@ class PreviousAppointments extends StatelessWidget {
   }
 }
 
-List<String> names = ['Dr.Shafiul Islam', 'Dr.Akbar Ali', 'Dr.Khademul Alam', 'Dr.Abul Kalam'];
+List<String> names = [
+  'Dr.Shafiul Islam',
+  'Dr.Akbar Ali',
+  'Dr.Khademul Alam',
+  'Dr.Abul Kalam'
+];

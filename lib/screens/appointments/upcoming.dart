@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../utils.dart';
+import '../../routes.dart';
 
 class UpcomingAppointments extends StatelessWidget {
   @override
@@ -24,6 +25,9 @@ class UpcomingAppointments extends StatelessWidget {
                       ),
                       child: ListTile(
                         contentPadding: EdgeInsets.only(left: 3.0, right: 8.0),
+                        onTap: () {
+                          Navigator.of(context).pushNamed(appointmentDetailsScreen);
+                        },
                         leading: Container(
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,

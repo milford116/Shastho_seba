@@ -3,9 +3,10 @@ import 'package:flutter/material.dart';
 import 'screens/splash.dart';
 import 'screens/login.dart';
 import 'screens/home.dart';
+import 'screens/registration.dart';
 import 'screens/prescriptions/prescriptions.dart';
 import 'screens/appointments/appointments.dart';
-import 'screens/registration.dart';
+import 'screens/appointmentDetails/details.dart';
 import 'routes.dart';
 import 'utils.dart';
 
@@ -30,6 +31,7 @@ class MyApp extends StatelessWidget {
         registrationScreen: (context) => Registration(),
         prescriptionsScreen: (context) => PrescriptionsScreen(),
         appointmentsScreen: (context) => AppointmentsScreen(),
+        appointmentDetailsScreen: (context) => AppointmentDetails(),
       },
     );
   }

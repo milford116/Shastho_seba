@@ -2,6 +2,37 @@ const mongoose = require("mongoose");
 mongoose.pluralize(null);
 const schema = mongoose.Schema;
 
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     patient:
+ *       type: object
+ *       properties:
+ *         name:
+ *           type: string
+ *           descriptions: this is optional!
+ *         mobile_no:
+ *           type: string
+ *           uniqueItems: true
+ *         password:
+ *           type: string
+ *         date_of_birth:
+ *           type: string
+ *         sex:
+ *           type: string
+ *         session_token:
+ *           type: string
+ *         image_link:
+ *           type: boolean
+ *         registration_token:
+ *           type: string
+ *       required:
+ *         - name
+ *         - mobile_no
+ *         - date_of_birth
+ *         - sex
+ */
 var patientSchema = new mongoose.Schema({
 	mobile_no: {
 		type: String,

@@ -1,6 +1,42 @@
 const mongoose = require("mongoose");
 mongoose.pluralize(null);
 
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     appointment:
+ *       type: object
+ *       properties:
+ *         serial_no:
+ *           type: string
+ *         schedule_id:
+ *           type: string
+ *         doc_mobile_no:
+ *           type: string
+ *         doc_name:
+ *           type: string
+ *         patient_mobile_no:
+ *           type: string
+ *         status:
+ *           type: number
+ *           default: 0
+ *         prescription_img:
+ *           type: string
+ *         password:
+ *           type: string
+ *         appointment_date_time:
+ *           type: string
+ *           format: date-time
+ *       required:
+ *         - serial_no
+ *         - schedule_id
+ *         - doc_mobile_no
+ *         - doc_name
+ *         - patient_mobile_no
+ *         - status
+ *         - appointment_date_time
+ */
 var appointmentSchema = new mongoose.Schema({
 	serial_no: {
 		type: Number,

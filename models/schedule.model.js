@@ -1,6 +1,34 @@
 const mongoose = require("mongoose");
 mongoose.pluralize(null);
 
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     schedule:
+ *       type: object
+ *       properties:
+ *         doc_mobile_no:
+ *           type: string
+ *         day:
+ *           type: number
+ *         fee:
+ *           type: number
+ *         time_start:
+ *           type: string
+ *           format: date-time
+ *           default: current-date
+ *         time_end:
+ *           type: string
+ *           format: date-time
+ *           default: current-date
+ *       required:
+ *         - doc_mobile_no
+ *         - time_start
+ *         - time_end
+ *         - day
+ *         - fee
+ */
 var scheduleSchema = new mongoose.Schema({
 	doc_mobile_no: {
 		type: String,

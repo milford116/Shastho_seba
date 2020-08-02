@@ -2,6 +2,47 @@ const mongoose = require("mongoose");
 const paginate = require("mongoose-paginate-v2");
 mongoose.pluralize(null);
 
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     doctor:
+ *       type: object
+ *       properties:
+ *         name:
+ *           type: string
+ *         designation:
+ *           type: string
+ *         institution:
+ *           type: string
+ *         reg_number:
+ *           type: string
+ *         mobile_no:
+ *           type: string
+ *           uniqueItems: true
+ *         email:
+ *           type: boolean
+ *         session_token:
+ *           type: string
+ *         image:
+ *           type: string
+ *         referrer:
+ *           type: string
+ *         specialization:
+ *           type: array
+ *           items:
+ *             $ref: '#/components/schemas/specialization'
+ *       required:
+ *         - name
+ *         - designation
+ *         - institution
+ *         - reg_number
+ *         - mobile_no
+ *         - email
+ *         - session_token
+ *         - referrer
+ *         - specialization
+ */
 var doctorSchema = new mongoose.Schema({
 	name: {
 		type: String,

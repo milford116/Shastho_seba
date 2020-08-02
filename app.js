@@ -31,6 +31,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.json());
 
 // set the docs
+console.log("app js", process.env.PORT);
 swagger(app);
 
 app.use(express.static("storage"));

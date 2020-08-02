@@ -29,14 +29,14 @@ const options = {
 			},
 		},
 		openapi: "3.0.0",
-		servers: [{url: "http://localhost:" + process.env.PORT + "/"}],
+		servers: [{url: "http://localhost:80"}],
 		responses: {
 			UnauthorizedError: {
 				description: "Access token is missing or invalid",
 			},
 		},
 
-		basePath: "http://localhost:" + process.env.PORT + "/",
+		basePath: "http://localhost:80",
 		paths: {},
 		definitions: {},
 		responses: {},

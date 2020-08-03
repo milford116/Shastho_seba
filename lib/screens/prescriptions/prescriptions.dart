@@ -41,35 +41,37 @@ class PrescriptionsScreen extends StatelessWidget {
                     labelText: 'Search',
                   ),
                 ),
-                ListView.builder(
-                    shrinkWrap: true,
-                    padding: EdgeInsets.only(top: 20.0),
-                    itemCount: names.length,
-                    itemBuilder: (context, index) {
-                      return Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 5.0),
-                        child: Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(30.0),
-                            color: lightBlue,
-                          ),
-                          child: ListTile(
-                            leading: Icon(Icons.person_pin,
-                                size: 30.0, color: Colors.white),
-                            title: Center(
-                              child: Text(
-                                names[index],
-                                style: TextStyle(color: Colors.white),
+                Expanded(
+                  child: ListView.builder(
+                      shrinkWrap: true,
+                      padding: EdgeInsets.only(top: 20.0),
+                      itemCount: names.length,
+                      itemBuilder: (context, index) {
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 5.0),
+                          child: Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(30.0),
+                              color: lightBlue,
+                            ),
+                            child: ListTile(
+                              leading: Icon(Icons.person_pin,
+                                  size: 30.0, color: Colors.white),
+                              title: Center(
+                                child: Text(
+                                  names[index],
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                              ),
+                              trailing: Opacity(
+                                opacity: 0.0,
+                                child: Icon(Icons.person_pin),
                               ),
                             ),
-                            trailing: Opacity(
-                              opacity: 0.0,
-                              child: Icon(Icons.person_pin),
-                            ),
                           ),
-                        ),
-                      );
-                    }),
+                        );
+                      }),
+                ),
               ],
             ),
           ),

@@ -10,103 +10,101 @@ class AppointmentsTodayScreen extends StatefulWidget {
 }
 
 class _AppointmentsTodayScreenState extends State<AppointmentsTodayScreen> {
-  Widget appointmentcards(
+  Widget appointmentCard(
       String name, String time, String serialno, String paymentstatus) {
     return Container(
       margin: EdgeInsets.all(15),
       decoration: BoxDecoration(border: Border.all(color: blue, width: 2.5)),
       child: Card(
-        margin: EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 16.0),
         elevation: 0.0,
         color: Colors.transparent,
         child: Padding(
-          padding: EdgeInsets.all(10.0),
+          padding: EdgeInsets.fromLTRB(10.0, 10.0, 5.0, 0.0),
           child: Container(
-            height: 220,
-            width: 500,
             child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    CircleAvatar(
-                      radius: 55,
-                      backgroundColor: Colors.blue,
-                      child: CircleAvatar(
-                        radius: 53,
-                        backgroundImage: AssetImage('images/abul_kalam.png'),
-                      ),
-                    )
-                  ],
+                CircleAvatar(
+                  radius: 55,
+                  backgroundColor: Colors.blue,
+                  child: CircleAvatar(
+                    radius: 53,
+                    backgroundImage: AssetImage('images/abul_kalam.png'),
+                  ),
                 ),
                 SizedBox(
-                  width: 40.0,
+                  width: 20.0,
                 ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.only(top: 25.0),
-                      child: Text(
-                        '$name',
-                        style: XL,
-                      ),
-                    ),
-                    SizedBox(
-                      height: 30.0,
-                    ),
-                    Text(
-                      'Time: $time',
-                      style: M,
-                    ),
-                    SizedBox(
-                      height: 10.0,
-                    ),
-                    Text(
-                      'Serial No: $serialno',
-                      style: M,
-                    ),
-                    SizedBox(
-                      height: 10.0,
-                    ),
-                    Row(
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 25.0),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
                       children: <Widget>[
                         Text(
-                          'Payment Status: ',
+                          '$name',
+                          style: XL,
+                        ),
+                        SizedBox(
+                          height: 30.0,
+                        ),
+                        Text(
+                          'Time: $time',
                           style: M,
                         ),
-                        paymentstatus.toLowerCase() == 'done'
-                            ? Text(
-                                'Done',
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  color: mint,
-                                ),
-                              )
-                            : Text(
-                                'Pending',
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  color: red,
-                                ),
+                        SizedBox(
+                          height: 10.0,
+                        ),
+                        Text(
+                          'Serial No: $serialno',
+                          style: M,
+                        ),
+                        SizedBox(
+                          height: 10.0,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Text(
+                              'Payment Status: ',
+                              style: M,
+                            ),
+                            paymentstatus.toLowerCase() == 'done'
+                                ? Text(
+                                    'Done',
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      color: mint,
+                                    ),
+                                  )
+                                : Text(
+                                    'Pending',
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      color: red,
+                                    ),
+                                  ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 12.0,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: <Widget>[
+                            FlatButton(
+                              child: Text(
+                                'Details',
+                                style: TextStyle(color: Colors.white),
                               ),
+                              color: blue,
+                              onPressed: () {},
+                            ),
+                          ],
+                        ),
                       ],
                     ),
-                    SizedBox(
-                      height: 12.0,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 100.0),
-                      child: FlatButton(
-                        child: Text(
-                          'Details',
-                          style: TextStyle(color: Colors.white),
-                        ),
-                        color: blue,
-                        onPressed: () {},
-                      ),
-                    ),
-                  ],
+                  ),
                 ),
               ],
             ),
@@ -137,7 +135,11 @@ class _AppointmentsTodayScreenState extends State<AppointmentsTodayScreen> {
           child: MyDrawer(Selected.appointmentsToday),
         ),
         body: SafeArea(
-          child: appointmentcards('Dr. Abul Kalam', '4.00 PM', '12', 'Done'),
+          child: ListView(
+            children: <Widget>[
+              appointmentCard('Dr. Abul Kalam', '4.00 PM', '12', 'Done'),
+            ],
+          ),
         ),
       ),
     );

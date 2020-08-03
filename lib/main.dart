@@ -1,4 +1,3 @@
-import 'package:Shastho_Sheba/screens/appointments_today/appointmentsToday.dart';
 import 'package:flutter/material.dart';
 
 import 'screens/splash.dart';
@@ -8,6 +7,8 @@ import 'screens/registration.dart';
 import 'screens/prescriptions/prescriptions.dart';
 import 'screens/appointments/appointments.dart';
 import 'screens/appointmentDetails/details.dart';
+import 'screens/appointmentsToday.dart';
+import 'screens/showPrescription.dart';
 import 'routes.dart';
 import 'utils.dart';
 
@@ -34,6 +35,7 @@ class MyApp extends StatelessWidget {
         appointmentsScreen: (context) => AppointmentsScreen(),
         appointmentDetailsScreen: (context) => AppointmentDetails(),
         appointmentsTodayScreen: (context) => AppointmentsTodayScreen(),
+        showPrescriptionScreen: (context) => ShowPrescriptionScreen(),
       },
     );
   }

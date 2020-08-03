@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../utils.dart';
 import '../../widgets/drawer.dart';
+import '../../routes.dart';
 import 'tile.dart';
 
 class AppointmentDetails extends StatelessWidget {
@@ -97,7 +98,10 @@ class AppointmentDetails extends StatelessWidget {
                         children: <Widget>[
                           FlatButton(
                             color: mint,
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.pushNamed(
+                                  context, showPrescriptionScreen);
+                            },
                             child: Text(
                               'View',
                               style: TextStyle(

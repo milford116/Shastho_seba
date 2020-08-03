@@ -6,4 +6,5 @@ String appointmentsTodayScreen = '/appointmentsToday';
 String findDoctorsScreen = '/findDoctors';
 String appointmentsScreen = '/appointments';
 String prescriptionsScreen = '/prescriptions';
+String showPrescriptionScreen = '/showPrescription';
 String appointmentDetailsScreen = '/appointmentDetails';

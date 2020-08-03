@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../../utils.dart';
-import '../../widgets/drawer.dart';
+import '../utils.dart';
+import '../routes.dart';
+import '../widgets/drawer.dart';
 
 class AppointmentsTodayScreen extends StatefulWidget {
   @override
@@ -72,17 +73,11 @@ class _AppointmentsTodayScreenState extends State<AppointmentsTodayScreen> {
                             paymentstatus.toLowerCase() == 'done'
                                 ? Text(
                                     'Done',
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                      color: mint,
-                                    ),
+                                    style: M.copyWith(color: mint),
                                   )
                                 : Text(
                                     'Pending',
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                      color: red,
-                                    ),
+                                    style: M.copyWith(color: red),
                                   ),
                           ],
                         ),
@@ -98,7 +93,10 @@ class _AppointmentsTodayScreenState extends State<AppointmentsTodayScreen> {
                                 style: TextStyle(color: Colors.white),
                               ),
                               color: blue,
-                              onPressed: () {},
+                              onPressed: () {
+                                Navigator.pushNamed(
+                                    context, appointmentDetailsScreen);
+                              },
                             ),
                           ],
                         ),

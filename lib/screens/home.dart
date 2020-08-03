@@ -34,10 +34,20 @@ class HomeScreen extends StatelessWidget {
                   shrinkWrap: true,
                   crossAxisCount: 2,
                   children: <Widget>[
-                    _Tile(title: 'Appointments Today', icon: Icons.schedule),
+                    _Tile(
+                      title: 'Appointments Today',
+                      icon: Icons.schedule,
+                      route: appointmentsTodayScreen,
+                    ),
                     _Tile(title: 'Find Doctors', icon: Icons.search),
-                    _Tile(title: 'Appointments', icon: Icons.insert_invitation, route: appointmentsScreen),
-                    _Tile(title: 'Prescriptions', icon: Icons.content_paste, route: prescriptionsScreen),
+                    _Tile(
+                        title: 'Appointments',
+                        icon: Icons.insert_invitation,
+                        route: appointmentsScreen),
+                    _Tile(
+                        title: 'Prescriptions',
+                        icon: Icons.content_paste,
+                        route: prescriptionsScreen),
                   ],
                 ),
               ),

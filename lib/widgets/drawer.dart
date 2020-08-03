@@ -50,6 +50,7 @@ class MyDrawer extends StatelessWidget {
               title: 'Appointments Today',
               icon: Icons.schedule,
               selected: selected == Selected.appointmentsToday,
+              route: appointmentsTodayScreen,
             ),
             Divider(
               color: Colors.white,

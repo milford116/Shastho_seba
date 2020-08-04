@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../utils.dart';
-import '../routes.dart';
-import '../widgets/drawer.dart';
+import '../../utils.dart';
+import '../../routes.dart';
+import '../../widgets/drawer.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 List<Speciality> specialities = [
@@ -64,7 +64,10 @@ class _FindDoctorsScreenState extends State<FindDoctorsScreen> {
                   crossAxisCount: 2,
                   children: specialities
                       .map((speciality) => _Tile(
-                          title: speciality.name, imageURL: speciality.icon))
+                            title: speciality.name,
+                            imageURL: speciality.icon,
+                            route: specialityWiseDoctorListScreen,
+                          ))
                       .toList(),
                 ),
               ),

@@ -8,3 +8,4 @@ String appointmentsScreen = '/appointments';
 String prescriptionsScreen = '/prescriptions';
 String showPrescriptionScreen = '/showPrescription';
 String appointmentDetailsScreen = '/appointmentDetails';
+String specialityWiseDoctorListScreen = '/specialityWiseDoctorList';

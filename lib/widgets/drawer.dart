@@ -60,6 +60,7 @@ class MyDrawer extends StatelessWidget {
               title: 'Find Doctors',
               icon: Icons.search,
               selected: selected == Selected.findDoctors,
+              route: findDoctorsScreen,
             ),
             Divider(
               color: Colors.white,

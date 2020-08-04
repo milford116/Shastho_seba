@@ -1,0 +1,74 @@
+color: #2c88d9
+
+1. Pediatric and Neonatology - branch of medicine that involves the medical care of infants, children, and adolescents.Neonatology is a subspecialty of pediatrics that consists of the medical care of newborn infants.
+2. Burn, Plastic & Cosmetic Surgery
+3. Cardiologist & Medicine Specialist
+4. Child Specialist
+5. Dental Clinic
+6. Dental Surgeon
+7. Dermatologist
+8. Dermatology
+9. Diabetes & Kidney Specialist
+10. Diabetes, Thyroid and Hormone Specialist
+11. Diabetic, Medicine and Cardiology
+12. Diabetis & Family Medicine Specialist
+13. Diabetology & Endocrinology
+14. ENT ( Ear,Nose &Throat)
+15. Emergency
+16. Eye Centre
+17. Fertility Centre
+18. Gastroenterology
+19. Gastroenterology, Liver and Internal Medicine Specialist
+20. Hematology
+21. Hepatology: liver
+22. Kidney, Ureter, Bladder, Prostate and Andrology Specialist Surgeon
+23. Nephrology
+24. Gynecology & Obstetrics
+25. Neurology
+26. Neuromedicine
+27. Neurosurgery
+28. Liver & Gastroenterologist Specialist
+29. Medicine
+30. Medicine and Cardiology
+31. Medicine and Chest Specialist
+32. Medicine and Kindey Specialist
+33. Medicine Specialist
+34. Medicine Specialist and Cardiologist
+35. Medicine Specialist and Diabetologist
+36. Medicine, Diabetis & Kidney Specialist
+37. Medicine, Rheumatic Fever and Heart Specialist
+38. Medicine, Rheumatic Fever, Hypertention and Cardiology Specialist
+39. Nutrition & Dietetics
+40. Radiology and Imaging
+41. Orthopedic
+42. Orthopedic & Trauma
+43. Orthopedic Surgeon
+44. Orthopedic, Trauma and Reconstructive Surgeon
+45. Pulmonology
+46. Psychiatry
+47. Urology
+
+
+not searched/found
+-------------------------------------
+General & Colorectal Surgery
+General Advance Laprascopic and GI Tract Cancer Surgery
+General and Laprascopic Surgeon
+General Surgery
+Health Check-Up & Corporate Services
+Internal Medicine & Reumatology
+Internal medicine and chest diesease specialist
+Laparoscopic & Colorectal Surgery
+Nursing
+Oncology
+Physical Medicine & Physiotherapy
+Rheumatology, Rehabilitation and Sports Medicine
+Skin & VD
+Vaccination
+
+
+not required:
+--------------
+Anesthesiology
+Blood Bank
+Breast and Cosmetic Surgery

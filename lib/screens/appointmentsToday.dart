@@ -127,7 +127,7 @@ class _AppointmentsTodayScreenState extends State<AppointmentsTodayScreen> {
           elevation: 0.0,
           backgroundColor: lightBlue,
           centerTitle: true,
-          title: Text('Appointments'),
+          title: Text('Appointments Today'),
         ),
         drawer: SafeArea(
           child: MyDrawer(Selected.appointmentsToday),

@@ -39,7 +39,11 @@ class HomeScreen extends StatelessWidget {
                       icon: Icons.schedule,
                       route: appointmentsTodayScreen,
                     ),
-                    _Tile(title: 'Find Doctors', icon: Icons.search),
+                    _Tile(
+                      title: 'Find Doctors',
+                      icon: Icons.search,
+                      route: findDoctorsScreen,
+                    ),
                     _Tile(
                         title: 'Appointments',
                         icon: Icons.insert_invitation,

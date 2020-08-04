@@ -1,3 +1,4 @@
+import 'package:Shastho_Sheba/screens/findDoctors.dart';
 import 'package:flutter/material.dart';
 
 import 'screens/splash.dart';
@@ -36,6 +37,7 @@ class MyApp extends StatelessWidget {
         appointmentDetailsScreen: (context) => AppointmentDetails(),
         appointmentsTodayScreen: (context) => AppointmentsTodayScreen(),
         showPrescriptionScreen: (context) => ShowPrescriptionScreen(),
+        findDoctorsScreen: (context) => FindDoctorsScreen(),
       },
     );
   }

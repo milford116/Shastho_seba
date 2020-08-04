@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:Shastho_Sheba/utils.dart';
 import 'package:flutter/material.dart';
 
 import '../routes.dart';
@@ -25,7 +26,7 @@ class _SplashScreenState extends State<SplashScreen> {
     return Container(
       decoration: BoxDecoration(
         image: DecorationImage(
-          image: AssetImage('images/patient_background.jpg'),
+          image: AssetImage(splashbackgroundimage),
           fit: BoxFit.cover,
           // colorFilter: ColorFilter.mode(Colors.black.withOpacity(0.5), BlendMode.dstATop),
         ),

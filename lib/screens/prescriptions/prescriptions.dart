@@ -9,7 +9,7 @@ class PrescriptionsScreen extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         image: DecorationImage(
-          image: AssetImage('images/patient_background_low_opacity.png'),
+          image: AssetImage(backgroundimage),
           fit: BoxFit.cover,
         ),
       ),

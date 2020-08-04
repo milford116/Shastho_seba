@@ -16,6 +16,9 @@ const TextStyle M = TextStyle(fontSize: 16);
 const TextStyle S = TextStyle(fontSize: 12);
 const TextStyle XS = TextStyle(fontSize: 10);
 
+const backgroundimage = 'images/patient_background_low_opacity.png';
+const splashbackgroundimage = 'images/patient_background.jpg';
+
 const blooddrop = 'images/icons/blood-drop.svg';
 const burnandplastic = 'images/icons/burn and plastic surgery.svg';
 const dermatologist = 'images/icons/dermatologist.svg';

@@ -1,29 +1,163 @@
 const mongoose = require("mongoose");
+mongoose.set("useFindAndModify", false);
 
-const doctor = require("../models/doctor.model");
 const appointment = require("../models/appointment.model");
 const patient = require("../models/patient.model");
 
 const patientModel = mongoose.model("patient");
-const doctorModel = mongoose.model("doctor");
 const appointmentModel = mongoose.model("appointment");
 
 const {SUCCESS, INTERNAL_SERVER_ERROR, BAD_REQUEST, DATA_NOT_FOUND} = require("../errors");
 const error_message = require("../error.messages");
 
+/**
+ * @swagger
+ * /doctor/update/appointment:
+ *   post:
+ *     deprecated: false
+ *     security:
+ *       - bearerAuth: []
+ *     tags:
+ *       - Appointment
+ *     summary: updates the status of an appointment
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               appointment_id:
+ *                 type: string
+ *               status:
+ *                 type: number
+ *                 description: 1 or 2
+ *             required:
+ *               - appointment_id
+ *               - status
+ *     responses:
+ *       200:
+ *         description: success
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 msg:
+ *                   type: string
+ *                 appointment_detail:
+ *                   $ref: '#/components/schemas/appointment'
+ *       500:
+ *         description: Internal Server Error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 msg:
+ *                   type: string
+ *       404:
+ *         description: Data Not Found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 msg:
+ *                   type: string
+ */
 exports.updateAppointment = async function (req, res) {
-	appointmentModel.updateOne({_id: req.body.appointment_id}, {status: true}, (err, docs) => {
+	appointmentModel.findOneAndUpdate({_id: req.body.appointment_id}, {status: req.body.status}, {new: true}, (err, docs) => {
 		if (err) {
-			res.status(INTERNAL_SERVER_ERROR).send(error_message.INTERNAL_SERVER_ERROR);
+			res.status(INTERNAL_SERVER_ERROR).json({msg: error_message.INTERNAL_SERVER_ERROR});
 		} else if (!docs) {
-			res.status(BAD_REQUEST).send(error_message.noScheduleFound);
+			res.status(DATA_NOT_FOUND).json({msg: "no appointment found"});
 		} else {
-			res.status(SUCCESS).send(docs);
+			let ret = {
+				msg: error_message.SUCCESS,
+				appointment_detail: docs,
+			};
+			res.status(SUCCESS).json(ret);
 		}
 	});
 };
 
-exports.appointment = async function (req, res) {
+/**
+ * @swagger
+ * /doctor/get/appointment:
+ *   get:
+ *     deprecated: false
+ *     security:
+ *       - bearerAuth: []
+ *     tags:
+ *       - Appointment
+ *     summary: gets all the appointments of the current day(query may not be working)
+ *     responses:
+ *       200:
+ *         description: success
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 msg:
+ *                   type: string
+ *                 appointments:
+ *                   type: array
+ *                   items:
+ *                     type: object
+ *                     properties:
+ *                       appointment_detail:
+ *                         $ref: '#/components/schemas/appointment'
+ *                       patient_detail:
+ *                         $ref: '#/components/schemas/patient'
+ *       500:
+ *         description: Internal Server Error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 msg:
+ *                   type: string
+ *       400:
+ *         description: Bad Request
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 msg:
+ *                   type: string
+ *       401:
+ *         description: Unauthorized
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 msg:
+ *                   type: string
+ *       403:
+ *         description: Forbidden
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 msg:
+ *                   type: string
+ *       404:
+ *         description: Data Not Found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 msg:
+ *                   type: string
+ */
+exports.todaysAppointment = async function (req, res) {
 	let st = new Date(Date.now());
 	let en = new Date(Date.now());
 	st.setHours(0, 0, 0, 0);
@@ -39,7 +173,7 @@ exports.appointment = async function (req, res) {
 
 	appointmentModel.find(query, async (err, docs) => {
 		if (err) {
-			res.status(INTERNAL_SERVER_ERROR).send(error_message.INTERNAL_SERVER_ERROR);
+			res.status(INTERNAL_SERVER_ERROR).json({msg: error_message.INTERNAL_SERVER_ERROR});
 		} else {
 			for (let i = 0; i < docs.length; i++) {
 				let obj = await patientModel.findOne({mobile_no: docs[i].patient_mobile_no}).exec();
@@ -49,11 +183,64 @@ exports.appointment = async function (req, res) {
 				};
 				appointments.push(data);
 			}
-			res.status(SUCCESS).send(appointments);
+
+			let ret = {
+				msg: error_message.SUCCESS,
+				appointments,
+			};
+			res.status(SUCCESS).json(ret);
 		}
 	});
 };
 
+/**
+ * @swagger
+ * /doctor/get/futureAppointment:
+ *   post:
+ *     deprecated: false
+ *     security:
+ *       - bearerAuth: []
+ *     tags:
+ *       - Appointment
+ *     summary: get the future appointments
+ *     responses:
+ *       200:
+ *         description: success
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 msg:
+ *                   type: string
+ *                 appointments:
+ *                   type: array
+ *                   items:
+ *                     type: object
+ *                     properties:
+ *                       appointment_detail:
+ *                         $ref: '#/components/schemas/appointment'
+ *                       patient_detail:
+ *                         $ref: '#/components/schemas/patient'
+ *       500:
+ *         description: Internal Server Error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 msg:
+ *                   type: string
+ *       400:
+ *         description: Bad Request
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 msg:
+ *                   type: string
+ */
 exports.getFutureAppointment = async function (req, res) {
 	let st = new Date(Date.now());
 	st.setHours(23, 59, 59, 999);
@@ -68,7 +255,7 @@ exports.getFutureAppointment = async function (req, res) {
 
 	appointmentModel.find(query, async (err, docs) => {
 		if (err) {
-			res.status(INTERNAL_SERVER_ERROR).send(error_message.INTERNAL_SERVER_ERROR);
+			res.status(INTERNAL_SERVER_ERROR).json({msg: error_message.INTERNAL_SERVER_ERROR});
 		} else {
 			for (let i = 0; i < docs.length; i++) {
 				let obj = await patientModel.findOne({mobile_no: docs[i].patient_mobile_no}).exec();
@@ -78,11 +265,79 @@ exports.getFutureAppointment = async function (req, res) {
 				};
 				appointments.push(data);
 			}
-			res.status(SUCCESS).send(appointments);
+
+			let ret = {
+				msg: error_message,
+				appointments,
+			};
+			res.status(SUCCESS).json(ret);
 		}
 	});
 };
 
+/**
+ * @swagger
+ * /doctor/get/appointmentDetail:
+ *   post:
+ *     deprecated: false
+ *     security:
+ *       - bearerAuth: []
+ *     tags:
+ *       - Appointment
+ *     summary: get the details of an appointment
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               appointment_id:
+ *                 type: string
+ *             required:
+ *               - appointment_id
+ *     responses:
+ *       200:
+ *         description: success
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 msg:
+ *                   type: string
+ *                 appointment_detail:
+ *                   $ref: '#/components/schemas/appointment'
+ *                 patient:
+ *                   $ref: '#/components/schemas/patient'
+ *       500:
+ *         description: Internal Server Error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 msg:
+ *                   type: string
+ *       400:
+ *         description: Bad Request
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 msg:
+ *                   type: string
+ *       404:
+ *         description: Data Not Found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 msg:
+ *                   type: string
+ */
 exports.appointmentDetail = async function (req, res) {
 	let data = {
 		appointment_detail: {},
@@ -90,17 +345,19 @@ exports.appointmentDetail = async function (req, res) {
 	};
 
 	appointmentModel.findOne({_id: req.body.appointment_id}, (err, docs) => {
-		if (err) res.status(INTERNAL_SERVER_ERROR).send(error_message.INTERNAL_SERVER_ERROR);
+		if (err) res.status(INTERNAL_SERVER_ERROR).json({msg: error_message.INTERNAL_SERVER_ERROR});
+		else if (!docs) res.status(DATA_NOT_FOUND).json({msg: "appointment not found"});
 		else {
 			data.appointment_detail = docs;
 			if (docs) {
 				patientModel.find({mobile_no: docs.patient_mobile_no}, (err, obj) => {
 					if (!err) {
 						data.patient = obj;
-						res.status(SUCCESS).send(data);
-					} else res.status(INTERNAL_SERVER_ERROR).send(error_message.INTERNAL_SERVER_ERROR);
+						data.msg = error_message.SUCCESS;
+						res.status(SUCCESS).json(data);
+					} else res.status(INTERNAL_SERVER_ERROR).json({msg: error_message.INTERNAL_SERVER_ERROR});
 				});
-			} else res.status(SUCCESS).send(data);
+			} else res.status(SUCCESS).json(data);
 		}
 	});
 };

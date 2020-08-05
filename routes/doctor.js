@@ -24,9 +24,9 @@ router.get("/doctor/get/schedule", doctorMiddleware.middleware, scheduleControll
 router.post("/doctor/edit/schedule", validatorMiddleWare(doctorValidator.editSchedule), doctorMiddleware.middleware, scheduleController.editSchedule);
 
 router.post("/doctor/update/appointment", doctorMiddleware.middleware, appointmentController.updateAppointment);
-router.get("/doctor/get/appointment", doctorMiddleware.middleware, appointmentController.appointment);
+router.get("/doctor/get/appointment", doctorMiddleware.middleware, appointmentController.todaysAppointment);
 router.get("/doctor/get/futureAppointment", doctorMiddleware.middleware, appointmentController.getFutureAppointment);
-router.get("/doctor/get/appointmentDetail", doctorMiddleware.middleware, appointmentController.appointmentDetail);
+router.post("/doctor/get/appointmentDetail", doctorMiddleware.middleware, appointmentController.appointmentDetail);
 
 router.post("/doctor/search", searchController.searchDoctor);
 router.post("/doctor/get/transaction", doctorMiddleware.middleware, transactionController.getTransaction);

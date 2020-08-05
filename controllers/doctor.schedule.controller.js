@@ -4,6 +4,71 @@ const scheduleModel = mongoose.model("schedule");
 const {SUCCESS, INTERNAL_SERVER_ERROR, BAD_REQUEST, DATA_NOT_FOUND} = require("../errors");
 const error_message = require("../error.messages");
 
+/**
+ * @swagger
+ * /doctor/post/schedule:
+ *   post:
+ *     deprecated: false
+ *     security:
+ *       - bearerAuth: []
+ *     tags:
+ *       - Doctor-Schedule
+ *     summary: adds schedule
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               time_start:
+ *                 type: string
+ *                 format: date-time
+ *               time_end:
+ *                 type: string
+ *                 format: date-time
+ *               day:
+ *                 type: number
+ *                 description: sunday = 1, monday = 2 and so on
+ *               fee:
+ *                 type: number
+ *             required:
+ *               - time-start
+ *               - time_end
+ *               - day
+ *               - fee
+ *     responses:
+ *       200:
+ *         description: success
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 msg:
+ *                   type: string
+ *                   description: jwt token
+ *                 schedule:
+ *                   ref: '#/components/schemas/schedule'
+ *       500:
+ *         description: Internal Server Error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 msg:
+ *                   type: string
+ *       400:
+ *         description: Bad Request
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 msg:
+ *                   type: string
+ */
 exports.addSchedule = async function (req, res) {
 	var st = new Date(req.body.time_start);
 	var en = new Date(req.body.time_end);
@@ -19,9 +84,9 @@ exports.addSchedule = async function (req, res) {
 
 	scheduleModel.findOne(query, (err, docs) => {
 		if (err) {
-			res.status(INTERNAL_SERVER_ERROR).send(error_message.INTERNAL_SERVER_ERROR);
+			res.status(INTERNAL_SERVER_ERROR).json({msg: error_message.INTERNAL_SERVER_ERROR});
 		} else if (docs) {
-			res.status(BAD_REQUEST).send(error_message.BAD_REQUEST);
+			res.status(BAD_REQUEST).json({msg: "schedule clashes with existing schedule"});
 		} else {
 			var new_schedule = new scheduleModel();
 			new_schedule.doc_mobile_no = req.mobile_no;
@@ -32,25 +97,140 @@ exports.addSchedule = async function (req, res) {
 
 			new_schedule.save((err, docs) => {
 				if (err) {
-					res.status(INTERNAL_SERVER_ERROR).send(error_message.INTERNAL_SERVER_ERROR);
+					res.status(INTERNAL_SERVER_ERROR).json({msg: error_message.INTERNAL_SERVER_ERROR});
 				} else {
-					res.status(SUCCESS).send(error_message.SUCCESS);
+					res.status(SUCCESS).json({msg: error_message.SUCCESS, schedule: docs});
 				}
 			});
 		}
 	});
 };
 
+/**
+ * @swagger
+ * /doctor/get/schedule:
+ *   get:
+ *     deprecated: false
+ *     security:
+ *       - bearerAuth: []
+ *     tags:
+ *       - Doctor-Schedule
+ *     summary: returns all the upcoming schedule
+ *     responses:
+ *       200:
+ *         description: success
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 msg:
+ *                   type: string
+ *                 schedules:
+ *                   type: array
+ *                   items:
+ *                     $ref: '#/components/schemas/schedule'
+ *       500:
+ *         description: Internal Server Error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 msg:
+ *                   type: string
+ *       400:
+ *         description: Bad Request
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 msg:
+ *                   type: string
+ */
 exports.getSchedule = async function (req, res) {
 	scheduleModel.find({doc_mobile_no: req.mobile_no}, (err, docs) => {
 		if (err) {
-			res.status(INTERNAL_SERVER_ERROR).send(error_message.INTERNAL_SERVER_ERROR);
+			res.status(INTERNAL_SERVER_ERROR).json({msg: error_message.INTERNAL_SERVER_ERROR});
 		} else {
-			res.status(SUCCESS).send(docs);
+			let ret = {
+				msg: error_message.SUCCESS,
+				schedules: docs,
+			};
+			res.status(SUCCESS).json(ret);
 		}
 	});
 };
 
+/**
+ * @swagger
+ * /doctor/edit/schedule:
+ *   post:
+ *     deprecated: false
+ *     security:
+ *       - bearerAuth: []
+ *     tags:
+ *       - Doctor-Schedule
+ *     summary: edits schedule
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               id:
+ *                 type: string
+ *               time_start:
+ *                 type: string
+ *                 format: date-time
+ *               time_end:
+ *                 type: string
+ *                 format: date-time
+ *               day:
+ *                 type: number
+ *                 description: sunday = 1, monday = 2 and so on
+ *               fee:
+ *                 type: number
+ *             required:
+ *               - time-start
+ *               - time_end
+ *               - day
+ *               - fee
+ *               - id
+ *     responses:
+ *       200:
+ *         description: success
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 msg:
+ *                   type: string
+ *                   description: jwt token
+ *                 schedule:
+ *                   ref: '#/components/schemas/schedule'
+ *       500:
+ *         description: Internal Server Error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 msg:
+ *                   type: string
+ *       400:
+ *         description: Bad Request
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 msg:
+ *                   type: string
+ */
 exports.editSchedule = async function (req, res) {
 	var st = new Date(req.body.time_start);
 	var en = new Date(req.body.time_end);
@@ -73,16 +253,15 @@ exports.editSchedule = async function (req, res) {
 		fee: req.body.fee,
 	};
 
-	scheduleModel.findOne(query, (err, docs) => {
+	scheduleModel.findOneAndUpdate(query, data, {new: true}, (err, docs) => {
 		if (err) {
-			res.status(INTERNAL_SERVER_ERROR).send(error_message.INTERNAL_SERVER_ERROR);
-		} else if (docs) {
-			res.status(BAD_REQUEST).send(error_message.BAD_REQUEST);
+			res.status(INTERNAL_SERVER_ERROR).json({msg: error_message.INTERNAL_SERVER_ERROR});
 		} else {
-			scheduleModel.updateOne({_id: req.body.id}, data, (errU, docU) => {
-				if (errU) res.status(INTERNAL_SERVER_ERROR).send(error_message.INTERNAL_SERVER_ERROR);
-				else res.status(SUCCESS).send(error_message.SUCCESS);
-			});
+			let ret = {
+				msg: error_message,
+				schedule: docs,
+			};
+			res.status(SUCCESS).json(ret);
 		}
 	});
 };

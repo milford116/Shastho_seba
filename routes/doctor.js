@@ -29,9 +29,7 @@ router.get("/doctor/get/futureAppointment", doctorMiddleware.middleware, appoint
 router.get("/doctor/get/appointmentDetail", doctorMiddleware.middleware, appointmentController.appointmentDetail);
 
 router.post("/doctor/search", searchController.searchDoctor);
-
 router.post("/doctor/get/transaction", doctorMiddleware.middleware, transactionController.getTransaction);
-
 router.post("/doctor/get/token", validatorMiddleWare(doctorValidator.token), doctorMiddleware.middleware, tokenController.getToken);
 
 router.post(

@@ -17,6 +17,23 @@ const jwt = require("jsonwebtoken");
 const {SUCCESS, INTERNAL_SERVER_ERROR, BAD_REQUEST, DATA_NOT_FOUND} = require("../errors");
 const error_message = require("../error.messages");
 
+const path = require("path");
+const multer = require("multer");
+
+const storage = multer.diskStorage({
+	destination: function (req, file, cb) {
+		cb(null, "./storage/profilePicture/doctor/");
+	},
+	filename: function (req, file, cb) {
+		const today = new Date();
+		const name = req.mobile_no + today.valueOf() + path.extname(file.originalname);
+		req.fileName = name;
+		cb(null, name);
+	},
+});
+const upload = multer({storage});
+exports.upload = upload;
+
 /**
  * @swagger
  * /doctor/post/register/:

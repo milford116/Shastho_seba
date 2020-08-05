@@ -28,9 +28,7 @@ router.get("/doctor/get/appointment", doctorMiddleware.middleware, appointmentCo
 router.get("/doctor/get/futureAppointment", doctorMiddleware.middleware, appointmentController.getFutureAppointment);
 router.get("/doctor/get/appointmentDetail", doctorMiddleware.middleware, appointmentController.appointmentDetail);
 
-router.get("/doctor/search/name/:name/:limit/:page", searchController.searchByName);
-router.get("/doctor/search/hospital_name/:hospital_name/:limit/:page", searchController.searchByHospital);
-router.get("/doctor/search/specialization/:speciality/:limit/:page", searchController.searchBySpecialization);
+router.post("/doctor/search", searchController.searchDoctor);
 
 router.post("/doctor/get/transaction", doctorMiddleware.middleware, transactionController.getTransaction);
 

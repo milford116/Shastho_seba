@@ -1,3 +1,4 @@
+import 'package:Shastho_Sheba/screens/findDoctors/doctorProfile.dart';
 import 'package:Shastho_Sheba/screens/findDoctors/findDoctors.dart';
 import 'package:Shastho_Sheba/screens/findDoctors/specialityWiseDoctorList.dart';
 import 'package:flutter/material.dart';
@@ -41,6 +42,7 @@ class MyApp extends StatelessWidget {
         showPrescriptionScreen: (context) => ShowPrescriptionScreen(),
         findDoctorsScreen: (context) => FindDoctorsScreen(),
         specialityWiseDoctorListScreen: (context) => SpecialityWiseDoctorList(),
+        doctorProfileScreen: (context) => DoctorProfileScreen(),
       },
     );
   }

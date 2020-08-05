@@ -101,7 +101,11 @@ class _Tile extends StatelessWidget {
 
     return FlatButton(
       onPressed: () {
-        Navigator.of(context).pushReplacementNamed(route);
+        Navigator.pushNamed(
+          context,
+          route,
+          arguments: title,
+        );
       },
       child: Column(
         mainAxisSize: MainAxisSize.min,

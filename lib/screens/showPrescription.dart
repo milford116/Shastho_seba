@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:flutter_svg/flutter_svg.dart';
 import '../utils.dart';
 import '../widgets/drawer.dart';
 
@@ -10,6 +10,13 @@ class ShowPrescriptionScreen extends StatelessWidget {
   final String date = '22/07/2020';
 
   final double cellPadding = 5.0;
+
+  final Widget svg = SvgPicture.asset(
+    stethoscope,
+    height: 28,
+    width: 28,
+    color: blue,
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -56,9 +63,14 @@ class ShowPrescriptionScreen extends StatelessWidget {
                 ),
                 Align(
                   alignment: Alignment.topLeft,
-                  child: Text(
-                    'Rx',
-                    style: XL,
+                  child: Row(
+                    children: <Widget>[
+                      svg,
+                      Text(
+                        'Rx',
+                        style: XL,
+                      ),
+                    ],
                   ),
                 ),
                 SizedBox(

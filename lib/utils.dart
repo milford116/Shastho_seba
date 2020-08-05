@@ -40,6 +40,7 @@ const psychiartry = 'images/icons/psychiatry.svg';
 const radiotherapy = 'images/icons/radiotherapy.svg';
 const stomach = 'images/icons/stomach.svg';
 const tooth = 'images/icons/tooth.svg';
+const stethoscope = 'images/icons/stethoscope.svg';
 
 class Speciality {
   String name;

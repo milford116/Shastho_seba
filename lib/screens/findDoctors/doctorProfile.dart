@@ -8,6 +8,7 @@ class DoctorProfileScreen extends StatefulWidget {
 }
 
 class _DoctorProfileScreenState extends State<DoctorProfileScreen> {
+  final double cellPadding = 5.0;
   @override
   Widget build(BuildContext context) {
     final String docname = ModalRoute.of(context).settings.arguments;
@@ -29,87 +30,120 @@ class _DoctorProfileScreenState extends State<DoctorProfileScreen> {
         drawer: SafeArea(
           child: MyDrawer(Selected.findDoctors),
         ),
-        body: Column(
-          children: <Widget>[
-            SizedBox(
-              height: 10.0,
-            ),
-            CircleAvatar(
-              radius: 70,
-              backgroundColor: Colors.blue,
-              child: CircleAvatar(
-                radius: 68,
-                backgroundImage: AssetImage(doc.imageurl),
-              ),
-            ),
-            SizedBox(
-              height: 10.0,
-            ),
-            Text(
-              'Details',
-              style: XL,
-            ),
-            SizedBox(
-              height: 10.0,
-            ),
-            Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: Text(
-                doc.details,
-                style: M,
-              ),
-            ),
-            SizedBox(
-              height: 10.0,
-            ),
-            Text(
-              'Schedule',
-              style: XL,
-            ),
-            SizedBox(
-              height: 10.0,
-            ),
-            Align(
-              alignment: Alignment.centerLeft,
-              child: Text(
-                '''
-                    Sunday:   10:00 AM - 12:00 PM
-                                      03:00 PM - 05:00 PM
-                    Monday:   03:00 PM - 05:00 PM
-                                      08:00 PM - 10:00 PM
-                    Tuesday:  08:00 PM - 10:00 PM
-                    ''',
-                style: M,
-              ),
-            ),
-            SizedBox(
-              height: 10.0,
-            ),
-            Text(
-              'Fee: 500 Tk',
-              style: XL,
-            ),
-            SizedBox(
-              height: 20.0,
-            ),
-            ButtonBar(
-              alignment: MainAxisAlignment.center,
+        body: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10.0),
+            child: ListView(
               children: <Widget>[
-                FlatButton.icon(
-                  onPressed: () {},
-                  icon: Icon(
-                    Icons.add_circle,
-                    color: Colors.white,
+                SizedBox(
+                  height: 10.0,
+                ),
+                CircleAvatar(
+                  radius: 70,
+                  backgroundColor: Colors.blue,
+                  child: CircleAvatar(
+                    radius: 68,
+                    backgroundImage: AssetImage(doc.imageurl),
                   ),
-                  color: blue,
-                  label: Text(
-                    'Take An Appointment',
-                    style: TextStyle(color: Colors.white),
+                ),
+                SizedBox(
+                  height: 10.0,
+                ),
+                Text(
+                  'Details',
+                  style: XL,
+                  textAlign: TextAlign.center,
+                ),
+                SizedBox(
+                  height: 10.0,
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 10.0),
+                  child: Text(
+                    doc.details,
+                    style: M,
+                    textAlign: TextAlign.justify,
                   ),
+                ),
+                SizedBox(
+                  height: 10.0,
+                ),
+                Text(
+                  'Schedule',
+                  style: XL,
+                  textAlign: TextAlign.center,
+                ),
+                SizedBox(
+                  height: 10.0,
+                ),
+                Table(
+                  defaultVerticalAlignment: TableCellVerticalAlignment.top,
+                  columnWidths: {
+                    0: FlexColumnWidth(1.0),
+                    1: FlexColumnWidth(2.0),
+                    2: FlexColumnWidth(1.0),
+                  },
+                  children: doc.schedule
+                      .map<TableRow>(
+                        (s) => TableRow(
+                          children: <Widget>[
+                            Container(
+                              padding: EdgeInsets.all(cellPadding),
+                              child: Text(
+                                '${s.day}:',
+                                style: M,
+                              ),
+                            ),
+                            Container(
+                              padding: EdgeInsets.all(cellPadding),
+                              child: Column(
+                                children: s.time
+                                    .map<Text>(
+                                      (t) => Text(
+                                        t,
+                                        style: M,
+                                      ),
+                                    )
+                                    .toList(),
+                              ),
+                            ),
+                            SizedBox(),
+                          ],
+                        ),
+                      )
+                      .toList(),
+                ),
+                SizedBox(
+                  height: 15.0,
+                ),
+                Text(
+                  'Fee: 500 Tk',
+                  style: XL,
+                  textAlign: TextAlign.center,
+                ),
+                SizedBox(
+                  height: 15.0,
+                ),
+                ButtonBar(
+                  alignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    FlatButton.icon(
+                      onPressed: () {},
+                      icon: Icon(
+                        Icons.add_circle,
+                        color: Colors.white,
+                      ),
+                      color: blue,
+                      label: Text(
+                        'Take An Appointment',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),
-          ],
+          ),
         ),
       ),
     );

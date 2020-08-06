@@ -3,13 +3,13 @@ import 'package:flutter/material.dart';
 import '../../widgets/drawer.dart';
 import '../../routes.dart';
 
-class SpecialityWiseDoctorList extends StatefulWidget {
+class DoctorList extends StatefulWidget {
   @override
   _SpecialityWiseDoctorListState createState() =>
       _SpecialityWiseDoctorListState();
 }
 
-class _SpecialityWiseDoctorListState extends State<SpecialityWiseDoctorList> {
+class _SpecialityWiseDoctorListState extends State<DoctorList> {
   @override
   Widget build(BuildContext context) {
     final String specialityname = ModalRoute.of(context).settings.arguments;

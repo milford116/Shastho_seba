@@ -143,7 +143,7 @@ class _Tile extends StatelessWidget {
           size: 30,
         ),
         onTap: () {
-          Navigator.of(context).pushReplacementNamed(route);
+          Navigator.of(context).pushNamedAndRemoveUntil(route, (_) => false);
         },
       ),
     );

@@ -37,15 +37,18 @@ class PreviousAppointments extends StatelessWidget {
                         color: lightBlue,
                       ),
                       child: ListTile(
+                        contentPadding: EdgeInsets.only(left: 5.0),
                         onTap: () {
-                          Navigator.of(context)
-                              .pushNamed(appointmentDetailsScreen);
+                          Navigator.of(context).pushNamed(
+                            appointmentDetailsScreen,
+                            arguments: names[index],
+                          );
                         },
                         leading: CircleAvatar(
                           radius: 25,
                           backgroundColor: Colors.white,
                           child: CircleAvatar(
-                            radius: 22,
+                            radius: 23,
                             backgroundImage:
                                 AssetImage('images/abul_kalam.png'),
                           ),

@@ -1,6 +1,3 @@
-import 'package:Shastho_Sheba/screens/findDoctors/doctorProfile.dart';
-import 'package:Shastho_Sheba/screens/findDoctors/findDoctors.dart';
-import 'package:Shastho_Sheba/screens/findDoctors/specialityWiseDoctorList.dart';
 import 'package:flutter/material.dart';
 
 import 'screens/splash.dart';
@@ -10,8 +7,10 @@ import 'screens/registration.dart';
 import 'screens/prescriptions/prescriptions.dart';
 import 'screens/appointments/appointments.dart';
 import 'screens/appointmentDetails/details.dart';
-import 'screens/findDoctors/findDoctors.dart';
 import 'screens/appointmentsToday.dart';
+import 'screens/findDoctors/doctorList.dart';
+import 'screens/findDoctors/findDoctors.dart';
+import 'screens/findDoctors/doctorProfile.dart';
 import 'screens/showPrescription.dart';
 import 'routes.dart';
 import 'utils.dart';
@@ -25,10 +24,11 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
-          textTheme: TextTheme(
-        bodyText2: TextStyle(color: blue),
-        subtitle1: TextStyle(color: blue),
-      )),
+        textTheme: TextTheme(
+          bodyText2: TextStyle(color: blue),
+          subtitle1: TextStyle(color: blue),
+        ),
+      ),
       initialRoute: splashScreen,
       routes: {
         splashScreen: (context) => SplashScreen(),
@@ -41,7 +41,7 @@ class MyApp extends StatelessWidget {
         appointmentsTodayScreen: (context) => AppointmentsTodayScreen(),
         showPrescriptionScreen: (context) => ShowPrescriptionScreen(),
         findDoctorsScreen: (context) => FindDoctorsScreen(),
-        specialityWiseDoctorListScreen: (context) => SpecialityWiseDoctorList(),
+        specialityWiseDoctorListScreen: (context) => DoctorList(),
         doctorProfileScreen: (context) => DoctorProfileScreen(),
       },
     );

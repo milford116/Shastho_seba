@@ -74,7 +74,7 @@ class _Tile extends StatelessWidget {
   Widget build(BuildContext context) {
     return FlatButton(
       onPressed: () {
-        Navigator.of(context).pushReplacementNamed(route);
+        Navigator.of(context).pushNamed(route);
       },
       child: Column(
         mainAxisSize: MainAxisSize.min,

@@ -95,7 +95,10 @@ class _AppointmentsTodayScreenState extends State<AppointmentsTodayScreen> {
                               color: blue,
                               onPressed: () {
                                 Navigator.pushNamed(
-                                    context, appointmentDetailsScreen);
+                                  context,
+                                  appointmentDetailsScreen,
+                                  arguments: name,
+                                );
                               },
                             ),
                           ],

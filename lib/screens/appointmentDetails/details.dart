@@ -6,10 +6,9 @@ import '../../routes.dart';
 import 'tile.dart';
 
 class AppointmentDetails extends StatelessWidget {
-  final String doctorName = 'Dr.Shafiul Islam';
-
   @override
   Widget build(BuildContext context) {
+    String doctorName = ModalRoute.of(context).settings.arguments;
     return Container(
       decoration: BoxDecoration(
         image: DecorationImage(
@@ -37,7 +36,7 @@ class AppointmentDetails extends StatelessWidget {
                   children: <Widget>[
                     Tile(
                       date: 'Jul 10\n2020',
-                      message: 'You created an appointment for July 20,2020.',
+                      message: 'You created an appointment for July 22,2020.',
                       color: lightRed,
                       buttonBar: Row(
                         mainAxisAlignment: MainAxisAlignment.end,

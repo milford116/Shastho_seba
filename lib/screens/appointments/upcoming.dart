@@ -23,7 +23,10 @@ class UpcomingAppointments extends StatelessWidget {
                 child: ListTile(
                   contentPadding: EdgeInsets.only(left: 3.0, right: 8.0),
                   onTap: () {
-                    Navigator.of(context).pushNamed(appointmentDetailsScreen);
+                    Navigator.of(context).pushNamed(
+                      appointmentDetailsScreen,
+                      arguments: names[index],
+                    );
                   },
                   leading: Container(
                     decoration: BoxDecoration(

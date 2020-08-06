@@ -55,8 +55,16 @@ class PrescriptionsScreen extends StatelessWidget {
                               color: lightBlue,
                             ),
                             child: ListTile(
-                              leading: Icon(Icons.person_pin,
-                                  size: 30.0, color: Colors.white),
+                              contentPadding: EdgeInsets.only(left: 5.0),
+                              leading: CircleAvatar(
+                                radius: 25,
+                                backgroundColor: Colors.white,
+                                child: CircleAvatar(
+                                  radius: 23,
+                                  backgroundImage:
+                                      AssetImage('images/abul_kalam.png'),
+                                ),
+                              ),
                               title: Center(
                                 child: Text(
                                   names[index],

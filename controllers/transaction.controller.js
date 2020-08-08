@@ -14,7 +14,7 @@ const error_message = require("../error.messages");
  *       - bearerAuth: []
  *     tags:
  *       - Transaction
- *     summary: adds transaction
+ *     summary: Patient adds transaction
  *     requestBody:
  *       required: true
  *       content:

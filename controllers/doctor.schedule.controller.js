@@ -12,7 +12,7 @@ const error_message = require("../error.messages");
  *     security:
  *       - bearerAuth: []
  *     tags:
- *       - Doctor-Schedule
+ *       - Schedule
  *     summary: adds schedule
  *     requestBody:
  *       required: true
@@ -114,7 +114,7 @@ exports.addSchedule = async function (req, res) {
  *     security:
  *       - bearerAuth: []
  *     tags:
- *       - Doctor-Schedule
+ *       - Schedule
  *     summary: returns all the upcoming schedule
  *     responses:
  *       200:
@@ -171,7 +171,7 @@ exports.getSchedule = async function (req, res) {
  *     security:
  *       - bearerAuth: []
  *     tags:
- *       - Doctor-Schedule
+ *       - Schedule
  *     summary: edits schedule
  *     requestBody:
  *       required: true

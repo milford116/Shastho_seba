@@ -10,6 +10,9 @@ const router = express.Router();
 
 router.post("/patient/post/login", patientController.login);
 router.post("/patient/post/register", patientController.registration);
+router.get("/patient/get/details", patientMiddleware.middleware, patientController.details);
+router.post("/patient/post/logout", patientMiddleware.middleware, patientController.logout);
+
 router.post("/patient/post/appointment", patientMiddleware.middleware, appointmentController.postAppointment);
 router.get("/patient/get/today/appointment", patientMiddleware.middleware, appointmentController.getAppointment);
 router.get("/patient/get/past/appointment", patientMiddleware.middleware, appointmentController.getPastAppointment);
@@ -18,8 +21,7 @@ router.post("/patient/add/transaction", patientMiddleware.middleware, transactio
 router.post("/patient/get/transaction", patientMiddleware.middleware, transactionController.getTransaction);
 router.post("/patient/get/schedule", patientMiddleware.middleware, scheduleController.getSchedule);
 router.post("/patient/set/token", patientMiddleware.middleware, tokenController.setToken);
-router.get("/patient/get/details", patientMiddleware.middleware, patientController.details);
-router.post("/patient/post/logout", patientMiddleware.middleware, patientController.logout);
+
 router.post("/patient/cancel/appointment", patientMiddleware.middleware, appointmentController.cancelAppointment);
 
 module.exports = router;

@@ -21,9 +21,9 @@ function setDateTime(cur, date) {
 exports.postAppointment = async function (req, res) {
 	doctorModel.findOne({mobile_no: req.body.doc_mobile_no}, async (err, docs) => {
 		if (err) {
-			res.status(INTERNAL_SERVER_ERROR).send(error_message.INTERNAL_SERVER_ERROR);
+			res.status(INTERNAL_SERVER_ERROR).json(error_message.INTERNAL_SERVER_ERROR);
 		} else if (!docs) {
-			res.status(BAD_REQUEST).send(error_message.BAD_REQUEST);
+			res.status(BAD_REQUEST).json(error_message.BAD_REQUEST);
 		} else {
 			var date = new Date(req.body.appointment_date_time);
 			date.setHours(date.getHours() + 6);
@@ -41,9 +41,9 @@ exports.postAppointment = async function (req, res) {
 
 			appointmentModel.findOne(query1, async (err, doc) => {
 				if (err) {
-					res.status(INTERNAL_SERVER_ERROR).send(error_message.INTERNAL_SERVER_ERROR);
+					res.status(INTERNAL_SERVER_ERROR).json(error_message.INTERNAL_SERVER_ERROR);
 				} else if (doc) {
-					res.status(BAD_REQUEST).send(error_message.BAD_REQUEST);
+					res.status(BAD_REQUEST).json(error_message.BAD_REQUEST);
 				} else {
 					var query2 = {
 						schedule_id: req.body.schedule_id,
@@ -68,12 +68,12 @@ exports.postAppointment = async function (req, res) {
 
 					appointment.save((err, docs) => {
 						if (err) {
-							res.status(INTERNAL_SERVER_ERROR).send(error_message.INTERNAL_SERVER_ERROR);
+							res.status(INTERNAL_SERVER_ERROR).json(error_message.INTERNAL_SERVER_ERROR);
 						} else {
 							var ret = {
 								serial_no: appointment.serial_no,
 							};
-							res.status(SUCCESS).send(ret);
+							res.status(SUCCESS).json(ret);
 						}
 					});
 				}
@@ -82,6 +82,49 @@ exports.postAppointment = async function (req, res) {
 	});
 };
 
+/**
+ * @swagger
+ * /patient/get/today/appointment:
+ *   get:
+ *     deprecated: false
+ *     security:
+ *       - bearerAuth: []
+ *     tags:
+ *       - Appointment
+ *     summary: Appointments of today for a patient
+ *     responses:
+ *       200:
+ *         description: success
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 msg:
+ *                   type: string
+ *                 appointments:
+ *                   type: array
+ *                   items:
+ *                     $ref: '#/components/schemas/appointment'
+ *       500:
+ *         description: Internal Server Error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 msg:
+ *                   type: string
+ *       401:
+ *         description: Unauthorized
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 msg:
+ *                   type: string
+ */
 exports.getAppointment = async function (req, res) {
 	let st = new Date(Date.now());
 	let en = new Date(Date.now());
@@ -95,13 +138,60 @@ exports.getAppointment = async function (req, res) {
 	};
 	appointmentModel.find(query, (err, docs) => {
 		if (err) {
-			res.status(INTERNAL_SERVER_ERROR).send(error_message.INTERNAL_SERVER_ERROR);
+			res.status(INTERNAL_SERVER_ERROR).json({msg: error_message.INTERNAL_SERVER_ERROR});
 		} else {
-			res.status(SUCCESS).send(docs);
+			let ret = {
+				msg: error_message.SUCCESS,
+				appointments: docs,
+			};
+			res.status(SUCCESS).json(ret);
 		}
 	});
 };
 
+/**
+ * @swagger
+ * /patient/get/past/appointment:
+ *   get:
+ *     deprecated: false
+ *     security:
+ *       - bearerAuth: []
+ *     tags:
+ *       - Appointment
+ *     summary: Gets the past appointments of the patient
+ *     responses:
+ *       200:
+ *         description: success
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 msg:
+ *                   type: string
+ *                 appointments:
+ *                   type: array
+ *                   items:
+ *                     $ref: '#/components/schemas/appointment'
+ *       500:
+ *         description: Internal Server Error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 msg:
+ *                   type: string
+ *       401:
+ *         description: Unauthorized
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 msg:
+ *                   type: string
+ */
 exports.getPastAppointment = async function (req, res) {
 	let st = new Date(Date.now());
 	st.setHours(st.getHours() + 6);
@@ -116,13 +206,60 @@ exports.getPastAppointment = async function (req, res) {
 	};
 	appointmentModel.find(query, null, options, (err, docs) => {
 		if (err) {
-			res.status(INTERNAL_SERVER_ERROR).send(error_message.INTERNAL_SERVER_ERROR);
+			res.status(INTERNAL_SERVER_ERROR).json({msg: error_message.INTERNAL_SERVER_ERROR});
 		} else {
-			res.status(SUCCESS).send(docs);
+			let ret = {
+				msg: error_message,
+				appointments: docs,
+			};
+			res.status(SUCCESS).json(ret);
 		}
 	});
 };
 
+/**
+ * @swagger
+ * /patient/get/future/appointment:
+ *   get:
+ *     deprecated: false
+ *     security:
+ *       - bearerAuth: []
+ *     tags:
+ *       - Appointment
+ *     summary: Gets the upcoming appointments of the patient
+ *     responses:
+ *       200:
+ *         description: success
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 msg:
+ *                   type: string
+ *                 appointments:
+ *                   type: array
+ *                   items:
+ *                     $ref: '#/components/schemas/appointment'
+ *       500:
+ *         description: Internal Server Error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 msg:
+ *                   type: string
+ *       401:
+ *         description: Unauthorized
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 msg:
+ *                   type: string
+ */
 exports.getFutureAppointment = async function (req, res) {
 	let st = new Date(Date.now());
 	st.setHours(23, 59, 59, 999);
@@ -138,21 +275,84 @@ exports.getFutureAppointment = async function (req, res) {
 	};
 	appointmentModel.find(query, null, options, (err, docs) => {
 		if (err) {
-			res.status(INTERNAL_SERVER_ERROR).send(error_message.INTERNAL_SERVER_ERROR);
+			res.status(INTERNAL_SERVER_ERROR).json({msg: error_message.INTERNAL_SERVER_ERROR});
 		} else {
-			res.status(SUCCESS).send(docs);
+			let ret = {
+				msg: error_message.SUCCESS,
+				appointments: docs,
+			};
+			res.status(SUCCESS).json(ret);
 		}
 	});
 };
 
+/**
+ * @swagger
+ * /patient/cancel/appointment:
+ *   post:
+ *     deprecated: false
+ *     security:
+ *       - bearerAuth: []
+ *     tags:
+ *       - Appointment
+ *     summary: Lets the patient cancel an appointment
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               id:
+ *                 type: string
+ *             required:
+ *               - id
+ *     responses:
+ *       200:
+ *         description: success
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 msg:
+ *                   type: string
+ *       500:
+ *         description: Internal Server Error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 msg:
+ *                   type: string
+ *       400:
+ *         description: Bad Request
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 msg:
+ *                   type: string
+ *       401:
+ *         description: Unauthorized
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 msg:
+ *                   type: string
+ */
 exports.cancelAppointment = async function (req, res) {
 	appointmentModel.deleteOne({_id: req.body.id}, (err, docs) => {
 		if (err) {
-			res.status(INTERNAL_SERVER_ERROR).send(error_message.INTERNAL_SERVER_ERROR);
+			res.status(INTERNAL_SERVER_ERROR).json({msg: error_message.INTERNAL_SERVER_ERROR});
 		} else if (docs.deletedCount === 0) {
-			res.status(BAD_REQUEST).send(error_message.BAD_REQUEST);
+			res.status(BAD_REQUEST).json({msg: error_message.BAD_REQUEST});
 		} else {
-			res.status(SUCCESS).send(error_message.SUCCESS);
+			res.status(SUCCESS).json({msg: error_message.SUCCESS});
 		}
 	});
 };
@@ -160,9 +360,9 @@ exports.cancelAppointment = async function (req, res) {
 // exports.postAppointment = async function (req, res) {
 // 	doctorModel.findOne({mobile_no: req.body.doc_mobile_no}, async (err, docs) => {
 // 		if (err) {
-// 			res.status(INTERNAL_SERVER_ERROR).send(error_message.INTERNAL_SERVER_ERROR);
+// 			res.status(INTERNAL_SERVER_ERROR).json(error_message.INTERNAL_SERVER_ERROR);
 // 		} else if (!docs) {
-// 			res.status(BAD_REQUEST).send(error_message.BAD_REQUEST);
+// 			res.status(BAD_REQUEST).json(error_message.BAD_REQUEST);
 // 		} else {
 // 			var date = new Date(req.body.appointment_date_time);
 // 			date.setHours(date.getHours() + 6);
@@ -194,12 +394,12 @@ exports.cancelAppointment = async function (req, res) {
 
 // 			appointment.save((err, docs) => {
 // 				if (err) {
-// 					res.status(INTERNAL_SERVER_ERROR).send(error_message.INTERNAL_SERVER_ERROR);
+// 					res.status(INTERNAL_SERVER_ERROR).json(error_message.INTERNAL_SERVER_ERROR);
 // 				} else {
 // 					var ret = {
 // 						serial_no: appointment.serial_no,
 // 					};
-// 					res.status(SUCCESS).send(ret);
+// 					res.status(SUCCESS).json(ret);
 // 				}
 // 			});
 // 		}

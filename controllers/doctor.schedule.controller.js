@@ -69,13 +69,29 @@ const error_message = require("../error.messages");
 exports.addSchedule = async function (req, res) {
 	var st = new Date(req.body.time_start);
 	var en = new Date(req.body.time_end);
+
+	// the front-end sends time that is not GMT+6
 	st.setHours(st.getHours() + 6);
 	en.setHours(en.getHours() + 6);
-	st.setDate(1), st.setMonth(1), st.setFullYear(2000);
-	en.setDate(1), en.setMonth(1), en.setFullYear(2000);
+
+	// st.setDate(1), st.setMonth(1), st.setFullYear(2000);
+	// en.setDate(1), en.setMonth(1), en.setFullYear(2000);
+
+	/*
+  	https://stackoverflow.com/questions/13272824/combine-two-or-queries-with-and-in-mongoose
+		time_start st-en time_end
+		st time_start-time_end en
+		st time-start en time_end
+		time_start st time_end en
+	*/
 	var query = {
 		doc_mobile_no: req.mobile_no,
-		$or: [{time_start: {$lte: en, $gte: st}}, {time_end: {$lte: st, $gte: en}}],
+		$or: [
+			{$and: [{time_start: {$lte: st}}, {time_end: {$gte: en}}]},
+			{$and: [{time_start: {$gte: st}}, {time_end: {$lte: en}}]},
+			{$and: [{time_start: {$gte: st}}, {time_end: {$gte: en}}]},
+			{$and: [{time_start: {$lte: st}}, {time_end: {$lte: en}}]},
+		],
 		day: req.body.day,
 	};
 

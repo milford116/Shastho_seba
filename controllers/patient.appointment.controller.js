@@ -100,8 +100,6 @@ exports.postAppointment = async function (req, res) {
  *             schema:
  *               type: object
  *               properties:
- *                 msg:
- *                   type: string
  *                 appointments:
  *                   type: array
  *                   items:
@@ -113,7 +111,7 @@ exports.postAppointment = async function (req, res) {
  *             schema:
  *               type: object
  *               properties:
- *                 msg:
+ *                 message:
  *                   type: string
  *       401:
  *         description: Unauthorized
@@ -122,7 +120,7 @@ exports.postAppointment = async function (req, res) {
  *             schema:
  *               type: object
  *               properties:
- *                 msg:
+ *                 message:
  *                   type: string
  */
 exports.getAppointment = async function (req, res) {
@@ -138,10 +136,9 @@ exports.getAppointment = async function (req, res) {
 	};
 	appointmentModel.find(query, (err, docs) => {
 		if (err) {
-			res.status(INTERNAL_SERVER_ERROR).json({msg: error_message.INTERNAL_SERVER_ERROR});
+			res.status(INTERNAL_SERVER_ERROR).json(error_message.INTERNAL_SERVER_ERROR);
 		} else {
 			let ret = {
-				msg: error_message.SUCCESS,
 				appointments: docs,
 			};
 			res.status(SUCCESS).json(ret);
@@ -167,8 +164,6 @@ exports.getAppointment = async function (req, res) {
  *             schema:
  *               type: object
  *               properties:
- *                 msg:
- *                   type: string
  *                 appointments:
  *                   type: array
  *                   items:
@@ -180,7 +175,7 @@ exports.getAppointment = async function (req, res) {
  *             schema:
  *               type: object
  *               properties:
- *                 msg:
+ *                 message:
  *                   type: string
  *       401:
  *         description: Unauthorized
@@ -189,7 +184,7 @@ exports.getAppointment = async function (req, res) {
  *             schema:
  *               type: object
  *               properties:
- *                 msg:
+ *                 message:
  *                   type: string
  */
 exports.getPastAppointment = async function (req, res) {
@@ -206,10 +201,9 @@ exports.getPastAppointment = async function (req, res) {
 	};
 	appointmentModel.find(query, null, options, (err, docs) => {
 		if (err) {
-			res.status(INTERNAL_SERVER_ERROR).json({msg: error_message.INTERNAL_SERVER_ERROR});
+			res.status(INTERNAL_SERVER_ERROR).json(error_message.INTERNAL_SERVER_ERROR);
 		} else {
 			let ret = {
-				msg: error_message,
 				appointments: docs,
 			};
 			res.status(SUCCESS).json(ret);
@@ -235,8 +229,6 @@ exports.getPastAppointment = async function (req, res) {
  *             schema:
  *               type: object
  *               properties:
- *                 msg:
- *                   type: string
  *                 appointments:
  *                   type: array
  *                   items:
@@ -248,7 +240,7 @@ exports.getPastAppointment = async function (req, res) {
  *             schema:
  *               type: object
  *               properties:
- *                 msg:
+ *                 message:
  *                   type: string
  *       401:
  *         description: Unauthorized
@@ -257,7 +249,7 @@ exports.getPastAppointment = async function (req, res) {
  *             schema:
  *               type: object
  *               properties:
- *                 msg:
+ *                 message:
  *                   type: string
  */
 exports.getFutureAppointment = async function (req, res) {
@@ -275,10 +267,9 @@ exports.getFutureAppointment = async function (req, res) {
 	};
 	appointmentModel.find(query, null, options, (err, docs) => {
 		if (err) {
-			res.status(INTERNAL_SERVER_ERROR).json({msg: error_message.INTERNAL_SERVER_ERROR});
+			res.status(INTERNAL_SERVER_ERROR).json(error_message.INTERNAL_SERVER_ERROR);
 		} else {
 			let ret = {
-				msg: error_message.SUCCESS,
 				appointments: docs,
 			};
 			res.status(SUCCESS).json(ret);
@@ -315,7 +306,7 @@ exports.getFutureAppointment = async function (req, res) {
  *             schema:
  *               type: object
  *               properties:
- *                 msg:
+ *                 message:
  *                   type: string
  *       500:
  *         description: Internal Server Error
@@ -324,7 +315,7 @@ exports.getFutureAppointment = async function (req, res) {
  *             schema:
  *               type: object
  *               properties:
- *                 msg:
+ *                 message:
  *                   type: string
  *       400:
  *         description: Bad Request
@@ -333,7 +324,7 @@ exports.getFutureAppointment = async function (req, res) {
  *             schema:
  *               type: object
  *               properties:
- *                 msg:
+ *                 message:
  *                   type: string
  *       401:
  *         description: Unauthorized
@@ -342,17 +333,17 @@ exports.getFutureAppointment = async function (req, res) {
  *             schema:
  *               type: object
  *               properties:
- *                 msg:
+ *                 message:
  *                   type: string
  */
 exports.cancelAppointment = async function (req, res) {
 	appointmentModel.deleteOne({_id: req.body.id}, (err, docs) => {
 		if (err) {
-			res.status(INTERNAL_SERVER_ERROR).json({msg: error_message.INTERNAL_SERVER_ERROR});
+			res.status(INTERNAL_SERVER_ERROR).json(error_message.INTERNAL_SERVER_ERROR);
 		} else if (docs.deletedCount === 0) {
-			res.status(BAD_REQUEST).json({msg: error_message.BAD_REQUEST});
+			res.status(BAD_REQUEST).json(error_message.BAD_REQUEST);
 		} else {
-			res.status(SUCCESS).json({msg: error_message.SUCCESS});
+			res.status(SUCCESS).json(error_message.SUCCESS);
 		}
 	});
 };

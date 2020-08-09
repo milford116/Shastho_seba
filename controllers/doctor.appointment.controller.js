@@ -7,7 +7,7 @@ const patient = require("../models/patient.model");
 const patientModel = mongoose.model("patient");
 const appointmentModel = mongoose.model("appointment");
 
-const {SUCCESS, INTERNAL_SERVER_ERROR, BAD_REQUEST, DATA_NOT_FOUND} = require("../errors");
+const {SUCCESS, INTERNAL_SERVER_ERROR, DATA_NOT_FOUND} = require("../errors");
 const error_message = require("../error.messages");
 
 /**
@@ -43,8 +43,6 @@ const error_message = require("../error.messages");
  *             schema:
  *               type: object
  *               properties:
- *                 msg:
- *                   type: string
  *                 appointment_detail:
  *                   $ref: '#/components/schemas/appointment'
  *       500:
@@ -54,7 +52,7 @@ const error_message = require("../error.messages");
  *             schema:
  *               type: object
  *               properties:
- *                 msg:
+ *                 message:
  *                   type: string
  *       404:
  *         description: Data Not Found
@@ -63,18 +61,17 @@ const error_message = require("../error.messages");
  *             schema:
  *               type: object
  *               properties:
- *                 msg:
+ *                 message:
  *                   type: string
  */
 exports.updateAppointment = async function (req, res) {
 	appointmentModel.findOneAndUpdate({_id: req.body.appointment_id}, {status: req.body.status}, {new: true}, (err, docs) => {
 		if (err) {
-			res.status(INTERNAL_SERVER_ERROR).json({msg: error_message.INTERNAL_SERVER_ERROR});
+			res.status(INTERNAL_SERVER_ERROR).json(error_message.INTERNAL_SERVER_ERROR);
 		} else if (!docs) {
-			res.status(DATA_NOT_FOUND).json({msg: "no appointment found"});
+			res.status(DATA_NOT_FOUND).json("no appointment found");
 		} else {
 			let ret = {
-				msg: error_message.SUCCESS,
 				appointment_detail: docs,
 			};
 			res.status(SUCCESS).json(ret);
@@ -100,8 +97,6 @@ exports.updateAppointment = async function (req, res) {
  *             schema:
  *               type: object
  *               properties:
- *                 msg:
- *                   type: string
  *                 appointments:
  *                   type: array
  *                   items:
@@ -118,7 +113,7 @@ exports.updateAppointment = async function (req, res) {
  *             schema:
  *               type: object
  *               properties:
- *                 msg:
+ *                 message:
  *                   type: string
  *       400:
  *         description: Bad Request
@@ -127,7 +122,7 @@ exports.updateAppointment = async function (req, res) {
  *             schema:
  *               type: object
  *               properties:
- *                 msg:
+ *                 message:
  *                   type: string
  *       401:
  *         description: Unauthorized
@@ -136,7 +131,7 @@ exports.updateAppointment = async function (req, res) {
  *             schema:
  *               type: object
  *               properties:
- *                 msg:
+ *                 message:
  *                   type: string
  *       403:
  *         description: Forbidden
@@ -145,7 +140,7 @@ exports.updateAppointment = async function (req, res) {
  *             schema:
  *               type: object
  *               properties:
- *                 msg:
+ *                 message:
  *                   type: string
  *       404:
  *         description: Data Not Found
@@ -154,7 +149,7 @@ exports.updateAppointment = async function (req, res) {
  *             schema:
  *               type: object
  *               properties:
- *                 msg:
+ *                 message:
  *                   type: string
  */
 exports.todaysAppointment = async function (req, res) {
@@ -173,7 +168,7 @@ exports.todaysAppointment = async function (req, res) {
 
 	appointmentModel.find(query, async (err, docs) => {
 		if (err) {
-			res.status(INTERNAL_SERVER_ERROR).json({msg: error_message.INTERNAL_SERVER_ERROR});
+			res.status(INTERNAL_SERVER_ERROR).json(error_message.INTERNAL_SERVER_ERROR);
 		} else {
 			for (let i = 0; i < docs.length; i++) {
 				let obj = await patientModel.findOne({mobile_no: docs[i].patient_mobile_no}).exec();
@@ -185,7 +180,6 @@ exports.todaysAppointment = async function (req, res) {
 			}
 
 			let ret = {
-				msg: error_message.SUCCESS,
 				appointments,
 			};
 			res.status(SUCCESS).json(ret);
@@ -211,8 +205,6 @@ exports.todaysAppointment = async function (req, res) {
  *             schema:
  *               type: object
  *               properties:
- *                 msg:
- *                   type: string
  *                 appointments:
  *                   type: array
  *                   items:
@@ -229,7 +221,7 @@ exports.todaysAppointment = async function (req, res) {
  *             schema:
  *               type: object
  *               properties:
- *                 msg:
+ *                 message:
  *                   type: string
  *       400:
  *         description: Bad Request
@@ -238,7 +230,7 @@ exports.todaysAppointment = async function (req, res) {
  *             schema:
  *               type: object
  *               properties:
- *                 msg:
+ *                 message:
  *                   type: string
  */
 exports.getFutureAppointment = async function (req, res) {
@@ -255,7 +247,7 @@ exports.getFutureAppointment = async function (req, res) {
 
 	appointmentModel.find(query, async (err, docs) => {
 		if (err) {
-			res.status(INTERNAL_SERVER_ERROR).json({msg: error_message.INTERNAL_SERVER_ERROR});
+			res.status(INTERNAL_SERVER_ERROR).json(error_message.INTERNAL_SERVER_ERROR);
 		} else {
 			for (let i = 0; i < docs.length; i++) {
 				let obj = await patientModel.findOne({mobile_no: docs[i].patient_mobile_no}).exec();
@@ -267,7 +259,6 @@ exports.getFutureAppointment = async function (req, res) {
 			}
 
 			let ret = {
-				msg: error_message,
 				appointments,
 			};
 			res.status(SUCCESS).json(ret);
@@ -304,8 +295,6 @@ exports.getFutureAppointment = async function (req, res) {
  *             schema:
  *               type: object
  *               properties:
- *                 msg:
- *                   type: string
  *                 appointment_detail:
  *                   $ref: '#/components/schemas/appointment'
  *                 patient:
@@ -317,7 +306,7 @@ exports.getFutureAppointment = async function (req, res) {
  *             schema:
  *               type: object
  *               properties:
- *                 msg:
+ *                 message:
  *                   type: string
  *       400:
  *         description: Bad Request
@@ -326,7 +315,7 @@ exports.getFutureAppointment = async function (req, res) {
  *             schema:
  *               type: object
  *               properties:
- *                 msg:
+ *                 message:
  *                   type: string
  *       404:
  *         description: Data Not Found
@@ -335,7 +324,7 @@ exports.getFutureAppointment = async function (req, res) {
  *             schema:
  *               type: object
  *               properties:
- *                 msg:
+ *                 message:
  *                   type: string
  */
 exports.appointmentDetail = async function (req, res) {
@@ -345,17 +334,16 @@ exports.appointmentDetail = async function (req, res) {
 	};
 
 	appointmentModel.findOne({_id: req.body.appointment_id}, (err, docs) => {
-		if (err) res.status(INTERNAL_SERVER_ERROR).json({msg: error_message.INTERNAL_SERVER_ERROR});
-		else if (!docs) res.status(DATA_NOT_FOUND).json({msg: "appointment not found"});
+		if (err) res.status(INTERNAL_SERVER_ERROR).json(error_message.INTERNAL_SERVER_ERROR);
+		else if (!docs) res.status(DATA_NOT_FOUND).json({message: "appointment not found"});
 		else {
 			data.appointment_detail = docs;
 			if (docs) {
 				patientModel.find({mobile_no: docs.patient_mobile_no}, (err, obj) => {
 					if (!err) {
 						data.patient = obj;
-						data.msg = error_message.SUCCESS;
 						res.status(SUCCESS).json(data);
-					} else res.status(INTERNAL_SERVER_ERROR).json({msg: error_message.INTERNAL_SERVER_ERROR});
+					} else res.status(INTERNAL_SERVER_ERROR).json(error_message.INTERNAL_SERVER_ERROR);
 				});
 			} else res.status(SUCCESS).json(data);
 		}

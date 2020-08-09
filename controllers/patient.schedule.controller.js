@@ -36,8 +36,6 @@ const error_message = require("../error.messages");
  *             schema:
  *               type: object
  *               properties:
- *                 msg:
- *                   type: string
  *                 schedule:
  *                   type: array
  *                   items:
@@ -49,7 +47,7 @@ const error_message = require("../error.messages");
  *             schema:
  *               type: object
  *               properties:
- *                 msg:
+ *                 message:
  *                   type: string
  *       401:
  *         description: Unauthorized
@@ -58,16 +56,15 @@ const error_message = require("../error.messages");
  *             schema:
  *               type: object
  *               properties:
- *                 msg:
+ *                 message:
  *                   type: string
  */
 exports.getSchedule = async function (req, res) {
 	scheduleModel.find({doc_mobile_no: req.body.mobile_no}, null, {sort: {day: 1, time_start: 1}}, (err, docs) => {
 		if (err) {
-			res.status(INTERNAL_SERVER_ERROR).send({msg: error_message.INTERNAL_SERVER_ERROR});
+			res.status(INTERNAL_SERVER_ERROR).send(error_message.INTERNAL_SERVER_ERROR);
 		} else {
 			let ret = {
-				msg: error_message.SUCCESS,
 				schedule: docs,
 			};
 			res.status(SUCCESS).send(ret);

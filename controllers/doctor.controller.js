@@ -1,12 +1,9 @@
 const mongoose = require("mongoose");
 mongoose.set("useFindAndModify", false);
-
 const doctor = require("../models/doctor.model");
 const reference = require("../models/reference.model");
-
 const doctorModel = mongoose.model("doctor");
 const referenceModel = mongoose.model("reference");
-
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const {SUCCESS, INTERNAL_SERVER_ERROR, BAD_REQUEST, DATA_NOT_FOUND} = require("../errors");
@@ -51,7 +48,7 @@ exports.upload = upload;
  *             schema:
  *               type: object
  *               properties:
- *                 msg:
+ *                 message:
  *                   type: string
  *       500:
  *         description: Internal Server Error
@@ -60,19 +57,19 @@ exports.upload = upload;
  *             schema:
  *               type: object
  *               properties:
- *                 msg:
+ *                 message:
  *                   type: string
  */
 exports.registration = async function (req, res) {
 	doctorModel.findOne({mobile_no: req.body.mobile_no}, (err, docs) => {
 		if (docs) {
-			res.status(BAD_REQUEST).json({msg: error_message.duplicateAcc});
+			res.status(BAD_REQUEST).json(error_message.duplicateAcc);
 		} else {
 			referenceModel.findOneAndDelete({doctor: req.body.mobile_no}, (err, docs) => {
 				if (err) {
-					res.status(INTERNAL_SERVER_ERROR).json({msg: error_message.INTERNAL_SERVER_ERROR});
+					res.status(INTERNAL_SERVER_ERROR).json(error_message.INTERNAL_SERVER_ERROR);
 				} else if (!docs) {
-					res.status(BAD_REQUEST).json({msg: error_message.noRef});
+					res.status(BAD_REQUEST).json(error_message.noRef);
 				} else {
 					var new_doctor = new doctorModel();
 					new_doctor.name = req.body.name;
@@ -85,14 +82,14 @@ exports.registration = async function (req, res) {
 
 					bcrypt.hash(req.body.password, parseInt(process.env.SALT_ROUNDS, 10), (err, hash) => {
 						if (err) {
-							res.status(INTERNAL_SERVER_ERROR).json({msg: error_message.INTERNAL_SERVER_ERROR});
+							res.status(INTERNAL_SERVER_ERROR).json(error_message.INTERNAL_SERVER_ERROR);
 						} else {
 							new_doctor.password = hash;
 							new_doctor.save((err, docs) => {
 								if (err) {
-									res.status(INTERNAL_SERVER_ERROR).json({msg: error_message.INTERNAL_SERVER_ERROR});
+									res.status(INTERNAL_SERVER_ERROR).json(error_message.INTERNAL_SERVER_ERROR);
 								} else {
-									res.status(SUCCESS).json({msg: error_message.SUCCESS});
+									res.status(SUCCESS).json(error_message.SUCCESS);
 								}
 							});
 						}
@@ -133,8 +130,6 @@ exports.registration = async function (req, res) {
  *             schema:
  *               type: object
  *               properties:
- *                 msg:
- *                   type: string
  *                 token:
  *                   type: string
  *                   description: jwt token
@@ -147,7 +142,7 @@ exports.registration = async function (req, res) {
  *             schema:
  *               type: object
  *               properties:
- *                 msg:
+ *                 message:
  *                   type: string
  *       400:
  *         description: Bad Request
@@ -156,7 +151,7 @@ exports.registration = async function (req, res) {
  *             schema:
  *               type: object
  *               properties:
- *                 msg:
+ *                 message:
  *                   type: string
  *       404:
  *         description: Data Not Found
@@ -165,21 +160,21 @@ exports.registration = async function (req, res) {
  *             schema:
  *               type: object
  *               properties:
- *                 msg:
+ *                 message:
  *                   type: string
  */
 exports.login = async function (req, res) {
 	doctorModel.findOne({mobile_no: req.body.mobile_no}, (err, docs) => {
 		if (err) {
-			res.status(INTERNAL_SERVER_ERROR).json({msg: error_message.INTERNAL_SERVER_ERROR});
+			res.status(INTERNAL_SERVER_ERROR).json(error_message.INTERNAL_SERVER_ERROR);
 		} else if (!docs) {
-			res.status(DATA_NOT_FOUND).json({msg: error_message.noUserFound});
+			res.status(DATA_NOT_FOUND).json(error_message.noUserFound);
 		} else {
 			bcrypt.compare(req.body.password, docs.password, (err, result) => {
 				if (err) {
-					res.status(INTERNAL_SERVER_ERROR).json({msg: error_message.INTERNAL_SERVER_ERROR});
+					res.status(INTERNAL_SERVER_ERROR).json(error_message.INTERNAL_SERVER_ERROR);
 				} else if (!result) {
-					res.status(BAD_REQUEST).json({msg: error_message.passwordMismatch});
+					res.status(BAD_REQUEST).json(error_message.passwordMismatch);
 				} else {
 					const payload = {
 						mobile_no: docs.mobile_no,
@@ -191,10 +186,10 @@ exports.login = async function (req, res) {
 
 					doctorModel.updateOne({mobile_no: req.body.mobile_no}, {session_token: token}, (err, docs) => {
 						if (err) {
-							res.status(INTERNAL_SERVER_ERROR).json({msg: error_message.INTERNAL_SERVER_ERROR});
+							res.status(INTERNAL_SERVER_ERROR).json(error_message.INTERNAL_SERVER_ERROR);
 						} else {
 							const ret = {
-								msg: error_message.SUCCESS,
+								message: error_message.SUCCESS,
 								token: token,
 								doctor_detail: doctor_detail,
 							};
@@ -238,7 +233,7 @@ exports.login = async function (req, res) {
  *             schema:
  *               type: object
  *               properties:
- *                 msg:
+ *                 message:
  *                   type: string
  *       500:
  *         description: Internal Server Error
@@ -247,7 +242,7 @@ exports.login = async function (req, res) {
  *             schema:
  *               type: object
  *               properties:
- *                 msg:
+ *                 message:
  *                   type: string
  *       400:
  *         description: Bad Request
@@ -256,15 +251,15 @@ exports.login = async function (req, res) {
  *             schema:
  *               type: object
  *               properties:
- *                 msg:
+ *                 message:
  *                   type: string
  */
 exports.reference = async function (req, res) {
 	doctorModel.findOne({mobile_no: req.body.doctor}, (err, docs) => {
 		if (err) {
-			res.status(INTERNAL_SERVER_ERROR).json({msg: error_message.INTERNAL_SERVER_ERROR});
+			res.status(INTERNAL_SERVER_ERROR).json(error_message.INTERNAL_SERVER_ERROR);
 		} else if (docs) {
-			res.status(BAD_REQUEST).json({msg: error_message.duplicateAcc});
+			res.status(BAD_REQUEST).json(error_message.duplicateAcc);
 		} else {
 			var new_reference = new referenceModel();
 			new_reference.referrer = req.mobile_no;
@@ -272,9 +267,9 @@ exports.reference = async function (req, res) {
 
 			new_reference.save((err, docs) => {
 				if (err) {
-					res.status(INTERNAL_SERVER_ERROR).json({msg: error_message.INTERNAL_SERVER_ERROR});
+					res.status(INTERNAL_SERVER_ERROR).json(error_message.INTERNAL_SERVER_ERROR);
 				} else {
-					res.status(SUCCESS).json({msg: error_message.SUCCESS});
+					res.status(SUCCESS).json(error_message.SUCCESS);
 				}
 			});
 		}
@@ -312,8 +307,6 @@ exports.reference = async function (req, res) {
  *             schema:
  *               type: object
  *               properties:
- *                 msg:
- *                   type: string
  *                 doctors:
  *                   type: array
  *                   items:
@@ -325,7 +318,7 @@ exports.reference = async function (req, res) {
  *             schema:
  *               type: object
  *               properties:
- *                 msg:
+ *                 message:
  *                   type: string
  *       400:
  *         description: Bad Request
@@ -334,7 +327,7 @@ exports.reference = async function (req, res) {
  *             schema:
  *               type: object
  *               properties:
- *                 msg:
+ *                 message:
  *                   type: string
  */
 exports.doctorList = async function (req, res) {
@@ -345,10 +338,9 @@ exports.doctorList = async function (req, res) {
 
 	doctorModel.paginate({}, options, (err, docs) => {
 		if (err) {
-			res.status(INTERNAL_SERVER_ERROR).json({msg: error_message.INTERNAL_SERVER_ERROR});
+			res.status(INTERNAL_SERVER_ERROR).json(error_message.INTERNAL_SERVER_ERROR);
 		} else {
 			let ret = {
-				msg: error_message.SUCCESS,
 				doctors: docs,
 			};
 			res.status(SUCCESS).json(ret);
@@ -386,8 +378,6 @@ exports.doctorList = async function (req, res) {
  *             schema:
  *               type: object
  *               properties:
- *                 msg:
- *                   type: string
  *                 doctor:
  *                   $ref: '#/components/schemas/doctor'
  *       500:
@@ -397,7 +387,7 @@ exports.doctorList = async function (req, res) {
  *             schema:
  *               type: object
  *               properties:
- *                 msg:
+ *                 message:
  *                   type: string
  *       400:
  *         description: Bad Request
@@ -406,17 +396,16 @@ exports.doctorList = async function (req, res) {
  *             schema:
  *               type: object
  *               properties:
- *                 msg:
+ *                 message:
  *                   type: string
  */
 exports.editDoctor = async function (req, res) {
 	let updates = req.body.newDoctor;
 	doctorModel.findOneAndUpdate({mobile_no: req.mobile_no}, updates, {new: true}, (err, docs) => {
 		if (err) {
-			res.status(INTERNAL_SERVER_ERROR).json({msg: error_message.INTERNAL_SERVER_ERROR});
+			res.status(INTERNAL_SERVER_ERROR).json(error_message.INTERNAL_SERVER_ERROR);
 		} else {
 			let ret = {
-				msg: error_message,
 				doctor: docs,
 			};
 			res.status(SUCCESS).json(ret);
@@ -442,7 +431,7 @@ exports.editDoctor = async function (req, res) {
  *             schema:
  *               type: object
  *               properties:
- *                 msg:
+ *                 message:
  *                   type: string
  *       500:
  *         description: Internal Server Error
@@ -451,7 +440,7 @@ exports.editDoctor = async function (req, res) {
  *             schema:
  *               type: object
  *               properties:
- *                 msg:
+ *                 message:
  *                   type: string
  *       400:
  *         description: Bad Request
@@ -460,13 +449,13 @@ exports.editDoctor = async function (req, res) {
  *             schema:
  *               type: object
  *               properties:
- *                 msg:
+ *                 message:
  *                   type: string
  */
 exports.uploadDP = async function (req, res) {
 	doctorModel.updateOne({mobile_no: req.mobile_no}, {image: "/profilePicture/doctor/" + req.fileName}, (err, docs) => {
-		if (err) res.status(INTERNAL_SERVER_ERROR).json({msg: error_message.INTERNAL_SERVER_ERROR});
-		else res.status(SUCCESS).json({msg: error_message.SUCCESS});
+		if (err) res.status(INTERNAL_SERVER_ERROR).json(error_message.INTERNAL_SERVER_ERROR);
+		else res.status(SUCCESS).json(error_message.SUCCESS);
 	});
 };
 
@@ -488,8 +477,6 @@ exports.uploadDP = async function (req, res) {
  *             schema:
  *               type: object
  *               properties:
- *                 msg:
- *                   type: string
  *                 doctor:
  *                   $ref: '#/components/schemas/doctor'
  *       500:
@@ -499,7 +486,7 @@ exports.uploadDP = async function (req, res) {
  *             schema:
  *               type: object
  *               properties:
- *                 msg:
+ *                 message:
  *                   type: string
  *       400:
  *         description: Bad Request
@@ -508,15 +495,14 @@ exports.uploadDP = async function (req, res) {
  *             schema:
  *               type: object
  *               properties:
- *                 msg:
+ *                 message:
  *                   type: string
  */
 exports.getProfile = async function (req, res) {
 	doctorModel.findOne({mobile_no: req.mobile_no}, (err, docs) => {
-		if (err) res.status(INTERNAL_SERVER_ERROR).json({msg: error_message.INTERNAL_SERVER_ERROR});
+		if (err) res.status(INTERNAL_SERVER_ERROR).json(error_message.INTERNAL_SERVER_ERROR);
 		else {
 			let ret = {
-				msg: error_message.SUCCESS,
 				doctor: docs,
 			};
 

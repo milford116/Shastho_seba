@@ -45,9 +45,6 @@ const error_message = require("../error.messages");
  *             schema:
  *               type: object
  *               properties:
- *                 msg:
- *                   type: string
- *                   description: jwt token
  *                 schedule:
  *                   ref: '#/components/schemas/schedule'
  *       500:
@@ -57,7 +54,7 @@ const error_message = require("../error.messages");
  *             schema:
  *               type: object
  *               properties:
- *                 msg:
+ *                 message:
  *                   type: string
  *       400:
  *         description: Bad Request
@@ -66,7 +63,7 @@ const error_message = require("../error.messages");
  *             schema:
  *               type: object
  *               properties:
- *                 msg:
+ *                 message:
  *                   type: string
  */
 exports.addSchedule = async function (req, res) {
@@ -84,9 +81,9 @@ exports.addSchedule = async function (req, res) {
 
 	scheduleModel.findOne(query, (err, docs) => {
 		if (err) {
-			res.status(INTERNAL_SERVER_ERROR).json({msg: error_message.INTERNAL_SERVER_ERROR});
+			res.status(INTERNAL_SERVER_ERROR).json(error_message.INTERNAL_SERVER_ERROR);
 		} else if (docs) {
-			res.status(BAD_REQUEST).json({msg: "schedule clashes with existing schedule"});
+			res.status(BAD_REQUEST).json({message: "schedule clashes with existing schedule"});
 		} else {
 			var new_schedule = new scheduleModel();
 			new_schedule.doc_mobile_no = req.mobile_no;
@@ -97,9 +94,9 @@ exports.addSchedule = async function (req, res) {
 
 			new_schedule.save((err, docs) => {
 				if (err) {
-					res.status(INTERNAL_SERVER_ERROR).json({msg: error_message.INTERNAL_SERVER_ERROR});
+					res.status(INTERNAL_SERVER_ERROR).json(error_message.INTERNAL_SERVER_ERROR);
 				} else {
-					res.status(SUCCESS).json({msg: error_message.SUCCESS, schedule: docs});
+					res.status(SUCCESS).json({schedule: docs});
 				}
 			});
 		}
@@ -124,8 +121,6 @@ exports.addSchedule = async function (req, res) {
  *             schema:
  *               type: object
  *               properties:
- *                 msg:
- *                   type: string
  *                 schedules:
  *                   type: array
  *                   items:
@@ -137,7 +132,7 @@ exports.addSchedule = async function (req, res) {
  *             schema:
  *               type: object
  *               properties:
- *                 msg:
+ *                 message:
  *                   type: string
  *       400:
  *         description: Bad Request
@@ -146,16 +141,15 @@ exports.addSchedule = async function (req, res) {
  *             schema:
  *               type: object
  *               properties:
- *                 msg:
+ *                 message:
  *                   type: string
  */
 exports.getSchedule = async function (req, res) {
 	scheduleModel.find({doc_mobile_no: req.mobile_no}, (err, docs) => {
 		if (err) {
-			res.status(INTERNAL_SERVER_ERROR).json({msg: error_message.INTERNAL_SERVER_ERROR});
+			res.status(INTERNAL_SERVER_ERROR).json(error_message.INTERNAL_SERVER_ERROR);
 		} else {
 			let ret = {
-				msg: error_message.SUCCESS,
 				schedules: docs,
 			};
 			res.status(SUCCESS).json(ret);
@@ -207,9 +201,6 @@ exports.getSchedule = async function (req, res) {
  *             schema:
  *               type: object
  *               properties:
- *                 msg:
- *                   type: string
- *                   description: jwt token
  *                 schedule:
  *                   ref: '#/components/schemas/schedule'
  *       500:
@@ -219,7 +210,7 @@ exports.getSchedule = async function (req, res) {
  *             schema:
  *               type: object
  *               properties:
- *                 msg:
+ *                 message:
  *                   type: string
  *       400:
  *         description: Bad Request
@@ -228,7 +219,7 @@ exports.getSchedule = async function (req, res) {
  *             schema:
  *               type: object
  *               properties:
- *                 msg:
+ *                 message:
  *                   type: string
  */
 exports.editSchedule = async function (req, res) {
@@ -255,10 +246,10 @@ exports.editSchedule = async function (req, res) {
 
 	scheduleModel.findOneAndUpdate(query, data, {new: true}, (err, docs) => {
 		if (err) {
-			res.status(INTERNAL_SERVER_ERROR).json({msg: error_message.INTERNAL_SERVER_ERROR});
+			res.status(INTERNAL_SERVER_ERROR).json(error_message.INTERNAL_SERVER_ERROR);
 		} else {
 			let ret = {
-				msg: error_message,
+				message: error_message,
 				schedule: docs,
 			};
 			res.status(SUCCESS).json(ret);

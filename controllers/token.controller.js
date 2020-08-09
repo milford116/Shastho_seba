@@ -37,7 +37,7 @@ const error_message = require("../error.messages");
  *             schema:
  *               type: object
  *               properties:
- *                 msg:
+ *                 message:
  *                   type: string
  *       500:
  *         description: Internal Server Error
@@ -46,7 +46,7 @@ const error_message = require("../error.messages");
  *             schema:
  *               type: object
  *               properties:
- *                 msg:
+ *                 message:
  *                   type: string
  *       400:
  *         description: Bad Request
@@ -55,13 +55,13 @@ const error_message = require("../error.messages");
  *             schema:
  *               type: object
  *               properties:
- *                 msg:
+ *                 message:
  *                   type: string
  */
 exports.setToken = async function (req, res) {
 	patientModel.updateOne({_id: req.body.id}, {registration_token: req.body.registration_token}, (err, docs) => {
-		if (err) res.status(INTERNAL_SERVER_ERROR).json({msg: error_message.INTERNAL_SERVER_ERROR});
-		else res.status(SUCCESS).json({msg: error_message.SUCCESS});
+		if (err) res.status(INTERNAL_SERVER_ERROR).json(error_message.INTERNAL_SERVER_ERROR);
+		else res.status(SUCCESS).json(error_message.SUCCESS);
 	});
 };
 
@@ -97,8 +97,6 @@ exports.setToken = async function (req, res) {
  *               properties:
  *                 registration_token:
  *                   type: string
- *                 msg:
- *                   type: string
  *       500:
  *         description: Internal Server Error
  *         content:
@@ -106,7 +104,7 @@ exports.setToken = async function (req, res) {
  *             schema:
  *               type: object
  *               properties:
- *                 msg:
+ *                 message:
  *                   type: string
  *       400:
  *         description: Bad Request
@@ -115,15 +113,14 @@ exports.setToken = async function (req, res) {
  *             schema:
  *               type: object
  *               properties:
- *                 msg:
+ *                 message:
  *                   type: string
  */
 exports.getToken = async function (req, res) {
 	patientModel.findOne({mobile_no: req.body.mobile_no}, (err, docs) => {
-		if (err) res.status(INTERNAL_SERVER_ERROR).json({msg: error_message.INTERNAL_SERVER_ERROR});
+		if (err) res.status(INTERNAL_SERVER_ERROR).json(error_message.INTERNAL_SERVER_ERROR);
 		else {
 			let ret = {
-				msg: error_message.SUCCESS,
 				registration_token: docs.registration_token,
 			};
 

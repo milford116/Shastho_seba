@@ -1,13 +1,10 @@
 const mongoose = require("mongoose");
-
 const appointment = require("../models/appointment.model");
 const appointmentModel = mongoose.model("appointment");
 const prescription = require("../models/prescription.model");
 const prescriptionModel = mongoose.model("prescription");
-
-const {SUCCESS, INTERNAL_SERVER_ERROR, BAD_REQUEST, DATA_NOT_FOUND} = require("../errors");
+const {SUCCESS, INTERNAL_SERVER_ERROR} = require("../errors");
 const error_message = require("../error.messages");
-
 const path = require("path");
 const multer = require("multer");
 
@@ -65,7 +62,7 @@ exports.upload = upload;
  *             schema:
  *               type: object
  *               properties:
- *                 msg:
+ *                 message:
  *                   type: string
  *       500:
  *         description: Internal Server Error
@@ -74,7 +71,7 @@ exports.upload = upload;
  *             schema:
  *               type: object
  *               properties:
- *                 msg:
+ *                 message:
  *                   type: string
  *       400:
  *         description: Bad Request
@@ -83,7 +80,7 @@ exports.upload = upload;
  *             schema:
  *               type: object
  *               properties:
- *                 msg:
+ *                 message:
  *                   type: string
  */
 exports.postPrescription = async function (req, res) {
@@ -94,8 +91,8 @@ exports.postPrescription = async function (req, res) {
 	if (req.body.medicine !== undefined) newPrescription.medicine = req.body.medicine;
 
 	newPrescription.save((err, docs) => {
-		if (err) res.status(INTERNAL_SERVER_ERROR).json({msg: error_message.INTERNAL_SERVER_ERROR});
-		else res.status(SUCCESS).json({msg: error_message.SUCCESS});
+		if (err) res.status(INTERNAL_SERVER_ERROR).json(error_message.INTERNAL_SERVER_ERROR);
+		else res.status(SUCCESS).json(error_message.SUCCESS);
 	});
 };
 
@@ -128,8 +125,6 @@ exports.postPrescription = async function (req, res) {
  *             schema:
  *               type: object
  *               properties:
- *                 msg:
- *                   type: string
  *                 prescriptions:
  *                   type: array
  *                   items:
@@ -141,7 +136,7 @@ exports.postPrescription = async function (req, res) {
  *             schema:
  *               type: object
  *               properties:
- *                 msg:
+ *                 message:
  *                   type: string
  *       400:
  *         description: Bad Request
@@ -150,7 +145,7 @@ exports.postPrescription = async function (req, res) {
  *             schema:
  *               type: object
  *               properties:
- *                 msg:
+ *                 message:
  *                   type: string
  */
 exports.getPreviousPrescription = async function (req, res) {
@@ -164,7 +159,6 @@ exports.getPreviousPrescription = async function (req, res) {
 			}
 
 			let ret = {
-				msg: error_message.SUCCESS,
 				prescriptions,
 			};
 

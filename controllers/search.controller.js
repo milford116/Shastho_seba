@@ -40,8 +40,6 @@ const error_message = require("../error.messages");
  *             schema:
  *               type: object
  *               properties:
- *                 msg:
- *                   type: string
  *                 doctors:
  *                   type: array
  *                   items:
@@ -53,7 +51,7 @@ const error_message = require("../error.messages");
  *             schema:
  *               type: object
  *               properties:
- *                 msg:
+ *                 message:
  *                   type: string
  *       400:
  *         description: Bad Request
@@ -62,7 +60,7 @@ const error_message = require("../error.messages");
  *             schema:
  *               type: object
  *               properties:
- *                 msg:
+ *                 message:
  *                   type: string
  */
 exports.searchDoctor = async function (req, res) {
@@ -85,10 +83,9 @@ exports.searchDoctor = async function (req, res) {
 		.limit(data.limit)
 		.skip(data.limit * data.skip)
 		.exec((err, docs) => {
-			if (err) res.status(INTERNAL_SERVER_ERROR).json({msg: error_message.INTERNAL_SERVER_ERROR});
+			if (err) res.status(INTERNAL_SERVER_ERROR).json(error_message.INTERNAL_SERVER_ERROR);
 			else {
 				let ret = {
-					msg: error_message.SUCCESS,
 					doctors: docs,
 				};
 				res.status(SUCCESS).send(ret);

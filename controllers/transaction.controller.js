@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const transaction = require("../models/transaction.model");
 const transactionModel = mongoose.model("transaction");
 
-const {SUCCESS, INTERNAL_SERVER_ERROR, BAD_REQUEST, DATA_NOT_FOUND} = require("../errors");
+const {SUCCESS, INTERNAL_SERVER_ERROR} = require("../errors");
 const error_message = require("../error.messages");
 
 /**
@@ -40,7 +40,7 @@ const error_message = require("../error.messages");
  *             schema:
  *               type: object
  *               properties:
- *                 msg:
+ *                 message:
  *                   type: string
  *       500:
  *         description: Internal Server Error
@@ -49,7 +49,7 @@ const error_message = require("../error.messages");
  *             schema:
  *               type: object
  *               properties:
- *                 msg:
+ *                 message:
  *                   type: string
  *       400:
  *         description: Bad Request
@@ -58,7 +58,7 @@ const error_message = require("../error.messages");
  *             schema:
  *               type: object
  *               properties:
- *                 msg:
+ *                 message:
  *                   type: string
  */
 exports.addTransaction = async function (req, res) {
@@ -69,9 +69,9 @@ exports.addTransaction = async function (req, res) {
 
 	transaction.save((err, docs) => {
 		if (err) {
-			res.status(INTERNAL_SERVER_ERROR).json({msg: error_message.INTERNAL_SERVER_ERROR});
+			res.status(INTERNAL_SERVER_ERROR).json(error_message.INTERNAL_SERVER_ERROR);
 		} else {
-			res.status(SUCCESS).json({msg: error_message.SUCCESS});
+			res.status(SUCCESS).json(error_message.SUCCESS);
 		}
 	});
 };
@@ -105,7 +105,7 @@ exports.addTransaction = async function (req, res) {
  *             schema:
  *               type: object
  *               properties:
- *                 msg:
+ *                 message:
  *                   type: string
  *                   description: jwt token
  *                 transactions:
@@ -119,7 +119,7 @@ exports.addTransaction = async function (req, res) {
  *             schema:
  *               type: object
  *               properties:
- *                 msg:
+ *                 message:
  *                   type: string
  *       400:
  *         description: Bad Request
@@ -128,7 +128,7 @@ exports.addTransaction = async function (req, res) {
  *             schema:
  *               type: object
  *               properties:
- *                 msg:
+ *                 message:
  *                   type: string
  */
 
@@ -161,9 +161,6 @@ exports.addTransaction = async function (req, res) {
  *             schema:
  *               type: object
  *               properties:
- *                 msg:
- *                   type: string
- *                   description: jwt token
  *                 transactions:
  *                   type: array
  *                   items:
@@ -175,7 +172,7 @@ exports.addTransaction = async function (req, res) {
  *             schema:
  *               type: object
  *               properties:
- *                 msg:
+ *                 message:
  *                   type: string
  *       400:
  *         description: Bad Request
@@ -184,16 +181,15 @@ exports.addTransaction = async function (req, res) {
  *             schema:
  *               type: object
  *               properties:
- *                 msg:
+ *                 message:
  *                   type: string
  */
 exports.getTransaction = async function (req, res) {
 	transactionModel.find({appointment_id: req.body.appointment_id}, (err, docs) => {
 		if (err) {
-			res.status(INTERNAL_SERVER_ERROR).json({msg: error_message.INTERNAL_SERVER_ERROR});
+			res.status(INTERNAL_SERVER_ERROR).json(error_message.INTERNAL_SERVER_ERROR);
 		} else {
 			let ret = {
-				msg: error_message.SUCCESS,
 				transactions: docs,
 			};
 

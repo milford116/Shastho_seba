@@ -39,7 +39,34 @@ exports.upload = upload;
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/doctor'
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *               mobile_no:
+ *                 type: string
+ *               email:
+ *                 type: string
+ *               institution:
+ *                 type: string
+ *               designation:
+ *                 type: string
+ *               reg_number:
+ *                 type: string
+ *               password:
+ *                 type: string
+ *               specialization:
+ *                 type: array
+ *                 items:
+ *                   type: string
+ *             required:
+ *               - name
+ *               - email
+ *               - mobile_no
+ *               - institution
+ *               - designation
+ *               - reg_number
+ *               - password
  *     responses:
  *       200:
  *         description: Success
@@ -189,7 +216,6 @@ exports.login = async function (req, res) {
 							res.status(INTERNAL_SERVER_ERROR).json(error_message.INTERNAL_SERVER_ERROR);
 						} else {
 							const ret = {
-								message: error_message.SUCCESS,
 								token: token,
 								doctor_detail: doctor_detail,
 							};
@@ -278,7 +304,7 @@ exports.reference = async function (req, res) {
 
 /**
  * @swagger
- * /doctor/list/all/:limit/:page:
+ * /doctor/list/all/{limit}/{page}:
  *   get:
  *     deprecated: false
  *     security:
@@ -310,7 +336,28 @@ exports.reference = async function (req, res) {
  *                 doctors:
  *                   type: array
  *                   items:
- *                     $ref: '#/components/schemas/doctor'
+ *                     type: object
+ *                     properties:
+ *                       _id:
+ *                         type: string
+ *                       name:
+ *                         type: string
+ *                       designation:
+ *                         type: string
+ *                       institution:
+ *                         type: string
+ *                       reg_number:
+ *                         type: string
+ *                       mobile_no:
+ *                         type: string
+ *                       email:
+ *                         type: string
+ *                       image:
+ *                         type: string
+ *                       specialization:
+ *                         type: array
+ *                         items:
+ *                           type: string
  *       500:
  *         description: Internal Server Error
  *         content:
@@ -336,16 +383,15 @@ exports.doctorList = async function (req, res) {
 		limit: parseInt(req.params.limit, 10),
 	};
 
-	doctorModel.paginate({}, options, (err, docs) => {
-		if (err) {
-			res.status(INTERNAL_SERVER_ERROR).json(error_message.INTERNAL_SERVER_ERROR);
-		} else {
-			let ret = {
-				doctors: docs,
-			};
-			res.status(SUCCESS).json(ret);
-		}
-	});
+	let total = await doctorModel.countDocuments({});
+	let doctors = await doctorModel
+		.find({})
+		.limit(options.limit)
+		.skip(options.limit * options.page)
+		.select("_id name institution designation reg_number mobile_no email image specialization")
+		.exec();
+
+	res.status(SUCCESS).json({total, doctors});
 };
 
 /**
@@ -357,7 +403,7 @@ exports.doctorList = async function (req, res) {
  *       - bearerAuth: []
  *     tags:
  *       - Doctor
- *     summary: edit the detail of a doctor. just add the fields that are being updated
+ *     summary: Edit doctor detail
  *     requestBody:
  *       required: true
  *       content:
@@ -367,9 +413,85 @@ exports.doctorList = async function (req, res) {
  *             properties:
  *               newDoctor:
  *                 type: object
- *                 $ref: '#/components/schemas/doctor'
+ *                 properties:
+ *                   name:
+ *                     type: string
+ *                   designation:
+ *                     type: string
+ *                   institution:
+ *                     type: string
+ *                   email:
+ *                     type: string
+ *                   specialization:
+ *                     type: array
+ *                     items:
+ *                       type: string
+ *     responses:
+ *       200:
+ *         description: success
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 doctor:
+ *                   $ref: '#/components/schemas/doctor'
+ *       500:
+ *         description: Internal Server Error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 msg:
+ *                   type: string
+ *       400:
+ *         description: Bad Request
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 msg:
+ *                   type: string
+ */
+exports.editDoctor = async function (req, res) {
+	let updates = req.body.newDoctor;
+	doctorModel.findOneAndUpdate({mobile_no: req.mobile_no}, updates, {new: true}, (err, docs) => {
+		if (err) {
+			res.status(INTERNAL_SERVER_ERROR).json(error_message.INTERNAL_SERVER_ERROR);
+		} else {
+			let ret = {
+				doctor: docs,
+			};
+			res.status(SUCCESS).json(ret);
+		}
+	});
+};
+
+/**
+ * @swagger
+ * /doctor/upload/profile_picture:
+ *   post:
+ *     deprecated: false
+ *     security:
+ *       - bearerAuth: []
+ *     tags:
+ *       - Doctor
+ *     summary: Posts the profile picture of the doctor
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         multipart/form-data:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               file:
+ *                 type: string
+ *                 format: binary
+ *                 description: profile picture of the doctor
  *             required:
- *               - newDoctor
+ *               - file
  *     responses:
  *       200:
  *         description: success
@@ -399,63 +521,13 @@ exports.doctorList = async function (req, res) {
  *                 message:
  *                   type: string
  */
-exports.editDoctor = async function (req, res) {
-	let updates = req.body.newDoctor;
-	doctorModel.findOneAndUpdate({mobile_no: req.mobile_no}, updates, {new: true}, (err, docs) => {
-		if (err) {
-			res.status(INTERNAL_SERVER_ERROR).json(error_message.INTERNAL_SERVER_ERROR);
-		} else {
-			let ret = {
-				doctor: docs,
-			};
-			res.status(SUCCESS).json(ret);
-		}
-	});
-};
-
-/**
- * @swagger
- * /doctor/upload/profile_picture:
- *   post:
- *     deprecated: false
- *     security:
- *       - bearerAuth: []
- *     tags:
- *       - Doctor
- *     summary: Posts the profile picture of the doctor
- *     responses:
- *       200:
- *         description: success
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 message:
- *                   type: string
- *       500:
- *         description: Internal Server Error
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 message:
- *                   type: string
- *       400:
- *         description: Bad Request
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 message:
- *                   type: string
- */
 exports.uploadDP = async function (req, res) {
-	doctorModel.updateOne({mobile_no: req.mobile_no}, {image: "/profilePicture/doctor/" + req.fileName}, (err, docs) => {
+	const url = req.protocol + "://" + req.get("host");
+	const imageName = url + "/profilePicture/doctor/" + req.fileName;
+
+	doctorModel.findOneAndUpdate({mobile_no: req.mobile_no}, {image: imageName}, {new: true}, (err, docs) => {
 		if (err) res.status(INTERNAL_SERVER_ERROR).json(error_message.INTERNAL_SERVER_ERROR);
-		else res.status(SUCCESS).json(error_message.SUCCESS);
+		else res.status(SUCCESS).json({doctor: docs});
 	});
 };
 

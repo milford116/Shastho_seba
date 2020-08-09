@@ -3,6 +3,7 @@ class Response<T> {
   T data;
   String message;
 
+  Response.idle() : status = Status.IDLE;
   Response.loading(this.message) : status = Status.LOADING;
   Response.completed(this.data) : status = Status.COMPLETED;
   Response.error(this.message) : status = Status.ERROR;
@@ -13,4 +14,4 @@ class Response<T> {
   }
 }
 
-enum Status { LOADING, COMPLETED, ERROR }
+enum Status { IDLE, LOADING, COMPLETED, ERROR }

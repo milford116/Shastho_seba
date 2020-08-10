@@ -22,12 +22,9 @@ const error_message = require("../error.messages");
  *           schema:
  *             type: object
  *             properties:
- *               id:
- *                 type: string
  *               registration_token:
  *                 type: string
  *             required:
- *               - id
  *               - registration_token
  *     responses:
  *       200:
@@ -37,7 +34,7 @@ const error_message = require("../error.messages");
  *             schema:
  *               type: object
  *               properties:
- *                 message:
+ *                 registration_token:
  *                   type: string
  *       500:
  *         description: Internal Server Error
@@ -59,9 +56,11 @@ const error_message = require("../error.messages");
  *                   type: string
  */
 exports.setToken = async function (req, res) {
-	patientModel.updateOne({_id: req.body.id}, {registration_token: req.body.registration_token}, (err, docs) => {
+	patientModel.findOneAndUpdate({mobile_no: req.mobile_no}, {registration_token: req.body.registration_token}, {new: true}, (err, docs) => {
 		if (err) res.status(INTERNAL_SERVER_ERROR).json(error_message.INTERNAL_SERVER_ERROR);
-		else res.status(SUCCESS).json(error_message.SUCCESS);
+		else {
+			res.status(SUCCESS).json({registration_token: docs.registration_token});
+		}
 	});
 };
 

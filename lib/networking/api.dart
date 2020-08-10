@@ -42,30 +42,30 @@ class Api {
   }
 
   dynamic _response(http.Response response) {
+    print(response.body);
+    dynamic responseJson = jsonDecode(response.body);
     switch (response.statusCode) {
       case 200:
-        print(response.body);
-        dynamic responseJson = jsonDecode(response.body);
         return responseJson;
         break;
       case 400:
-        throw BadRequestException(response.body);
+        throw BadRequestException(responseJson['message']);
         break;
       case 401:
-        throw UnauthorisedException(response.body);
+        throw UnauthorisedException(responseJson['message']);
         break;
       case 403:
-        throw ForbiddenException(response.body);
+        throw ForbiddenException(responseJson['message']);
         break;
       case 404:
-        throw DataNotFoundException(response.body);
+        throw DataNotFoundException(responseJson['message']);
         break;
       case 500:
-        throw InternalServerException(response.body);
+        throw InternalServerException(responseJson['message']);
         break;
       default:
         throw FetchDataException(
-            "Error occured while communicating with server with status code: ${response.statusCode}");
+            'Error occured while communicating with server with status code: ${response.statusCode}');
     }
   }
 }

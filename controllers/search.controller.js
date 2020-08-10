@@ -53,15 +53,6 @@ const error_message = require("../error.messages");
  *               properties:
  *                 message:
  *                   type: string
- *       400:
- *         description: Bad Request
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 message:
- *                   type: string
  */
 exports.searchDoctor = async function (req, res) {
 	let data = req.body;
@@ -82,6 +73,7 @@ exports.searchDoctor = async function (req, res) {
 		.find(query)
 		.limit(data.limit)
 		.skip(data.limit * data.skip)
+		.select("_id name institution designation reg_number mobile_no email image specialization")
 		.exec((err, docs) => {
 			if (err) res.status(INTERNAL_SERVER_ERROR).json(error_message.INTERNAL_SERVER_ERROR);
 			else {

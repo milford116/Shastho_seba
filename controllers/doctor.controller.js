@@ -161,7 +161,7 @@ exports.registration = async function (req, res) {
  *                   type: string
  *                   description: jwt token
  *                 doctor_detail:
- *                   ref: '#/components/schemas/doctor'
+ *                   $ref: '#/components/schemas/doctor'
  *       500:
  *         description: Internal Server Error
  *         content:

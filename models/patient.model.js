@@ -11,7 +11,6 @@ const schema = mongoose.Schema;
  *       properties:
  *         name:
  *           type: string
- *           descriptions: this is optional!
  *         mobile_no:
  *           type: string
  *           uniqueItems: true

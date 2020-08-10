@@ -77,18 +77,21 @@ exports.addSchedule = async function (req, res) {
 	/*
   	https://stackoverflow.com/questions/13272824/combine-two-or-queries-with-and-in-mongoose
 		time_start st-en time_end : old: 9-12, new: 10-11 
-		st time_start-time_end en : old: 9-12, new: 8-1
+		st time_start-time_end en : old: 9-12, new: 8-13
 		st time-start en time_end : old: 9-12, new: 8-11
-		time_start st time_end en : old: 9-12, new: 10:1
+		time_start st time_end en : old: 9-12, new: 10:13
 		accepted: 7-8, anything starting after 12
+		old: 9-12. new: 8-9
+		old 9-12, new 12-13
+		old 9-12, new: 0-9
 	*/
 	var query = {
 		doc_mobile_no: req.mobile_no,
 		$or: [
-			{$and: [{time_start: {$lte: st, $lte: en}}, {time_end: {$gte: st, $gte: en}}]},
-			{$and: [{time_start: {$gte: st, $lte: en}}, {time_end: {$gte: st, $lte: en}}]},
-			{$and: [{time_start: {$gte: st, $lte: en}}, {time_end: {$gte: st, $gte: en}}]},
-			{$and: [{time_start: {$lte: st, $lte: en}}, {time_end: {$gte: st, $lte: en}}]},
+			{$and: [{time_start: {$lt: st, $lt: en}}, {time_end: {$gt: st, $gt: en}}]},
+			{$and: [{time_start: {$gt: st, $lt: en}}, {time_end: {$gt: st, $lt: en}}]},
+			{$and: [{time_start: {$gt: st, $lt: en}}, {time_end: {$gt: st, $gt: en}}]},
+			{$and: [{time_start: {$lt: st, $lt: en}}, {time_end: {$gt: st, $lt: en}}]},
 		],
 		day: req.body.day,
 	};
@@ -246,10 +249,10 @@ exports.editSchedule = async function (req, res) {
 	var query = {
 		doc_mobile_no: req.mobile_no,
 		$or: [
-			{$and: [{time_start: {$lte: st, $lte: en}}, {time_end: {$gte: st, $gte: en}}]},
-			{$and: [{time_start: {$gte: st, $lte: en}}, {time_end: {$gte: st, $lte: en}}]},
-			{$and: [{time_start: {$gte: st, $lte: en}}, {time_end: {$gte: st, $gte: en}}]},
-			{$and: [{time_start: {$lte: st, $lte: en}}, {time_end: {$gte: st, $lte: en}}]},
+			{$and: [{time_start: {$lt: st, $lt: en}}, {time_end: {$gt: st, $gt: en}}]},
+			{$and: [{time_start: {$gt: st, $lt: en}}, {time_end: {$gt: st, $lt: en}}]},
+			{$and: [{time_start: {$gt: st, $lt: en}}, {time_end: {$gt: st, $gt: en}}]},
+			{$and: [{time_start: {$lt: st, $lt: en}}, {time_end: {$gt: st, $lt: en}}]},
 		],
 		day: req.body.day,
 		_id: {$ne: mongoose.Types.ObjectId(req.body.id)},

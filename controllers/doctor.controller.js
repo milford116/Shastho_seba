@@ -413,6 +413,7 @@ exports.doctorList = async function (req, res) {
  *             properties:
  *               newDoctor:
  *                 type: object
+ *                 description: send only those fields that you are updating
  *                 properties:
  *                   name:
  *                     type: string

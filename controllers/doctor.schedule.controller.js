@@ -46,7 +46,7 @@ const error_message = require("../error.messages");
  *               type: object
  *               properties:
  *                 schedule:
- *                   ref: '#/components/schemas/schedule'
+ *                   $ref: '#/components/schemas/schedule'
  *       500:
  *         description: Internal Server Error
  *         content:
@@ -74,23 +74,21 @@ exports.addSchedule = async function (req, res) {
 	st.setHours(st.getHours() + 6);
 	en.setHours(en.getHours() + 6);
 
-	// st.setDate(1), st.setMonth(1), st.setFullYear(2000);
-	// en.setDate(1), en.setMonth(1), en.setFullYear(2000);
-
 	/*
   	https://stackoverflow.com/questions/13272824/combine-two-or-queries-with-and-in-mongoose
-		time_start st-en time_end
-		st time_start-time_end en
-		st time-start en time_end
-		time_start st time_end en
+		time_start st-en time_end : old: 9-12, new: 10-11 
+		st time_start-time_end en : old: 9-12, new: 8-1
+		st time-start en time_end : old: 9-12, new: 8-11
+		time_start st time_end en : old: 9-12, new: 10:1
+		accepted: 7-8, anything starting after 12
 	*/
 	var query = {
 		doc_mobile_no: req.mobile_no,
 		$or: [
-			{$and: [{time_start: {$lte: st}}, {time_end: {$gte: en}}]},
-			{$and: [{time_start: {$gte: st}}, {time_end: {$lte: en}}]},
-			{$and: [{time_start: {$gte: st}}, {time_end: {$gte: en}}]},
-			{$and: [{time_start: {$lte: st}}, {time_end: {$lte: en}}]},
+			{$and: [{time_start: {$lte: st, $lte: en}}, {time_end: {$gte: st, $gte: en}}]},
+			{$and: [{time_start: {$gte: st, $lte: en}}, {time_end: {$gte: st, $lte: en}}]},
+			{$and: [{time_start: {$gte: st, $lte: en}}, {time_end: {$gte: st, $gte: en}}]},
+			{$and: [{time_start: {$lte: st, $lte: en}}, {time_end: {$gte: st, $lte: en}}]},
 		],
 		day: req.body.day,
 	};
@@ -200,15 +198,15 @@ exports.getSchedule = async function (req, res) {
  *                 format: date-time
  *               day:
  *                 type: number
- *                 description: sunday = 1, monday = 2 and so on
+ *                 description: monday = 1 and so on
  *               fee:
  *                 type: number
  *             required:
- *               - time-start
+ *               - id
+ *               - time_start
  *               - time_end
  *               - day
  *               - fee
- *               - id
  *     responses:
  *       200:
  *         description: success
@@ -218,7 +216,7 @@ exports.getSchedule = async function (req, res) {
  *               type: object
  *               properties:
  *                 schedule:
- *                   ref: '#/components/schemas/schedule'
+ *                   $ref: '#/components/schemas/schedule'
  *       500:
  *         description: Internal Server Error
  *         content:
@@ -241,31 +239,37 @@ exports.getSchedule = async function (req, res) {
 exports.editSchedule = async function (req, res) {
 	var st = new Date(req.body.time_start);
 	var en = new Date(req.body.time_end);
+
 	st.setHours(st.getHours() + 6);
 	en.setHours(en.getHours() + 6);
-	st.setDate(1), st.setMonth(1), st.setFullYear(2000);
-	en.setDate(1), en.setMonth(1), en.setFullYear(2000);
 
 	var query = {
 		doc_mobile_no: req.mobile_no,
-		$or: [{time_start: {$lte: st, $gte: en}}, {time_end: {$lte: st, $gte: en}}],
+		$or: [
+			{$and: [{time_start: {$lte: st, $lte: en}}, {time_end: {$gte: st, $gte: en}}]},
+			{$and: [{time_start: {$gte: st, $lte: en}}, {time_end: {$gte: st, $lte: en}}]},
+			{$and: [{time_start: {$gte: st, $lte: en}}, {time_end: {$gte: st, $gte: en}}]},
+			{$and: [{time_start: {$lte: st, $lte: en}}, {time_end: {$gte: st, $lte: en}}]},
+		],
 		day: req.body.day,
+		_id: {$ne: mongoose.Types.ObjectId(req.body.id)},
 	};
 
 	let data = {
-		doc_mobile_no: req.body.doc_mobile_no,
 		time_start: req.body.time_start,
 		time_end: req.body.time_end,
 		day: req.body.day,
 		fee: req.body.fee,
 	};
 
-	scheduleModel.findOneAndUpdate(query, data, {new: true}, (err, docs) => {
+	let clash = await scheduleModel.find(query).exec();
+	if (clash && clash.length) res.status(BAD_REQUEST).json({message: "schedule clashes with current schedules"});
+
+	scheduleModel.findOneAndUpdate({_id: req.body.id}, data, {new: true}, (err, docs) => {
 		if (err) {
 			res.status(INTERNAL_SERVER_ERROR).json(error_message.INTERNAL_SERVER_ERROR);
 		} else {
 			let ret = {
-				message: error_message,
 				schedule: docs,
 			};
 			res.status(SUCCESS).json(ret);

@@ -7,6 +7,7 @@ import '../../blocs/previousAppointments.dart';
 import '../../networking/response.dart';
 import '../../models/appointment.dart';
 import '../../widgets/loading.dart';
+import '../../widgets/error.dart';
 
 class PreviousAppointments extends StatelessWidget {
   @override
@@ -102,7 +103,13 @@ class PreviousAppointments extends StatelessWidget {
                         ),
                       );
                     case Status.ERROR:
-                      break;
+                      return Center(
+                        child: Error(
+                          message: response.message,
+                          onPressed: () =>
+                              appointmentsBloc.fetchPreviousAppointments(),
+                        ),
+                      );
                   }
                 }
                 return Container();

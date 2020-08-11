@@ -37,11 +37,8 @@ exports.handleSocketIO = async function (server) {
 				msg: data.msg,
 			};
 
-			io.to(chamber).emit(payload);
-		});
-
-		socket.on("dbg", () => {
-			console.log(socket.userId, socket.username, socket.userType);
+			// send the whole payload in real app
+			io.to(chamber).emit(payload.msg);
 		});
 	});
 };

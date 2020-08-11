@@ -15,20 +15,33 @@ exports.handleSocketIO = async function (server) {
 
 	io.on("connection", async (socket) => {
 		socket.on("join", (data, cb) => {
-			helperFunctions.jwtVerifier(data.token, async (err, user) => {
+			helperFunctions.jwtVerifier(data, async (err, user) => {
 				if (err) console.log(err);
 				else {
-					// const webinar = await Webinar.findById(data.webinarId);
-					// const seminarRoom = webinar._id.toString() + '_seminar';
-					// const modRoom = webinar._id.toString() + '_mod';
-					// socket.join(seminarRoom);
+					socket.userId = user.detail._id;
+					socket.username = user.detail.name;
+					socket.userType = user.type;
+
+					socket.join(data.chamberId.toString());
+					if (cb) cb();
 				}
 			});
 		});
 
 		socket.on("msg", (data, cb) => {
 			const chamber = data.chamberId.toString();
-			io.to(chamber).emit(data.message);
+			let payload = {
+				userId: socket.userId,
+				username: socket.username,
+				userType: socket.userType,
+				msg: data.msg,
+			};
+
+			io.to(chamber).emit(payload);
+		});
+
+		socket.on("dbg", () => {
+			console.log(socket.userId, socket.username, socket.userType);
 		});
 	});
 };

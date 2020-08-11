@@ -5,28 +5,24 @@ const patientModel = mongoose.model("patient");
 const doctor = require("../models/doctor.model");
 const doctorModel = mongoose.model("doctor");
 
-exports.jwtVerifier = async function (token, cb) {
-	let tokenString = token.split(" ")[1];
+exports.jwtVerifier = async function (data, cb) {
+	let tokenString = data.token.split(" ")[1];
 
 	jwt.verify(tokenString, process.env.SECRET, async (err, decode) => {
 		if (!err) {
-			let patient = await patientModel.findOne({mobile_no: decode.mobile_no});
-			if (patient) {
-				let user = {
-					type: "patient",
-					detail: patient,
-				};
-				cb(null, patient);
+			let user = {
+				type: data.type,
+			};
+
+			if (data.type === "doctor") {
+				let doctor = await doctorModel.findOne({mobile_no: decode.mobile_no});
+				user.detail = doctor;
+			} else {
+				let patient = await patientModel.findOne({mobile_no: decode.mobile_no});
+				user.detail = patient;
 			}
 
-			let doctor = await doctorModel.findOne({mobile_no: decode.mobile_no});
-			if (doctor) {
-				let user = {
-					type: "doctor",
-					detail: doctor,
-				};
-				cb(null, user);
-			}
+			cb(null, user);
 		} else {
 			cb("jwt verification error", {});
 		}

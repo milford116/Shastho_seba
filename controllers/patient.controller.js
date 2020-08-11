@@ -11,7 +11,7 @@ const error_message = require("../error.messages");
 
 /**
  * @swagger
- * /patient/post/registration:
+ * /patient/post/register:
  *   post:
  *     deprecated: false
  *     tags:

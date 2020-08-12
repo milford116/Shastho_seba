@@ -108,8 +108,8 @@ exports.addSchedule = async function (req, res) {
 		} else {
 			var new_schedule = new scheduleModel();
 			new_schedule.doc_mobile_no = req.mobile_no;
-			new_schedule.time_start = st;
-			new_schedule.time_end = en;
+			new_schedule.time_start = req.body.time_start;
+			new_schedule.time_end = req.body.time_end;
 			new_schedule.day = req.body.day;
 			new_schedule.fee = req.body.fee;
 

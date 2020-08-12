@@ -350,4 +350,7 @@ exports.appointmentDetail = async function (req, res) {
 	});
 };
 
-//exports.
+exports.appointmentInRange = async function (req, res) {
+	var st = new Date(req.body.time_start);
+	var en = new Date(req.body.time_end);
+};

@@ -23,8 +23,6 @@ mongoose.pluralize(null);
  *           default: 0
  *         prescription_img:
  *           type: string
- *         password:
- *           type: string
  *         appointment_date_time:
  *           type: string
  *           format: date-time

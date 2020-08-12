@@ -274,18 +274,19 @@ exports.editSchedule = async function (req, res) {
 
 	let clash = await scheduleModel.find(query).exec();
 	if (clash && clash.length) res.status(BAD_REQUEST).json({message: "schedule clashes with current schedules"});
-
-	scheduleModel.findOneAndUpdate({_id: req.body.id}, data, {new: true}, (err, docs) => {
-		console.log(err, docs);
-		if (err) {
-			res.status(INTERNAL_SERVER_ERROR).json(error_message.INTERNAL_SERVER_ERROR);
-		} else {
-			let ret = {
-				schedule: docs,
-			};
-			res.status(SUCCESS).json(ret);
-		}
-	});
+	else {
+		scheduleModel.findOneAndUpdate({_id: req.body.id}, data, {new: true}, (err, docs) => {
+			console.log(err, docs);
+			if (err) {
+				res.status(INTERNAL_SERVER_ERROR).json(error_message.INTERNAL_SERVER_ERROR);
+			} else {
+				let ret = {
+					schedule: docs,
+				};
+				res.status(SUCCESS).json(ret);
+			}
+		});
+	}
 };
 
 /**

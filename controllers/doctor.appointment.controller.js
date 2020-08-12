@@ -294,11 +294,11 @@ exports.appointmentInRange = async function (req, res) {
 	var st = new Date();
 	var en = new Date();
 
-	st.setHours(0), st.setMinutes(0), st.setSeconds(0);
-	en.setHours(23), en.setMinutes(59), en.setSeconds(59);
+	st.setUTCHours(0, 0, 0, 0);
+	en.setUTCHours(23, 59, 59, 999);
 
 	var query = {
-		schedule_id: req.body.schedule_id,
+		schedule_id: req.params.id,
 		appointment_date_time: {$gte: st, $lte: en},
 	};
 

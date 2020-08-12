@@ -250,13 +250,13 @@ exports.appointmentDetail = async function (req, res) {
  *     security:
  *       - bearerAuth: []
  *     tags:
- *       - Appointmet
+ *       - Appointment
  *     summary: appointments under that schedule
  *     parameters:
  *       - in: path
  *         name: id
  *         schema:
- *           type: integer
+ *           type: string
  *         required: true
  *         description: Numeric ID of the schedule
  *     responses:
@@ -291,8 +291,11 @@ exports.appointmentDetail = async function (req, res) {
  *                   type: string
  */
 exports.appointmentInRange = async function (req, res) {
-	var st = req.body.time_start;
-	var en = req.body.time_end;
+	var st = new Date();
+	var en = new Date();
+
+	st.setHours(0), st.setMinutes(0), st.setSeconds(0);
+	en.setHours(23), en.setMinutes(59), en.setSeconds(59);
 
 	var query = {
 		schedule_id: req.body.schedule_id,

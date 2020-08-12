@@ -407,5 +407,5 @@ exports.todaysSchedule = async function (req, res) {
 	};
 
 	let schedules = await scheduleModel.find(query).exec();
-	res.status(SUCCESS).json(schedules);
+	res.status(SUCCESS).json({schedules});
 };

@@ -81,114 +81,6 @@ exports.updateAppointment = async function (req, res) {
 
 /**
  * @swagger
- * /doctor/get/appointment:
- *   get:
- *     deprecated: false
- *     security:
- *       - bearerAuth: []
- *     tags:
- *       - Appointment
- *     summary: gets all the appointments of the current day(query may not be working)
- *     responses:
- *       200:
- *         description: success
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 appointments:
- *                   type: array
- *                   items:
- *                     type: object
- *                     properties:
- *                       appointment_detail:
- *                         $ref: '#/components/schemas/appointment'
- *                       patient_detail:
- *                         $ref: '#/components/schemas/patient'
- *       500:
- *         description: Internal Server Error
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 message:
- *                   type: string
- *       400:
- *         description: Bad Request
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 message:
- *                   type: string
- *       401:
- *         description: Unauthorized
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 message:
- *                   type: string
- *       403:
- *         description: Forbidden
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 message:
- *                   type: string
- *       404:
- *         description: Data Not Found
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 message:
- *                   type: string
- */
-exports.todaysAppointment = async function (req, res) {
-	let st = new Date(Date.now());
-	let en = new Date(Date.now());
-	st.setHours(0, 0, 0, 0);
-	en.setHours(23, 59, 59, 999);
-	st.setHours(st.getHours() + 6);
-	en.setHours(en.getHours() + 6);
-	const query = {
-		doc_mobile_no: req.mobile_no,
-		appointment_date_time: {$lte: en, $gte: st},
-	};
-
-	let appointments = [];
-
-	appointmentModel.find(query, async (err, docs) => {
-		if (err) {
-			res.status(INTERNAL_SERVER_ERROR).json(error_message.INTERNAL_SERVER_ERROR);
-		} else {
-			for (let i = 0; i < docs.length; i++) {
-				let obj = await patientModel.findOne({mobile_no: docs[i].patient_mobile_no}).exec();
-				let data = {
-					appointment_detail: docs[i],
-					patient_detail: obj,
-				};
-				appointments.push(data);
-			}
-
-			let ret = {
-				appointments,
-			};
-			res.status(SUCCESS).json(ret);
-		}
-	});
-};
-
-/**
- * @swagger
  * /doctor/get/futureAppointment:
  *   post:
  *     deprecated: false
@@ -352,30 +244,21 @@ exports.appointmentDetail = async function (req, res) {
 
 /**
  * @swagger
- * /doctor/get/apointment-in-range:
- *   post:
+ * /doctor/get/appointment:
+ *   get:
  *     deprecated: false
  *     security:
  *       - bearerAuth: []
  *     tags:
- *       - Appointment
- *     summary: appointments in a range
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             properties:
- *               time_start:
- *                 type: string
- *                 format: date-time
- *               time_end:
- *                 type: string
- *                 format: date-time
- *             required:
- *               - time_start
- *               - time_end
+ *       - Appointmet
+ *     summary: appointments under that schedule
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: integer
+ *         required: true
+ *         description: Numeric ID of the schedule
  *     responses:
  *       200:
  *         description: success
@@ -412,6 +295,7 @@ exports.appointmentInRange = async function (req, res) {
 	var en = req.body.time_end;
 
 	var query = {
+		schedule_id: req.body.schedule_id,
 		appointment_date_time: {$gte: st, $lte: en},
 	};
 

@@ -14,6 +14,8 @@ exports.handleSocketIO = async function (server) {
 	});
 
 	io.on("connection", async (socket) => {
+		console.log("new connection", socket.id);
+
 		socket.on("join", (data, cb) => {
 			helperFunctions.jwtVerifier(data, async (err, user) => {
 				if (err) console.log(err);

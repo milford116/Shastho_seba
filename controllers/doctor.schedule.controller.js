@@ -279,3 +279,71 @@ exports.editSchedule = async function (req, res) {
 		}
 	});
 };
+
+/**
+ * @swagger
+ * /doctor/delete/schedule/{id}:
+ *   get:
+ *     deprecated: false
+ *     security:
+ *       - bearerAuth: []
+ *     tags:
+ *       - Schedule
+ *     summary: Delete a schedule
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: integer
+ *         required: true
+ *         description: Numeric ID of the schedule
+ *     responses:
+ *       200:
+ *         description: success
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *       500:
+ *         description: Internal Server Error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 msg:
+ *                   type: string
+ *       400:
+ *         description: Bad Request
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 msg:
+ *                   type: string
+ *       404:
+ *         description: Data Not Found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 msg:
+ *                   type: string
+ */
+exports.deleteSchedule = async function (req, res) {
+	let id = req.params.id;
+	let schedule = await scheduleModel.findById(id);
+
+	if (!schedule) res.status(DATA_NOT_FOUND).json(error_message.DATA_NOT_FOUND);
+	else {
+		scheduleModel.deleteOne({_id: id}, (err, docs) => {
+			if (err) res.status(INTERNAL_SERVER_ERROR).json(error_message.INTERNAL_SERVER_ERROR);
+			else res.status(SUCCESS).json(error_message.SUCCESS);
+		});
+	}
+};

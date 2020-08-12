@@ -22,6 +22,7 @@ router.get("/doctor/list/all/:limit/:page", doctorController.doctorList);
 router.post("/doctor/post/schedule", validatorMiddleWare(doctorValidator.postSchedule), doctorMiddleware.middleware, scheduleController.addSchedule);
 router.get("/doctor/get/schedule", doctorMiddleware.middleware, scheduleController.getSchedule);
 router.post("/doctor/edit/schedule", validatorMiddleWare(doctorValidator.editSchedule), doctorMiddleware.middleware, scheduleController.editSchedule);
+router.get("/doctor/delete/schedule/:id", doctorMiddleware.middleware, scheduleController.deleteSchedule);
 
 router.post("/doctor/update/appointment", doctorMiddleware.middleware, appointmentController.updateAppointment);
 router.get("/doctor/get/appointment", doctorMiddleware.middleware, appointmentController.todaysAppointment);

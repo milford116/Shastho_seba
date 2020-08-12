@@ -36,7 +36,7 @@ const options = {
 			},
 		},
 
-		basePath: "http://localhost:5000",
+		//basePath: "http://localhost:5000",
 		paths: {},
 		definitions: {},
 		responses: {},

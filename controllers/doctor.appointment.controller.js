@@ -416,5 +416,5 @@ exports.appointmentInRange = async function (req, res) {
 	};
 
 	let appointments = await appointmentModel.find(query).exec();
-	res.status(SUCCESS).json(appointments);
+	res.status(SUCCESS).json({appointments});
 };

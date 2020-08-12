@@ -22,6 +22,7 @@ exports.handleSocketIO = async function (server) {
 					socket.username = user.detail.name;
 					socket.userType = user.type;
 
+					console.log(user.detail.name, "has joined");
 					socket.join(data.chamberId.toString());
 					if (cb) cb();
 				}
@@ -38,6 +39,7 @@ exports.handleSocketIO = async function (server) {
 			};
 
 			// send the whole payload in real app
+			console.log(payload.username, " says ", payload.msg);
 			io.to(chamber).emit(payload.msg);
 		});
 

@@ -40,5 +40,14 @@ exports.handleSocketIO = async function (server) {
 			// send the whole payload in real app
 			io.to(chamber).emit(payload.msg);
 		});
+
+		socket.on("disconnect", async () => {
+			console.log("Disconnected: " + socket.userId);
+
+			// io.to(socket.userId).emit('message', {
+			// 	user: 'Admin',
+			// 	text: `${socket.username} has left.`,
+			// });
+		});
 	});
 };

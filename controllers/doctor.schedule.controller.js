@@ -74,6 +74,10 @@ exports.addSchedule = async function (req, res) {
 	st.setHours(st.getHours() + 6);
 	en.setHours(en.getHours() + 6);
 
+	// date doesn't matter so fixing a particular date
+	st.setDate(1), st.setMonth(1), st.setFullYear(2000);
+	en.setDate(1), en.setMonth(1), en.setFullYear(2000);
+
 	/*
   	https://stackoverflow.com/questions/13272824/combine-two-or-queries-with-and-in-mongoose
 		time_start st-en time_end : old: 9-12, new: 10-11 
@@ -245,6 +249,9 @@ exports.editSchedule = async function (req, res) {
 
 	st.setHours(st.getHours() + 6);
 	en.setHours(en.getHours() + 6);
+	// date doesn't matter so fixing a particular date
+	st.setDate(1), st.setMonth(1), st.setFullYear(2000);
+	en.setDate(1), en.setMonth(1), en.setFullYear(2000);
 
 	var query = {
 		doc_mobile_no: req.mobile_no,
@@ -346,4 +353,59 @@ exports.deleteSchedule = async function (req, res) {
 			else res.status(SUCCESS).json(error_message.SUCCESS);
 		});
 	}
+};
+
+/**
+ * @swagger
+ * /doctor/schedule/today:
+ *   get:
+ *     deprecated: false
+ *     security:
+ *       - bearerAuth: []
+ *     tags:
+ *       - Schedule
+ *     summary: Gets all the schedule of today
+ *     responses:
+ *       200:
+ *         description: success
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 schedules:
+ *                   type: array
+ *                   items:
+ *                     $ref: '#/components/schemas/schedule'
+ *       500:
+ *         description: Internal Server Error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 msg:
+ *                   type: string
+ *       400:
+ *         description: Bad Request
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 msg:
+ *                   type: string
+ */
+exports.todaysSchedule = async function (req, res) {
+	var date = new Date();
+
+	var query = {
+		doc_mobile_no: req.mobile_no,
+		day: date.getDay(),
+	};
+
+	console.log(date, date.getDay());
+
+	let schedules = await scheduleModel.find(query).exec();
+	res.status(SUCCESS).json(schedules);
 };

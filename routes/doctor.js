@@ -23,6 +23,7 @@ router.post("/doctor/post/schedule", validatorMiddleWare(doctorValidator.postSch
 router.get("/doctor/get/schedule", doctorMiddleware.middleware, scheduleController.getSchedule);
 router.post("/doctor/edit/schedule", validatorMiddleWare(doctorValidator.editSchedule), doctorMiddleware.middleware, scheduleController.editSchedule);
 router.get("/doctor/delete/schedule/:id", doctorMiddleware.middleware, scheduleController.deleteSchedule);
+router.get("/doctor/schedule/today", doctorMiddleware.middleware, scheduleController.todaysSchedule);
 
 router.post("/doctor/update/appointment", doctorMiddleware.middleware, appointmentController.updateAppointment);
 router.get("/doctor/get/appointment", doctorMiddleware.middleware, appointmentController.todaysAppointment);

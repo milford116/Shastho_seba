@@ -276,6 +276,7 @@ exports.editSchedule = async function (req, res) {
 	if (clash && clash.length) res.status(BAD_REQUEST).json({message: "schedule clashes with current schedules"});
 
 	scheduleModel.findOneAndUpdate({_id: req.body.id}, data, {new: true}, (err, docs) => {
+		console.log(err, docs);
 		if (err) {
 			res.status(INTERNAL_SERVER_ERROR).json(error_message.INTERNAL_SERVER_ERROR);
 		} else {

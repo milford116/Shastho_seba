@@ -71,8 +71,8 @@ exports.addSchedule = async function (req, res) {
 	var en = new Date(req.body.time_end);
 
 	// the front-end sends time that is not GMT+6
-	st.setHours(st.getHours() + 6);
-	en.setHours(en.getHours() + 6);
+	// st.setHours(st.getHours() + 6);
+	// en.setHours(en.getHours() + 6);
 
 	// date doesn't matter so fixing a particular date
 	st.setDate(1), st.setMonth(1), st.setFullYear(2000);
@@ -247,8 +247,8 @@ exports.editSchedule = async function (req, res) {
 	var st = new Date(req.body.time_start);
 	var en = new Date(req.body.time_end);
 
-	st.setHours(st.getHours() + 6);
-	en.setHours(en.getHours() + 6);
+	// st.setHours(st.getHours() + 6);
+	// en.setHours(en.getHours() + 6);
 	// date doesn't matter so fixing a particular date
 	st.setDate(1), st.setMonth(1), st.setFullYear(2000);
 	en.setDate(1), en.setMonth(1), en.setFullYear(2000);

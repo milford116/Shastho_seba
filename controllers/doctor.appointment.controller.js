@@ -244,7 +244,7 @@ exports.appointmentDetail = async function (req, res) {
 
 /**
  * @swagger
- * /doctor/get/appointment:
+ * /doctor/get/appointment/{id}:
  *   get:
  *     deprecated: false
  *     security:

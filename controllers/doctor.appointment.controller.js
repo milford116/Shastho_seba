@@ -350,7 +350,71 @@ exports.appointmentDetail = async function (req, res) {
 	});
 };
 
+/**
+ * @swagger
+ * /doctor/get/apointment-in-range:
+ *   post:
+ *     deprecated: false
+ *     security:
+ *       - bearerAuth: []
+ *     tags:
+ *       - Appointment
+ *     summary: appointments in a range
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               time_start:
+ *                 type: string
+ *                 format: date-time
+ *               time_end:
+ *                 type: string
+ *                 format: date-time
+ *             required:
+ *               - time_start
+ *               - time_end
+ *     responses:
+ *       200:
+ *         description: success
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 appointments:
+ *                   type: array
+ *                   items:
+ *                     $ref: '#/components/schemas/appointment'
+ *       500:
+ *         description: Internal Server Error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 msg:
+ *                   type: string
+ *       400:
+ *         description: Bad Request
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 msg:
+ *                   type: string
+ */
 exports.appointmentInRange = async function (req, res) {
-	var st = new Date(req.body.time_start);
-	var en = new Date(req.body.time_end);
+	var st = req.body.time_start;
+	var en = req.body.time_end;
+
+	var query = {
+		appointment_date_time: {$gte: st, $lte: en},
+	};
+
+	let appointments = await appointmentModel.find(query).exec();
+	res.status(SUCCESS).json(appointments);
 };

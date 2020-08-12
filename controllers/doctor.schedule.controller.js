@@ -266,8 +266,8 @@ exports.editSchedule = async function (req, res) {
 	};
 
 	let data = {
-		time_start: req.body.time_start,
-		time_end: req.body.time_end,
+		time_start: st,
+		time_end: en,
 		day: req.body.day,
 		fee: req.body.fee,
 	};
@@ -403,8 +403,6 @@ exports.todaysSchedule = async function (req, res) {
 		doc_mobile_no: req.mobile_no,
 		day: date.getDay(),
 	};
-
-	console.log(date, date.getDay());
 
 	let schedules = await scheduleModel.find(query).exec();
 	res.status(SUCCESS).json(schedules);

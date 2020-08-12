@@ -17,4 +17,11 @@ class AppointmentsRepository {
         .map<Appointment>((json) => Appointment.fromJson(json))
         .toList();
   }
+
+  Future<List<Appointment>> todayAppointments() async {
+    final data = await _api.get('/patient/get/today/appointment', true);
+    return data['appointments']
+        .map<Appointment>((json) => Appointment.fromJson(json))
+        .toList();
+  }
 }

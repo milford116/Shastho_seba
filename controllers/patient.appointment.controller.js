@@ -8,7 +8,7 @@ const doctorModel = mongoose.model("doctor");
 const appointmentModel = mongoose.model("appointment");
 const scheduleModel = mongoose.model("schedule");
 
-const { SUCCESS, INTERNAL_SERVER_ERROR, BAD_REQUEST, DATA_NOT_FOUND } = require("../errors");
+const {SUCCESS, INTERNAL_SERVER_ERROR, BAD_REQUEST, DATA_NOT_FOUND} = require("../errors");
 const error_message = require("../error.messages");
 
 function setDateTime(cur, date) {
@@ -18,18 +18,68 @@ function setDateTime(cur, date) {
 	return cur;
 }
 
-/*
-2 tarik ---- 2345 ---- 2
-13 tarik ----
-15 tarik ---- 2345 ---- 0/1
-22 tarik ----- 2345 ---- 0/1
-
-schedule --- 2000-01-01 5:00 - 2000-01-01 7:00 saturday 
-date time ---- 2020-08-13 00:00
-*/
-
+/**
+ * @swagger
+ * /patient/post/appointment:
+ *   post:
+ *     deprecated: false
+ *     security:
+ *       - bearerAuth: []
+ *     tags:
+ *       - Appointment
+ *     summary: Get an appointment
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               schedule_id:
+ *                 type: string
+ *               doc_mobile_no:
+ *                 type: string
+ *               doc_name:
+ *                 type: string
+ *               appointment_date_time:
+ *                 type: string
+ *                 format: date-time
+ *             required:
+ *               - schedule_id
+ *               - doc_mobile_no
+ *               - doc_name
+ *               - appointment_date_time
+ *     responses:
+ *       200:
+ *         description: success
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 serial_no:
+ *                   type: string
+ *       500:
+ *         description: Internal Server Error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 msg:
+ *                   type: string
+ *       400:
+ *         description: Bad Request
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 msg:
+ *                   type: string
+ */
 exports.postAppointment = async function (req, res) {
-	doctorModel.findOne({ mobile_no: req.body.doc_mobile_no }, async (err, docs) => {
+	doctorModel.findOne({mobile_no: req.body.doc_mobile_no}, async (err, docs) => {
 		if (err) {
 			res.status(INTERNAL_SERVER_ERROR).json(error_message.INTERNAL_SERVER_ERROR);
 		} else if (!docs) {
@@ -41,7 +91,7 @@ exports.postAppointment = async function (req, res) {
 			var query1 = {
 				schedule_id: req.body.schedule_id,
 				patient_mobile_no: req.mobile_no,
-				status: { $lt: 2 },
+				status: {$lt: 2},
 				appointment_date_time: date,
 			};
 
@@ -56,7 +106,7 @@ exports.postAppointment = async function (req, res) {
 						appointment_date_time: date,
 					};
 
-					var max_collection = await appointmentModel.find(query2).sort({ serial_no: -1 }).limit(1).exec();
+					var max_collection = await appointmentModel.find(query2).sort({serial_no: -1}).limit(1).exec();
 
 					var appointment = new appointmentModel();
 					appointment.schedule_id = req.body.schedule_id;
@@ -135,7 +185,7 @@ exports.getAppointment = async function (req, res) {
 
 	var query = {
 		patient_mobile_no: req.mobile_no,
-		status: { $lt: 2 },
+		status: {$lt: 2},
 		appointment_date_time: date,
 	};
 
@@ -199,7 +249,7 @@ exports.getPastAppointment = async function (req, res) {
 	var query = {
 		patient_mobile_no: req.mobile_no,
 		status: 2,
-		appointment_date_time: { $lte: date },
+		appointment_date_time: {$lte: date},
 	};
 
 	var options = {
@@ -267,7 +317,7 @@ exports.getFutureAppointment = async function (req, res) {
 
 	var query = {
 		patient_mobile_no: req.mobile_no,
-		appointment_date_time: { $gt: date },
+		appointment_date_time: {$gt: date},
 	};
 
 	var options = {
@@ -348,7 +398,7 @@ exports.getFutureAppointment = async function (req, res) {
  *                   type: string
  */
 exports.cancelAppointment = async function (req, res) {
-	appointmentModel.deleteOne({ _id: req.body.id }, (err, docs) => {
+	appointmentModel.deleteOne({_id: req.body.id}, (err, docs) => {
 		if (err) {
 			res.status(INTERNAL_SERVER_ERROR).json(error_message.INTERNAL_SERVER_ERROR);
 		} else if (docs.deletedCount === 0) {

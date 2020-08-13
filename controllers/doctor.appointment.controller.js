@@ -82,7 +82,7 @@ exports.updateAppointment = async function (req, res) {
 /**
  * @swagger
  * /doctor/get/futureAppointment:
- *   post:
+ *   get:
  *     deprecated: false
  *     security:
  *       - bearerAuth: []

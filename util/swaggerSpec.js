@@ -29,7 +29,7 @@ const options = {
 			},
 		},
 		openapi: "3.0.0",
-		servers: [{url: "http://localhost:5000"}, {url: "http://52.77.186.131:5000"}, {url: "https://71a5a6bb720f.ngrok.io"}],
+		servers: [{url: "http://52.77.186.131:5000"}, {url: "http://localhost:5000"}],
 		responses: {
 			UnauthorizedError: {
 				description: "Access token is missing or invalid",

@@ -18,6 +18,16 @@ function setDateTime(cur, date) {
 	return cur;
 }
 
+/*
+2 tarik ---- 2345 ---- 2
+13 tarik ----
+15 tarik ---- 2345 ---- 0/1
+22 tarik ----- 2345 ---- 0/1
+
+schedule --- 2000-01-01 5:00 - 2000-01-01 7:00 saturday 
+date time ---- 2020-08-13 00:00
+*/
+
 exports.postAppointment = async function (req, res) {
 	doctorModel.findOne({ mobile_no: req.body.doc_mobile_no }, async (err, docs) => {
 		if (err) {
@@ -26,28 +36,24 @@ exports.postAppointment = async function (req, res) {
 			res.status(BAD_REQUEST).json(error_message.BAD_REQUEST);
 		} else {
 			var date = new Date(req.body.appointment_date_time);
-			date.setUTCHours(date.getUTCHours() + 6);
-
-			var schedule = await scheduleModel.findOne({ _id: req.body.schedule_id }).exec();
-			schedule.time_start = setDateTime(schedule.time_start, date);
-			schedule.time_end = setDateTime(schedule.time_end, date);
+			date.setUTCHours(0, 0, 0, 0);
 
 			var query1 = {
 				schedule_id: req.body.schedule_id,
 				patient_mobile_no: req.mobile_no,
 				status: { $lt: 2 },
-				appointment_date_time: { $lte: schedule.time_end, $gte: schedule.time_start },
+				appointment_date_time: date,
 			};
 
 			appointmentModel.findOne(query1, async (err, doc) => {
 				if (err) {
 					res.status(INTERNAL_SERVER_ERROR).json(error_message.INTERNAL_SERVER_ERROR);
 				} else if (doc) {
-					res.status(BAD_REQUEST).json(error_message.BAD_REQUEST);
+					res.status(BAD_REQUEST).json("Appointment has already been existed");
 				} else {
 					var query2 = {
 						schedule_id: req.body.schedule_id,
-						appointment_date_time: { $lte: schedule.time_end, $gte: schedule.time_start },
+						appointment_date_time: date,
 					};
 
 					var max_collection = await appointmentModel.find(query2).sort({ serial_no: -1 }).limit(1).exec();
@@ -124,16 +130,15 @@ exports.postAppointment = async function (req, res) {
  *                   type: string
  */
 exports.getAppointment = async function (req, res) {
-	let st = new Date(Date.now());
-	let en = new Date(Date.now());
-	st.setUTCHours(0, 0, 0, 0);
-	en.setUTCHours(23, 59, 59, 999);
-	st.setUTCHours(st.getHours() + 6);
-	en.setUTCHours(en.getHours() + 6);
+	let date = new Date(Date.now());
+	date.setUTCHours(0, 0, 0, 0);
+
 	var query = {
 		patient_mobile_no: req.mobile_no,
-		appointment_date_time: { $lte: en, $gte: st },
+		status: { $lt: 2 },
+		appointment_date_time: date,
 	};
+
 	appointmentModel.find(query, (err, docs) => {
 		if (err) {
 			res.status(INTERNAL_SERVER_ERROR).json(error_message.INTERNAL_SERVER_ERROR);
@@ -188,17 +193,21 @@ exports.getAppointment = async function (req, res) {
  *                   type: string
  */
 exports.getPastAppointment = async function (req, res) {
-	let st = new Date(Date.now());
-	st.setHours(st.getHours() + 6);
+	let date = new Date(Date.now());
+	date.setUTCHours(0, 0, 0, 0);
+
 	var query = {
 		patient_mobile_no: req.mobile_no,
-		appointment_date_time: { $lt: st },
+		status: 2,
+		appointment_date_time: { $lte: date },
 	};
+
 	var options = {
 		sort: {
 			appointment_date_time: -1,
 		},
 	};
+
 	appointmentModel.find(query, null, options, (err, docs) => {
 		if (err) {
 			res.status(INTERNAL_SERVER_ERROR).json(error_message.INTERNAL_SERVER_ERROR);
@@ -253,18 +262,20 @@ exports.getPastAppointment = async function (req, res) {
  *                   type: string
  */
 exports.getFutureAppointment = async function (req, res) {
-	let st = new Date(Date.now());
-	st.setHours(23, 59, 59, 999);
-	st.setHours(st.getHours() + 6);
+	let date = new Date(Date.now());
+	date.setUTCHours(0, 0, 0, 0);
+
 	var query = {
 		patient_mobile_no: req.mobile_no,
-		appointment_date_time: { $gt: st },
+		appointment_date_time: { $gt: date },
 	};
+
 	var options = {
 		sort: {
 			appointment_date_time: 1,
 		},
 	};
+
 	appointmentModel.find(query, null, options, (err, docs) => {
 		if (err) {
 			res.status(INTERNAL_SERVER_ERROR).json(error_message.INTERNAL_SERVER_ERROR);

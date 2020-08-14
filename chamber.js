@@ -31,7 +31,7 @@ exports.handleSocketIO = async function (server) {
 					};
 
 					socket.join(data.chamberId.toString());
-					socket.to(data.chamberId.toString()).emit(payload);
+					socket.to(data.chamberId.toString()).emit("msg", payload);
 
 					if (!hashmap[socket.userId]) hashmap[socket.userId] = [data.chamberId.toString()];
 					else hashmap[socket.userId].push(data.chamberId.toString());
@@ -50,7 +50,7 @@ exports.handleSocketIO = async function (server) {
 			};
 
 			// send the whole payload in real app
-			socket.to(chamber).emit(payload);
+			socket.to(chamber).emit("msg", payload);
 		});
 
 		socket.on("disconnect", async () => {
@@ -62,7 +62,7 @@ exports.handleSocketIO = async function (server) {
 						msgType: "disconnect",
 						chamberId: hashmap[socket.userId][i],
 					};
-					io.to(hashmap[socket.userId][i]).emit(payload);
+					io.to(hashmap[socket.userId][i]).emit("msg", payload);
 				}
 			}
 		});

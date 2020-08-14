@@ -53,9 +53,9 @@ exports.handleSocketIO = async function (server) {
 
 		socket.on("disconnect", async () => {
 			console.log("Disconnected: " + socket.userId);
-
+			console.log(hashmap);
 			if (hashmap[socket.userId]) {
-				for (let i = 0; i < hashmap[socket.userId]; i++) {
+				for (let i = 0; i < hashmap[socket.userId].length; i++) {
 					let payload = {
 						chamberId: hashmap[socket.userId][i],
 					};

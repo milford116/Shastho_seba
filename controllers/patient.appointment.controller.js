@@ -113,6 +113,7 @@ exports.postAppointment = async function (req, res) {
 					appointment.doc_mobile_no = req.body.doc_mobile_no;
 					appointment.doc_name = docs.name;
 					appointment.patient_mobile_no = req.mobile_no;
+					appointment.patient_name = req.name;
 					appointment.status = 0;
 					appointment.appointment_date_time = date;
 

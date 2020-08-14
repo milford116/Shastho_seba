@@ -18,6 +18,8 @@ mongoose.pluralize(null);
  *           type: string
  *         patient_mobile_no:
  *           type: string
+ *         patient_name:
+ *           type: string
  *         status:
  *           type: number
  *           default: 0
@@ -53,6 +55,10 @@ var appointmentSchema = new mongoose.Schema({
 		required: true,
 	},
 	patient_mobile_no: {
+		type: String,
+		required: true,
+	},
+	patient_name: {
 		type: String,
 		required: true,
 	},

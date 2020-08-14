@@ -3,6 +3,7 @@ const helperFunctions = require("./util/helper");
 exports.handleSocketIO = async function (server) {
 	// socket
 	const io = require("socket.io")(server);
+	let hashmap = {};
 
 	// called everytime a socket tries to connect
 	io.use(async (socket, next) => {
@@ -24,9 +25,17 @@ exports.handleSocketIO = async function (server) {
 					socket.username = user.detail.name;
 					socket.userType = user.type;
 
-					console.log(user.detail.name, "has joined");
+					let payload = {
+						msgType: "connection",
+						chamberId: data.chamberId.toString(),
+					};
 
 					socket.join(data.chamberId.toString());
+					socket.to(data.chamberId.toString()).emit(payload);
+
+					if (!hashmap[socket.userId]) hashmap[socket.userId] = [data.chamberId.toString()];
+					else hashmap[socket.userId].push(data.chamberId.toString());
+
 					if (cb) cb();
 				}
 			});
@@ -39,20 +48,64 @@ exports.handleSocketIO = async function (server) {
 				username: socket.username,
 				userType: socket.userType,
 				msg: data.msg,
+				msgType: "msg",
 			};
 
 			// send the whole payload in real app
-			console.log(payload.username, " says ", payload.msg, " in ", chamber);
-			io.to(chamber).emit(payload.msg);
+			socket.to(chamber).emit(payload);
 		});
 
 		socket.on("disconnect", async () => {
 			console.log("Disconnected: " + socket.userId);
 
-			// io.to(socket.userId).emit('message', {
-			// 	user: 'Admin',
-			// 	text: `${socket.username} has left.`,
-			// });
+			if (hashmap[socket.userId]) {
+				for (let i = 0; i < hashmap[socket.userId]; i++) {
+					let payload = {
+						msgType: "disconnect",
+						chamberId: hashmap[socket.userId][i],
+					};
+					io.to(hashmap[socket.userId][i]).emit(payload);
+				}
+			}
 		});
 	});
 };
+
+/*
+--------
+join
+--------
+app will send:
+"join", object: {token, chamberid: the appointment id, type: 'patient' / 'doctor'}
+
+when someone joins server emits:
+let payload = {
+	msgType: string - "connection",
+	chamberId: string
+};
+
+
+-------
+msg
+-------
+app will send:
+"msg", object: {chamberId, msg}
+
+when someone messages in a room, server emits:
+let payload = {
+	userId: string - id of the user,
+	username: string - name of the user,
+	msg: string - actual message
+	msgType: string - "msg"
+};
+
+--------
+disconnect
+--------
+app says
+when someone disconnects, server emits:
+let payload = {
+	msgType: "disconnect",
+	chamberId: id of the appointment
+};
+*/

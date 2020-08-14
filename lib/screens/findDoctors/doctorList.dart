@@ -156,12 +156,6 @@ class _SpecialityWiseDoctorListState extends State<DoctorList> {
                                                         style: M.copyWith(
                                                             color: blue),
                                                       ),
-                                                      Text(
-                                                        response.data[index]
-                                                            .email, // not email. fee range will be shown here
-                                                        style: M.copyWith(
-                                                            color: blue),
-                                                      )
                                                     ],
                                                   ),
                                                 ),

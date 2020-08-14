@@ -3,12 +3,15 @@ import 'package:flutter/material.dart';
 import '../../utils.dart';
 import '../../widgets/drawer.dart';
 import '../../routes.dart';
+import '../../models/appointment.dart';
 import 'tile.dart';
 
 class AppointmentDetails extends StatelessWidget {
+  Appointment appointment;
+
   @override
   Widget build(BuildContext context) {
-    String doctorName = ModalRoute.of(context).settings.arguments;
+    appointment = ModalRoute.of(context).settings.arguments;
     return Container(
       decoration: BoxDecoration(
         image: DecorationImage(
@@ -22,7 +25,7 @@ class AppointmentDetails extends StatelessWidget {
           elevation: 0.0,
           backgroundColor: lightBlue,
           centerTitle: true,
-          title: Text(doctorName),
+          title: Text(appointment.doctorName),
         ),
         drawer: SafeArea(
           child: MyDrawer(Selected.none),

@@ -69,8 +69,7 @@ class UpcomingAppointments extends StatelessWidget {
                                   onTap: () {
                                     Navigator.of(context).pushNamed(
                                       appointmentDetailsScreen,
-                                      arguments:
-                                          response.data[index].doctorName,
+                                      arguments: response.data[index],
                                     );
                                   },
                                   leading: Container(

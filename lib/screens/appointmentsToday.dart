@@ -1,16 +1,10 @@
-import 'package:Shastho_Sheba/blocs/todayAppointments.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:intl/intl.dart';
 
 import '../utils.dart';
 import '../routes.dart';
 import '../widgets/drawer.dart';
-
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-
-import 'package:intl/intl.dart';
-
 import '../blocs/todayAppointments.dart';
 import '../networking/response.dart';
 import '../models/appointment.dart';
@@ -24,8 +18,20 @@ class AppointmentsTodayScreen extends StatefulWidget {
 }
 
 class _AppointmentsTodayScreenState extends State<AppointmentsTodayScreen> {
-  Widget appointmentCard(
-      String name, String time, String serialno, String paymentstatus) {
+  Widget appointmentCard(Appointment appointment) {
+    final DateTime temp = appointment.dateTime;
+    final DateFormat formatter = DateFormat.jm();
+    final String time = formatter.format(temp);
+
+    int statuscode = appointment.status;
+
+    String status;
+    if (statuscode == 1 || statuscode == 2) {
+      status = 'done';
+    } else if (statuscode == 0) {
+      status = 'pending';
+    }
+
     return Container(
       margin: EdgeInsets.all(15),
       decoration: BoxDecoration(border: Border.all(color: blue, width: 2.5)),
@@ -56,7 +62,7 @@ class _AppointmentsTodayScreenState extends State<AppointmentsTodayScreen> {
                       mainAxisSize: MainAxisSize.min,
                       children: <Widget>[
                         Text(
-                          '$name',
+                          appointment.doctorName,
                           style: XL,
                         ),
                         SizedBox(
@@ -70,7 +76,7 @@ class _AppointmentsTodayScreenState extends State<AppointmentsTodayScreen> {
                           height: 10.0,
                         ),
                         Text(
-                          'Serial No: $serialno',
+                          'Serial No: ${appointment.serialNo}',
                           style: M,
                         ),
                         SizedBox(
@@ -83,7 +89,7 @@ class _AppointmentsTodayScreenState extends State<AppointmentsTodayScreen> {
                               'Payment Status: ',
                               style: M,
                             ),
-                            paymentstatus.toLowerCase() == 'done'
+                            status.toLowerCase() == 'done'
                                 ? Text(
                                     'Done',
                                     style: M.copyWith(color: mint),
@@ -110,7 +116,7 @@ class _AppointmentsTodayScreenState extends State<AppointmentsTodayScreen> {
                                 Navigator.pushNamed(
                                   context,
                                   appointmentDetailsScreen,
-                                  arguments: name,
+                                  arguments: appointment,
                                 );
                               },
                             ),
@@ -177,33 +183,11 @@ class _AppointmentsTodayScreenState extends State<AppointmentsTodayScreen> {
                                       shrinkWrap: true,
                                       itemCount: response.data.length,
                                       itemBuilder: (context, index) {
-                                        final DateTime temp =
-                                            response.data[index].dateTime;
-                                        final DateFormat formatter =
-                                            DateFormat.jm();
-                                        final String time =
-                                            formatter.format(temp);
-
-                                        int statuscode =
-                                            response.data[index].status;
-
-                                        String status;
-                                        if (statuscode == 1 ||
-                                            statuscode == 2) {
-                                          status = 'done';
-                                        } else if (statuscode == 0) {
-                                          status = 'pending';
-                                        }
-
                                         return Padding(
                                           padding: const EdgeInsets.symmetric(
                                               vertical: 5.0),
                                           child: appointmentCard(
-                                            response.data[index].doctorName,
-                                            time,
-                                            response.data[index].serialNo
-                                                .toString(),
-                                            status,
+                                            response.data[index],
                                           ),
                                         );
                                       },

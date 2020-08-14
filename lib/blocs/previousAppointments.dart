@@ -27,7 +27,6 @@ class PreviousAppointmentsBloc extends ChangeNotifier implements BaseBloc {
     sink.add(Response.loading('Fetching Appointments'));
     try {
       final list = await _appointmentsRepository.previousAppointments();
-      print(list);
       sink.add(Response.completed(list));
     } catch (e) {
       sink.add(Response.error(e.toString()));

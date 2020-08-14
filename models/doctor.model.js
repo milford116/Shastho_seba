@@ -26,6 +26,9 @@ mongoose.pluralize(null);
  *           type: string
  *         image:
  *           type: string
+ *         about_me:
+ *           type: string
+ *           description: short description about the doctor
  *         referrer:
  *           type: string
  *         specialization:

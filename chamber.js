@@ -44,9 +44,7 @@ exports.handleSocketIO = async function (server) {
 		socket.on("msg", (data, cb) => {
 			const chamber = data.chamberId.toString();
 			let payload = {
-				userId: socket.userId,
-				username: socket.username,
-				userType: socket.userType,
+				chamberId: chamber,
 				msg: data.msg,
 				msgType: "msg",
 			};
@@ -93,8 +91,7 @@ app will send:
 
 when someone messages in a room, server emits:
 let payload = {
-	userId: string - id of the user,
-	username: string - name of the user,
+	chamberId: id of the appointment,
 	msg: string - actual message
 	msgType: string - "msg"
 };

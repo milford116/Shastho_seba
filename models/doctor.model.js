@@ -89,6 +89,10 @@ var doctorSchema = new mongoose.Schema({
 		type: Array,
 		required: false,
 	},
+	about_me: {
+		type: String,
+		required: false,
+	},
 });
 
 doctorSchema.plugin(paginate);

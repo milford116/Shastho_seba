@@ -53,6 +53,9 @@ exports.upload = upload;
  *                 type: string
  *               reg_number:
  *                 type: string
+ *               about_me:
+ *                 type: string
+ *                 description: short description about the doctor
  *               password:
  *                 type: string
  *               specialization:
@@ -106,6 +109,8 @@ exports.registration = async function (req, res) {
 					new_doctor.designation = req.body.designation;
 					new_doctor.reg_number = req.body.reg_number;
 					new_doctor.referrer = docs.referrer;
+
+					if (req.body.about_me) new_doctor.about_me = req.body.about_me;
 
 					bcrypt.hash(req.body.password, parseInt(process.env.SALT_ROUNDS, 10), (err, hash) => {
 						if (err) {
@@ -422,6 +427,8 @@ exports.doctorList = async function (req, res) {
  *                   institution:
  *                     type: string
  *                   email:
+ *                     type: string
+ *                   about_me:
  *                     type: string
  *                   specialization:
  *                     type: array

@@ -47,7 +47,6 @@ exports.handleSocketIO = async function (server) {
 				msg: data.msg,
 			};
 
-			// send the whole payload in real app
 			socket.to(chamber).emit("msg", payload);
 		});
 
@@ -73,9 +72,8 @@ join
 app will send:
 "join", object: {token, chamberid: the appointment id, type: 'patient' / 'doctor'}
 
-when someone joins server emits:
+when someone joins server emits, "connection":
 let payload = {
-	msgType: string - "connection",
 	chamberId: string
 };
 
@@ -86,20 +84,18 @@ msg
 app will send:
 "msg", object: {chamberId, msg}
 
-when someone messages in a room, server emits:
+when someone messages in a room, server emits, "msg":
 let payload = {
 	chamberId: id of the appointment,
 	msg: string - actual message
-	msgType: string - "msg"
 };
 
 --------
 disconnect
 --------
 app says
-when someone disconnects, server emits:
+when someone disconnects, server emits, "disconnect":
 let payload = {
-	msgType: "disconnect",
 	chamberId: id of the appointment
 };
 */

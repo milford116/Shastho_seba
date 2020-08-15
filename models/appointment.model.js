@@ -12,14 +12,10 @@ mongoose.pluralize(null);
  *           type: string
  *         schedule_id:
  *           type: string
- *         doc_mobile_no:
- *           type: string
- *         doc_name:
- *           type: string
- *         patient_mobile_no:
- *           type: string
- *         patient_name:
- *           type: string
+ *         doctorId:
+ *           $ref: '#/components/schemas/doctor'
+ *         patientId:
+ *           $ref: '#/components/schemas/patient'
  *         status:
  *           type: number
  *           default: 0
@@ -46,21 +42,15 @@ var appointmentSchema = new mongoose.Schema({
 		type: String,
 		required: true,
 	},
-	doc_mobile_no: {
-		type: String,
+	doctorId: {
+		type: mongoose.Schema.Types.ObjectId,
 		required: true,
+		ref: "doctor",
 	},
-	doc_name: {
-		type: String,
+	patientId: {
+		type: mongoose.Schema.Types.ObjectId,
 		required: true,
-	},
-	patient_mobile_no: {
-		type: String,
-		required: true,
-	},
-	patient_name: {
-		type: String,
-		required: true,
+		ref: "patient",
 	},
 	status: {
 		type: Number,

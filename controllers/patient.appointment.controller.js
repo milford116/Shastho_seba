@@ -3,20 +3,15 @@ const mongoose = require("mongoose");
 const doctor = require("../models/doctor.model");
 const appointment = require("../models/appointment.model");
 const schedule = require("../models/schedule.model");
+const patient = require("../models/patient.model");
 
 const doctorModel = mongoose.model("doctor");
 const appointmentModel = mongoose.model("appointment");
 const scheduleModel = mongoose.model("schedule");
+const patientModel = mongoose.model("patient");
 
 const {SUCCESS, INTERNAL_SERVER_ERROR, BAD_REQUEST, DATA_NOT_FOUND} = require("../errors");
 const error_message = require("../error.messages");
-
-function setDateTime(cur, date) {
-	cur.setUTCFullYear(date.getUTCFullYear());
-	cur.setUTCMonth(date.getUTCMonth());
-	cur.setUTCDate(date.getUTCDate());
-	return cur;
-}
 
 /**
  * @swagger
@@ -39,15 +34,12 @@ function setDateTime(cur, date) {
  *                 type: string
  *               doc_mobile_no:
  *                 type: string
- *               doc_name:
- *                 type: string
  *               appointment_date_time:
  *                 type: string
  *                 format: date-time
  *             required:
  *               - schedule_id
  *               - doc_mobile_no
- *               - doc_name
  *               - appointment_date_time
  *     responses:
  *       200:
@@ -107,13 +99,12 @@ exports.postAppointment = async function (req, res) {
 					};
 
 					var max_collection = await appointmentModel.find(query2).sort({serial_no: -1}).limit(1).exec();
+					var patient_detail = await patientModel.findOne({mobile_no: req.mobile_no}).exec();
 
 					var appointment = new appointmentModel();
 					appointment.schedule_id = req.body.schedule_id;
-					appointment.doc_mobile_no = req.body.doc_mobile_no;
-					appointment.doc_name = docs.name;
-					appointment.patient_mobile_no = req.mobile_no;
-					appointment.patient_name = req.name;
+					appointment.doctorId = docs._id;
+					appointment.patientId = patient_detail._id;
 					appointment.status = 0;
 					appointment.appointment_date_time = date;
 
@@ -184,22 +175,22 @@ exports.getAppointment = async function (req, res) {
 	let date = new Date(Date.now());
 	date.setUTCHours(0, 0, 0, 0);
 
+	let patient = await patientModel.findOne({mobile_no: req.mobile_no}, {_id: 1});
+
 	var query = {
-		patient_mobile_no: req.mobile_no,
+		patientId: patient._id,
 		status: {$lt: 2},
 		appointment_date_time: date,
 	};
 
-	appointmentModel.find(query, (err, docs) => {
-		if (err) {
-			res.status(INTERNAL_SERVER_ERROR).json(error_message.INTERNAL_SERVER_ERROR);
-		} else {
-			let ret = {
-				appointments: docs,
-			};
-			res.status(SUCCESS).json(ret);
-		}
-	});
+	let appointments = await appointmentModel
+		.find(query)
+		.populate("doctorId", "name designation institute reg_number mobile_no email image specialization about_me")
+		.populate("patientId", "mobile_no date_of_birth sex name image_link")
+		.exec();
+
+	if (appointments) res.status(SUCCESS).json({appointments});
+	else res.status(DATA_NOT_FOUND).json(error_message.DATA_NOT_FOUND);
 };
 
 /**
@@ -247,28 +238,23 @@ exports.getPastAppointment = async function (req, res) {
 	let date = new Date(Date.now());
 	date.setUTCHours(0, 0, 0, 0);
 
+	let patient = await patientModel.findOne({mobile_no: req.mobile_no}, {_id: 1});
+
 	var query = {
-		patient_mobile_no: req.mobile_no,
-		status: 2,
+		patientId: patient._id,
+		status: {$lt: 2},
 		appointment_date_time: {$lte: date},
 	};
 
-	var options = {
-		sort: {
-			appointment_date_time: -1,
-		},
-	};
+	let appointments = await appointmentModel
+		.find(query)
+		.sort({appointment_date_time: -1})
+		.populate("doctorId", "name designation institute reg_number mobile_no email image specialization about_me")
+		.populate("patientId", "mobile_no date_of_birth sex name image_link")
+		.exec();
 
-	appointmentModel.find(query, null, options, (err, docs) => {
-		if (err) {
-			res.status(INTERNAL_SERVER_ERROR).json(error_message.INTERNAL_SERVER_ERROR);
-		} else {
-			let ret = {
-				appointments: docs,
-			};
-			res.status(SUCCESS).json(ret);
-		}
-	});
+	if (appointments) res.status(SUCCESS).json({appointments});
+	else res.status(DATA_NOT_FOUND).json(error_message.DATA_NOT_FOUND);
 };
 
 /**
@@ -316,27 +302,22 @@ exports.getFutureAppointment = async function (req, res) {
 	let date = new Date(Date.now());
 	date.setUTCHours(0, 0, 0, 0);
 
+	let patient = await patientModel.findOne({mobile_no: req.mobile_no}, {_id: 1});
+
 	var query = {
-		patient_mobile_no: req.mobile_no,
+		patientId: patient._id,
 		appointment_date_time: {$gt: date},
 	};
 
-	var options = {
-		sort: {
-			appointment_date_time: 1,
-		},
-	};
+	let appointments = await appointmentModel
+		.find(query)
+		.sort({appointment_date_time: 1})
+		.populate("doctorId", "name designation institute reg_number mobile_no email image specialization about_me")
+		.populate("patientId", "mobile_no date_of_birth sex name image_link")
+		.exec();
 
-	appointmentModel.find(query, null, options, (err, docs) => {
-		if (err) {
-			res.status(INTERNAL_SERVER_ERROR).json(error_message.INTERNAL_SERVER_ERROR);
-		} else {
-			let ret = {
-				appointments: docs,
-			};
-			res.status(SUCCESS).json(ret);
-		}
-	});
+	if (appointments) res.status(SUCCESS).json({appointments});
+	else res.status(DATA_NOT_FOUND).json(error_message.DATA_NOT_FOUND);
 };
 
 /**

@@ -393,7 +393,7 @@ exports.doctorList = async function (req, res) {
 		.find({})
 		.limit(options.limit)
 		.skip(options.limit * options.page)
-		.select("_id name institution designation reg_number mobile_no email image specialization")
+		.select("_id name institution designation reg_number mobile_no email image specialization about_me")
 		.exec();
 
 	res.status(SUCCESS).json({total, doctors});

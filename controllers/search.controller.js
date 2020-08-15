@@ -73,7 +73,7 @@ exports.searchDoctor = async function (req, res) {
 		.find(query)
 		.limit(data.limit)
 		.skip(data.limit * data.skip)
-		.select("_id name institution designation reg_number mobile_no email image specialization")
+		.select("_id name institution designation reg_number mobile_no email image specialization about_me")
 		.exec((err, docs) => {
 			if (err) res.status(INTERNAL_SERVER_ERROR).json(error_message.INTERNAL_SERVER_ERROR);
 			else {

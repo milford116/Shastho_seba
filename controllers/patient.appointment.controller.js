@@ -302,7 +302,7 @@ exports.getFutureAppointment = async function (req, res) {
 	let date = new Date(Date.now());
 	date.setUTCHours(0, 0, 0, 0);
 
-	let patient = await patientModel.findOne({mobile_no: req.mobile_no}, {_id: 1});
+	let patient = await patientModel.findOne({mobile_no: req.mobile_no});
 
 	var query = {
 		patientId: patient._id,

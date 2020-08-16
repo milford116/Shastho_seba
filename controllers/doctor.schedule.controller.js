@@ -400,9 +400,6 @@ exports.deleteSchedule = async function (req, res) {
  */
 exports.todaysSchedule = async function (req, res) {
 	var date = new Date();
-
-	console.log(date.getDay());
-
 	var query = {
 		doc_mobile_no: req.mobile_no,
 		day: date.getDay() === 0 ? 7 : date.getDay() + 1,

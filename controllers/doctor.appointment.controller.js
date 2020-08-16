@@ -3,9 +3,11 @@ mongoose.set("useFindAndModify", false);
 
 const appointment = require("../models/appointment.model");
 const patient = require("../models/patient.model");
+const doctor = require("../models/doctor.model");
 
 const patientModel = mongoose.model("patient");
 const appointmentModel = mongoose.model("appointment");
+const doctorModel = mongoose.model("doctor");
 
 const {SUCCESS, INTERNAL_SERVER_ERROR, DATA_NOT_FOUND} = require("../errors");
 const error_message = require("../error.messages");
@@ -100,12 +102,7 @@ exports.updateAppointment = async function (req, res) {
  *                 appointments:
  *                   type: array
  *                   items:
- *                     type: object
- *                     properties:
- *                       appointment_detail:
- *                         $ref: '#/components/schemas/appointment'
- *                       patient_detail:
- *                         $ref: '#/components/schemas/patient'
+ *                     $ref: '#/components/schemas/appointment'
  *       500:
  *         description: Internal Server Error
  *         content:
@@ -130,32 +127,17 @@ exports.getFutureAppointment = async function (req, res) {
 	st.setHours(23, 59, 59, 999);
 	st.setHours(st.getHours() + 6);
 
+	let doctor = await doctorModel.findOne({mobile_no: req.mobile_no});
+
 	const query = {
-		doc_mobile_no: req.mobile_no,
+		doctorId: doctor._id,
 		appointment_date_time: {$gt: st},
 	};
 
-	let appointments = [];
+	let appointments = await appointmentModel.find(query).sort({appointment_date_time: -1}).populate("patientId", "mobile_no date_of_birth sex name image_link").exec();
 
-	appointmentModel.find(query, async (err, docs) => {
-		if (err) {
-			res.status(INTERNAL_SERVER_ERROR).json(error_message.INTERNAL_SERVER_ERROR);
-		} else {
-			for (let i = 0; i < docs.length; i++) {
-				let obj = await patientModel.findOne({mobile_no: docs[i].patient_mobile_no}).exec();
-				let data = {
-					appointment_detail: docs[i],
-					patient_detail: obj,
-				};
-				appointments.push(data);
-			}
-
-			let ret = {
-				appointments,
-			};
-			res.status(SUCCESS).json(ret);
-		}
-	});
+	if (appointments) res.status(SUCCESS).send({appointments});
+	else res.status(INTERNAL_SERVER_ERROR).send(error_message.INTERNAL_SERVER_ERROR);
 };
 
 /**
@@ -189,8 +171,6 @@ exports.getFutureAppointment = async function (req, res) {
  *               properties:
  *                 appointment_detail:
  *                   $ref: '#/components/schemas/appointment'
- *                 patient:
- *                   $ref: '#/components/schemas/patient'
  *       500:
  *         description: Internal Server Error
  *         content:
@@ -220,26 +200,9 @@ exports.getFutureAppointment = async function (req, res) {
  *                   type: string
  */
 exports.appointmentDetail = async function (req, res) {
-	let data = {
-		appointment_detail: {},
-		patient: {},
-	};
-
-	appointmentModel.findOne({_id: req.body.appointment_id}, (err, docs) => {
-		if (err) res.status(INTERNAL_SERVER_ERROR).json(error_message.INTERNAL_SERVER_ERROR);
-		else if (!docs) res.status(DATA_NOT_FOUND).json({message: "appointment not found"});
-		else {
-			data.appointment_detail = docs;
-			if (docs) {
-				patientModel.find({mobile_no: docs.patient_mobile_no}, (err, obj) => {
-					if (!err) {
-						data.patient = obj;
-						res.status(SUCCESS).json(data);
-					} else res.status(INTERNAL_SERVER_ERROR).json(error_message.INTERNAL_SERVER_ERROR);
-				});
-			} else res.status(SUCCESS).json(data);
-		}
-	});
+	let appointment = await appointmentModel.findOne({_id: req.body.appointment_id}).populate("patientId", "mobile_no date_of_birth sex name image_link").exec();
+	if (appointment) res.status(SUCCESS).send({appointment_detail: appointment});
+	else res.status(INTERNAL_SERVER_ERROR).send(error_message.INTERNAL_SERVER_ERROR);
 };
 
 /**

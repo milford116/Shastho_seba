@@ -80,7 +80,7 @@ class _SpecialityWiseDoctorListState extends State<DoctorList> {
                                   child: ListView.builder(
                                     shrinkWrap: true,
                                     padding: EdgeInsets.only(top: 20.0),
-                                    itemCount: names.length,
+                                    itemCount: response.data.length,
                                     itemBuilder: (context, index) {
                                       return Padding(
                                         padding: const EdgeInsets.symmetric(
@@ -97,8 +97,7 @@ class _SpecialityWiseDoctorListState extends State<DoctorList> {
                                               Navigator.pushNamed(
                                                 context,
                                                 doctorProfileScreen,
-                                                arguments:
-                                                    response.data[index].name,
+                                                arguments: response.data[index],
                                               );
                                             },
                                             child: Padding(
@@ -145,20 +144,26 @@ class _SpecialityWiseDoctorListState extends State<DoctorList> {
                                                     ],
                                                   ),
                                                 ),
-                                                trailing: Padding(
-                                                  padding:
-                                                      const EdgeInsets.fromLTRB(
-                                                          0.0, 10.0, 10.0, 0.0),
-                                                  child: Column(
-                                                    children: <Widget>[
-                                                      Text(
-                                                        'Fee:',
-                                                        style: M.copyWith(
-                                                            color: blue),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
+                                                // trailing: Padding(
+                                                //   padding:
+                                                //       const EdgeInsets.fromLTRB(
+                                                //           0.0, 10.0, 10.0, 0.0),
+                                                //   child: Column(
+                                                //     children: <Widget>[
+                                                //       Text(
+                                                //         'Fee:',
+                                                //         style: M.copyWith(
+                                                //             color: blue),
+                                                //       ),
+                                                //       Text(
+                                                //         response.data[index]
+                                                //             .email, // not email. fee range will be shown here
+                                                //         style: M.copyWith(
+                                                //             color: blue),
+                                                //       )
+                                                //     ],
+                                                //   ),
+                                                // ),
                                               ),
                                             ),
                                           ),

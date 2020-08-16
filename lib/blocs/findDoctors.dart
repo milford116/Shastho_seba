@@ -24,7 +24,7 @@ class FindDoctorsBloc extends ChangeNotifier implements BaseBloc {
   void findDoctors(String speciality) async {
     sink.add(Response.loading('Fetching Doctors'));
     try {
-      final list = await _findDoctorsRepository.findDoctors(60, 0, speciality);
+      final list = await _findDoctorsRepository.findDoctors(60, 60, speciality);
       print(list);
       sink.add(Response.completed(list));
     } catch (e) {

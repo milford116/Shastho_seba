@@ -27,13 +27,22 @@ exports.handleSocketIO = async function (server) {
 
 					let payload = {
 						chamberId: data.chamberId.toString(),
+						members: [],
 					};
+
+					io.of("/")
+						.in(data.chamberId.toString())
+						.clients((error, clients) => {
+							if (error) throw error;
+							else {
+								for (let i = 0; i < clients.length; i++) {
+									payload.members.push(io.sockets.connected[clients[i]].userId);
+								}
+							}
+						});
 
 					socket.join(data.chamberId.toString());
 					socket.to(data.chamberId.toString()).emit("connection", payload);
-
-					if (!hashmap[socket.userId]) hashmap[socket.userId] = [data.chamberId.toString()];
-					else hashmap[socket.userId].push(data.chamberId.toString());
 
 					if (cb) cb();
 				}
@@ -45,19 +54,18 @@ exports.handleSocketIO = async function (server) {
 			socket.to(chamber).emit("msg", data);
 		});
 
+		socket.on("disconnecting", () => {
+			const rooms = Object.keys(socket.rooms);
+			for (let i = 0; i < rooms.length; i++) {
+				let payload = {
+					chamberId: rooms[i],
+				};
+				io.to(rooms[i]).emit("disconnect", payload);
+			}
+		});
+
 		socket.on("disconnect", async () => {
 			console.log("Disconnected: " + socket.userId);
-
-			if (hashmap[socket.userId]) {
-				for (let i = 0; i < hashmap[socket.userId].length; i++) {
-					let payload = {
-						chamberId: hashmap[socket.userId][i],
-					};
-					io.to(hashmap[socket.userId][i]).emit("disconnect", payload);
-				}
-			}
-
-			delete hashmap[socket.userId];
 		});
 	});
 };

@@ -4,6 +4,7 @@ const scheduleController = require("../controllers/doctor.schedule.controller");
 const transactionController = require("../controllers/transaction.controller");
 const appointmentController = require("../controllers/doctor.appointment.controller");
 const prescriptionController = require("../controllers/prescription.controller");
+const timelineController = require("../controllers/timeline.controller");
 const doctorMiddleware = require("../middlewares/auth.doctor.middleware");
 const validatorMiddleWare = require("../middlewares/validator.middleware");
 const doctorValidator = require("../validators/doctor.validator");
@@ -42,5 +43,7 @@ router.post(
 	prescriptionController.postPrescription
 );
 router.post("/doctor/get/prevPrescription", validatorMiddleWare(doctorValidator.getPreviousPrescriptions), doctorMiddleware.middleware, prescriptionController.getPreviousPrescription);
+
+router.get("/get/doctor/timeline", doctorMiddleware.middleware, timelineController.getTimeline);
 
 module.exports = router;

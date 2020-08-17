@@ -5,7 +5,7 @@ mongoose.pluralize(null);
  * @swagger
  * components:
  *   schemas:
- *     log:
+ *     timeline:
  *       type: object
  *       properties:
  *         appointment_id:
@@ -20,7 +20,7 @@ mongoose.pluralize(null);
  *         - patient_mobile_no
  *         - type
  */
-var logSchema = new mongoose.Schema(
+var timelineSchema = new mongoose.Schema(
 	{
 		appointment_id: {
 			type: String,
@@ -31,7 +31,7 @@ var logSchema = new mongoose.Schema(
 			required: true,
 		},
 	},
-	{timestamps: true}
+	{ timestamps: true }
 );
 
-mongoose.model("log", logSchema);
+mongoose.model("timeline", timelineSchema);

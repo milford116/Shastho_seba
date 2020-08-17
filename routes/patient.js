@@ -4,6 +4,7 @@ const transactionController = require("../controllers/transaction.controller");
 const scheduleController = require("../controllers/patient.schedule.controller");
 const patientMiddleware = require("../middlewares/auth.patient.middleware");
 const tokenController = require("../controllers/token.controller");
+const timelineController = require("../controllers/timeline.controller");
 
 const express = require("express");
 const router = express.Router();
@@ -25,5 +26,7 @@ router.post("/patient/get/transaction", patientMiddleware.middleware, transactio
 router.post("/patient/get/schedule", patientMiddleware.middleware, scheduleController.getSchedule);
 
 router.post("/patient/set/token", patientMiddleware.middleware, tokenController.setToken);
+
+router.get("/get/patient/timeline", patientMiddleware.middleware, timelineController.getTimeline);
 
 module.exports = router;

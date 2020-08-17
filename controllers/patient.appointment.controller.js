@@ -183,11 +183,7 @@ exports.getAppointment = async function (req, res) {
 		appointment_date_time: date,
 	};
 
-	let appointments = await appointmentModel
-		.find(query)
-		.populate("doctorId", "name designation institute reg_number mobile_no email image specialization about_me")
-		.populate("patientId", "mobile_no date_of_birth sex name image_link")
-		.exec();
+	let appointments = await appointmentModel.find(query).populate("doctorId", "name designation institute reg_number mobile_no email image specialization about_me").exec();
 
 	if (appointments) res.status(SUCCESS).json({appointments});
 	else res.status(DATA_NOT_FOUND).json(error_message.DATA_NOT_FOUND);
@@ -250,7 +246,6 @@ exports.getPastAppointment = async function (req, res) {
 		.find(query)
 		.sort({appointment_date_time: -1})
 		.populate("doctorId", "name designation institute reg_number mobile_no email image specialization about_me")
-		.populate("patientId", "mobile_no date_of_birth sex name image_link")
 		.exec();
 
 	if (appointments) res.status(SUCCESS).json({appointments});
@@ -313,7 +308,6 @@ exports.getFutureAppointment = async function (req, res) {
 		.find(query)
 		.sort({appointment_date_time: 1})
 		.populate("doctorId", "name designation institute reg_number mobile_no email image specialization about_me")
-		.populate("patientId", "mobile_no date_of_birth sex name image_link")
 		.exec();
 
 	if (appointments) res.status(SUCCESS).json({appointments});

@@ -402,7 +402,7 @@ exports.todaysSchedule = async function (req, res) {
 	var date = new Date();
 	var query = {
 		doc_mobile_no: req.mobile_no,
-		day: date.getDay() === 0 ? 7 : date.getDay() + 1,
+		day: date.getDay() === 0 ? 7 : date.getDay(),
 	};
 
 	let schedules = await scheduleModel.find(query).exec();

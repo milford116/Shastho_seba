@@ -4,14 +4,17 @@ const doctor = require("../models/doctor.model");
 const appointment = require("../models/appointment.model");
 const schedule = require("../models/schedule.model");
 const patient = require("../models/patient.model");
+const log = require("../models/log.model");
 
 const doctorModel = mongoose.model("doctor");
 const appointmentModel = mongoose.model("appointment");
 const scheduleModel = mongoose.model("schedule");
 const patientModel = mongoose.model("patient");
+const logModel = mongoose.model("log");
 
 const {SUCCESS, INTERNAL_SERVER_ERROR, BAD_REQUEST, DATA_NOT_FOUND} = require("../errors");
 const error_message = require("../error.messages");
+const {mongo} = require("mongoose");
 
 /**
  * @swagger
@@ -114,13 +117,20 @@ exports.postAppointment = async function (req, res) {
 						appointment.serial_no = 1;
 					}
 
-					appointment.save((err, docs) => {
+					appointment.save(async (err, docs) => {
 						if (err) {
 							res.status(INTERNAL_SERVER_ERROR).json(error_message.INTERNAL_SERVER_ERROR);
 						} else {
 							var ret = {
 								serial_no: appointment.serial_no,
 							};
+
+							let logData = new logModel();
+							logData.appointment_id = docs._id;
+							logData.type = "appointment";
+
+							await logData.save();
+
 							res.status(SUCCESS).json(ret);
 						}
 					});

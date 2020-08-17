@@ -3,6 +3,9 @@ const appointment = require("../models/appointment.model");
 const appointmentModel = mongoose.model("appointment");
 const prescription = require("../models/prescription.model");
 const prescriptionModel = mongoose.model("prescription");
+const log = require("../models/log.model");
+const logModel = mongoose.model("log");
+
 const {SUCCESS, INTERNAL_SERVER_ERROR} = require("../errors");
 const error_message = require("../error.messages");
 const path = require("path");
@@ -89,6 +92,12 @@ exports.postPrescription = async function (req, res) {
 
 	if (req.filename) newPrescription.prescription_img = "/prescription/" + req.filename;
 	if (req.body.medicine !== undefined) newPrescription.medicine = req.body.medicine;
+
+	let logData = new logModel();
+	logData.appointment_id = req.body.appointment_id;
+	logData.type = "prescription";
+
+	await logData.save();
 
 	newPrescription.save((err, docs) => {
 		if (err) res.status(INTERNAL_SERVER_ERROR).json(error_message.INTERNAL_SERVER_ERROR);

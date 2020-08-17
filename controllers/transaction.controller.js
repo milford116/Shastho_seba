@@ -69,16 +69,15 @@ exports.addTransaction = async function (req, res) {
 	transaction.transaction_id = req.body.transaction_id;
 	transaction.amount = req.body.amount;
 
-	transaction.save((err, docs) => {
+	transaction.save(async (err, docs) => {
 		if (err) {
 			res.status(INTERNAL_SERVER_ERROR).json(error_message.INTERNAL_SERVER_ERROR);
 		} else {
-			let logData = {
-				appointment_id: req.body.appointment_id,
-				type: "transaction of " + req.body.amount.toString(),
-			};
+			let logData = new logModel();
+			logData.appointment_id = req.body.appointment_id;
+			logData.type = "transaction of " + req.body.amount.toString();
 
-			//await logData.save();
+			await logData.save();
 			res.status(SUCCESS).json(error_message.SUCCESS);
 		}
 	});

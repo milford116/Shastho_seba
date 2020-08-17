@@ -57,7 +57,7 @@ exports.handleSocketIO = async function (server) {
 				}
 			}
 
-			hashmap.delete(socket.userId);
+			delete hashmap[socket.userId];
 		});
 	});
 };

@@ -76,9 +76,9 @@ exports.addTransaction = async function (req, res) {
 			let logData = {
 				appointment_id: req.body.appointment_id,
 				type: "transaction of " + req.body.amount.toString(),
-			}
+			};
 
-			await logData.save();
+			//await logData.save();
 			res.status(SUCCESS).json(error_message.SUCCESS);
 		}
 	});

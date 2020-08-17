@@ -53,7 +53,7 @@ exports.handleSocketIO = async function (server) {
 					let payload = {
 						chamberId: hashmap[socket.userId][i],
 					};
-					io.to(hashmap[socket.userId][i]).emit("disconnect", payload);
+					socket.to(hashmap[socket.userId][i]).emit("disconnect", payload);
 				}
 			}
 

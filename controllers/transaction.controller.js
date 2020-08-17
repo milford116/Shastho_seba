@@ -1,8 +1,8 @@
 const mongoose = require("mongoose");
 const transaction = require("../models/transaction.model");
 const transactionModel = mongoose.model("transaction");
-const log = require("../models/log.model");
-const logModel = mongoose.model("log");
+const timeline = require("../models/timeline.model");
+const timelineModel = mongoose.model("timeline");
 
 const {SUCCESS, INTERNAL_SERVER_ERROR} = require("../errors");
 const error_message = require("../error.messages");
@@ -73,11 +73,11 @@ exports.addTransaction = async function (req, res) {
 		if (err) {
 			res.status(INTERNAL_SERVER_ERROR).json(error_message.INTERNAL_SERVER_ERROR);
 		} else {
-			let logData = new logModel();
-			logData.appointment_id = req.body.appointment_id;
-			logData.type = "transaction of " + req.body.amount.toString();
+			let timelineData = new timelineModel();
+			timelineData.appointment_id = req.body.appointment_id;
+			timelineData.type = "transaction of " + req.body.amount.toString();
 
-			await logData.save();
+			await timelineData.save();
 			res.status(SUCCESS).json(error_message.SUCCESS);
 		}
 	});

@@ -10,3 +10,5 @@ String showPrescriptionScreen = '/showPrescription';
 String appointmentDetailsScreen = '/appointmentDetails';
 String specialityWiseDoctorListScreen = '/specialityWiseDoctorList';
 String doctorProfileScreen = '/doctorProfile';
+String chamberScreen = '/chamber';
+String videoCallScreen = '/videoCall';

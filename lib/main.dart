@@ -12,6 +12,8 @@ import 'screens/findDoctors/doctorList.dart';
 import 'screens/findDoctors/findDoctors.dart';
 import 'screens/findDoctors/doctorProfile.dart';
 import 'screens/showPrescription.dart';
+import 'screens/chamber/chamber.dart';
+import 'screens/videoCall.dart';
 import 'routes.dart';
 import 'utils.dart';
 
@@ -43,6 +45,8 @@ class MyApp extends StatelessWidget {
         findDoctorsScreen: (context) => FindDoctorsScreen(),
         specialityWiseDoctorListScreen: (context) => DoctorList(),
         doctorProfileScreen: (context) => DoctorProfileScreen(),
+        chamberScreen: (context) => ChamberScreen(),
+        videoCallScreen: (context) => VideoCallScreen(),
       },
     );
   }

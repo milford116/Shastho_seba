@@ -22,7 +22,7 @@ class Appointment {
       : id = json['_id'],
         doctorMobileNo = json['doc_mobile_no'],
         patientMobileNo = json['patient_mobile_no'],
-        doctorName = json['doc_name'],
+        doctorName = json['doctorId']['name'],
         status = json['status'],
         serialNo = json['serial_no'],
         dateTime = DateTime.parse(json['appointment_date_time']),

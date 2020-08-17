@@ -7,11 +7,9 @@ import '../../models/appointment.dart';
 import 'tile.dart';
 
 class AppointmentDetails extends StatelessWidget {
-  Appointment appointment;
-
   @override
   Widget build(BuildContext context) {
-    appointment = ModalRoute.of(context).settings.arguments;
+    Appointment appointment = ModalRoute.of(context).settings.arguments;
     return Container(
       decoration: BoxDecoration(
         image: DecorationImage(
@@ -127,7 +125,13 @@ class AppointmentDetails extends StatelessWidget {
                     color: blue,
                   ),
                   FlatButton.icon(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.pushNamed(
+                        context,
+                        chamberScreen,
+                        arguments: appointment,
+                      );
+                    },
                     icon: Icon(Icons.exit_to_app),
                     label: Text('Enter Chamber'),
                     color: blue,

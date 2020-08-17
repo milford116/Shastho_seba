@@ -42,12 +42,7 @@ exports.handleSocketIO = async function (server) {
 
 		socket.on("msg", (data, cb) => {
 			const chamber = data.chamberId.toString();
-			let payload = {
-				chamberId: chamber,
-				msg: data.msg,
-			};
-
-			socket.to(chamber).emit("msg", payload);
+			socket.to(chamber).emit("msg", data);
 		});
 
 		socket.on("disconnect", async () => {

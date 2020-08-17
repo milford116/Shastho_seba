@@ -19,7 +19,7 @@ exports.middleware = async function (req, res, next) {
 					} else {
 						req.mobile_no = docs.mobile_no;
 						req.name = docs.name;
-						req.type = "patient";
+						req._id = docs._id;
 						next();
 					}
 				});

@@ -20,7 +20,7 @@ exports.middleware = async function (req, res, next) {
 						res.status(BAD_REQUEST).send(error_message.BAD_REQUEST);
 					} else {
 						req.mobile_no = docs.mobile_no;
-						req.type = "doctor";
+						req._id = docs._id;
 						next();
 					}
 				});

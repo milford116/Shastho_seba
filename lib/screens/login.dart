@@ -42,7 +42,8 @@ class LoginScreen extends StatelessWidget {
                             return Loading(data.message);
                           case Status.COMPLETED:
                             WidgetsBinding.instance.addPostFrameCallback(
-                              (_) => Navigator.pushNamed(context, homeScreen),
+                              (_) => Navigator.pushReplacementNamed(
+                                  context, homeScreen),
                             );
                             break;
                           case Status.ERROR:

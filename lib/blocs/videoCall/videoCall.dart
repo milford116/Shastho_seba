@@ -39,6 +39,7 @@ class VideoCallBloc extends ChangeNotifier implements BaseBloc {
         () => sink.add(Response.completed(CallState.EndCall));
 
     _initRenderders();
+
     sink.add(Response.completed(CallState.Ringing));
   }
 
@@ -55,7 +56,6 @@ class VideoCallBloc extends ChangeNotifier implements BaseBloc {
 
   void endCall() {
     _signaling.endCall(_appointment.id);
-    sink.add(Response.completed(CallState.EndCall));
   }
 
   @override

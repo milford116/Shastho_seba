@@ -142,8 +142,8 @@ class Signaling {
       _peerConnections.remove(chamberId);
     }
 
-    if (this.onStateChange != null) {
-      this.onStateChange(SignalingState.CallStateEnd);
+    if (onCallEnd != null) {
+      onCallEnd();
     }
   }
 
@@ -285,9 +285,6 @@ class Signaling {
       case 'bye':
         var chamberId = data['chamberId'];
         _close(chamberId);
-        if (onCallEnd != null) {
-          onCallEnd();
-        }
         break;
     }
   }

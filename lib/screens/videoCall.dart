@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:flutter_webrtc/webrtc.dart';
 
 import '../utils.dart';
+import '../routes.dart';
 import '../blocs/videoCall/callState.dart';
 import '../blocs/videoCall/videoCall.dart';
 import '../blocs/chamber/messenger.dart';
@@ -31,7 +32,8 @@ class VideoCallScreen extends StatelessWidget {
                   return _VideoCall();
                 case CallState.EndCall:
                   WidgetsBinding.instance.addPostFrameCallback(
-                    (_) => Navigator.pop(context),
+                    (_) => Navigator.pop(
+                        context, ModalRoute.withName(appointmentDetailsScreen)),
                   );
                   break;
                 default:
@@ -129,6 +131,24 @@ class _VideoCall extends StatelessWidget {
     VideoCallBloc videoCallBloc = Provider.of<VideoCallBloc>(context);
     return Scaffold(
       backgroundColor: Colors.transparent,
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButton: ButtonBar(
+        children: [
+          FlatButton(
+            padding: EdgeInsets.all(20.0),
+            child: Icon(
+              Icons.call_end,
+              color: red,
+              size: 30.0,
+            ),
+            color: lightRed,
+            shape: CircleBorder(),
+            onPressed: () {
+              videoCallBloc.endCall();
+            },
+          ),
+        ],
+      ),
       body: SafeArea(
         child: OrientationBuilder(
           builder: (context, orientation) {
@@ -159,22 +179,6 @@ class _VideoCall extends StatelessWidget {
                       decoration: BoxDecoration(color: Colors.black54),
                     ),
                   ),
-                  Positioned(
-                    bottom: 15.0,
-                    child: FlatButton(
-                      padding: EdgeInsets.all(20.0),
-                      child: Icon(
-                        Icons.call_end,
-                        color: red,
-                        size: 30.0,
-                      ),
-                      color: lightRed,
-                      shape: CircleBorder(),
-                      onPressed: () {
-                        videoCallBloc.endCall();
-                      },
-                    ),
-                  )
                 ],
               ),
             );

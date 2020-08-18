@@ -265,6 +265,6 @@ exports.appointmentInRange = async function (req, res) {
 		appointment_date_time: {$gte: st, $lte: en},
 	};
 
-	let appointments = await appointmentModel.find(query).populate("patientId", "mobile_no date_of_birth sex name image_link").exec();
+	let appointments = await appointmentModel.find(query).populate("patientId", "mobile_no date_of_birth sex name image_link").sort({createdAt: 1}).exec();
 	res.status(SUCCESS).json({appointments});
 };

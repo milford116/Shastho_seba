@@ -33,38 +33,41 @@ mongoose.pluralize(null);
  *         - status
  *         - appointment_date_time
  */
-var appointmentSchema = new mongoose.Schema({
-	serial_no: {
-		type: Number,
-		required: true,
+var appointmentSchema = new mongoose.Schema(
+	{
+		serial_no: {
+			type: Number,
+			required: true,
+		},
+		schedule_id: {
+			type: String,
+			required: true,
+		},
+		doctorId: {
+			type: mongoose.Schema.Types.ObjectId,
+			required: true,
+			ref: "doctor",
+		},
+		patientId: {
+			type: mongoose.Schema.Types.ObjectId,
+			required: true,
+			ref: "patient",
+		},
+		status: {
+			type: Number,
+			required: true,
+			default: 0,
+		},
+		prescription_img: {
+			type: String,
+			required: false,
+		},
+		appointment_date_time: {
+			type: Date,
+			required: true,
+		},
 	},
-	schedule_id: {
-		type: String,
-		required: true,
-	},
-	doctorId: {
-		type: mongoose.Schema.Types.ObjectId,
-		required: true,
-		ref: "doctor",
-	},
-	patientId: {
-		type: mongoose.Schema.Types.ObjectId,
-		required: true,
-		ref: "patient",
-	},
-	status: {
-		type: Number,
-		required: true,
-		default: 0,
-	},
-	prescription_img: {
-		type: String,
-		required: false,
-	},
-	appointment_date_time: {
-		type: Date,
-		required: true,
-	},
-});
+	{timestamps: true}
+);
 
 mongoose.model("appointment", appointmentSchema);

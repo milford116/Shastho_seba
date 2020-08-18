@@ -24,4 +24,14 @@ class AppointmentsRepository {
         .map<Appointment>((json) => Appointment.fromJson(json))
         .toList();
   }
+
+  Future<int> createAppointment(
+      String scheduleId, String mobileNo, DateTime dateTime) async {
+    final data = await _api.post('/patient/post/appointment', true, {
+      'schedule_id': scheduleId,
+      'doc_mobile_no': mobileNo,
+      'appointment_date_time': dateTime.toString(),
+    });
+    return data['serial_no'];
+  }
 }

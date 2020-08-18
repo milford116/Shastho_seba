@@ -25,11 +25,14 @@ class MyDrawer extends StatelessWidget {
         child: Column(
           children: <Widget>[
             ListTile(
-              title: Center(
-                child: Text(
-                  'ShasthoSheba',
-                  style: XL.copyWith(color: Colors.white),
-                ),
+              leading: Icon(
+                Icons.healing,
+                color: Colors.white,
+                size: 30.0,
+              ),
+              title: Text(
+                'ShasthoSheba',
+                style: XL.copyWith(color: Colors.white),
               ),
             ),
             Divider(

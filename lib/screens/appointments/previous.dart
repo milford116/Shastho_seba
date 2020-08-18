@@ -120,10 +120,3 @@ class PreviousAppointments extends StatelessWidget {
     );
   }
 }
-
-List<String> names = [
-  'Dr.Shafiul Islam',
-  'Dr.Akbar Ali',
-  'Dr.Khademul Alam',
-  'Dr.Abul Kalam'
-];

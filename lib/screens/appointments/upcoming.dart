@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 import 'package:intl/intl.dart';
 
 import '../../utils.dart';
@@ -42,19 +41,9 @@ class UpcomingAppointments extends StatelessWidget {
                           padding: EdgeInsets.only(top: 20.0),
                           itemCount: response.data.length,
                           itemBuilder: (context, index) {
-                            final DateTime temp = response.data[index].dateTime;
-
-                            final DateFormat formatter1 =
-                                DateFormat.MMMd('en_US');
-                            final DateFormat formatter2 = DateFormat.y();
-                            final DateFormat formatter3 = DateFormat.jm();
-
-                            final String day = formatter1.format(temp);
-                            final String year = formatter2.format(temp);
-                            final String time = formatter3.format(temp);
-
-                            List timesubstr = time.split(" ");
-
+                            DateTime dateTime = response.data[index].dateTime;
+                            DateFormat timeFormat = DateFormat('hh:mm\na');
+                            DateFormat dateFormat = DateFormat('MMM dd\nyyyy');
                             return Padding(
                               padding:
                                   const EdgeInsets.symmetric(vertical: 5.0),
@@ -77,9 +66,9 @@ class UpcomingAppointments extends StatelessWidget {
                                       shape: BoxShape.circle,
                                       color: Colors.white,
                                     ),
-                                    padding: EdgeInsets.all(7.0),
+                                    padding: EdgeInsets.all(10.0),
                                     child: Text(
-                                      day + '\n' + year,
+                                      dateFormat.format(dateTime),
                                       textAlign: TextAlign.center,
                                       style: XS,
                                     ),
@@ -90,10 +79,13 @@ class UpcomingAppointments extends StatelessWidget {
                                       style: TextStyle(color: Colors.white),
                                     ),
                                   ),
-                                  trailing: Text(
-                                    timesubstr[0] + '\n' + timesubstr[1],
-                                    textAlign: TextAlign.center,
-                                    style: XS.copyWith(color: Colors.white),
+                                  trailing: Padding(
+                                    padding: const EdgeInsets.only(right: 5.0),
+                                    child: Text(
+                                      timeFormat.format(dateTime),
+                                      textAlign: TextAlign.center,
+                                      style: XS.copyWith(color: Colors.white),
+                                    ),
                                   ),
                                 ),
                               ),
@@ -120,5 +112,3 @@ class UpcomingAppointments extends StatelessWidget {
     );
   }
 }
-
-List<String> names = ['Dr.Shafiul Islam', 'Dr.Akbar Ali', 'Dr.Khademul Alam'];

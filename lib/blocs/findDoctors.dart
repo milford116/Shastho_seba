@@ -5,10 +5,10 @@ import 'package:flutter/foundation.dart';
 import 'baseBloc.dart';
 import '../models/doctor.dart';
 import '../networking/response.dart';
-import '../repositories/findDoctors.dart';
+import '../repositories/doctor.dart';
 
 class FindDoctorsBloc extends ChangeNotifier implements BaseBloc {
-  FindDoctorsRepository _findDoctorsRepository;
+  DoctorsRepository _doctorsRepository;
   StreamController _doctorsController;
 
   StreamSink<Response<List<Doctor>>> get sink => _doctorsController.sink;
@@ -16,7 +16,7 @@ class FindDoctorsBloc extends ChangeNotifier implements BaseBloc {
   Stream<Response<List<Doctor>>> get stream => _doctorsController.stream;
 
   FindDoctorsBloc(String speciality) {
-    _findDoctorsRepository = FindDoctorsRepository();
+    _doctorsRepository = DoctorsRepository();
     _doctorsController = StreamController<Response<List<Doctor>>>();
     findDoctors(speciality);
   }
@@ -24,8 +24,7 @@ class FindDoctorsBloc extends ChangeNotifier implements BaseBloc {
   void findDoctors(String speciality) async {
     sink.add(Response.loading('Fetching Doctors'));
     try {
-      final list = await _findDoctorsRepository.findDoctors(60, 0, speciality);
-      print(list);
+      final list = await _doctorsRepository.doctorsList(60, 0, speciality);
       sink.add(Response.completed(list));
     } catch (e) {
       sink.add(Response.error(e.toString()));

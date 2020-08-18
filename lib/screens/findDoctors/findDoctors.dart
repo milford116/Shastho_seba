@@ -1,39 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../utils.dart';
 import '../../routes.dart';
 import '../../widgets/drawer.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
-List<Speciality> specialities = [
-  Speciality(name: 'Emergency', icon: emergency),
-  Speciality(name: 'Medicine', icon: pill),
-  Speciality(name: 'Dermatology', icon: dermatologist),
-  Speciality(name: 'Diabetes', icon: diabetes),
-  Speciality(name: 'Burn & Plastic', icon: burnandplastic),
-  Speciality(name: 'Opthalmology', icon: eye),
-  Speciality(name: 'Cardiology', icon: heart),
-  Speciality(name: 'Nefrology', icon: kidney),
-  Speciality(name: 'Hepatology', icon: liver),
-  Speciality(name: 'Pulmonology', icon: lungs),
-  Speciality(name: 'Neurology', icon: neuron),
-  Speciality(name: 'Otolaryngology', icon: nose),
-  Speciality(name: 'Nutrition', icon: nutritionist),
-  Speciality(name: 'Orthopaedic', icon: orthopedic),
-  Speciality(name: 'Pediatric', icon: pediatric),
-  Speciality(name: 'Maternity', icon: pregnant),
-  Speciality(name: 'Psychology', icon: psychiartry),
-  Speciality(name: 'Radiology', icon: radiotherapy),
-  Speciality(name: 'Gastroenterology', icon: stomach),
-  Speciality(name: 'Dental', icon: tooth),
-];
-
-class FindDoctorsScreen extends StatefulWidget {
-  @override
-  _FindDoctorsScreenState createState() => _FindDoctorsScreenState();
-}
-
-class _FindDoctorsScreenState extends State<FindDoctorsScreen> {
+class FindDoctorsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -56,20 +28,19 @@ class _FindDoctorsScreenState extends State<FindDoctorsScreen> {
         ),
         body: SafeArea(
           child: Center(
-            child: Padding(
-              padding: const EdgeInsets.only(top: 10),
-              child: Center(
-                child: GridView.count(
-                  childAspectRatio: 1.5,
-                  crossAxisCount: 2,
-                  children: specialities
-                      .map((speciality) => _Tile(
-                            title: speciality.name,
-                            imageURL: speciality.icon,
-                            route: specialityWiseDoctorListScreen,
-                          ))
-                      .toList(),
-                ),
+            child: Center(
+              child: GridView.count(
+                childAspectRatio: 1.5,
+                crossAxisCount: 2,
+                children: specialities
+                    .map(
+                      (speciality) => _Tile(
+                        title: speciality.name,
+                        imageURL: speciality.icon,
+                        route: specialityWiseDoctorListScreen,
+                      ),
+                    )
+                    .toList(),
               ),
             ),
           ),
@@ -121,3 +92,26 @@ class _Tile extends StatelessWidget {
     );
   }
 }
+
+List<Speciality> specialities = [
+  Speciality(name: 'Emergency', icon: emergency),
+  Speciality(name: 'Medicine', icon: pill),
+  Speciality(name: 'Dermatology', icon: dermatologist),
+  Speciality(name: 'Diabetes', icon: diabetes),
+  Speciality(name: 'Burn & Plastic', icon: burnandplastic),
+  Speciality(name: 'Opthalmology', icon: eye),
+  Speciality(name: 'Cardiology', icon: heart),
+  Speciality(name: 'Nefrology', icon: kidney),
+  Speciality(name: 'Hepatology', icon: liver),
+  Speciality(name: 'Pulmonology', icon: lungs),
+  Speciality(name: 'Neurology', icon: neuron),
+  Speciality(name: 'Otolaryngology', icon: nose),
+  Speciality(name: 'Nutrition', icon: nutritionist),
+  Speciality(name: 'Orthopaedic', icon: orthopedic),
+  Speciality(name: 'Pediatric', icon: pediatric),
+  Speciality(name: 'Maternity', icon: pregnant),
+  Speciality(name: 'Psychology', icon: psychiartry),
+  Speciality(name: 'Radiology', icon: radiotherapy),
+  Speciality(name: 'Gastroenterology', icon: stomach),
+  Speciality(name: 'Dental', icon: tooth),
+];

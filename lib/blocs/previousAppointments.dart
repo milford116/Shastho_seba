@@ -5,7 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'baseBloc.dart';
 import '../models/appointment.dart';
 import '../networking/response.dart';
-import '../repositories/appointments.dart';
+import '../repositories/appointment.dart';
 
 class PreviousAppointmentsBloc extends ChangeNotifier implements BaseBloc {
   AppointmentsRepository _appointmentsRepository;

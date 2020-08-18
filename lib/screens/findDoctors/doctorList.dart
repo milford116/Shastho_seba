@@ -1,24 +1,19 @@
-import 'package:Shastho_Sheba/blocs/findDoctors.dart';
-import 'package:Shastho_Sheba/models/doctor.dart';
-import 'package:Shastho_Sheba/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
 import '../../widgets/drawer.dart';
+import '../../utils.dart';
 import '../../routes.dart';
 import '../../networking/response.dart';
+import '../../blocs/findDoctors.dart';
+import '../../models/doctor.dart';
 import '../../widgets/loading.dart';
 import '../../widgets/error.dart';
 
-class DoctorList extends StatefulWidget {
-  @override
-  _SpecialityWiseDoctorListState createState() =>
-      _SpecialityWiseDoctorListState();
-}
-
-class _SpecialityWiseDoctorListState extends State<DoctorList> {
+class DoctorList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final String specialityname = ModalRoute.of(context).settings.arguments;
+    final String specialityName = ModalRoute.of(context).settings.arguments;
     return Container(
       decoration: BoxDecoration(
         image: DecorationImage(
@@ -32,14 +27,14 @@ class _SpecialityWiseDoctorListState extends State<DoctorList> {
           elevation: 0.0,
           backgroundColor: lightBlue,
           centerTitle: true,
-          title: Text('$specialityname'),
+          title: Text('$specialityName'),
         ),
         drawer: SafeArea(
-          child: MyDrawer(Selected.findDoctors),
+          child: MyDrawer(Selected.none),
         ),
         body: SafeArea(
           child: ChangeNotifierProvider(
-            create: (context) => FindDoctorsBloc(specialityname),
+            create: (context) => FindDoctorsBloc(specialityName),
             child: Builder(
               builder: (context) {
                 FindDoctorsBloc findDoctorsBloc =
@@ -80,92 +75,75 @@ class _SpecialityWiseDoctorListState extends State<DoctorList> {
                                   child: ListView.builder(
                                     shrinkWrap: true,
                                     padding: EdgeInsets.only(top: 20.0),
-                                    itemCount: names.length,
+                                    itemCount: response.data.length,
                                     itemBuilder: (context, index) {
-                                      return Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            vertical: 5.0),
-                                        child: Container(
-                                          decoration: BoxDecoration(
+                                      return InkWell(
+                                        onTap: () {
+                                          Navigator.pushNamed(
+                                            context,
+                                            doctorProfileScreen,
+                                            arguments: response.data[index],
+                                          );
+                                        },
+                                        child: Card(
+                                          elevation: 0.1,
+                                          shadowColor: Colors.black12,
+                                          color: Colors.transparent,
+                                          child: Container(
+                                            padding: EdgeInsets.all(5.0),
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(5.0),
                                               color: Colors.transparent,
                                               border: Border.all(
                                                 color: blue,
-                                                width: 2.0,
-                                              )),
-                                          child: InkWell(
-                                            onTap: () {
-                                              Navigator.pushNamed(
-                                                context,
-                                                doctorProfileScreen,
-                                                arguments:
-                                                    response.data[index].name,
-                                              );
-                                            },
-                                            child: Padding(
-                                              padding:
-                                                  const EdgeInsets.symmetric(
-                                                      vertical: 5.0),
-                                              child: ListTile(
-                                                leading: CircleAvatar(
-                                                  radius: 30,
-                                                  backgroundColor: Colors.blue,
+                                                width: 1.0,
+                                              ),
+                                            ),
+                                            child: Row(
+                                              children: [
+                                                CircleAvatar(
+                                                  radius: 40,
+                                                  backgroundColor: Colors.white,
                                                   child: CircleAvatar(
-                                                    radius: 27,
+                                                    radius: 38,
                                                     backgroundImage: AssetImage(
                                                         'images/abul_kalam.png'),
                                                   ),
                                                 ),
-                                                title: Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          left: 20.0),
+                                                SizedBox(
+                                                  width: 15.0,
+                                                ),
+                                                Expanded(
                                                   child: Column(
                                                     crossAxisAlignment:
                                                         CrossAxisAlignment
                                                             .start,
+                                                    mainAxisSize:
+                                                        MainAxisSize.min,
                                                     children: <Widget>[
                                                       Text(
                                                         response
                                                             .data[index].name,
                                                         style: M.copyWith(
-                                                            color: blue),
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .bold),
                                                       ),
                                                       Text(
                                                         response.data[index]
                                                             .designation,
-                                                        style: M.copyWith(
-                                                            color: blue),
+                                                        style: M,
                                                       ),
                                                       Text(
                                                         response.data[index]
                                                             .institution,
-                                                        style: M.copyWith(
-                                                            color: blue),
+                                                        style: M,
                                                       ),
                                                     ],
                                                   ),
                                                 ),
-                                                trailing: Padding(
-                                                  padding:
-                                                      const EdgeInsets.fromLTRB(
-                                                          0.0, 10.0, 10.0, 0.0),
-                                                  child: Column(
-                                                    children: <Widget>[
-                                                      Text(
-                                                        'Fee:',
-                                                        style: M.copyWith(
-                                                            color: blue),
-                                                      ),
-                                                      Text(
-                                                        response.data[index]
-                                                            .email, // not email. fee range will be shown here
-                                                        style: M.copyWith(
-                                                            color: blue),
-                                                      )
-                                                    ],
-                                                  ),
-                                                ),
-                                              ),
+                                              ],
                                             ),
                                           ),
                                         ),
@@ -182,7 +160,7 @@ class _SpecialityWiseDoctorListState extends State<DoctorList> {
                             child: Error(
                               message: response.message,
                               onPressed: () =>
-                                  findDoctorsBloc.findDoctors(specialityname),
+                                  findDoctorsBloc.findDoctors(specialityName),
                             ),
                           );
                       }
@@ -198,10 +176,3 @@ class _SpecialityWiseDoctorListState extends State<DoctorList> {
     );
   }
 }
-
-List<String> names = [
-  'Dr.Shafiul Islam',
-  'Dr.Akbar Ali',
-  'Dr.Khademul Alam',
-  'Dr.Abul Kalam'
-];

@@ -5,9 +5,9 @@ import 'package:flutter/foundation.dart';
 import 'baseBloc.dart';
 import '../models/appointment.dart';
 import '../networking/response.dart';
-import '../repositories/appointments.dart';
+import '../repositories/appointment.dart';
 
-class TodayAppointmentsBloc extends ChangeNotifier implements BaseBloc {
+class AppointmentsTodayBloc extends ChangeNotifier implements BaseBloc {
   AppointmentsRepository _appointmentsRepository;
   StreamController _appointmentsController;
 
@@ -17,7 +17,7 @@ class TodayAppointmentsBloc extends ChangeNotifier implements BaseBloc {
   Stream<Response<List<Appointment>>> get stream =>
       _appointmentsController.stream;
 
-  TodayAppointmentsBloc() {
+  AppointmentsTodayBloc() {
     _appointmentsRepository = AppointmentsRepository();
     _appointmentsController = StreamController<Response<List<Appointment>>>();
     fetchTodayAppointments();
@@ -27,7 +27,6 @@ class TodayAppointmentsBloc extends ChangeNotifier implements BaseBloc {
     sink.add(Response.loading('Fetching Appointments'));
     try {
       final list = await _appointmentsRepository.todayAppointments();
-      print(list);
       sink.add(Response.completed(list));
     } catch (e) {
       sink.add(Response.error(e.toString()));

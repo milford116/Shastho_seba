@@ -53,7 +53,7 @@ const {mongo} = require("mongoose");
  *               type: object
  *               properties:
  *                 serial_no:
- *                   type: string
+ *                   type: number
  *       500:
  *         description: Internal Server Error
  *         content:

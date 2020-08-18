@@ -9,6 +9,113 @@ const appointment = require("../models/appointment.model");
 const {SUCCESS} = require("../error.messages");
 const appointmentModel = mongoose.model("appointment");
 
+/**
+ * @swagger
+ * /doctor/get/timeline:
+ *   get:
+ *     deprecated: false
+ *     security:
+ *       - bearerAuth: []
+ *     tags:
+ *       - Timeline
+ *     summary: timeline of a pair of doctor-patient
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               patient_mobile_no:
+ *                 type: string
+ *                 description: send this from the doctor app
+ *               doctor_mobile_no:
+ *                 type: string
+ *                 description: send this from the patient app
+ *     responses:
+ *       200:
+ *         description: success
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 timeline:
+ *                   type: array
+ *                   $ref: '#/components/schemas/timeline'
+ *       500:
+ *         description: Internal Server Error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 msg:
+ *                   type: string
+ *       400:
+ *         description: Bad Request
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 msg:
+ *                   type: string
+ */
+
+/**
+ * @swagger
+ * /patient/get/timeline:
+ *   get:
+ *     deprecated: false
+ *     security:
+ *       - bearerAuth: []
+ *     tags:
+ *       - Timeline
+ *     summary: timeline of a pair of doctor-patient
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               patient_mobile_no:
+ *                 type: string
+ *                 description: send this from the doctor app
+ *               doctor_mobile_no:
+ *                 type: string
+ *                 description: send this from the patient app
+ *     responses:
+ *       200:
+ *         description: success
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 timeline:
+ *                   type: array
+ *                   $ref: '#/components/schemas/timeline'
+ *       500:
+ *         description: Internal Server Error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 msg:
+ *                   type: string
+ *       400:
+ *         description: Bad Request
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 msg:
+ *                   type: string
+ */
 exports.getTimeline = async function (req, res) {
 	let doctorId = "";
 	let patientId = "";
@@ -31,5 +138,5 @@ exports.getTimeline = async function (req, res) {
 		ret.push(log);
 	}
 
-	res.status(SUCCESS).json({logs: ret});
+	res.status(SUCCESS).json({timeline: ret});
 };

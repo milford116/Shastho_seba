@@ -44,6 +44,6 @@ router.post(
 );
 router.post("/doctor/get/prevPrescription", validatorMiddleWare(doctorValidator.getPreviousPrescriptions), doctorMiddleware.middleware, prescriptionController.getPreviousPrescription);
 
-router.get("/get/doctor/timeline", doctorMiddleware.middleware, timelineController.getTimeline);
+router.get("/doctor/get/timeline", doctorMiddleware.middleware, timelineController.getTimeline);
 
 module.exports = router;

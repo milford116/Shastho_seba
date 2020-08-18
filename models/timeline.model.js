@@ -11,7 +11,7 @@ mongoose.pluralize(null);
  *         appointment_id:
  *           type: string
  *         type:
- *           type: number
+ *           type: string
  *         createdAt:
  *           type: string
  *           format: date-format
@@ -31,7 +31,7 @@ var timelineSchema = new mongoose.Schema(
 			required: true,
 		},
 	},
-	{ timestamps: true }
+	{timestamps: true}
 );
 
 mongoose.model("timeline", timelineSchema);

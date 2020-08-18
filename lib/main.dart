@@ -4,7 +4,7 @@ import 'screens/splash.dart';
 import 'screens/login.dart';
 import 'screens/home.dart';
 import 'screens/registration.dart';
-import 'screens/prescriptions/prescriptions.dart';
+import 'screens/feedback.dart';
 import 'screens/appointments/appointments.dart';
 import 'screens/appointmentDetails/details.dart';
 import 'screens/appointmentsToday.dart';
@@ -37,7 +37,7 @@ class MyApp extends StatelessWidget {
         loginScreen: (context) => LoginScreen(),
         homeScreen: (context) => HomeScreen(),
         registrationScreen: (context) => Registration(),
-        prescriptionsScreen: (context) => PrescriptionsScreen(),
+        feedbackScreen: (context) => FeedbackScreen(),
         appointmentsScreen: (context) => AppointmentsScreen(),
         appointmentDetailsScreen: (context) => AppointmentDetails(),
         appointmentsTodayScreen: (context) => AppointmentsTodayScreen(),

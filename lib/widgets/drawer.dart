@@ -8,7 +8,7 @@ enum Selected {
   appointmentsToday,
   findDoctors,
   appointments,
-  prescriptions,
+  feedback,
   none,
 }
 
@@ -80,10 +80,10 @@ class MyDrawer extends StatelessWidget {
               thickness: 2.0,
             ),
             _Tile(
-              title: 'Prescriptions',
-              icon: Icons.content_paste,
-              selected: selected == Selected.prescriptions,
-              route: prescriptionsScreen,
+              title: 'Feedback',
+              icon: Icons.feedback,
+              selected: selected == Selected.feedback,
+              route: feedbackScreen,
             ),
             Divider(
               color: Colors.white,
@@ -146,7 +146,9 @@ class _Tile extends StatelessWidget {
           size: 30,
         ),
         onTap: () {
-          Navigator.of(context).pushNamedAndRemoveUntil(route, (_) => false);
+          Navigator.of(context)
+              .pushNamedAndRemoveUntil(homeScreen, (_) => false);
+          Navigator.of(context).pushNamed(route);
         },
       ),
     );

@@ -27,24 +27,20 @@ exports.handleSocketIO = async function (server) {
 
 					let payload = {
 						chamberId: data.chamberId.toString(),
-						members: [],
 					};
+
+					socket.join(data.chamberId.toString());
 
 					io.of("/")
 						.in(data.chamberId.toString())
 						.clients((error, clients) => {
 							if (error) throw error;
 							else {
-								for (let i = 0; i < clients.length; i++) {
-									payload.members.push(io.sockets.connected[clients[i]].userId);
-								}
+								if (clients.length === 2) io.to(socket.id).emit("old_connection", payload);
 							}
 						});
 
-					socket.join(data.chamberId.toString());
 					socket.to(data.chamberId.toString()).emit("connection", payload);
-
-					if (cb) cb();
 				}
 			});
 		});

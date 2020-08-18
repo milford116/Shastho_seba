@@ -21,6 +21,7 @@ exports.middleware = async function (req, res, next) {
 					} else {
 						req.mobile_no = docs.mobile_no;
 						req._id = docs._id;
+						req.type = "doctor";
 						next();
 					}
 				});

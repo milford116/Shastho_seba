@@ -50,7 +50,7 @@ const appointmentModel = mongoose.model("appointment");
  *             schema:
  *               type: object
  *               properties:
- *                 msg:
+ *                 message:
  *                   type: string
  *       400:
  *         description: Bad Request
@@ -59,7 +59,7 @@ const appointmentModel = mongoose.model("appointment");
  *             schema:
  *               type: object
  *               properties:
- *                 msg:
+ *                 message:
  *                   type: string
  */
 
@@ -104,7 +104,7 @@ const appointmentModel = mongoose.model("appointment");
  *             schema:
  *               type: object
  *               properties:
- *                 msg:
+ *                 message:
  *                   type: string
  *       400:
  *         description: Bad Request
@@ -113,7 +113,7 @@ const appointmentModel = mongoose.model("appointment");
  *             schema:
  *               type: object
  *               properties:
- *                 msg:
+ *                 message:
  *                   type: string
  */
 exports.getTimeline = async function (req, res) {

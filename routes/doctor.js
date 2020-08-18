@@ -9,6 +9,7 @@ const doctorMiddleware = require("../middlewares/auth.doctor.middleware");
 const validatorMiddleWare = require("../middlewares/validator.middleware");
 const doctorValidator = require("../validators/doctor.validator");
 const tokenController = require("../controllers/token.controller");
+const feedbackController = require("../controllers/feedback.controller");
 const express = require("express");
 const router = express.Router();
 
@@ -45,5 +46,7 @@ router.post(
 router.post("/doctor/get/prevPrescription", validatorMiddleWare(doctorValidator.getPreviousPrescriptions), doctorMiddleware.middleware, prescriptionController.getPreviousPrescription);
 
 router.get("/doctor/get/timeline", doctorMiddleware.middleware, timelineController.getTimeline);
+
+router.post("/doctor/post/feedback", doctorMiddleware.middleware, feedbackController.postfeedback);
 
 module.exports = router;

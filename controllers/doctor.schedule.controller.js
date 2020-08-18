@@ -323,7 +323,7 @@ exports.editSchedule = async function (req, res) {
  *             schema:
  *               type: object
  *               properties:
- *                 msg:
+ *                 message:
  *                   type: string
  *       400:
  *         description: Bad Request
@@ -332,7 +332,7 @@ exports.editSchedule = async function (req, res) {
  *             schema:
  *               type: object
  *               properties:
- *                 msg:
+ *                 message:
  *                   type: string
  *       404:
  *         description: Data Not Found
@@ -341,7 +341,7 @@ exports.editSchedule = async function (req, res) {
  *             schema:
  *               type: object
  *               properties:
- *                 msg:
+ *                 message:
  *                   type: string
  */
 exports.deleteSchedule = async function (req, res) {
@@ -386,7 +386,7 @@ exports.deleteSchedule = async function (req, res) {
  *             schema:
  *               type: object
  *               properties:
- *                 msg:
+ *                 message:
  *                   type: string
  *       400:
  *         description: Bad Request
@@ -395,7 +395,7 @@ exports.deleteSchedule = async function (req, res) {
  *             schema:
  *               type: object
  *               properties:
- *                 msg:
+ *                 message:
  *                   type: string
  */
 exports.todaysSchedule = async function (req, res) {

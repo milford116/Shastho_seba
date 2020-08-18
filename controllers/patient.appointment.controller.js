@@ -61,7 +61,7 @@ const {mongo} = require("mongoose");
  *             schema:
  *               type: object
  *               properties:
- *                 msg:
+ *                 message:
  *                   type: string
  *       400:
  *         description: Bad Request
@@ -70,7 +70,7 @@ const {mongo} = require("mongoose");
  *             schema:
  *               type: object
  *               properties:
- *                 msg:
+ *                 message:
  *                   type: string
  */
 exports.postAppointment = async function (req, res) {

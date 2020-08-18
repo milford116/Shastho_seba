@@ -20,6 +20,7 @@ exports.middleware = async function (req, res, next) {
 						req.mobile_no = docs.mobile_no;
 						req.name = docs.name;
 						req._id = docs._id;
+						req.type = "patient";
 						next();
 					}
 				});

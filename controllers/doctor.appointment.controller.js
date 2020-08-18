@@ -241,7 +241,7 @@ exports.appointmentDetail = async function (req, res) {
  *             schema:
  *               type: object
  *               properties:
- *                 msg:
+ *                 message:
  *                   type: string
  *       400:
  *         description: Bad Request
@@ -250,7 +250,7 @@ exports.appointmentDetail = async function (req, res) {
  *             schema:
  *               type: object
  *               properties:
- *                 msg:
+ *                 message:
  *                   type: string
  */
 exports.appointmentInRange = async function (req, res) {

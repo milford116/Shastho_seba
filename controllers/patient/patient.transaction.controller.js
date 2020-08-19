@@ -6,6 +6,7 @@ const timelineModel = mongoose.model("timeline");
 const appointment = require("../../models/appointment.model");
 const appointmentModel = mongoose.model("appointment");
 const error_message = require("../../error.messages");
+const { SUCCESS, INTERNAL_SERVER_ERROR, BAD_REQUEST, DATA_NOT_FOUND } = require("../../errors");
 
 /**
  * @swagger

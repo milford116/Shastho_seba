@@ -6,8 +6,25 @@ const patientModel = mongoose.model("patient");
 const bcrypt = require("bcryptjs");
 const dotenv = require("dotenv");
 const jwt = require("jsonwebtoken");
-const { SUCCESS, INTERNAL_SERVER_ERROR, BAD_REQUEST, DATA_NOT_FOUND } = require("../../errors");
+const {SUCCESS, INTERNAL_SERVER_ERROR, BAD_REQUEST, DATA_NOT_FOUND} = require("../../errors");
 const error_message = require("../../error.messages");
+
+const path = require("path");
+const multer = require("multer");
+
+const storage = multer.diskStorage({
+	destination: function (req, file, cb) {
+		cb(null, "./storage/profilePicture/patient/");
+	},
+	filename: function (req, file, cb) {
+		const today = new Date();
+		const name = req.mobile_no + today.valueOf() + path.extname(file.originalname);
+		req.fileName = name;
+		cb(null, name);
+	},
+});
+const upload = multer({storage});
+exports.upload = upload;
 
 /**
  * @swagger
@@ -80,7 +97,7 @@ const error_message = require("../../error.messages");
  *                   type: string
  */
 exports.registration = async function (req, res) {
-	patientModel.findOne({ mobile_no: req.body.mobile_no }, (err, docs) => {
+	patientModel.findOne({mobile_no: req.body.mobile_no}, (err, docs) => {
 		if (err) {
 			res.status(INTERNAL_SERVER_ERROR).json(error_message.INTERNAL_SERVER_ERROR);
 		} else if (docs) {
@@ -186,7 +203,7 @@ exports.registration = async function (req, res) {
  *                   type: string
  */
 exports.login = async function (req, res) {
-	patientModel.findOne({ mobile_no: req.body.mobile_no }, (err, docs) => {
+	patientModel.findOne({mobile_no: req.body.mobile_no}, (err, docs) => {
 		if (err) {
 			res.status(INTERNAL_SERVER_ERROR).json(error_message.INTERNAL_SERVER_ERROR);
 		} else if (!docs) {
@@ -209,7 +226,7 @@ exports.login = async function (req, res) {
 						token: token_value,
 					};
 
-					patientModel.findOneAndUpdate({ mobile_no: req.body.mobile_no }, { session_token: token_value }, (err, docs) => {
+					patientModel.findOneAndUpdate({mobile_no: req.body.mobile_no}, {session_token: token_value}, (err, docs) => {
 						if (err) {
 							res.status(INTERNAL_SERVER_ERROR).json(error_message.INTERNAL_SERVER_ERROR);
 						} else {
@@ -272,7 +289,7 @@ exports.login = async function (req, res) {
  *                   type: string
  */
 exports.details = async function (req, res) {
-	patientModel.findOne({ mobile_no: req.mobile_no }, (err, docs) => {
+	patientModel.findOne({mobile_no: req.mobile_no}, (err, docs) => {
 		if (err) {
 			res.status(INTERNAL_SERVER_ERROR).json(error_message.INTERNAL_SERVER_ERROR);
 		} else if (!docs) {
@@ -335,13 +352,13 @@ exports.details = async function (req, res) {
  *                   type: string
  */
 exports.logout = async function (req, res) {
-	patientModel.findOne({ mobile_no: req.mobile_no }, (err, docs) => {
+	patientModel.findOne({mobile_no: req.mobile_no}, (err, docs) => {
 		if (err) {
 			res.status(INTERNAL_SERVER_ERROR).json(error_message.INTERNAL_SERVER_ERROR);
 		} else if (!docs) {
 			res.status(DATA_NOT_FOUND).json(error_message.DATA_NOT_FOUND);
 		} else {
-			patientModel.updateOne({ mobile_no: req.mobile_no }, { $unset: { session_token: null } }, (err, docs) => {
+			patientModel.updateOne({mobile_no: req.mobile_no}, {$unset: {session_token: null}}, (err, docs) => {
 				if (err) {
 					res.status(INTERNAL_SERVER_ERROR).json(error_message.INTERNAL_SERVER_ERROR);
 				} else {
@@ -349,5 +366,67 @@ exports.logout = async function (req, res) {
 				}
 			});
 		}
+	});
+};
+
+/**
+ * @swagger
+ * /patient/upload/profile_picture:
+ *   post:
+ *     deprecated: false
+ *     security:
+ *       - bearerAuth: []
+ *     tags:
+ *       - Patient
+ *     summary: Posts the profile picture of the patient
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         multipart/form-data:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               file:
+ *                 type: string
+ *                 format: binary
+ *                 description: profile picture of the patient
+ *             required:
+ *               - file
+ *     responses:
+ *       200:
+ *         description: success
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 patient:
+ *                   $ref: '#/components/schemas/patient'
+ *       500:
+ *         description: Internal Server Error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *       400:
+ *         description: Bad Request
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ */
+exports.uploadDP = async function (req, res) {
+	const url = req.protocol + "://" + req.get("host");
+	const imageName = url + "/profilePicture/patient/" + req.fileName;
+
+	patientModel.findOneAndUpdate({mobile_no: req.mobile_no}, {image_link: imageName}, {new: true}, (err, docs) => {
+		if (err) res.status(INTERNAL_SERVER_ERROR).json(error_message.INTERNAL_SERVER_ERROR);
+		else res.status(SUCCESS).json({patient: docs});
 	});
 };

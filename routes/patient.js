@@ -14,6 +14,7 @@ router.post("/patient/post/login", patientController.login);
 router.post("/patient/post/register", patientController.registration);
 router.get("/patient/get/details", patientMiddleware.middleware, patientController.details);
 router.post("/patient/post/logout", patientMiddleware.middleware, patientController.logout);
+router.post("/patient/upload/profile_picture", patientMiddleware.middleware, patientController.upload.single("file"), patientController.uploadDP);
 
 router.post("/patient/post/appointment", patientMiddleware.middleware, appointmentController.postAppointment);
 router.get("/patient/get/today/appointment", patientMiddleware.middleware, appointmentController.getAppointment);

@@ -1,13 +1,13 @@
 const mongoose = require("mongoose");
 mongoose.set("useFindAndModify", false);
-const patient = require("../models/patient.model");
+const patient = require("../../models/patient.model");
 const patientModel = mongoose.model("patient");
 
 const bcrypt = require("bcryptjs");
 const dotenv = require("dotenv");
 const jwt = require("jsonwebtoken");
-const {SUCCESS, INTERNAL_SERVER_ERROR, BAD_REQUEST, DATA_NOT_FOUND} = require("../errors");
-const error_message = require("../error.messages");
+const { SUCCESS, INTERNAL_SERVER_ERROR, BAD_REQUEST, DATA_NOT_FOUND } = require("../../errors");
+const error_message = require("../../error.messages");
 
 /**
  * @swagger
@@ -80,7 +80,7 @@ const error_message = require("../error.messages");
  *                   type: string
  */
 exports.registration = async function (req, res) {
-	patientModel.findOne({mobile_no: req.body.mobile_no}, (err, docs) => {
+	patientModel.findOne({ mobile_no: req.body.mobile_no }, (err, docs) => {
 		if (err) {
 			res.status(INTERNAL_SERVER_ERROR).json(error_message.INTERNAL_SERVER_ERROR);
 		} else if (docs) {
@@ -186,7 +186,7 @@ exports.registration = async function (req, res) {
  *                   type: string
  */
 exports.login = async function (req, res) {
-	patientModel.findOne({mobile_no: req.body.mobile_no}, (err, docs) => {
+	patientModel.findOne({ mobile_no: req.body.mobile_no }, (err, docs) => {
 		if (err) {
 			res.status(INTERNAL_SERVER_ERROR).json(error_message.INTERNAL_SERVER_ERROR);
 		} else if (!docs) {
@@ -209,7 +209,7 @@ exports.login = async function (req, res) {
 						token: token_value,
 					};
 
-					patientModel.findOneAndUpdate({mobile_no: req.body.mobile_no}, {session_token: token_value}, (err, docs) => {
+					patientModel.findOneAndUpdate({ mobile_no: req.body.mobile_no }, { session_token: token_value }, (err, docs) => {
 						if (err) {
 							res.status(INTERNAL_SERVER_ERROR).json(error_message.INTERNAL_SERVER_ERROR);
 						} else {
@@ -272,7 +272,7 @@ exports.login = async function (req, res) {
  *                   type: string
  */
 exports.details = async function (req, res) {
-	patientModel.findOne({mobile_no: req.mobile_no}, (err, docs) => {
+	patientModel.findOne({ mobile_no: req.mobile_no }, (err, docs) => {
 		if (err) {
 			res.status(INTERNAL_SERVER_ERROR).json(error_message.INTERNAL_SERVER_ERROR);
 		} else if (!docs) {
@@ -335,13 +335,13 @@ exports.details = async function (req, res) {
  *                   type: string
  */
 exports.logout = async function (req, res) {
-	patientModel.findOne({mobile_no: req.mobile_no}, (err, docs) => {
+	patientModel.findOne({ mobile_no: req.mobile_no }, (err, docs) => {
 		if (err) {
 			res.status(INTERNAL_SERVER_ERROR).json(error_message.INTERNAL_SERVER_ERROR);
 		} else if (!docs) {
 			res.status(DATA_NOT_FOUND).json(error_message.DATA_NOT_FOUND);
 		} else {
-			patientModel.updateOne({mobile_no: req.mobile_no}, {$unset: {session_token: null}}, (err, docs) => {
+			patientModel.updateOne({ mobile_no: req.mobile_no }, { $unset: { session_token: null } }, (err, docs) => {
 				if (err) {
 					res.status(INTERNAL_SERVER_ERROR).json(error_message.INTERNAL_SERVER_ERROR);
 				} else {

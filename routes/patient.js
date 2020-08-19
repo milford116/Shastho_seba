@@ -1,11 +1,11 @@
-const patientController = require("../controllers/patient.controller");
-const appointmentController = require("../controllers/patient.appointment.controller");
-const transactionController = require("../controllers/transaction.controller");
-const scheduleController = require("../controllers/patient.schedule.controller");
+const patientController = require("../controllers/patient/patient.controller");
+const appointmentController = require("../controllers/patient/patient.appointment.controller");
+const transactionController = require("../controllers/patient/patient.transaction.controller");
+const scheduleController = require("../controllers/patient/patient.schedule.controller");
 const patientMiddleware = require("../middlewares/auth.patient.middleware");
 const tokenController = require("../controllers/token.controller");
-const timelineController = require("../controllers/timeline.controller");
-const feedbackController = require("../controllers/feedback.controller");
+const timelineController = require("../controllers/patient/patient.timeline.controller");
+const feedbackController = require("../controllers/patient/feedback.controller");
 
 const express = require("express");
 const router = express.Router();
@@ -30,6 +30,6 @@ router.post("/patient/set/token", patientMiddleware.middleware, tokenController.
 
 router.get("/patient/get/timeline", patientMiddleware.middleware, timelineController.getTimeline);
 
-router.post("/patient/post/feedback", patientMiddleware.middleware, feedbackController.postfeedback);
+router.post("/patient/post/feedback", patientMiddleware.middleware, feedbackController.postFeedback);
 
 module.exports = router;

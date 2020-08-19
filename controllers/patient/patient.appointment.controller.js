@@ -1,10 +1,10 @@
 const mongoose = require("mongoose");
 
-const doctor = require("../models/doctor.model");
-const appointment = require("../models/appointment.model");
-const schedule = require("../models/schedule.model");
-const patient = require("../models/patient.model");
-const timeline = require("../models/timeline.model");
+const doctor = require("../../models/doctor.model");
+const appointment = require("../../models/appointment.model");
+const schedule = require("../../models/schedule.model");
+const patient = require("../../models/patient.model");
+const timeline = require("../../models/timeline.model");
 
 const doctorModel = mongoose.model("doctor");
 const appointmentModel = mongoose.model("appointment");
@@ -12,9 +12,8 @@ const scheduleModel = mongoose.model("schedule");
 const patientModel = mongoose.model("patient");
 const timelineModel = mongoose.model("timeline");
 
-const {SUCCESS, INTERNAL_SERVER_ERROR, BAD_REQUEST, DATA_NOT_FOUND} = require("../errors");
-const error_message = require("../error.messages");
-const {mongo} = require("mongoose");
+const { SUCCESS, INTERNAL_SERVER_ERROR, BAD_REQUEST, DATA_NOT_FOUND } = require("../../errors");
+const error_message = require("../../error.messages");
 
 /**
  * @swagger
@@ -74,7 +73,7 @@ const {mongo} = require("mongoose");
  *                   type: string
  */
 exports.postAppointment = async function (req, res) {
-	doctorModel.findOne({mobile_no: req.body.doc_mobile_no}, async (err, docs) => {
+	doctorModel.findOne({ mobile_no: req.body.doc_mobile_no }, async (err, docs) => {
 		if (err) {
 			res.status(INTERNAL_SERVER_ERROR).json(error_message.INTERNAL_SERVER_ERROR);
 		} else if (!docs) {
@@ -86,7 +85,7 @@ exports.postAppointment = async function (req, res) {
 			var query1 = {
 				schedule_id: req.body.schedule_id,
 				patient_mobile_no: req.mobile_no,
-				status: {$lt: 2},
+				status: { $lt: 3 },
 				appointment_date_time: date,
 			};
 
@@ -101,8 +100,8 @@ exports.postAppointment = async function (req, res) {
 						appointment_date_time: date,
 					};
 
-					var max_collection = await appointmentModel.find(query2).sort({serial_no: -1}).limit(1).exec();
-					var patient_detail = await patientModel.findOne({mobile_no: req.mobile_no}).exec();
+					var max_collection = await appointmentModel.find(query2).sort({ serial_no: -1 }).limit(1).exec();
+					var patient_detail = await patientModel.findOne({ mobile_no: req.mobile_no }).exec();
 
 					var appointment = new appointmentModel();
 					appointment.schedule_id = req.body.schedule_id;
@@ -125,12 +124,14 @@ exports.postAppointment = async function (req, res) {
 								serial_no: appointment.serial_no,
 							};
 
-							let timelineData = new timelineModel();
-							timelineData.appointment_id = docs._id;
-							timelineData.type = "appointment";
+							let timeline_data = new timelineModel();
+							timeline_data.doctor_mobile_no = req.body.doc_mobile_no;
+							timeline_data.patient_mobile_no = req.mobile_no;
+							timeline_data.type_id = docs._id;
+							timeline_data.type = 0;
+							timeline_data.appointment_date = date;
 
-							await timelineData.save();
-
+							await timeline_data.save();
 							res.status(SUCCESS).json(ret);
 						}
 					});
@@ -185,18 +186,21 @@ exports.getAppointment = async function (req, res) {
 	let date = new Date(Date.now());
 	date.setUTCHours(0, 0, 0, 0);
 
-	let patient = await patientModel.findOne({mobile_no: req.mobile_no}, {_id: 1});
+	let patient = await patientModel.findOne({ mobile_no: req.mobile_no }, { _id: 1 });
 
 	var query = {
 		patientId: patient._id,
-		status: {$lt: 2},
+		status: { $lt: 3 },
 		appointment_date_time: date,
 	};
 
 	let appointments = await appointmentModel.find(query).populate("doctorId", "name designation institute reg_number mobile_no email image specialization about_me").exec();
 
-	if (appointments) res.status(SUCCESS).json({appointments});
-	else res.status(DATA_NOT_FOUND).json(error_message.DATA_NOT_FOUND);
+	if (appointments) {
+		res.status(SUCCESS).json({ appointments });
+	} else {
+		res.status(DATA_NOT_FOUND).json(error_message.DATA_NOT_FOUND);
+	}
 };
 
 /**
@@ -244,21 +248,21 @@ exports.getPastAppointment = async function (req, res) {
 	let date = new Date(Date.now());
 	date.setUTCHours(0, 0, 0, 0);
 
-	let patient = await patientModel.findOne({mobile_no: req.mobile_no}, {_id: 1});
+	let patient = await patientModel.findOne({ mobile_no: req.mobile_no }, { _id: 1 });
 
 	var query = {
 		patientId: patient._id,
-		status: {$lt: 2},
-		appointment_date_time: {$lte: date},
+		status: { $lt: 3 },
+		appointment_date_time: { $lte: date },
 	};
 
 	let appointments = await appointmentModel
 		.find(query)
-		.sort({appointment_date_time: -1})
+		.sort({ appointment_date_time: -1 })
 		.populate("doctorId", "name designation institute reg_number mobile_no email image specialization about_me")
 		.exec();
 
-	if (appointments) res.status(SUCCESS).json({appointments});
+	if (appointments) res.status(SUCCESS).json({ appointments });
 	else res.status(DATA_NOT_FOUND).json(error_message.DATA_NOT_FOUND);
 };
 
@@ -307,20 +311,20 @@ exports.getFutureAppointment = async function (req, res) {
 	let date = new Date(Date.now());
 	date.setUTCHours(0, 0, 0, 0);
 
-	let patient = await patientModel.findOne({mobile_no: req.mobile_no});
+	let patient = await patientModel.findOne({ mobile_no: req.mobile_no });
 
 	var query = {
 		patientId: patient._id,
-		appointment_date_time: {$gt: date},
+		appointment_date_time: { $gt: date },
 	};
 
 	let appointments = await appointmentModel
 		.find(query)
-		.sort({appointment_date_time: 1})
+		.sort({ appointment_date_time: 1 })
 		.populate("doctorId", "name designation institute reg_number mobile_no email image specialization about_me")
 		.exec();
 
-	if (appointments) res.status(SUCCESS).json({appointments});
+	if (appointments) res.status(SUCCESS).json({ appointments });
 	else res.status(DATA_NOT_FOUND).json(error_message.DATA_NOT_FOUND);
 };
 
@@ -384,7 +388,7 @@ exports.getFutureAppointment = async function (req, res) {
  *                   type: string
  */
 exports.cancelAppointment = async function (req, res) {
-	appointmentModel.deleteOne({_id: req.body.id}, (err, docs) => {
+	appointmentModel.deleteOne({ _id: req.body.id }, (err, docs) => {
 		if (err) {
 			res.status(INTERNAL_SERVER_ERROR).json(error_message.INTERNAL_SERVER_ERROR);
 		} else if (docs.deletedCount === 0) {

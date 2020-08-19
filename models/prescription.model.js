@@ -24,12 +24,10 @@ var prescriptionSchema = new mongoose.Schema({
 		type: String,
 		required: true,
 	},
-
 	prescription_img: {
 		type: String,
 		required: false,
 	},
-
 	medicine: {
 		type: Array,
 		required: false,

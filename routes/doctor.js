@@ -4,12 +4,12 @@ const scheduleController = require("../controllers/doctor.schedule.controller");
 const transactionController = require("../controllers/transaction.controller");
 const appointmentController = require("../controllers/doctor.appointment.controller");
 const prescriptionController = require("../controllers/prescription.controller");
-const timelineController = require("../controllers/timeline.controller");
+const timelineController = require("../controllers/patient/patient.timeline.controller");
 const doctorMiddleware = require("../middlewares/auth.doctor.middleware");
 const validatorMiddleWare = require("../middlewares/validator.middleware");
 const doctorValidator = require("../validators/doctor.validator");
 const tokenController = require("../controllers/token.controller");
-const feedbackController = require("../controllers/feedback.controller");
+//const feedbackController = require("../controllers/feedback.controller");
 const express = require("express");
 const router = express.Router();
 
@@ -47,6 +47,6 @@ router.post("/doctor/get/prevPrescription", validatorMiddleWare(doctorValidator.
 
 router.get("/doctor/get/timeline", doctorMiddleware.middleware, timelineController.getTimeline);
 
-router.post("/doctor/post/feedback", doctorMiddleware.middleware, feedbackController.postfeedback);
+//router.post("/doctor/post/feedback", doctorMiddleware.middleware, feedbackController.postfeedback);
 
 module.exports = router;

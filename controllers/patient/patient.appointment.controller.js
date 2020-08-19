@@ -84,7 +84,7 @@ exports.postAppointment = async function (req, res) {
 
 			var query1 = {
 				schedule_id: req.body.schedule_id,
-				patient_mobile_no: req.mobile_no,
+				patientId: req._id,
 				status: { $lt: 3 },
 				appointment_date_time: date,
 			};

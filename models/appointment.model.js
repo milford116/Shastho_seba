@@ -40,8 +40,9 @@ var appointmentSchema = new mongoose.Schema(
 			required: true,
 		},
 		schedule_id: {
-			type: String,
+			type: mongoose.Schema.Types.ObjectId,
 			required: true,
+			ref: "schedule",
 		},
 		doctorId: {
 			type: mongoose.Schema.Types.ObjectId,
@@ -67,7 +68,7 @@ var appointmentSchema = new mongoose.Schema(
 			required: true,
 		},
 	},
-	{timestamps: true}
+	{ timestamps: true }
 );
 
 mongoose.model("appointment", appointmentSchema);

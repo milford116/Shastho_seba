@@ -28,7 +28,7 @@ router.post("/patient/get/schedule", patientMiddleware.middleware, scheduleContr
 
 router.post("/patient/set/token", patientMiddleware.middleware, tokenController.setToken);
 
-router.get("/patient/get/timeline", patientMiddleware.middleware, timelineController.getTimeline);
+router.post("/patient/get/timeline", patientMiddleware.middleware, timelineController.getTimeline);
 
 router.post("/patient/post/feedback", patientMiddleware.middleware, feedbackController.postFeedback);
 

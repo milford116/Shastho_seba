@@ -54,7 +54,7 @@ var timelineSchema = new mongoose.Schema({
 		required: false,
 	},
 	transaction_createdAt: {
-		type: String,
+		type: Date,
 		required: false,
 	},
 	prescription_createdAt: {

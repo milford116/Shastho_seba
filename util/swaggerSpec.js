@@ -42,7 +42,7 @@ const options = {
 		responses: {},
 		parameters: {},
 	},
-	apis: ["./models/*.js", "./controllers/*.js"],
+	apis: ["./models/*.js", "./controllers/doctor/*.js", "./controllers/patient/*.js"],
 	explorer: true,
 };
 

@@ -1,11 +1,11 @@
 const mongoose = require("mongoose");
-const transaction = require("../models/transaction.model");
+const transaction = require("../../models/transaction.model");
 const transactionModel = mongoose.model("transaction");
-const timeline = require("../models/timeline.model");
+const timeline = require("../../models/timeline.model");
 const timelineModel = mongoose.model("timeline");
 
-const {SUCCESS, INTERNAL_SERVER_ERROR} = require("../errors");
-const error_message = require("../error.messages");
+const {SUCCESS, INTERNAL_SERVER_ERROR} = require("../../errors");
+const error_message = require("../../error.messages");
 
 /**
  * @swagger

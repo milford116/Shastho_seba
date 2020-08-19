@@ -1,8 +1,8 @@
 const mongoose = require("mongoose");
-const schedule = require("../models/schedule.model");
+const schedule = require("../../models/schedule.model");
 const scheduleModel = mongoose.model("schedule");
-const {SUCCESS, INTERNAL_SERVER_ERROR, BAD_REQUEST, DATA_NOT_FOUND} = require("../errors");
-const error_message = require("../error.messages");
+const {SUCCESS, INTERNAL_SERVER_ERROR, BAD_REQUEST, DATA_NOT_FOUND} = require("../../errors");
+const error_message = require("../../error.messages");
 
 /**
  * @swagger

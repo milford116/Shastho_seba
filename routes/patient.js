@@ -3,7 +3,7 @@ const appointmentController = require("../controllers/patient/patient.appointmen
 const transactionController = require("../controllers/patient/patient.transaction.controller");
 const scheduleController = require("../controllers/patient/patient.schedule.controller");
 const patientMiddleware = require("../middlewares/auth.patient.middleware");
-const tokenController = require("../controllers/token.controller");
+//const tokenController = require("../controllers/token.controller");
 const timelineController = require("../controllers/patient/patient.timeline.controller");
 const feedbackController = require("../controllers/patient/feedback.controller");
 
@@ -26,7 +26,7 @@ router.post("/patient/get/transaction", patientMiddleware.middleware, transactio
 
 router.post("/patient/get/schedule", patientMiddleware.middleware, scheduleController.getSchedule);
 
-router.post("/patient/set/token", patientMiddleware.middleware, tokenController.setToken);
+//router.post("/patient/set/token", patientMiddleware.middleware, tokenController.setToken);
 
 router.post("/patient/get/timeline", patientMiddleware.middleware, timelineController.getTimeline);
 

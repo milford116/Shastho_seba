@@ -1,13 +1,13 @@
 const mongoose = require("mongoose");
-const appointment = require("../models/appointment.model");
+const appointment = require("../../models/appointment.model");
 const appointmentModel = mongoose.model("appointment");
-const prescription = require("../models/prescription.model");
+const prescription = require("../../models/prescription.model");
 const prescriptionModel = mongoose.model("prescription");
-const timeline = require("../models/timeline.model");
+const timeline = require("../../models/timeline.model");
 const timelineModel = mongoose.model("timeline");
 
-const {SUCCESS, INTERNAL_SERVER_ERROR} = require("../errors");
-const error_message = require("../error.messages");
+const {SUCCESS, INTERNAL_SERVER_ERROR} = require("../../errors");
+const error_message = require("../../error.messages");
 const path = require("path");
 const multer = require("multer");
 
@@ -93,9 +93,14 @@ exports.postPrescription = async function (req, res) {
 	if (req.filename) newPrescription.prescription_img = "/prescription/" + req.filename;
 	if (req.body.medicine !== undefined) newPrescription.medicine = req.body.medicine;
 
+	let appointment = await appointmentModel.findOne({_id: req.body.appointment_id}).populate("patientId", "mobile_no").exec();
 	let timelineData = new timelineModel();
-	timelineData.appointment_id = req.body.appointment_id;
-	timelineData.type = "prescription";
+	timelineData.doctor_mobile_no = req.mobile_no;
+	timelineData.patient_mobile_no = appointment.patientId.mobile_no;
+	timelineData.appointment_id = appointment._id;
+	timelineData.prescription_createdAt = Date.now();
+	timelineData.appointment_createdAt = appointment.createdAt;
+	timelineData.appointment_date = appointment.appointment_date_time;
 
 	await timelineData.save();
 

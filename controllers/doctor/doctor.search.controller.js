@@ -1,8 +1,8 @@
 const mongoose = require("mongoose");
-const doctor = require("../models/doctor.model");
+const doctor = require("../../models/doctor.model");
 const doctorModel = mongoose.model("doctor");
-const {SUCCESS, INTERNAL_SERVER_ERROR} = require("../errors");
-const error_message = require("../error.messages");
+const {SUCCESS, INTERNAL_SERVER_ERROR} = require("../../errors");
+const error_message = require("../../error.messages");
 
 /**
  * @swagger

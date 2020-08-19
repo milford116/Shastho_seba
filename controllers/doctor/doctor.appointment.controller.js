@@ -1,16 +1,16 @@
 const mongoose = require("mongoose");
 mongoose.set("useFindAndModify", false);
 
-const appointment = require("../models/appointment.model");
-const patient = require("../models/patient.model");
-const doctor = require("../models/doctor.model");
+const appointment = require("../../models/appointment.model");
+const patient = require("../../models/patient.model");
+const doctor = require("../../models/doctor.model");
 
 const patientModel = mongoose.model("patient");
 const appointmentModel = mongoose.model("appointment");
 const doctorModel = mongoose.model("doctor");
 
-const {SUCCESS, INTERNAL_SERVER_ERROR, DATA_NOT_FOUND} = require("../errors");
-const error_message = require("../error.messages");
+const {SUCCESS, INTERNAL_SERVER_ERROR, DATA_NOT_FOUND} = require("../../errors");
+const error_message = require("../../error.messages");
 
 /**
  * @swagger

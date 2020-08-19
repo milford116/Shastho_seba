@@ -1,13 +1,13 @@
 const mongoose = require("mongoose");
 mongoose.set("useFindAndModify", false);
-const doctor = require("../models/doctor.model");
-const reference = require("../models/reference.model");
+const doctor = require("../../models/doctor.model");
+const reference = require("../../models/reference.model");
 const doctorModel = mongoose.model("doctor");
 const referenceModel = mongoose.model("reference");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const {SUCCESS, INTERNAL_SERVER_ERROR, BAD_REQUEST, DATA_NOT_FOUND} = require("../errors");
-const error_message = require("../error.messages");
+const {SUCCESS, INTERNAL_SERVER_ERROR, BAD_REQUEST, DATA_NOT_FOUND} = require("../../errors");
+const error_message = require("../../error.messages");
 
 const path = require("path");
 const multer = require("multer");

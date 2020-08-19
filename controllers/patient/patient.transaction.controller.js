@@ -79,6 +79,7 @@ exports.addTransaction = async function (req, res) {
                 transaction_createdAt: Date.now(),
             };
 
+            await appointmentModel.findOneAndUpdate({ _id: req.body.appointment_id }, { status: 1 }).exec();
             await timelineModel.findOneAndUpdate({ appointment_id: req.body.appointment_id }, data).exec();
             res.status(SUCCESS).json(error_message.SUCCESS);
         }

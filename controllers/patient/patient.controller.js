@@ -110,6 +110,7 @@ exports.registration = async function (req, res) {
 			new_patient.name = req.body.name;
 			new_patient.date_of_birth = req.body.date_of_birth;
 			new_patient.sex = req.body.sex;
+			new_patient.image_link = "https://ui-avatars.com/api/?background=2c88d9&color=fff&name=" + req.body.name;
 
 			bcrypt.hash(req.body.password, parseInt(process.env.SALT_ROUNDS, 10), (err, hash) => {
 				if (err) {

@@ -109,6 +109,7 @@ exports.registration = async function (req, res) {
 					new_doctor.designation = req.body.designation;
 					new_doctor.reg_number = req.body.reg_number;
 					new_doctor.referrer = docs.referrer;
+					new_doctor.image = "https://ui-avatars.com/api/?background=2c88d9&color=fff&name=" + req.body.name;
 
 					if (req.body.about_me) new_doctor.about_me = req.body.about_me;
 

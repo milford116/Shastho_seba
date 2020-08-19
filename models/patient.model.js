@@ -23,7 +23,7 @@ const schema = mongoose.Schema;
  *         session_token:
  *           type: string
  *         image_link:
- *           type: boolean
+ *           type: string
  *         registration_token:
  *           type: string
  *       required:

@@ -37,6 +37,9 @@ class PreviousAppointments extends StatelessWidget {
                         child: Column(
                           children: <Widget>[
                             TextField(
+                              onChanged: (value) {
+                                appointmentsBloc.streamController.add(value);
+                              },
                               decoration: InputDecoration(
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(30.0),
@@ -72,25 +75,12 @@ class PreviousAppointments extends StatelessWidget {
                                             arguments: response.data[index],
                                           );
                                         },
-                                        leading: CircleAvatar(
-                                          radius: 25,
-                                          backgroundColor: Colors.white,
-                                          child: CircleAvatar(
-                                            radius: 23,
-                                            backgroundImage: AssetImage(
-                                                'images/abul_kalam.png'),
-                                          ),
-                                        ),
                                         title: Center(
                                           child: Text(
                                             response.data[index].doctorName,
                                             style:
                                                 TextStyle(color: Colors.white),
                                           ),
-                                        ),
-                                        trailing: Opacity(
-                                          opacity: 0.0,
-                                          child: Icon(Icons.person_pin),
                                         ),
                                       ),
                                     ),

@@ -9,6 +9,7 @@ enum Selected {
   findDoctors,
   appointments,
   feedback,
+  profile,
   none,
 }
 
@@ -44,6 +45,16 @@ class MyDrawer extends StatelessWidget {
               icon: Icons.home,
               selected: selected == Selected.home,
               route: homeScreen,
+            ),
+            Divider(
+              color: Colors.white,
+              thickness: 2.0,
+            ),
+            _Tile(
+              title: 'Profile',
+              icon: Icons.person,
+              selected: selected == Selected.profile,
+              route: profileScreen,
             ),
             Divider(
               color: Colors.white,

@@ -57,6 +57,9 @@ class DoctorList extends StatelessWidget {
                             child: Column(
                               children: <Widget>[
                                 TextField(
+                                  onChanged: (value) {
+                                    findDoctorsBloc.streamController.add(value);
+                                  },
                                   decoration: InputDecoration(
                                     fillColor: Colors.white,
                                     filled: true,
@@ -107,8 +110,9 @@ class DoctorList extends StatelessWidget {
                                                   backgroundColor: Colors.white,
                                                   child: CircleAvatar(
                                                     radius: 38,
-                                                    backgroundImage: AssetImage(
-                                                        'images/abul_kalam.png'),
+                                                    backgroundImage:
+                                                        NetworkImage(response
+                                                            .data[index].image),
                                                   ),
                                                 ),
                                                 SizedBox(

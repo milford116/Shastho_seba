@@ -70,8 +70,7 @@ class DoctorProfileScreen extends StatelessWidget {
                                   backgroundColor: Colors.white,
                                   child: CircleAvatar(
                                     radius: 68,
-                                    backgroundImage:
-                                        AssetImage('images/abul_kalam.png'),
+                                    backgroundImage: NetworkImage(doctor.image),
                                   ),
                                 ),
                                 SizedBox(

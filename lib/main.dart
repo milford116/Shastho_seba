@@ -1,5 +1,7 @@
+import 'package:Shastho_Sheba/screens/profile.dart';
 import 'package:flutter/material.dart';
 
+import 'models/patient.dart';
 import 'screens/splash.dart';
 import 'screens/login.dart';
 import 'screens/home.dart';
@@ -22,6 +24,7 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
+  static Patient patient;
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -47,6 +50,7 @@ class MyApp extends StatelessWidget {
         doctorProfileScreen: (context) => DoctorProfileScreen(),
         chamberScreen: (context) => ChamberScreen(),
         videoCallScreen: (context) => VideoCallScreen(),
+        profileScreen: (context) => ProfileScreen(),
       },
     );
   }

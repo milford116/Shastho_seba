@@ -8,6 +8,7 @@ class Doctor {
   final String registrationNo;
   final String referrer;
   final String aboutMe;
+  final String image;
 
   Doctor({
     this.name,
@@ -19,6 +20,7 @@ class Doctor {
     this.registrationNo,
     this.referrer,
     this.aboutMe,
+    this.image,
   });
 
   Doctor.fromJson(Map<String, dynamic> json)
@@ -30,5 +32,6 @@ class Doctor {
         specialization = json['specialization'].cast<String>(),
         referrer = json['referrer'],
         registrationNo = json['reg_number'],
+        image = json['image'],
         aboutMe = json['about_me'];
 }

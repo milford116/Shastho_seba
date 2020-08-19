@@ -12,3 +12,4 @@ String specialityWiseDoctorListScreen = '/specialityWiseDoctorList';
 String doctorProfileScreen = '/doctorProfile';
 String chamberScreen = '/chamber';
 String videoCallScreen = '/videoCall';
+String profileScreen = '/profile';

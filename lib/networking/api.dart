@@ -4,6 +4,10 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import './customException.dart';
 
+import 'dart:io';
+
+import 'package:async/async.dart';
+
 class Api {
   final baseUrl = 'http://192.168.0.104';
   // final baseUrl = 'http://52.77.186.131:5000';
@@ -40,6 +44,28 @@ class Api {
       headers: headers,
       body: jsonEncode(object),
     ));
+  }
+
+  Future<http.StreamedResponse> uploadProfileImage(
+      String url, File _imageFile) async {
+    var stream = http.ByteStream(DelegatingStream.typed(_imageFile.openRead()));
+    var length = await _imageFile.length();
+
+    // string to uri
+    var uri = Uri.parse(baseUrl + url);
+
+    // create multipart request
+    var request = http.MultipartRequest('POST', uri);
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    // multipart that takes file
+    var multipartFile =
+        http.MultipartFile('file', stream, length, filename: _imageFile.path);
+    request.headers['Authorization'] = 'Bearer ' + prefs.getString('jwt');
+    // add file to multipart
+    request.files.add(multipartFile);
+    // send
+    return await request.send();
   }
 
   dynamic _response(http.Response response) {

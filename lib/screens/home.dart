@@ -49,9 +49,9 @@ class HomeScreen extends StatelessWidget {
                         icon: Icons.insert_invitation,
                         route: appointmentsScreen),
                     _Tile(
-                        title: 'Prescriptions',
-                        icon: Icons.content_paste,
-                        route: prescriptionsScreen),
+                        title: 'Feedback',
+                        icon: Icons.feedback,
+                        route: feedbackScreen),
                   ],
                 ),
               ),

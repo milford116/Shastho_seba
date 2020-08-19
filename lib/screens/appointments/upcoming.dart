@@ -41,7 +41,7 @@ class UpcomingAppointments extends StatelessWidget {
                           padding: EdgeInsets.only(top: 20.0),
                           itemCount: response.data.length,
                           itemBuilder: (context, index) {
-                            DateTime dateTime = response.data[index].dateTime;
+                            DateTime date = response.data[index].dateTime;
                             DateFormat timeFormat = DateFormat('hh:mm\na');
                             DateFormat dateFormat = DateFormat('MMM dd\nyyyy');
                             return Padding(
@@ -68,7 +68,7 @@ class UpcomingAppointments extends StatelessWidget {
                                     ),
                                     padding: EdgeInsets.all(10.0),
                                     child: Text(
-                                      dateFormat.format(dateTime),
+                                      dateFormat.format(date),
                                       textAlign: TextAlign.center,
                                       style: XS,
                                     ),
@@ -82,7 +82,8 @@ class UpcomingAppointments extends StatelessWidget {
                                   trailing: Padding(
                                     padding: const EdgeInsets.only(right: 5.0),
                                     child: Text(
-                                      timeFormat.format(dateTime),
+                                      timeFormat.format(
+                                          response.data[index].schedule.start),
                                       textAlign: TextAlign.center,
                                       style: XS.copyWith(color: Colors.white),
                                     ),

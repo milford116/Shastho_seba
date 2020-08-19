@@ -5,9 +5,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 import './customException.dart';
 
 class Api {
-  // final baseUrl = 'http://192.168.0.104';
-  final baseUrl = 'http://52.77.186.131:5000';
-// final baseUrl = 'http://c6a8eb34.ngrok.io';
+  final baseUrl = 'http://192.168.0.104';
+  // final baseUrl = 'http://52.77.186.131:5000';
+  // final baseUrl = 'http://3027267ff053.ngrok.io';
 
   Future<dynamic> get(String url, bool authorization) async {
     Map<String, String> headers = {

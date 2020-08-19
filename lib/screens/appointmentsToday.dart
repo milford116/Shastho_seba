@@ -163,7 +163,10 @@ class AppointmentCard extends StatelessWidget {
                             'Payment Status: ',
                             style: M,
                           ),
-                          _appointment.status == 1 || _appointment.status == 2
+                          _appointment.status ==
+                                      AppointmentStatus.NotVerified ||
+                                  _appointment.status ==
+                                      AppointmentStatus.Verified
                               ? Text(
                                   'Done',
                                   style: M.copyWith(color: mint),

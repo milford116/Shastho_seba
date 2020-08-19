@@ -46,7 +46,6 @@ class DoctorProfileBloc extends ChangeNotifier implements BaseBloc {
         newschedulelist[element.day].add(element);
       });
 
-      print(newschedulelist);
       sink.add(Response.completed(newschedulelist));
     } catch (e) {
       sink.add(Response.error(e.toString()));

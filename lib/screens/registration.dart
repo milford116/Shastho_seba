@@ -117,7 +117,7 @@ class _RegistrationForm extends StatelessWidget {
                       Row(
                         children: <Widget>[
                           Radio(
-                            value: 'male',
+                            value: 'Male',
                             groupValue: registrationBloc.sex,
                             onChanged: (String value) {
                               registrationBloc.sex = value;
@@ -131,7 +131,7 @@ class _RegistrationForm extends StatelessWidget {
                       Row(
                         children: <Widget>[
                           Radio(
-                            value: 'female',
+                            value: 'Female',
                             groupValue: registrationBloc.sex,
                             onChanged: (String value) {
                               registrationBloc.sex = value;

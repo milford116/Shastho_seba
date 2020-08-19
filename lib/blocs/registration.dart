@@ -11,7 +11,7 @@ import '../models/patient.dart';
 class RegistrationBloc extends ChangeNotifier implements BaseBloc {
   AuthenticationRepository _authenticationRepository;
   StreamController _registrationController;
-  String _sex = 'male';
+  String _sex = 'Male';
   DateTime _selectedDate;
   final formKey = GlobalKey<FormState>();
   final dob = TextEditingController();

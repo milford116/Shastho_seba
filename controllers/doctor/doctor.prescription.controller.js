@@ -94,16 +94,7 @@ exports.postPrescription = async function (req, res) {
 	if (req.filename) newPrescription.prescription_img = url + "/prescription/" + req.filename;
 	if (req.body.medicine !== undefined) newPrescription.medicine = req.body.medicine;
 
-	let appointment = await appointmentModel.findOne({_id: req.body.appointment_id}).populate("patientId", "mobile_no").exec();
-	let timelineData = new timelineModel();
-	timelineData.doctor_mobile_no = req.mobile_no;
-	timelineData.patient_mobile_no = appointment.patientId.mobile_no;
-	timelineData.appointment_id = appointment._id;
-	timelineData.prescription_createdAt = Date.now();
-	timelineData.appointment_createdAt = appointment.createdAt;
-	timelineData.appointment_date = appointment.appointment_date_time;
-
-	await timelineData.save();
+	await timelineModel.updateOne({appointment_id: req.body.appointment_id}, {prescription_createdAt: Date.now()}).exec();
 
 	newPrescription.save((err, docs) => {
 		if (err) res.status(INTERNAL_SERVER_ERROR).json(error_message.INTERNAL_SERVER_ERROR);

@@ -68,7 +68,8 @@ exports.getTimeline = async function (req, res) {
 		if (err) {
 			res.status(INTERNAL_SERVER_ERROR).json(error_message.INTERNAL_SERVER_ERROR);
 		} else {
-			res.status(SUCCESS).json(docs);
+			let timeline = docs;
+			res.status(SUCCESS).json({ timeline });
 		}
 	});
 };

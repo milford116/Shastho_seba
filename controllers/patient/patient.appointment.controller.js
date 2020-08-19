@@ -127,9 +127,9 @@ exports.postAppointment = async function (req, res) {
 							let timeline_data = new timelineModel();
 							timeline_data.doctor_mobile_no = req.body.doc_mobile_no;
 							timeline_data.patient_mobile_no = req.mobile_no;
-							timeline_data.type_id = docs._id;
-							timeline_data.type = 0;
+							timeline_data.appointment_id = docs._id;
 							timeline_data.appointment_date = date;
+							timeline_data.appointment_createdAt = Date.now();
 
 							await timeline_data.save();
 							res.status(SUCCESS).json(ret);

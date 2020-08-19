@@ -73,14 +73,12 @@ exports.addTransaction = async function (req, res) {
         if (err) {
             res.status(INTERNAL_SERVER_ERROR).json(error_message.INTERNAL_SERVER_ERROR);
         } else {
-            let appointment = await appointmentModel.findOne({ _id: req.body.appointment_id }).populate("doctorId", "mobile_no").exec();
-            let timeline_data = new timelineModel();
-            timeline_data.doctor_mobile_no = appointment.doctorId.mobile_no;
-            timeline_data.patient_mobile_no = req.mobile_no;
-            timeline_data.type_id = docs._id;
-            timeline_data.type = 1;
+            let data = {
+                transaction_id: docs._id,
+                transaction_createdAt: Date.now(),
+            };
 
-            await timelineData.save();
+            await timelineModel.findOneAndUpdate({ appointment_id: req.body.appointment_id }, data).exec();
             res.status(SUCCESS).json(error_message.SUCCESS);
         }
     });

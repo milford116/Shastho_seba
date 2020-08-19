@@ -37,27 +37,30 @@ var timelineSchema = new mongoose.Schema({
 		type: String,
 		required: true,
 	},
-	type: {
-		type: Number,
-		required: true,
-	},
-	type_id: {
+	appointment_id: {
 		type: String,
 		required: true,
 	},
 	appointment_date: {
 		type: Date,
+		required: true,
+	},
+	appointment_createdAt: {
+		type: Date,
+		required: true,
+	},
+	transaction_id: {
+		type: String,
 		required: false,
 	},
-},
-	{ timestamps: true }
-);
+	transaction_createdAt: {
+		type: String,
+		required: false,
+	},
+	prescription_createdAt: {
+		type: String,
+		required: false,
+	},
+});
 
 mongoose.model("timeline", timelineSchema);
-
-/*
-type:
-	0 - appointment
-	1 - transaction
-	2 - prescription
-*/

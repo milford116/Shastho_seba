@@ -90,7 +90,8 @@ exports.postPrescription = async function (req, res) {
 	var newPrescription = new prescriptionModel();
 	newPrescription.appointment_id = req.body.appointment_id;
 
-	if (req.filename) newPrescription.prescription_img = "/prescription/" + req.filename;
+	const url = req.protocol + "://" + req.get("host");
+	if (req.filename) newPrescription.prescription_img = url + "/prescription/" + req.filename;
 	if (req.body.medicine !== undefined) newPrescription.medicine = req.body.medicine;
 
 	let appointment = await appointmentModel.findOne({_id: req.body.appointment_id}).populate("patientId", "mobile_no").exec();

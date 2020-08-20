@@ -159,7 +159,9 @@ class _Tile extends StatelessWidget {
         onTap: () {
           Navigator.of(context)
               .pushNamedAndRemoveUntil(homeScreen, (_) => false);
-          Navigator.of(context).pushNamed(route);
+          if (route != homeScreen) {
+            Navigator.of(context).pushNamed(route);
+          }
         },
       ),
     );

@@ -60,7 +60,7 @@ class ChamberScreen extends StatelessWidget {
                       height: 15.0,
                     ),
                     Text(
-                      appointment.doctorName,
+                      appointment.doctor.name,
                       style: L.copyWith(
                         fontWeight: FontWeight.bold,
                       ),

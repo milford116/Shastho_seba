@@ -53,7 +53,7 @@ class PreviousAppointmentsBloc extends ChangeNotifier implements BaseBloc {
     List<Appointment> filterList = List<Appointment>();
 
     appointmentList.forEach((appointment) {
-      if (appointment.doctorName.toLowerCase().contains(value.toLowerCase()))
+      if (appointment.doctor.name.toLowerCase().contains(value.toLowerCase()))
         filterList.add(appointment);
     });
 

@@ -75,7 +75,7 @@ class UpcomingAppointments extends StatelessWidget {
                                   ),
                                   title: Center(
                                     child: Text(
-                                      response.data[index].doctorName,
+                                      response.data[index].doctor.name,
                                       style: TextStyle(color: Colors.white),
                                     ),
                                   ),

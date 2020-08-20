@@ -27,7 +27,7 @@ class VideoCallScreen extends StatelessWidget {
               Response<CallState> response = snapshot.data;
               switch (response.data) {
                 case CallState.Ringing:
-                  return _RingingScreen(appointment.doctorName);
+                  return _RingingScreen(appointment.doctor.name);
                 case CallState.Connected:
                   return _VideoCall();
                 case CallState.EndCall:

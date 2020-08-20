@@ -19,24 +19,22 @@ class Appointment {
   final DateTime dateTime;
   final AppointmentStatus status;
   final int serialNo;
-  final String imageURL;
 
-  Appointment(
-      {this.id,
-      this.doctor,
-      this.patient,
-      this.dateTime,
-      this.schedule,
-      this.status,
-      this.serialNo,
-      this.imageURL});
+  Appointment({
+    this.id,
+    this.doctor,
+    this.patient,
+    this.dateTime,
+    this.schedule,
+    this.status,
+    this.serialNo,
+  });
 
   Appointment.fromJson(Map<String, dynamic> json)
       : id = json['_id'],
         status = map[json['status']],
         serialNo = json['serial_no'],
-        dateTime = DateTime.parse(json['appointment_date_time']),
-        imageURL = json['prescription_img'] {
+        dateTime = DateTime.parse(json['appointment_date_time']) {
     if (!(json['schedule_id'] is String)) {
       schedule = Schedule.fromJson(json['schedule_id']);
     }

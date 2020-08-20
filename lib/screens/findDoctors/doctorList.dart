@@ -9,6 +9,7 @@ import '../../blocs/findDoctors.dart';
 import '../../models/doctor.dart';
 import '../../widgets/loading.dart';
 import '../../widgets/error.dart';
+import '../../widgets/image.dart';
 
 class DoctorList extends StatelessWidget {
   @override
@@ -106,13 +107,17 @@ class DoctorList extends StatelessWidget {
                                             child: Row(
                                               children: [
                                                 CircleAvatar(
-                                                  radius: 40,
+                                                  radius: 40.0,
                                                   backgroundColor: Colors.white,
                                                   child: CircleAvatar(
-                                                    radius: 38,
-                                                    backgroundImage:
-                                                        NetworkImage(response
-                                                            .data[index].image),
+                                                    radius: 38.0,
+                                                    backgroundColor:
+                                                        Colors.transparent,
+                                                    child: ShowImage(
+                                                      response
+                                                          .data[index].image,
+                                                      30.0,
+                                                    ),
                                                   ),
                                                 ),
                                                 SizedBox(

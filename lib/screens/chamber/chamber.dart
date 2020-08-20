@@ -6,6 +6,7 @@ import '../../routes.dart';
 import '../../widgets/drawer.dart';
 import '../../blocs/chamber/chamber.dart';
 import '../../models/appointment.dart';
+import '../../widgets/image.dart';
 
 class ChamberScreen extends StatelessWidget {
   @override
@@ -53,7 +54,8 @@ class ChamberScreen extends StatelessWidget {
                       backgroundColor: Colors.white,
                       child: CircleAvatar(
                         radius: 73,
-                        backgroundImage: AssetImage('images/abul_kalam.png'),
+                        backgroundColor: Colors.transparent,
+                        child: ShowImage(appointment.doctor.image, 65.0),
                       ),
                     ),
                     SizedBox(

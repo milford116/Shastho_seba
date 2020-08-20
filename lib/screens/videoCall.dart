@@ -9,6 +9,7 @@ import '../blocs/videoCall/videoCall.dart';
 import '../blocs/chamber/messenger.dart';
 import '../networking/response.dart';
 import '../models/appointment.dart';
+import '../widgets/image.dart';
 
 class VideoCallScreen extends StatelessWidget {
   @override
@@ -27,7 +28,7 @@ class VideoCallScreen extends StatelessWidget {
               Response<CallState> response = snapshot.data;
               switch (response.data) {
                 case CallState.Ringing:
-                  return _RingingScreen(appointment.doctor.name);
+                  return _RingingScreen(appointment);
                 case CallState.Connected:
                   return _VideoCall();
                 case CallState.EndCall:
@@ -49,9 +50,9 @@ class VideoCallScreen extends StatelessWidget {
 }
 
 class _RingingScreen extends StatelessWidget {
-  final doctorName;
+  final Appointment _appointment;
 
-  _RingingScreen(this.doctorName);
+  _RingingScreen(this._appointment);
 
   @override
   Widget build(BuildContext context) {
@@ -77,14 +78,15 @@ class _RingingScreen extends StatelessWidget {
                   backgroundColor: Colors.white,
                   child: CircleAvatar(
                     radius: 73,
-                    backgroundImage: AssetImage('images/abul_kalam.png'),
+                    backgroundColor: Colors.transparent,
+                    child: ShowImage(_appointment.doctor.image, 65.0),
                   ),
                 ),
                 SizedBox(
                   height: 25.0,
                 ),
                 Text(
-                  doctorName,
+                  _appointment.doctor.name,
                   style: XL.copyWith(fontWeight: FontWeight.bold),
                 ),
                 SizedBox(

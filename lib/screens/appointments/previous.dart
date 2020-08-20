@@ -8,6 +8,7 @@ import '../../networking/response.dart';
 import '../../models/appointment.dart';
 import '../../widgets/loading.dart';
 import '../../widgets/error.dart';
+import '../../widgets/image.dart';
 
 class PreviousAppointments extends StatelessWidget {
   @override
@@ -75,12 +76,28 @@ class PreviousAppointments extends StatelessWidget {
                                             arguments: response.data[index],
                                           );
                                         },
+                                        leading: CircleAvatar(
+                                          radius: 25,
+                                          backgroundColor: Colors.white,
+                                          child: CircleAvatar(
+                                            radius: 23,
+                                            backgroundColor: Colors.transparent,
+                                            child: ShowImage(
+                                                response
+                                                    .data[index].doctor.image,
+                                                15.0),
+                                          ),
+                                        ),
                                         title: Center(
                                           child: Text(
                                             response.data[index].doctor.name,
                                             style:
                                                 TextStyle(color: Colors.white),
                                           ),
+                                        ),
+                                        trailing: Opacity(
+                                          opacity: 0.0,
+                                          child: Icon(Icons.person_pin),
                                         ),
                                       ),
                                     ),

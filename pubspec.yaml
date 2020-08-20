@@ -37,6 +37,7 @@ dependencies:
   flutter_webrtc: ^0.2.8
   image_picker:
   stream_transform: ^1.2.0
+  transparent_image: ^1.0.0
 
 dev_dependencies:
   flutter_test:
@@ -57,7 +58,6 @@ flutter:
   assets:
     - images/patient_background.jpg
     - images/patient_background_low_opacity.png
-    - images/abul_kalam.png
     - images/icons/
 
   #   - images/a_dot_ham.jpeg

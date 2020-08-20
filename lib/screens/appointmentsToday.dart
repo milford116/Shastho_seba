@@ -10,6 +10,7 @@ import '../networking/response.dart';
 import '../models/appointment.dart';
 import '../widgets/loading.dart';
 import '../widgets/error.dart';
+import '../widgets/image.dart';
 
 class AppointmentsTodayScreen extends StatelessWidget {
   @override
@@ -51,6 +52,14 @@ class AppointmentsTodayScreen extends StatelessWidget {
                           );
                           break;
                         case Status.COMPLETED:
+                          if (response.data.length == 0) {
+                            return Center(
+                              child: Text(
+                                'You have no appointments today',
+                                style: L,
+                              ),
+                            );
+                          }
                           return Padding(
                             padding: const EdgeInsets.only(
                                 top: 3.0, left: 5.0, right: 5.0),
@@ -123,7 +132,8 @@ class AppointmentCard extends StatelessWidget {
                 backgroundColor: Colors.white,
                 child: CircleAvatar(
                   radius: 53,
-                  backgroundImage: AssetImage('images/abul_kalam.png'),
+                  backgroundColor: Colors.transparent,
+                  child: ShowImage(_appointment.doctor.image, 45.0),
                 ),
               ),
               SizedBox(

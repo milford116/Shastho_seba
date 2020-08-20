@@ -12,6 +12,7 @@ import '../../widgets/loading.dart';
 import '../../widgets/error.dart';
 import '../../widgets/success.dart';
 import '../../widgets/failure.dart';
+import '../../widgets/image.dart';
 
 class DoctorProfileScreen extends StatelessWidget {
   final EdgeInsets cellPadding = EdgeInsets.symmetric(vertical: 5.0);
@@ -70,7 +71,8 @@ class DoctorProfileScreen extends StatelessWidget {
                                   backgroundColor: Colors.white,
                                   child: CircleAvatar(
                                     radius: 68,
-                                    backgroundImage: NetworkImage(doctor.image),
+                                    backgroundColor: Colors.transparent,
+                                    child: ShowImage(doctor.image, 60.0),
                                   ),
                                 ),
                                 SizedBox(

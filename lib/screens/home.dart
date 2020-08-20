@@ -27,34 +27,38 @@ class HomeScreen extends StatelessWidget {
         ),
         body: SafeArea(
           child: Center(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Center(
-                child: GridView.count(
-                  shrinkWrap: true,
-                  crossAxisCount: 2,
-                  children: <Widget>[
-                    _Tile(
-                      title: 'Appointments Today',
-                      icon: Icons.schedule,
-                      route: appointmentsTodayScreen,
-                    ),
-                    _Tile(
-                      title: 'Find Doctors',
-                      icon: Icons.search,
-                      route: findDoctorsScreen,
-                    ),
-                    _Tile(
-                        title: 'Appointments',
-                        icon: Icons.insert_invitation,
-                        route: appointmentsScreen),
-                    _Tile(
-                        title: 'Feedback',
-                        icon: Icons.feedback,
-                        route: feedbackScreen),
-                  ],
+            child: GridView.count(
+              // padding: EdgeInsets.symmetric(horizontal: 20.0),
+              childAspectRatio: 1.5,
+              shrinkWrap: true,
+              crossAxisCount: 2,
+              children: <Widget>[
+                _Tile(
+                  title: 'Appointments Today',
+                  icon: Icons.schedule,
+                  route: appointmentsTodayScreen,
                 ),
-              ),
+                _Tile(
+                  title: 'Find Doctors',
+                  icon: Icons.search,
+                  route: findDoctorsScreen,
+                ),
+                _Tile(
+                  title: 'Appointments',
+                  icon: Icons.insert_invitation,
+                  route: appointmentsScreen,
+                ),
+                _Tile(
+                  title: 'Profile',
+                  icon: Icons.person,
+                  route: profileScreen,
+                ),
+                _Tile(
+                  title: 'Feedback',
+                  icon: Icons.feedback,
+                  route: feedbackScreen,
+                ),
+              ],
             ),
           ),
         ),

@@ -51,16 +51,6 @@ class MyDrawer extends StatelessWidget {
               thickness: 2.0,
             ),
             _Tile(
-              title: 'Profile',
-              icon: Icons.person,
-              selected: selected == Selected.profile,
-              route: profileScreen,
-            ),
-            Divider(
-              color: Colors.white,
-              thickness: 2.0,
-            ),
-            _Tile(
               title: 'Appointments Today',
               icon: Icons.schedule,
               selected: selected == Selected.appointmentsToday,
@@ -91,6 +81,16 @@ class MyDrawer extends StatelessWidget {
               thickness: 2.0,
             ),
             _Tile(
+              title: 'Profile',
+              icon: Icons.person,
+              selected: selected == Selected.profile,
+              route: profileScreen,
+            ),
+            Divider(
+              color: Colors.white,
+              thickness: 2.0,
+            ),
+            _Tile(
               title: 'Feedback',
               icon: Icons.feedback,
               selected: selected == Selected.feedback,
@@ -110,7 +110,7 @@ class MyDrawer extends StatelessWidget {
             ListTile(
               title: Text(
                 'Logout',
-                style: L.copyWith(
+                style: M.copyWith(
                   color: Colors.white,
                 ),
               ),
@@ -145,9 +145,10 @@ class _Tile extends StatelessWidget {
     return Container(
       color: selected ? Colors.white : Colors.transparent,
       child: ListTile(
+        visualDensity: VisualDensity.compact,
         title: Text(
           title,
-          style: L.copyWith(
+          style: M.copyWith(
             color: selected ? blue : Colors.white,
           ),
         ),

@@ -34,17 +34,17 @@ class Signaling {
 
   Map<String, dynamic> _iceServers = {
     'iceServers': [
-      {'url': 'stun:stun.l.google.com:19302'},
+      // {'url': 'stun:stun.l.google.com:19302'},
       // {
       //   'url': 'turn:numb.viagenie.ca',
       //   'username': 'haidertameem@gmail.com',
       //   'credential': '01737849382t',
       // },
-      // {
-      //   'url': 'turn:52.221.24.60:3478',
-      //   'username': 'server',
-      //   'credential': 'secret',
-      // },
+      {
+        'url': 'turn:52.221.24.60:3478',
+        'username': 'server',
+        'credential': 'secret',
+      },
       /*
        * turn server configuration example.
       {

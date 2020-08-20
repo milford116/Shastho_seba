@@ -5,6 +5,7 @@ const dotenv = require("dotenv");
 const bodyParser = require("body-parser");
 const swagger = require("./util/swaggerSpec");
 const cors = require("cors");
+const medicine = require("./controllers/doctor/doctor.medicine.controller");
 dotenv.config();
 
 const doctorRoutes = require("./routes/doctor");
@@ -27,7 +28,7 @@ mongoose.connect(process.env.DB_URL, options, (err) => {
 
 app.use(cors());
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
 
 // set the docs
@@ -39,6 +40,7 @@ app.use(doctorRoutes);
 app.use(patientRoutes);
 
 const server = app.listen(process.env.PORT, () => {
+	medicine.populateMedicine();
 	console.log("Server started at port " + process.env.PORT);
 });
 

@@ -63,7 +63,7 @@ exports.upload = upload;
  *                       type: string
  *                     dose:
  *                       type: string
- *                     date:
+ *                     day:
  *                       type: string
  *               file:
  *                 type: string

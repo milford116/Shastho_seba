@@ -22,6 +22,10 @@ mongoose.pluralize(null);
  *           type: array
  *           items:
  *             type: string
+ *         tests:
+ *           type: array
+ *           items:
+ *             type: string
  *         medicine:
  *           type: array
  *           items:
@@ -65,6 +69,12 @@ var prescriptionSchema = new mongoose.Schema({
 		{
 			type: String,
 			required: true,
+		},
+	],
+	tests: [
+		{
+			type: String,
+			required: false,
 		},
 	],
 	medicine: [

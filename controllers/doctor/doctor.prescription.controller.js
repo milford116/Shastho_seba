@@ -56,6 +56,10 @@ exports.upload = upload;
  *                 type: array
  *                 items:
  *                   type: string
+ *               tests:
+ *                 type: array
+ *                 items:
+ *                   type: string
  *               medicine:
  *                 type: array
  *                 description: array of suggested medicines
@@ -115,7 +119,7 @@ exports.postPrescription = async function (req, res) {
 	newPrescription.patient_sex = req.body.patient_sex;
 	newPrescription.symptoms = req.body.symptoms;
 
-	console.log(req.body.medicine);
+	if (req.body.tests) newPrescription.tests = req.body.tests;
 	if (req.body.medicine) newPrescription.medicine = req.body.medicine;
 
 	const url = req.protocol + "://" + req.get("host");

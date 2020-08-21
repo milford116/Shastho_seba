@@ -34,6 +34,6 @@ router.post("/patient/get/timeline", patientMiddleware.middleware, timelineContr
 
 router.post("/patient/post/feedback", patientMiddleware.middleware, feedbackController.postFeedback);
 
-router.post("/patient/get/prescription", prescriptionController.middleware, prescriptionController.getPrescription);
+router.post("/patient/get/prescription", patientMiddleware.middleware, prescriptionController.getPrescription);
 
 module.exports = router;

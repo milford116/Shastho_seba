@@ -26,8 +26,8 @@ mongoose.pluralize(null);
  *               name:
  *                 type: string
  *               dose:
- *                 type: number
- *               date:
+ *                 type: string
+ *               day:
  *                 type: string
  *       required:
  *         - appointment_id
@@ -67,7 +67,7 @@ var prescriptionSchema = new mongoose.Schema({
 				type: String,
 				required: true,
 			},
-			date: {
+			day: {
 				type: String,
 				required: true,
 			},

@@ -100,6 +100,7 @@ exports.postAppointment = async function (req, res) {
 						appointment_date_time: date,
 					};
 
+					var schedule_details = await scheduleModel.findOne({ _id: req.body.schedule_id }).exec();
 					var max_collection = await appointmentModel.find(query2).sort({ serial_no: -1 }).limit(1).exec();
 					var patient_detail = await patientModel.findOne({ mobile_no: req.mobile_no }).exec();
 
@@ -130,6 +131,7 @@ exports.postAppointment = async function (req, res) {
 							timeline_data.appointment_id = docs._id;
 							timeline_data.appointment_date = date;
 							timeline_data.appointment_createdAt = Date.now();
+							timeline_data.due = schedule_details.fee;
 
 							await timeline_data.save();
 							res.status(SUCCESS).json(ret);

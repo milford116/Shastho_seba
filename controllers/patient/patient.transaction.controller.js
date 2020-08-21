@@ -74,8 +74,10 @@ exports.addTransaction = async function (req, res) {
         if (err) {
             res.status(INTERNAL_SERVER_ERROR).json(error_message.INTERNAL_SERVER_ERROR);
         } else {
+            var timeline_deatils = await timelineModel.findOne({ appointment_id: req.body.appointment_id }).exec();
+
             let data = {
-                transaction_id: docs._id,
+                due: timeline_deatils.due - req.body.amount,
                 transaction_createdAt: Date.now(),
             };
 

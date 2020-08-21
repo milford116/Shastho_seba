@@ -33,7 +33,7 @@ var transactionSchema = new mongoose.Schema({
 	},
 	transaction_from: {
 		type: String,
-		required: true,
+		required: false,
 	},
 	amount: {
 		type: Number,

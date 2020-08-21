@@ -49,8 +49,8 @@ var timelineSchema = new mongoose.Schema({
 		type: Date,
 		required: true,
 	},
-	transaction_id: {
-		type: String,
+	due: {
+		type: Number,
 		required: false,
 	},
 	transaction_createdAt: {

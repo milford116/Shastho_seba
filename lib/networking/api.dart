@@ -46,10 +46,9 @@ class Api {
     ));
   }
 
-  Future<http.StreamedResponse> uploadProfileImage(
-      String url, File _imageFile) async {
-    var stream = http.ByteStream(DelegatingStream.typed(_imageFile.openRead()));
-    var length = await _imageFile.length();
+  Future<dynamic> uploadImage(String url, File imageFile) async {
+    var stream = http.ByteStream(DelegatingStream.typed(imageFile.openRead()));
+    var length = await imageFile.length();
 
     // string to uri
     var uri = Uri.parse(baseUrl + url);
@@ -60,12 +59,12 @@ class Api {
 
     // multipart that takes file
     var multipartFile =
-        http.MultipartFile('file', stream, length, filename: _imageFile.path);
+        http.MultipartFile('file', stream, length, filename: imageFile.path);
     request.headers['Authorization'] = 'Bearer ' + prefs.getString('jwt');
     // add file to multipart
     request.files.add(multipartFile);
     // send
-    return await request.send();
+    return _response(await http.Response.fromStream(await request.send()));
   }
 
   dynamic _response(http.Response response) {

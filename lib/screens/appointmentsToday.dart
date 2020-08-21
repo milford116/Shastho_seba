@@ -133,7 +133,8 @@ class AppointmentCard extends StatelessWidget {
                 child: CircleAvatar(
                   radius: 53,
                   backgroundColor: Colors.transparent,
-                  child: ShowImage(_appointment.doctor.image, 45.0),
+                  // child: ShowImage(_appointment.doctor.image, 45.0),
+                  child: ShowImage(_appointment.doctor.image),
                 ),
               ),
               SizedBox(

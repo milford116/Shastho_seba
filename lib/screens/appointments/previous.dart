@@ -82,10 +82,13 @@ class PreviousAppointments extends StatelessWidget {
                                           child: CircleAvatar(
                                             radius: 23,
                                             backgroundColor: Colors.transparent,
+                                            // child: ShowImage(
+                                            //     response
+                                            //         .data[index].doctor.image,
+                                            //     15.0),
                                             child: ShowImage(
-                                                response
-                                                    .data[index].doctor.image,
-                                                15.0),
+                                              response.data[index].doctor.image,
+                                            ),
                                           ),
                                         ),
                                         title: Center(

@@ -55,7 +55,8 @@ class ChamberScreen extends StatelessWidget {
                       child: CircleAvatar(
                         radius: 73,
                         backgroundColor: Colors.transparent,
-                        child: ShowImage(appointment.doctor.image, 65.0),
+                        // child: ShowImage(appointment.doctor.image, 65.0),
+                        child: ShowImage(appointment.doctor.image),
                       ),
                     ),
                     SizedBox(

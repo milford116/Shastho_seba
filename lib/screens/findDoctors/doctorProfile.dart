@@ -45,78 +45,77 @@ class DoctorProfileScreen extends StatelessWidget {
               builder: (context) {
                 DoctorProfileBloc doctorProfileBloc =
                     Provider.of<DoctorProfileBloc>(context);
-                return StreamBuilder(
-                  stream: doctorProfileBloc.stream,
-                  builder: (context, snapshot) {
-                    if (snapshot.hasData) {
-                      Response<Map<String, List<Schedule>>> response =
-                          snapshot.data;
-                      switch (response.status) {
-                        case Status.LOADING:
-                          return Center(
-                            child: Loading(response.message),
-                          );
-                          break;
-                        case Status.COMPLETED:
-                          return Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 10.0),
-                            child: ListView(
-                              children: <Widget>[
-                                SizedBox(
-                                  height: 10.0,
-                                ),
-                                CircleAvatar(
-                                  radius: 70,
-                                  backgroundColor: Colors.white,
-                                  child: CircleAvatar(
-                                    radius: 68,
-                                    backgroundColor: Colors.transparent,
-                                    child: ShowImage(doctor.image, 60.0),
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: 10.0,
-                                ),
-                                Text(
-                                  doctor.name,
-                                  style: L,
-                                  textAlign: TextAlign.center,
-                                ),
-                                Text(
-                                  doctor.designation,
-                                  style: M,
-                                  textAlign: TextAlign.center,
-                                ),
-                                Text(
-                                  doctor.institution,
-                                  style: M,
-                                  textAlign: TextAlign.center,
-                                ),
-                                SizedBox(
-                                  height: 10.0,
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      vertical: 10.0),
-                                  child: Text(
-                                    doctor.aboutMe,
-                                    style: M,
-                                    textAlign: TextAlign.justify,
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: 10.0,
-                                ),
-                                Text(
-                                  'Schedule',
-                                  style: XL,
-                                  textAlign: TextAlign.center,
-                                ),
-                                SizedBox(
-                                  height: 10.0,
-                                ),
-                                Table(
+                return Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                  child: ListView(
+                    children: <Widget>[
+                      SizedBox(
+                        height: 10.0,
+                      ),
+                      CircleAvatar(
+                        radius: 70,
+                        backgroundColor: Colors.white,
+                        child: CircleAvatar(
+                          radius: 68,
+                          backgroundColor: Colors.transparent,
+                          // child: ShowImage(doctor.image, 60.0),
+                          child: ShowImage(doctor.image),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 10.0,
+                      ),
+                      Text(
+                        doctor.name,
+                        style: L,
+                        textAlign: TextAlign.center,
+                      ),
+                      Text(
+                        doctor.designation,
+                        style: M,
+                        textAlign: TextAlign.center,
+                      ),
+                      Text(
+                        doctor.institution,
+                        style: M,
+                        textAlign: TextAlign.center,
+                      ),
+                      SizedBox(
+                        height: 10.0,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 10.0),
+                        child: Text(
+                          doctor.aboutMe,
+                          style: M,
+                          textAlign: TextAlign.justify,
+                        ),
+                      ),
+                      SizedBox(
+                        height: 10.0,
+                      ),
+                      Text(
+                        'Schedule',
+                        style: XL,
+                        textAlign: TextAlign.center,
+                      ),
+                      SizedBox(
+                        height: 10.0,
+                      ),
+                      StreamBuilder(
+                        stream: doctorProfileBloc.stream,
+                        builder: (context, snapshot) {
+                          if (snapshot.hasData) {
+                            Response<Map<String, List<Schedule>>> response =
+                                snapshot.data;
+                            switch (response.status) {
+                              case Status.LOADING:
+                                return Center(
+                                  child: Loading(response.message),
+                                );
+                                break;
+                              case Status.COMPLETED:
+                                return Table(
                                   defaultVerticalAlignment:
                                       TableCellVerticalAlignment.top,
                                   columnWidths: {
@@ -201,43 +200,42 @@ class DoctorProfileScreen extends StatelessWidget {
                                         )
                                         .toList(),
                                   ],
-                                ),
-                                SizedBox(
-                                  height: 15.0,
-                                ),
-                                ButtonBar(
-                                  alignment: MainAxisAlignment.center,
-                                  children: <Widget>[
-                                    FlatButton.icon(
-                                      onPressed: () =>
-                                          _takeAppointment(context),
-                                      icon: Icon(
-                                        Icons.add_circle,
-                                        color: Colors.white,
-                                      ),
-                                      color: blue,
-                                      label: Text(
-                                        'Take An Appointment',
-                                        style: TextStyle(color: Colors.white),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ],
+                                );
+                              case Status.ERROR:
+                                return Center(
+                                  child: Error(
+                                    message: response.message,
+                                    onPressed: () =>
+                                        doctorProfileBloc.getSchedule(),
+                                  ),
+                                );
+                            }
+                          }
+                          return Container();
+                        },
+                      ),
+                      SizedBox(
+                        height: 15.0,
+                      ),
+                      ButtonBar(
+                        alignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          FlatButton.icon(
+                            onPressed: () => _takeAppointment(context),
+                            icon: Icon(
+                              Icons.add_circle,
+                              color: Colors.white,
                             ),
-                          );
-
-                        case Status.ERROR:
-                          return Center(
-                            child: Error(
-                              message: response.message,
-                              onPressed: () => doctorProfileBloc.getSchedule(),
+                            color: blue,
+                            label: Text(
+                              'Take An Appointment',
+                              style: TextStyle(color: Colors.white),
                             ),
-                          );
-                      }
-                    }
-                    return Container();
-                  },
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
                 );
               },
             ),

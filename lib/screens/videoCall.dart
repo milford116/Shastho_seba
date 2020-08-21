@@ -79,7 +79,8 @@ class _RingingScreen extends StatelessWidget {
                   child: CircleAvatar(
                     radius: 73,
                     backgroundColor: Colors.transparent,
-                    child: ShowImage(_appointment.doctor.image, 65.0),
+                    // child: ShowImage(_appointment.doctor.image, 65.0),
+                    child: ShowImage(_appointment.doctor.image),
                   ),
                 ),
                 SizedBox(

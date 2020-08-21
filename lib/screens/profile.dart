@@ -1,45 +1,20 @@
-import 'dart:io';
-
-import 'package:Shastho_Sheba/models/patient.dart';
-import 'package:Shastho_Sheba/networking/api.dart';
+import 'package:Shastho_Sheba/networking/response.dart';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
+import '../models/patient.dart';
+import '../blocs/profileBloc.dart';
+import '../networking/response.dart';
 import '../main.dart';
 import '../utils.dart';
 import '../widgets/drawer.dart';
+import '../widgets/loading.dart';
+import '../widgets/error.dart';
+import '../widgets/image.dart';
 
-class ProfileScreen extends StatefulWidget {
-  @override
-  _ProfileScreenState createState() => _ProfileScreenState();
-}
-
-class _ProfileScreenState extends State<ProfileScreen> {
-  Patient patient;
-  File _imageFile;
-
+class ProfileScreen extends StatelessWidget {
   final dateformatter = DateFormat.yMMMMd('en_US');
-  Future<void> _pickImage(ImageSource source) async {
-    var selected = await ImagePicker().getImage(source: source);
-
-    _imageFile = File(selected.path);
-    var response = await Api()
-        .uploadProfileImage('/patient/upload/profile_picture', _imageFile);
-    print(response.statusCode);
-    if (response.statusCode == 200) {
-      final data = await Api().get('/patient/get/details', true);
-      setState(() {
-        patient = Patient.fromJson(data['patient']);
-      });
-    }
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    patient = MyApp.patient;
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -62,213 +37,124 @@ class _ProfileScreenState extends State<ProfileScreen> {
           child: MyDrawer(Selected.profile),
         ),
         body: SafeArea(
-          child: Center(
-            child: Scaffold(
-              backgroundColor: Colors.transparent,
-              body: Container(
-                child: ListView(
-                  children: <Widget>[
-                    Column(
-                      children: <Widget>[
-                        Container(
-                          height: 250.0,
-                          child: Column(
-                            children: <Widget>[
-                              Padding(
-                                padding: EdgeInsets.only(top: 20.0),
-                                child: Stack(fit: StackFit.loose, children: <
-                                    Widget>[
-                                  Row(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: <Widget>[
-                                      Container(
-                                          width: 140.0,
-                                          height: 140.0,
-                                          decoration: BoxDecoration(
-                                            shape: BoxShape.circle,
-                                            image: DecorationImage(
-                                              image:
-                                                  NetworkImage(patient.image),
-                                              fit: BoxFit.cover,
-                                            ),
-                                          )),
-                                    ],
-                                  ),
-                                  Padding(
-                                      padding: EdgeInsets.only(
-                                          top: 90.0, right: 100.0),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: <Widget>[
-                                          IconButton(
-                                            icon: Icon(
-                                              Icons.camera_alt,
-                                              color: Colors.white,
-                                            ),
-                                            onPressed: () =>
-                                                _pickImage(ImageSource.gallery),
-                                          ),
-                                        ],
-                                      )),
-                                ]),
-                              )
-                            ],
-                          ),
-                        ),
-                        Container(
-                          color: Colors.transparent,
-                          child: Padding(
-                            padding: EdgeInsets.only(bottom: 25.0),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.start,
+          child: ChangeNotifierProvider(
+            create: (context) => ProfileBloc(),
+            builder: (context, child) {
+              ProfileBloc profileBloc = Provider.of<ProfileBloc>(context);
+              return StreamBuilder(
+                stream: profileBloc.stream,
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    Response<Patient> response = snapshot.data;
+                    switch (response.status) {
+                      case Status.LOADING:
+                        return Center(
+                          child: Loading(response.message),
+                        );
+                      case Status.COMPLETED:
+                        Patient patient = response.data;
+                        return ListView(
+                          children: <Widget>[
+                            Column(
                               children: <Widget>[
-                                Padding(
-                                  padding: EdgeInsets.only(
-                                      left: 25.0, right: 25.0, top: 25.0),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    mainAxisSize: MainAxisSize.max,
-                                    children: <Widget>[
-                                      Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: <Widget>[
-                                          Text(
-                                            'Parsonal Information',
-                                            style: TextStyle(
-                                                fontSize: 18.0,
-                                                fontWeight: FontWeight.bold),
-                                          ),
-                                        ],
+                                Stack(
+                                  children: <Widget>[
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 15.0),
+                                      child: CircleAvatar(
+                                        maxRadius: 90.0,
+                                        backgroundColor: Colors.white,
+                                        child: CircleAvatar(
+                                          maxRadius: 88.0,
+                                          backgroundColor: Colors.transparent,
+                                          // child: ShowImage(patient.image, 30.0),
+                                          child: ShowImage(patient.image),
+                                        ),
                                       ),
-                                      Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.end,
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: <Widget>[
-                                          Container(),
-                                        ],
-                                      )
-                                    ],
-                                  ),
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.only(
-                                      left: 25.0, right: 25.0, top: 25.0),
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.max,
-                                    children: <Widget>[
-                                      Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: <Widget>[
-                                          Text(
-                                            'Name: ' +
-                                                (patient != null
-                                                    ? patient.name
-                                                    : " "),
-                                            style: TextStyle(
-                                                fontSize: 16.0,
-                                                fontWeight: FontWeight.bold),
-                                          ),
-                                        ],
+                                    ),
+                                    Positioned(
+                                      bottom: 8.0,
+                                      left: 8.0,
+                                      child: IconButton(
+                                        icon: Icon(
+                                          Icons.camera_alt,
+                                          color: blue,
+                                        ),
+                                        onPressed: profileBloc.uploadProfilePic,
                                       ),
-                                    ],
-                                  ),
+                                    ),
+                                  ],
                                 ),
-                                Padding(
-                                  padding: EdgeInsets.only(
-                                      left: 25.0, right: 25.0, top: 25.0),
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.max,
+                                Container(
+                                  alignment: Alignment.centerLeft,
+                                  padding: EdgeInsets.only(left: 25.0),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: <Widget>[
-                                      Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: <Widget>[
-                                          Text(
-                                            'Phone: ' +
-                                                (patient != null
-                                                    ? patient.mobileNo
-                                                    : " "),
-                                            style: TextStyle(
-                                                fontSize: 16.0,
-                                                fontWeight: FontWeight.bold),
+                                      Padding(
+                                        padding:
+                                            const EdgeInsets.only(bottom: 10.0),
+                                        child: Text(
+                                          'Personal Information',
+                                          style: L.copyWith(
+                                            fontWeight: FontWeight.bold,
                                           ),
-                                        ],
+                                        ),
                                       ),
-                                    ],
-                                  ),
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.only(
-                                      left: 25.0, right: 25.0, top: 25.0),
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.max,
-                                    children: <Widget>[
-                                      Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: <Widget>[
-                                          Text(
-                                            'Sex: ' +
-                                                (patient != null
-                                                    ? patient.sex
-                                                    : " "),
-                                            style: TextStyle(
-                                                fontSize: 16.0,
-                                                fontWeight: FontWeight.bold),
-                                          ),
-                                        ],
+                                      Padding(
+                                        padding:
+                                            const EdgeInsets.only(bottom: 8.0),
+                                        child: Text(
+                                          'Name: ${patient.name}',
+                                          style: M,
+                                        ),
                                       ),
-                                    ],
-                                  ),
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.only(
-                                      left: 25.0, right: 25.0, top: 25.0),
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.max,
-                                    children: <Widget>[
-                                      Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: <Widget>[
-                                          Text(
-                                            'Date of Birth: ' +
-                                                (patient != null
-                                                    ? dateformatter.format(
-                                                        MyApp.patient.dob)
-                                                    : " "),
-                                            style: TextStyle(
-                                                fontSize: 16.0,
-                                                fontWeight: FontWeight.bold),
-                                          ),
-                                        ],
+                                      Padding(
+                                        padding:
+                                            const EdgeInsets.only(bottom: 8.0),
+                                        child: Text(
+                                          'Phone: ${patient.mobileNo}',
+                                          style: M,
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding:
+                                            const EdgeInsets.only(bottom: 8.0),
+                                        child: Text(
+                                          'Sex: ${patient.sex}',
+                                          style: M,
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding:
+                                            const EdgeInsets.only(bottom: 8.0),
+                                        child: Text(
+                                          'Date of Birth: ${dateformatter.format(MyApp.patient.dob)}',
+                                          style: M,
+                                        ),
                                       ),
                                     ],
                                   ),
                                 ),
                               ],
                             ),
+                          ],
+                        );
+                      case Status.ERROR:
+                        return Center(
+                          child: Error(
+                            message: response.message,
+                            onPressed: profileBloc.getPatientDetails,
                           ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-            ),
+                        );
+                    }
+                  }
+                  return Container();
+                },
+              );
+            },
           ),
         ),
       ),

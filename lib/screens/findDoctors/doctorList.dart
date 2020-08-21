@@ -113,10 +113,14 @@ class DoctorList extends StatelessWidget {
                                                     radius: 38.0,
                                                     backgroundColor:
                                                         Colors.transparent,
+                                                    // child: ShowImage(
+                                                    //   response
+                                                    //       .data[index].image,
+                                                    //   30.0,
+                                                    // ),
                                                     child: ShowImage(
                                                       response
                                                           .data[index].image,
-                                                      30.0,
                                                     ),
                                                   ),
                                                 ),

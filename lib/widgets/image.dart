@@ -6,18 +6,19 @@ import '../utils.dart';
 
 class ShowImage extends StatelessWidget {
   final String _url;
-  final double _size;
+  // final double _size;
 
-  ShowImage(this._url, this._size);
+  // ShowImage(this._url, this._size);
+  ShowImage(this._url);
 
   @override
   Widget build(BuildContext context) {
     return Stack(
       children: [
         Center(
-          child: SpinKitWanderingCubes(
+          child: SpinKitRing(
             color: blue,
-            size: _size,
+            // size: _size,
           ),
         ),
         Center(

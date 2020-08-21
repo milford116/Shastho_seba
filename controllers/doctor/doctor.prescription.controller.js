@@ -52,6 +52,10 @@ exports.upload = upload;
  *                 type: number
  *               patient_sex:
  *                 type: string
+ *               symptoms:
+ *                 type: array
+ *                 items:
+ *                   type: string
  *               medicine:
  *                 type: array
  *                 description: array of suggested medicines
@@ -109,6 +113,7 @@ exports.postPrescription = async function (req, res) {
 	newPrescription.patient_name = req.body.patient_name;
 	newPrescription.patient_age = req.body.patient_age;
 	newPrescription.patient_sex = req.body.patient_sex;
+	newPrescription.symptoms = req.body.symptoms;
 
 	console.log(req.body.medicine);
 	if (req.body.medicine) newPrescription.medicine = req.body.medicine;

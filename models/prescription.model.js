@@ -18,6 +18,10 @@ mongoose.pluralize(null);
  *           type: number
  *         patient_sex:
  *           type: string
+ *         symptoms:
+ *           type: array
+ *           items:
+ *             type: string
  *         medicine:
  *           type: array
  *           items:
@@ -34,6 +38,7 @@ mongoose.pluralize(null);
  *         - patient_name
  *         - patient_age
  *         - patient_sex
+ *         - symptoms
  */
 var prescriptionSchema = new mongoose.Schema({
 	appointment_id: {
@@ -56,6 +61,12 @@ var prescriptionSchema = new mongoose.Schema({
 		type: String,
 		required: true,
 	},
+	symptoms: [
+		{
+			type: String,
+			required: true,
+		},
+	],
 	medicine: [
 		{
 			name: {

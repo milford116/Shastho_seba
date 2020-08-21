@@ -7,7 +7,7 @@ const {SUCCESS, INTERNAL_SERVER_ERROR} = require("../../errors");
 /**
  * @swagger
  * /patient/get/prescription:
- *   get:
+ *   post:
  *     deprecated: false
  *     security:
  *       - bearerAuth: []

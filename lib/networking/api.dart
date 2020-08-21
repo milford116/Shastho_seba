@@ -1,12 +1,10 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:async/async.dart';
 
 import './customException.dart';
-
-import 'dart:io';
-
-import 'package:async/async.dart';
 
 class Api {
   // final baseUrl = 'http://192.168.0.104';

@@ -6,7 +6,6 @@ import 'package:provider/provider.dart';
 import '../models/patient.dart';
 import '../blocs/profileBloc.dart';
 import '../networking/response.dart';
-import '../main.dart';
 import '../utils.dart';
 import '../widgets/drawer.dart';
 import '../widgets/loading.dart';
@@ -131,7 +130,7 @@ class ProfileScreen extends StatelessWidget {
                                         padding:
                                             const EdgeInsets.only(bottom: 8.0),
                                         child: Text(
-                                          'Date of Birth: ${dateformatter.format(MyApp.patient.dob)}',
+                                          'Date of Birth: ${dateformatter.format(patient.dob)}',
                                           style: M,
                                         ),
                                       ),

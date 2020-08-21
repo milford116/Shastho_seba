@@ -1,6 +1,5 @@
 import '../networking/api.dart';
 import '../models/patient.dart';
-import '../main.dart';
 
 class AuthenticationRepository {
   Api _api = Api();
@@ -9,7 +8,6 @@ class AuthenticationRepository {
     final data = await _api.post('/patient/post/login', false,
         {'mobile_no': mobileNo, 'password': password});
     final Patient patient = Patient.fromJson(data['patient']);
-    MyApp.patient = patient;
     return data['token'];
   }
 

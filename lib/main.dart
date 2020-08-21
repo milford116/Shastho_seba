@@ -24,7 +24,6 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  static Patient patient;
   @override
   Widget build(BuildContext context) {
     return MaterialApp(

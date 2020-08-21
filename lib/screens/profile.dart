@@ -67,14 +67,12 @@ class ProfileScreen extends StatelessWidget {
                                         child: CircleAvatar(
                                           maxRadius: 88.0,
                                           backgroundColor: Colors.transparent,
-                                          // child: ShowImage(patient.image, 30.0),
                                           child: ShowImage(patient.image),
                                         ),
                                       ),
                                     ),
                                     Positioned(
                                       bottom: 8.0,
-                                      left: 8.0,
                                       child: IconButton(
                                         icon: Icon(
                                           Icons.camera_alt,

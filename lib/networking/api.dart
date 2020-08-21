@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:async/async.dart';
 
 import './customException.dart';
 
@@ -45,7 +44,7 @@ class Api {
   }
 
   Future<dynamic> uploadImage(String url, File imageFile) async {
-    var stream = http.ByteStream(DelegatingStream.typed(imageFile.openRead()));
+    var stream = http.ByteStream(imageFile.openRead());
     var length = await imageFile.length();
 
     // string to uri

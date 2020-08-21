@@ -62,7 +62,7 @@ class AppointmentDetails extends StatelessWidget {
                                 itemBuilder: (context, index) {
                                   Timeline timeline = response.data[index];
                                   bool hasTransaction =
-                                      timeline.transactionId != null;
+                                      timeline.transactionCreatedAt != null;
                                   return Column(
                                     children: [
                                       Padding(
@@ -156,9 +156,19 @@ class AppointmentDetails extends StatelessWidget {
                                                               FlatButton(
                                                                 color: mint,
                                                                 onPressed: () {
-                                                                  Navigator.pushNamed(
-                                                                      context,
-                                                                      showPrescriptionScreen);
+                                                                  Navigator
+                                                                      .pushNamed(
+                                                                    context,
+                                                                    showPrescriptionScreen,
+                                                                    arguments: {
+                                                                      'appointmentID':
+                                                                          timeline
+                                                                              .appointmentId,
+                                                                      'appointmentDate':
+                                                                          timeline
+                                                                              .prescriptionCreatedAt,
+                                                                    },
+                                                                  );
                                                                 },
                                                                 child: Text(
                                                                   'View',
@@ -385,5 +395,3 @@ void _viewPayment(BuildContext context, TimelineBloc timelineBloc,
     );
   }
 }
-
-void showPrescription() {}

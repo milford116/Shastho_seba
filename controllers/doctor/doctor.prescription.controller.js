@@ -46,17 +46,34 @@ exports.upload = upload;
  *             properties:
  *               appointment_id:
  *                 type: string
+ *               patient_name:
+ *                 type: string
+ *               patient_age:
+ *                 type: number
+ *               patient_sex:
+ *                 type: string
  *               medicine:
  *                 type: array
  *                 description: array of suggested medicines
  *                 items:
- *                   type: string
+ *                   type: object
+ *                   additionalProperties: true
+ *                   properties:
+ *                     name:
+ *                       type: string
+ *                     dose:
+ *                       type: string
+ *                     date:
+ *                       type: string
  *               file:
  *                 type: string
  *                 format: binary
  *                 description: prescription image
  *             required:
  *               - appointment_id
+ *               - patient_name
+ *               - patient_age
+ *               - patient_sex
  *     responses:
  *       200:
  *         description: success
@@ -89,6 +106,10 @@ exports.upload = upload;
 exports.postPrescription = async function (req, res) {
 	var newPrescription = new prescriptionModel();
 	newPrescription.appointment_id = req.body.appointment_id;
+	newPrescription.patient_name = req.body.patient_name;
+	newPrescription.patient_age = req.body.patient_age;
+	newPrescription.patient_sex = req.body.patient_sex;
+	if (req.body.medicine) newPrescription.medicine = req.body.medicine;
 
 	const url = req.protocol + "://" + req.get("host");
 	if (req.filename) newPrescription.prescription_img = url + "/prescription/" + req.filename;

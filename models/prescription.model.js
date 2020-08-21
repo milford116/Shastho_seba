@@ -26,7 +26,7 @@ mongoose.pluralize(null);
  *               name:
  *                 type: string
  *               dose:
- *                 type: number
+ *                 type: string
  *               day:
  *                 type: string
  *       required:

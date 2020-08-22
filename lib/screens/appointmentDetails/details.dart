@@ -161,8 +161,17 @@ class AppointmentDetails extends StatelessWidget {
                                                       color: mint,
                                                       onPressed: () {
                                                         Navigator.pushNamed(
-                                                            context,
-                                                            showPrescriptionScreen);
+                                                          context,
+                                                          showPrescriptionScreen,
+                                                          arguments: {
+                                                            'appointmentId':
+                                                                timeline
+                                                                    .appointmentId,
+                                                            'appointmentDate':
+                                                                timeline
+                                                                    .prescriptionCreatedAt,
+                                                          },
+                                                        );
                                                       },
                                                       child: Text(
                                                         'View',
@@ -251,5 +260,3 @@ void _cancelAppointment(BuildContext context, TimelineBloc timelineBloc,
     }
   }
 }
-
-void showPrescription() {}

@@ -2,6 +2,7 @@ import 'package:socket_io_client/socket_io_client.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'signaling.dart';
+import 'chamber.dart';
 import '../../models/appointment.dart';
 
 typedef void CallReceiveCallback();
@@ -11,8 +12,9 @@ class Messenger {
   Socket _socket;
   Signaling signaling;
   CallReceiveCallback onCallReceive;
+  ChamberBloc _chamberBloc;
 
-  Messenger(this._url);
+  Messenger(this._url, this._chamberBloc);
 
   void init(Appointment appointment) async {
     _socket = io(_url, <String, dynamic>{
@@ -59,6 +61,11 @@ class Messenger {
 
     _socket.on('disconnect', (data) {
       print('disconnect');
+    });
+
+    _socket.on('old_connection', (data) {
+      print('old_connection');
+      _chamberBloc.doctorStatus = true;
     });
 
     signaling.onCallReceive = () => onCallReceive();

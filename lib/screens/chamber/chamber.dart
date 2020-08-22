@@ -69,6 +69,14 @@ class ChamberScreen extends StatelessWidget {
                       ),
                     ),
                     SizedBox(
+                      height: 10.0,
+                    ),
+                    Text(appointment.doctor.designation),
+                    SizedBox(
+                      height: 10.0,
+                    ),
+                    Text(appointment.doctor.institution),
+                    SizedBox(
                       height: 15.0,
                     ),
                     Text(
@@ -81,7 +89,14 @@ class ChamberScreen extends StatelessWidget {
                     SizedBox(
                       height: 25.0,
                     ),
-                    Text('Ongoing serial:', style: L),
+                    Text('Ongoing serial:'),
+                    SizedBox(
+                      height: 25.0,
+                    ),
+                    if (chamberBloc.doctorStatus)
+                      Text('The Doctor is currently online')
+                    else
+                      Text('The Doctor is currently offline'),
                   ],
                 ),
               );

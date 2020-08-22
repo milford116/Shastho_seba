@@ -45,8 +45,10 @@ router.post(
 );
 router.post("/doctor/get/prevPrescription", validatorMiddleWare(doctorValidator.getPreviousPrescriptions), doctorMiddleware.middleware, prescriptionController.getPreviousPrescription);
 
-router.get("/doctor/get/timeline", doctorMiddleware.middleware, timelineController.getTimeline);
+router.post("/doctor/get/timeline", doctorMiddleware.middleware, timelineController.getTimeline);
 
 router.post("/doctor/post/feedback", doctorMiddleware.middleware, feedbackController.postFeedback);
+
+router.post("/doctor/get/prescription",doctorMiddleware.middleware, prescriptionController.getPrescription);
 
 module.exports = router;

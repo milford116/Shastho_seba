@@ -72,7 +72,7 @@ class AppointmentDetails extends StatelessWidget {
                                                   .appointmentCreatedAt),
                                           color: lightBlue,
                                           message:
-                                              'You created an appointment for ${DateFormat.yMMMMd('en_US').format(timeline.appointmentDate)}',
+                                              'You created an appointment for ${DateFormat.yMMMMd('en_US').format(timeline.appointmentDate)}.',
                                           buttonBar: Row(
                                             mainAxisAlignment:
                                                 MainAxisAlignment.end,
@@ -109,7 +109,7 @@ class AppointmentDetails extends StatelessWidget {
                                                   .format(timeline
                                                       .transactionCreatedAt),
                                               message:
-                                                  'You have ${timeline.due}/- due',
+                                                  'You have ${timeline.due}/- due.',
                                               color: lightPurple,
                                               buttonBar: Row(
                                                 mainAxisAlignment:

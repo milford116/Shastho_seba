@@ -34,4 +34,10 @@ class AppointmentsRepository {
     });
     return data['serial_no'];
   }
+
+  Future<void> cancelAppointment(String appointmentId) async {
+    await _api.post('/patient/cancel/appointment', true, {
+      'id': appointmentId,
+    });
+  }
 }

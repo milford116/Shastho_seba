@@ -1,25 +1,34 @@
 class Timeline {
   final String appointmentId;
-  String transactionId;
+  double due;
   DateTime appointmentDate;
   DateTime appointmentCreatedAt;
   DateTime transactionCreatedAt;
   DateTime prescriptionCreatedAt;
   bool hasPrescription = false;
+  bool hasTransaction = false;
 
   Timeline({
     this.appointmentId,
-    this.transactionId,
+    this.due,
     this.appointmentDate,
     this.appointmentCreatedAt,
     this.transactionCreatedAt,
     this.prescriptionCreatedAt,
     this.hasPrescription,
+    this.hasTransaction,
   });
+
+  static double _parseDouble(dynamic value) {
+    if (value is int) {
+      return value + .0;
+    }
+    return value;
+  }
 
   Timeline.fromJson(Map<String, dynamic> json)
       : appointmentId = json['appointment_id'],
-        transactionId = json['transaction_id'],
+        due = _parseDouble(json['due']),
         appointmentDate = json['appointment_date'] != null
             ? DateTime.parse(json['appointment_date'])
             : DateTime.now(),
@@ -34,6 +43,9 @@ class Timeline {
             : DateTime.now() {
     if (json['prescription_createdAt'] != null) {
       hasPrescription = true;
+    }
+    if (json['transaction_createdAt'] != null) {
+      hasTransaction = true;
     }
   }
 }

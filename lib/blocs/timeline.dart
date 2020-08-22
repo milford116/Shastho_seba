@@ -5,14 +5,13 @@ import 'package:flutter/foundation.dart';
 import 'baseBloc.dart';
 import '../models/appointment.dart';
 import '../models/timeline.dart';
-import '../models/transaction.dart';
 import '../networking/response.dart';
 import '../repositories/timeline.dart';
-import '../repositories/transaction.dart';
+import '../repositories/appointment.dart';
 
 class TimelineBloc extends ChangeNotifier implements BaseBloc {
   TimelineRepository _timelineRepository;
-  TransactionRepository _transactionRepository;
+  AppointmentsRepository _appointmentsRepository;
   StreamController _timelineController;
   Appointment _appointment;
 
@@ -22,7 +21,7 @@ class TimelineBloc extends ChangeNotifier implements BaseBloc {
 
   TimelineBloc(this._appointment) {
     _timelineRepository = TimelineRepository();
-    _transactionRepository = TransactionRepository();
+    _appointmentsRepository = AppointmentsRepository();
     _timelineController = StreamController<Response<List<Timeline>>>();
     fetchTimeline();
   }
@@ -37,18 +36,8 @@ class TimelineBloc extends ChangeNotifier implements BaseBloc {
     }
   }
 
-  Future<void> addTransaction(Transaction transaction) async {
-    await _transactionRepository.addTransaction(transaction);
-    fetchTimeline();
-  }
-
-  Future<Transaction> getTransaction(String appointmentId) async {
-    try {
-      return await _transactionRepository.getTransaction(appointmentId);
-    } catch (e) {
-      print(e);
-      return null;
-    }
+  Future<void> cancelAppointment(String appointmentId) async {
+    await _appointmentsRepository.cancelAppointment(appointmentId);
   }
 
   @override

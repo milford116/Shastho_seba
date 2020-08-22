@@ -10,8 +10,7 @@ import '../../blocs/doctorProfile.dart';
 import '../../networking/response.dart';
 import '../../widgets/loading.dart';
 import '../../widgets/error.dart';
-import '../../widgets/success.dart';
-import '../../widgets/failure.dart';
+import '../../widgets/dialogs.dart';
 import '../../widgets/image.dart';
 
 class DoctorProfileScreen extends StatelessWidget {
@@ -270,27 +269,16 @@ void _takeAppointment(BuildContext context) async {
               ' ' +
               DateFormat.Hms().format(schedule.start));
       print(dateTime.toLocal());
-      int serialNo = await showDialog<int>(
-        context: context,
-        barrierDismissible: false,
-        builder: (context) {
-          doctorProfileBloc.createAppointment(schedule.id, dateTime).then(
-                (result) => Navigator.pop<int>(context, result),
-              );
-          return AlertDialog(
-              content: Padding(
-            padding: const EdgeInsets.only(top: 30.0),
-            child: Loading('Please Wait'),
-          ));
-        },
-      );
-      if (serialNo > 0) {
-        print('Successfully Created Appointment');
+      try {
+        await showProgressDialog(context, 'Please Wait');
+        int serialNo =
+            await doctorProfileBloc.createAppointment(schedule.id, dateTime);
+        await hideProgressDialog();
         await successDialog(context,
             'Appointment Created Successfully. Your Serial is $serialNo');
-      } else {
-        print('Appointment Creation Failed');
-        await failureDialog(context, 'Appointment Creation Failed');
+      } catch (e) {
+        await hideProgressDialog();
+        await failureDialog(context, e.toString());
       }
     }
   }
@@ -315,6 +303,7 @@ class _SelectTimeState extends State<_SelectTime> {
         widget.doctorProfileBloc.schedules(widget.weekDay);
     return AlertDialog(
       title: Text('Select Time'),
+      contentPadding: EdgeInsets.only(right: 0),
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: schedules

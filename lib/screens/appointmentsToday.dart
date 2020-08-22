@@ -118,7 +118,7 @@ class AppointmentCard extends StatelessWidget {
       elevation: 0.0,
       color: Colors.transparent,
       child: Container(
-        padding: EdgeInsets.all(15.0),
+        padding: EdgeInsets.all(10.0),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(8.0),
           border: Border.all(color: blue, width: 1.5),
@@ -168,24 +168,46 @@ class AppointmentCard extends StatelessWidget {
                         height: 10.0,
                       ),
                       Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
                           Text(
                             'Payment Status: ',
                             style: M,
                           ),
-                          _appointment.status ==
-                                      AppointmentStatus.NotVerified ||
-                                  _appointment.status ==
-                                      AppointmentStatus.Verified
-                              ? Text(
-                                  'Done',
-                                  style: M.copyWith(color: mint),
-                                )
-                              : Text(
-                                  'Pending',
-                                  style: M.copyWith(color: red),
-                                ),
+                          if (_appointment.status ==
+                              AppointmentStatus.NotVerified)
+                            Expanded(
+                              child: Text(
+                                'Not Verified',
+                                style: M.copyWith(color: red),
+                                textAlign: TextAlign.center,
+                              ),
+                            )
+                          else if (_appointment.status ==
+                              AppointmentStatus.Verified)
+                            Expanded(
+                              child: Text(
+                                'Verified',
+                                style: M.copyWith(color: mint),
+                                textAlign: TextAlign.center,
+                              ),
+                            )
+                          else if (_appointment.status ==
+                              AppointmentStatus.NoPayment)
+                            Expanded(
+                              child: Text(
+                                'No Payment',
+                                style: M.copyWith(color: red),
+                                textAlign: TextAlign.center,
+                              ),
+                            )
+                          else
+                            Expanded(
+                              child: Text(
+                                'Finished',
+                                style: M.copyWith(color: mint),
+                                textAlign: TextAlign.center,
+                              ),
+                            ),
                         ],
                       ),
                       SizedBox(

@@ -1,7 +1,5 @@
-import 'package:Shastho_Sheba/screens/profile.dart';
 import 'package:flutter/material.dart';
 
-import 'models/patient.dart';
 import 'screens/splash.dart';
 import 'screens/login.dart';
 import 'screens/home.dart';
@@ -16,6 +14,8 @@ import 'screens/findDoctors/doctorProfile.dart';
 import 'screens/showPrescription.dart';
 import 'screens/chamber/chamber.dart';
 import 'screens/videoCall.dart';
+import 'screens/profile.dart';
+import 'screens/transactions.dart';
 import 'routes.dart';
 import 'utils.dart';
 
@@ -31,6 +31,7 @@ class MyApp extends StatelessWidget {
         textTheme: TextTheme(
           bodyText2: TextStyle(color: blue),
           subtitle1: TextStyle(color: blue),
+          headline6: TextStyle(color: blue),
         ),
       ),
       initialRoute: splashScreen,
@@ -50,6 +51,7 @@ class MyApp extends StatelessWidget {
         chamberScreen: (context) => ChamberScreen(),
         videoCallScreen: (context) => VideoCallScreen(),
         profileScreen: (context) => ProfileScreen(),
+        transactionsScreen: (context) => TransactionsScreen(),
       },
     );
   }

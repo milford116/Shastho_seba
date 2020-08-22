@@ -18,4 +18,12 @@ class TransactionRepository {
         '/patient/get/transaction', true, {'appointment_id': appointmentId});
     return Transaction.fromJson(data['transactions'][0]);
   }
+
+  Future<List<Transaction>> getTransactions(String appointmentId) async {
+    final data = await _api.post(
+        '/patient/get/transaction', true, {'appointment_id': appointmentId});
+    return data['transactions']
+        .map<Transaction>((json) => Transaction.fromJson(json))
+        .toList();
+  }
 }

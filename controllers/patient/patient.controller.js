@@ -434,7 +434,7 @@ exports.uploadDP = async function (req, res) {
 
 
 exports.verifyToken = async function (req, res) {
-	patientModel.findOne({ token: req.body.token }, (err, docs) => {
+	patientModel.findOne({ session_token: req.body.token }, (err, docs) => {
 		if (err) {
 			res.status(INTERNAL_SERVER_ERROR).json(error_message.INTERNAL_SERVER_ERROR);
 		} else {

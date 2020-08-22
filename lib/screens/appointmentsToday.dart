@@ -154,7 +154,7 @@ class AppointmentCard extends StatelessWidget {
                         height: 30.0,
                       ),
                       Text(
-                        'Time: ${formatter.format(_appointment.dateTime)}',
+                        'Time: ${formatter.format(_appointment.schedule.start)}',
                         style: M,
                       ),
                       SizedBox(

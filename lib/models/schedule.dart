@@ -5,13 +5,13 @@ class Schedule {
   final DateTime end;
   final double fee;
   static Map<int, String> _map = {
-    1:'Monday',
-    2:'Tuesday',
-    3:'Wednesday',
-    4:'Thursday',
-    5:'Friday',
-    6:'Saturday',
-    7:'Sunday'
+    1: 'Monday',
+    2: 'Tuesday',
+    3: 'Wednesday',
+    4: 'Thursday',
+    5: 'Friday',
+    6: 'Saturday',
+    7: 'Sunday'
   };
 
   Schedule({this.id, this.weekDay, this.start, this.end, this.fee});
@@ -28,7 +28,11 @@ class Schedule {
   Schedule.fromJson(Map<String, dynamic> json)
       : id = json['_id'],
         weekDay = json['day'],
-        start = DateTime.parse(json['time_start']),
+        start = json['time_start'] != null
+            ? DateTime.parse(json['time_start'])
+            : DateTime.now(),
         fee = _parseDouble(json['fee']),
-        end = DateTime.parse(json['time_end']);
+        end = json['time_end'] != null
+            ? DateTime.parse(json['time_end'])
+            : DateTime.now();
 }

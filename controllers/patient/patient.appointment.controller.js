@@ -196,7 +196,7 @@ exports.getAppointment = async function (req, res) {
 		appointment_date_time: date,
 	};
 
-	let appointments = await appointmentModel.find(query).populate("doctorId", "name designation institute reg_number mobile_no email image specialization about_me").exec();
+	let appointments = await appointmentModel.find(query).populate("doctorId", "name designation institution reg_number mobile_no email image specialization about_me").exec();
 
 	if (appointments) {
 		res.status(SUCCESS).json({ appointments });
@@ -261,7 +261,7 @@ exports.getPastAppointment = async function (req, res) {
 	let appointments = await appointmentModel
 		.find(query)
 		.sort({ appointment_date_time: -1 })
-		.populate("doctorId", "name designation institute reg_number mobile_no email image specialization about_me")
+		.populate("doctorId", "name designation institution reg_number mobile_no email image specialization about_me")
 		.exec();
 
 	if (appointments) res.status(SUCCESS).json({ appointments });
@@ -324,7 +324,7 @@ exports.getFutureAppointment = async function (req, res) {
 		.find(query)
 		.sort({ appointment_date_time: 1 })
 		.populate("schedule_id", "time_start time_end")
-		.populate("doctorId", "name designation institute reg_number mobile_no email image specialization about_me")
+		.populate("doctorId", "name designation institution reg_number mobile_no email image specialization about_me")
 		.exec();
 
 	if (appointments) res.status(SUCCESS).json({ appointments });

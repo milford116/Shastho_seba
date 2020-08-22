@@ -13,6 +13,7 @@ const router = express.Router();
 
 router.post("/patient/post/login", patientController.login);
 router.post("/patient/post/register", patientController.registration);
+router.post("/patient/verify/token", patientController.verifyToken);
 router.get("/patient/get/details", patientMiddleware.middleware, patientController.details);
 router.post("/patient/post/logout", patientMiddleware.middleware, patientController.logout);
 router.post("/patient/upload/profile_picture", patientMiddleware.middleware, patientController.upload.single("file"), patientController.uploadDP);

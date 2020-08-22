@@ -42,7 +42,7 @@ class Appointment {
       doctor = Doctor.fromJson(json['doctorId']);
     }
     if (!(json['patientId'] is String)) {
-      doctor = Doctor.fromJson(json['patientId']);
+      patient = Patient.fromJson(json['patientId']);
     }
   }
 }

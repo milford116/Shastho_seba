@@ -170,6 +170,18 @@ class AppointmentDetails extends StatelessWidget {
                                                             'appointmentDate':
                                                                 timeline
                                                                     .prescriptionCreatedAt,
+                                                            'doctorName':
+                                                                appointment
+                                                                    .doctor
+                                                                    .name,
+                                                            'doctorDesignation':
+                                                                appointment
+                                                                    .doctor
+                                                                    .designation,
+                                                            'doctorInstitution':
+                                                                appointment
+                                                                    .doctor
+                                                                    .institution,
                                                           },
                                                         );
                                                       },

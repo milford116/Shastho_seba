@@ -27,6 +27,9 @@ class ShowPrescriptionScreen extends StatelessWidget {
 
     String appointmentID = map['appointmentId'];
     DateTime appointmentDate = map['appointmentDate'];
+    String doctorName = map['doctorName'];
+    String doctorDesignation = map['doctorDesignation'];
+    String doctorInstitution = map['doctorInstitution'];
 
     DateFormat dateFormatter = DateFormat('dd-MM-yyyy');
 
@@ -73,28 +76,67 @@ class ShowPrescriptionScreen extends StatelessWidget {
                                 10.0, 10.0, 10.0, 0.0),
                             child: Column(
                               children: <Widget>[
-                                Text(
-                                  'Patient Name: ${prescription.patientName}',
-                                  style: L,
-                                ),
-                                SizedBox(
-                                  height: 5.0,
-                                ),
                                 Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceAround,
+                                  mainAxisAlignment: MainAxisAlignment.start,
                                   children: <Widget>[
-                                    Text('Age: ${prescription.patientAge}',
-                                        style: M),
-                                    Text('Sex: ${prescription.patientSex}',
-                                        style: M),
-                                    Text(
-                                        'Date: ${dateFormatter.format(appointmentDate)}',
-                                        style: M),
+                                    Column(
+                                      children: <Widget>[
+                                        Text(
+                                            'Date: ${dateFormatter.format(appointmentDate)}',
+                                            style: M.copyWith(
+                                                fontWeight: FontWeight.bold)),
+                                      ],
+                                    ),
+                                    SizedBox(
+                                      width: 85.0,
+                                    ),
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: <Widget>[
+                                        Text('Dr. ${doctorName}',
+                                            style: M.copyWith(
+                                                fontWeight: FontWeight.bold)),
+                                        Text(doctorDesignation,
+                                            style: M.copyWith(
+                                                fontWeight: FontWeight.bold)),
+                                        Text(doctorInstitution,
+                                            style: M.copyWith(
+                                                fontWeight: FontWeight.bold)),
+                                      ],
+                                    ),
                                   ],
                                 ),
                                 SizedBox(
-                                  height: 5.0,
+                                  height: 10.0,
+                                ),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: <Widget>[
+                                    Text(
+                                        'Patient Name: ${prescription.patientName}',
+                                        style: M.copyWith(
+                                            fontWeight: FontWeight.bold)),
+                                    SizedBox(
+                                      height: 5.0,
+                                    ),
+                                    Row(
+                                      children: <Widget>[
+                                        Text('Age: ${prescription.patientAge}',
+                                            style: M.copyWith(
+                                                fontWeight: FontWeight.bold)),
+                                        SizedBox(
+                                          width: 10.0,
+                                        ),
+                                        Text('Sex: ${prescription.patientSex}',
+                                            style: M.copyWith(
+                                                fontWeight: FontWeight.bold)),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(
+                                  height: 20.0,
                                 ),
                                 Align(
                                   alignment: Alignment.topLeft,

@@ -93,7 +93,7 @@ exports.postAppointment = async function (req, res) {
 				if (err) {
 					res.status(INTERNAL_SERVER_ERROR).json(error_message.INTERNAL_SERVER_ERROR);
 				} else if (doc) {
-					res.status(BAD_REQUEST).json("Appointment has already been existed");
+					res.status(BAD_REQUEST).json({ message: "Appointment already exists" });
 				} else {
 					var query2 = {
 						schedule_id: req.body.schedule_id,
@@ -397,6 +397,7 @@ exports.cancelAppointment = async function (req, res) {
 		} else if (docs.deletedCount === 0) {
 			res.status(BAD_REQUEST).json(error_message.BAD_REQUEST);
 		} else {
+			await timelineModel.findOneAndDelete({ appointment_id: req.body.id }).exec();
 			res.status(SUCCESS).json(error_message.SUCCESS);
 		}
 	});

@@ -77,8 +77,30 @@ class ShowPrescriptionScreen extends StatelessWidget {
                             child: Column(
                               children: <Widget>[
                                 Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: <Widget>[
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: <Widget>[
+                                        Text(
+                                          'Dr. ${doctorName}',
+                                          style: M.copyWith(
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                        Text(
+                                          doctorDesignation,
+                                          style: M.copyWith(
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                        Text(
+                                          doctorInstitution,
+                                          style: M.copyWith(
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                      ],
+                                    ),
                                     Column(
                                       children: <Widget>[
                                         Text(
@@ -87,25 +109,11 @@ class ShowPrescriptionScreen extends StatelessWidget {
                                                 fontWeight: FontWeight.bold)),
                                       ],
                                     ),
-                                    SizedBox(
-                                      width: 85.0,
-                                    ),
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: <Widget>[
-                                        Text('Dr. ${doctorName}',
-                                            style: M.copyWith(
-                                                fontWeight: FontWeight.bold)),
-                                        Text(doctorDesignation,
-                                            style: M.copyWith(
-                                                fontWeight: FontWeight.bold)),
-                                        Text(doctorInstitution,
-                                            style: M.copyWith(
-                                                fontWeight: FontWeight.bold)),
-                                      ],
-                                    ),
                                   ],
+                                ),
+                                Divider(
+                                  color: blue,
+                                  thickness: 4.0,
                                 ),
                                 SizedBox(
                                   height: 10.0,
@@ -113,25 +121,57 @@ class ShowPrescriptionScreen extends StatelessWidget {
                                 Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: <Widget>[
-                                    Text(
-                                        'Patient Name: ${prescription.patientName}',
-                                        style: M.copyWith(
-                                            fontWeight: FontWeight.bold)),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: <Widget>[
+                                        Row(
+                                          children: <Widget>[
+                                            Text(
+                                              'Patient Name: ',
+                                              style: M.copyWith(
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                            Text(
+                                              prescription.patientName,
+                                              style: M,
+                                            ),
+                                          ],
+                                        ),
+                                        Row(
+                                          children: <Widget>[
+                                            Text(
+                                              'Age: ',
+                                              style: M.copyWith(
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                            Text(
+                                              prescription.patientAge,
+                                              style: M,
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
                                     SizedBox(
                                       height: 5.0,
                                     ),
                                     Row(
                                       children: <Widget>[
-                                        Text('Age: ${prescription.patientAge}',
-                                            style: M.copyWith(
-                                                fontWeight: FontWeight.bold)),
-                                        SizedBox(
-                                          width: 10.0,
+                                        Text(
+                                          'Gender: ',
+                                          style: M.copyWith(
+                                              fontWeight: FontWeight.bold),
                                         ),
-                                        Text('Sex: ${prescription.patientSex}',
-                                            style: M.copyWith(
-                                                fontWeight: FontWeight.bold)),
+                                        Text(
+                                          prescription.patientSex,
+                                          style: M,
+                                        ),
                                       ],
+                                    ),
+                                    Divider(
+                                      color: blue,
+                                      thickness: 4.0,
                                     ),
                                   ],
                                 ),
@@ -145,7 +185,8 @@ class ShowPrescriptionScreen extends StatelessWidget {
                                       svg,
                                       Text(
                                         'Rx',
-                                        style: XL,
+                                        style: XL.copyWith(
+                                            fontWeight: FontWeight.bold),
                                       ),
                                     ],
                                   ),
@@ -326,6 +367,44 @@ class ShowPrescriptionScreen extends StatelessWidget {
                                           )
                                           .values
                                           .toList(),
+                                      SizedBox(
+                                        height: 5.0,
+                                      ),
+                                      Align(
+                                        alignment: Alignment.topCenter,
+                                        child: Text(
+                                          'Special Advices',
+                                          style: L.copyWith(
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        height: 5.0,
+                                      ),
+                                      ...prescription.specialAdvice
+                                          .asMap()
+                                          .map<int, Widget>(
+                                            (index, advice) {
+                                              return MapEntry(
+                                                index,
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          bottom: 5.0),
+                                                  child: Text(
+                                                    '${index + 1}. $advice',
+                                                    style: M,
+                                                  ),
+                                                ),
+                                              );
+                                            },
+                                          )
+                                          .values
+                                          .toList(),
+                                      Divider(
+                                        color: blue,
+                                        thickness: 4.0,
+                                      ),
                                     ],
                                   ),
                                 ),

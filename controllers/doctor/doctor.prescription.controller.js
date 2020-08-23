@@ -49,7 +49,7 @@ exports.upload = upload;
  *               patient_name:
  *                 type: string
  *               patient_age:
- *                 type: number
+ *                 type: string
  *               patient_sex:
  *                 type: string
  *               symptoms:
@@ -57,6 +57,10 @@ exports.upload = upload;
  *                 items:
  *                   type: string
  *               tests:
+ *                 type: array
+ *                 items:
+ *                   type: string
+ *               special_advice:
  *                 type: array
  *                 items:
  *                   type: string
@@ -120,6 +124,7 @@ exports.postPrescription = async function (req, res) {
 	newPrescription.symptoms = req.body.symptoms;
 
 	if (req.body.tests) newPrescription.tests = req.body.tests;
+	if (req.body.special_advice) newPrescription.special_advice = req.body.special_advice;
 	if (req.body.medicine) newPrescription.medicine = req.body.medicine;
 
 	const url = req.protocol + "://" + req.get("host");

@@ -15,7 +15,7 @@ mongoose.pluralize(null);
  *         patient_name:
  *           type: string
  *         patient_age:
- *           type: number
+ *           type: string
  *         patient_sex:
  *           type: string
  *         symptoms:
@@ -23,6 +23,10 @@ mongoose.pluralize(null);
  *           items:
  *             type: string
  *         tests:
+ *           type: array
+ *           items:
+ *             type: string
+ *         special_advice:
  *           type: array
  *           items:
  *             type: string
@@ -58,7 +62,7 @@ var prescriptionSchema = new mongoose.Schema({
 		required: true,
 	},
 	patient_age: {
-		type: Number,
+		type: String,
 		required: true,
 	},
 	patient_sex: {
@@ -72,6 +76,12 @@ var prescriptionSchema = new mongoose.Schema({
 		},
 	],
 	tests: [
+		{
+			type: String,
+			required: false,
+		},
+	],
+	special_advice: [
 		{
 			type: String,
 			required: false,

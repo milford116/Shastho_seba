@@ -51,6 +51,9 @@ class TransactionsScreen extends StatelessWidget {
                           child: Loading(response.message),
                         );
                       case Status.COMPLETED:
+                        double due =
+                            transactionBloc.fee - transactionBloc.total;
+                        Color dueColor = due > 0 ? red : mint;
                         return Stack(
                           children: [
                             ListView(
@@ -225,9 +228,11 @@ class TransactionsScreen extends StatelessWidget {
                                             padding: EdgeInsets.symmetric(
                                                 vertical: 3.0),
                                             child: Text(
-                                              '${transactionBloc.fee - transactionBloc.total}/-',
+                                              '$due/-',
                                               style: M.copyWith(
-                                                  fontWeight: FontWeight.bold),
+                                                fontWeight: FontWeight.bold,
+                                                color: dueColor,
+                                              ),
                                               textAlign: TextAlign.center,
                                             ),
                                           ),

@@ -61,144 +61,48 @@ class AppointmentDetails extends StatelessWidget {
                                 itemCount: response.data.length,
                                 itemBuilder: (context, index) {
                                   Timeline timeline = response.data[index];
-                                  return Column(
-                                    children: [
-                                      Padding(
-                                        padding:
-                                            const EdgeInsets.only(bottom: 8.0),
-                                        child: Tile(
-                                          date: DateFormat('MMM dd\nyyyy')
-                                              .format(timeline
-                                                  .appointmentCreatedAt),
-                                          color: lightBlue,
-                                          message:
-                                              'You created an appointment for ${DateFormat.yMMMMd('en_US').format(timeline.appointmentDate)}.',
-                                          buttonBar: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.end,
-                                            children: <Widget>[
-                                              if (!timeline.hasTransaction)
-                                                FlatButton(
-                                                  color: blue,
-                                                  onPressed: () =>
-                                                      _cancelAppointment(
-                                                    context,
-                                                    timelineBloc,
-                                                    timeline.appointmentId,
-                                                    response.data.length == 1,
-                                                  ),
-                                                  child: Text(
-                                                    'Cancel',
-                                                    style: TextStyle(
-                                                      color: Colors.white,
-                                                    ),
-                                                  ),
-                                                ),
-                                            ],
-                                          ),
-                                        ),
+                                  return Container(
+                                    margin: EdgeInsets.only(bottom: 15.0),
+                                    child: Tile(
+                                      timeline: timeline,
+                                      onCancelAppointment: () =>
+                                          _cancelAppointment(
+                                        context,
+                                        timelineBloc,
+                                        timeline.appointmentId,
+                                        response.data.length == 1,
                                       ),
-                                      Column(
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: [
-                                          Padding(
-                                            padding: const EdgeInsets.only(
-                                                bottom: 8.0),
-                                            child: Tile(
-                                              date: DateFormat('MMM dd\nyyyy')
-                                                  .format(timeline
-                                                      .transactionCreatedAt),
-                                              message:
-                                                  'You have ${timeline.due}/- due.',
-                                              color: lightPurple,
-                                              buttonBar: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.end,
-                                                children: <Widget>[
-                                                  FlatButton(
-                                                    color: purple,
-                                                    onPressed: () async {
-                                                      await Navigator.pushNamed(
-                                                        context,
-                                                        transactionsScreen,
-                                                        arguments: {
-                                                          'appointmentId':
-                                                              timeline
-                                                                  .appointmentId,
-                                                          'due': timeline.due,
-                                                        },
-                                                      );
-                                                      timelineBloc
-                                                          .fetchTimeline();
-                                                    },
-                                                    child: Text(
-                                                      'View',
-                                                      style: TextStyle(
-                                                        color: Colors.white,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ),
-                                          if (timeline.hasPrescription)
-                                            Padding(
-                                              padding: const EdgeInsets.only(
-                                                  bottom: 8.0),
-                                              child: Tile(
-                                                date: DateFormat('MMM dd\nyyyy')
-                                                    .format(timeline
-                                                        .prescriptionCreatedAt),
-                                                message:
-                                                    'The Doctor has given you a prescription.',
-                                                color: lightMint,
-                                                buttonBar: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.end,
-                                                  children: <Widget>[
-                                                    FlatButton(
-                                                      color: mint,
-                                                      onPressed: () {
-                                                        Navigator.pushNamed(
-                                                          context,
-                                                          showPrescriptionScreen,
-                                                          arguments: {
-                                                            'appointmentId':
-                                                                timeline
-                                                                    .appointmentId,
-                                                            'appointmentDate':
-                                                                timeline
-                                                                    .prescriptionCreatedAt,
-                                                            'doctorName':
-                                                                appointment
-                                                                    .doctor
-                                                                    .name,
-                                                            'doctorDesignation':
-                                                                appointment
-                                                                    .doctor
-                                                                    .designation,
-                                                            'doctorInstitution':
-                                                                appointment
-                                                                    .doctor
-                                                                    .institution,
-                                                          },
-                                                        );
-                                                      },
-                                                      child: Text(
-                                                        'View',
-                                                        style: TextStyle(
-                                                          color: Colors.white,
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                            ),
-                                        ],
-                                      )
-                                    ],
+                                      onViewTransactions: () async {
+                                        await Navigator.pushNamed(
+                                          context,
+                                          transactionsScreen,
+                                          arguments: {
+                                            'appointmentId':
+                                                timeline.appointmentId,
+                                            'due': timeline.due,
+                                          },
+                                        );
+                                        timelineBloc.fetchTimeline();
+                                      },
+                                      onShowPrescription: () {
+                                        Navigator.pushNamed(
+                                          context,
+                                          showPrescriptionScreen,
+                                          arguments: {
+                                            'appointmentId':
+                                                timeline.appointmentId,
+                                            'appointmentDate':
+                                                timeline.prescriptionCreatedAt,
+                                            'doctorName':
+                                                appointment.doctor.name,
+                                            'doctorDesignation':
+                                                appointment.doctor.designation,
+                                            'doctorInstitution':
+                                                appointment.doctor.institution,
+                                          },
+                                        );
+                                      },
+                                    ),
                                   );
                                 },
                               ),

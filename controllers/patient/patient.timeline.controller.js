@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const timeline = require("../../models/timeline.model");
 const timelineModel = mongoose.model("timeline");
-const { SUCCESS, INTERNAL_SERVER_ERROR, BAD_REQUEST, DATA_NOT_FOUND } = require("../../errors");
+const {SUCCESS, INTERNAL_SERVER_ERROR, BAD_REQUEST, DATA_NOT_FOUND} = require("../../errors");
 const error_message = require("../../error.messages");
 
 /**
@@ -64,12 +64,12 @@ exports.getTimeline = async function (req, res) {
 		patient_mobile_no: req.mobile_no,
 	};
 
-	timelineModel.find(query, null, { sort: { createdAt: -1 } }, (err, docs) => {
+	timelineModel.find(query, null, {sort: {appointment_date: -1}}, (err, docs) => {
 		if (err) {
 			res.status(INTERNAL_SERVER_ERROR).json(error_message.INTERNAL_SERVER_ERROR);
 		} else {
 			let timeline = docs;
-			res.status(SUCCESS).json({ timeline });
+			res.status(SUCCESS).json({timeline});
 		}
 	});
 };

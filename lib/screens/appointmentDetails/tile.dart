@@ -35,7 +35,7 @@ class Tile extends StatelessWidget {
           ),
         ),
         SizedBox(
-          width: 10.0,
+          width: 5.0,
         ),
         Expanded(
           child: Column(
@@ -44,7 +44,7 @@ class Tile extends StatelessWidget {
                 message:
                     'You created the appointment on ${DateFormat.yMMMMd('en_US').format(timeline.appointmentCreatedAt)}.',
                 color: lightBlue,
-                buttonVisible: timeline.hasTransaction,
+                buttonVisible: !timeline.hasTransaction,
                 buttonText: 'Cancel',
                 buttonColor: blue,
                 onPressed: onCancelAppointment,

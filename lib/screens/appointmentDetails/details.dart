@@ -56,7 +56,7 @@ class AppointmentDetails extends StatelessWidget {
                             Expanded(
                               child: ListView.builder(
                                 padding: EdgeInsets.only(
-                                    left: 15.0, right: 15.0, top: 20.0),
+                                    left: 10.0, right: 10.0, top: 20.0),
                                 itemCount: response.data.length,
                                 itemBuilder: (context, index) {
                                   Timeline timeline = response.data[index];

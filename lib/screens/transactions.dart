@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:intl/intl.dart';
 
 import '../networking/response.dart';
 import '../utils.dart';
@@ -62,10 +63,23 @@ class TransactionsScreen extends StatelessWidget {
                                   padding: const EdgeInsets.fromLTRB(
                                       10.0, 15.0, 10.0, 0.0),
                                   child: Table(
-                                    columnWidths: {0: FlexColumnWidth(2.3)},
+                                    columnWidths: {
+                                      0: FlexColumnWidth(3),
+                                      1: FlexColumnWidth(5),
+                                      2: FlexColumnWidth(2),
+                                    },
                                     children: <TableRow>[
                                       TableRow(
                                         children: <Widget>[
+                                          Container(
+                                            padding: EdgeInsets.symmetric(
+                                                vertical: 5.0),
+                                            child: Text(
+                                              'Date',
+                                              style: L,
+                                              textAlign: TextAlign.center,
+                                            ),
+                                          ),
                                           Container(
                                             padding: EdgeInsets.symmetric(
                                                 vertical: 5.0),
@@ -93,10 +107,13 @@ class TransactionsScreen extends StatelessWidget {
                                   padding:
                                       EdgeInsets.symmetric(horizontal: 10.0),
                                   child: Table(
-                                    columnWidths: {
-                                      0: FlexColumnWidth(
-                                          response.data.length == 0 ? 1 : 2.3)
-                                    },
+                                    columnWidths: response.data.length == 0
+                                        ? {0: FlexColumnWidth(8)}
+                                        : {
+                                            0: FlexColumnWidth(3),
+                                            1: FlexColumnWidth(5),
+                                            2: FlexColumnWidth(2),
+                                          },
                                     children: response.data.length == 0
                                         ? <TableRow>[
                                             TableRow(children: [
@@ -123,8 +140,18 @@ class TransactionsScreen extends StatelessWidget {
                                                             vertical: 5.0),
                                                     child: Text(
                                                       '${index + 1}. ' +
-                                                          transaction
-                                                              .transactionId,
+                                                          DateFormat.yMd()
+                                                              .format(transaction
+                                                                  .createdAt),
+                                                      style: M,
+                                                    ),
+                                                  ),
+                                                  Container(
+                                                    padding:
+                                                        EdgeInsets.symmetric(
+                                                            vertical: 5.0),
+                                                    child: Text(
+                                                      transaction.transactionId,
                                                       style: M,
                                                     ),
                                                   ),
@@ -152,7 +179,7 @@ class TransactionsScreen extends StatelessWidget {
                                   padding:
                                       EdgeInsets.symmetric(horizontal: 10.0),
                                   child: Table(
-                                    columnWidths: {0: FlexColumnWidth(2.3)},
+                                    columnWidths: {0: FlexColumnWidth(4)},
                                     children: [
                                       TableRow(
                                         decoration: BoxDecoration(
@@ -321,6 +348,7 @@ void _addTransaction(BuildContext context, TransactionBloc transactionBloc,
                   appointmentId: appointmentId,
                   transactionId: transaction.text,
                   amount: double.parse(amount.text),
+                  createdAt: DateTime.now(),
                 ),
               );
             },

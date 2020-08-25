@@ -1,4 +1,4 @@
-import 'package:Shastho_Sheba/models/medicine.dart';
+import 'medicine.dart';
 
 class Prescription {
   final String appointmentId;

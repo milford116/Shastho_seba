@@ -39,6 +39,8 @@ var transactionSchema = new mongoose.Schema({
 		type: Number,
 		required: true,
 	},
-});
+},
+	{ timestamps: true }
+);
 
 mongoose.model("transaction", transactionSchema);

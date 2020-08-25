@@ -64,7 +64,7 @@ exports.getTimeline = async function (req, res) {
 		patient_mobile_no: req.mobile_no,
 	};
 
-	timelineModel.find(query, null, {sort: {appointment_date: -1}}, (err, docs) => {
+	timelineModel.find(query, null, {sort: {appointment_date: 1}}, (err, docs) => {
 		if (err) {
 			res.status(INTERNAL_SERVER_ERROR).json(error_message.INTERNAL_SERVER_ERROR);
 		} else {

@@ -153,6 +153,8 @@ class TransactionsScreen extends StatelessWidget {
                                                     child: Text(
                                                       transaction.transactionId,
                                                       style: M,
+                                                      textAlign:
+                                                          TextAlign.center,
                                                     ),
                                                   ),
                                                   Container(

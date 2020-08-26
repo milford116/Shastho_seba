@@ -4,32 +4,29 @@ import 'package:flutter/foundation.dart';
 
 import 'baseBloc.dart';
 import '../models/appointment.dart';
-import '../models/timeline.dart';
 import '../networking/response.dart';
-import '../repositories/timeline.dart';
 import '../repositories/appointment.dart';
 
 class TimelineBloc extends ChangeNotifier implements BaseBloc {
-  TimelineRepository _timelineRepository;
   AppointmentsRepository _appointmentsRepository;
   StreamController _timelineController;
   Appointment _appointment;
 
-  StreamSink<Response<List<Timeline>>> get sink => _timelineController.sink;
+  StreamSink<Response<List<Appointment>>> get sink => _timelineController.sink;
 
-  Stream<Response<List<Timeline>>> get stream => _timelineController.stream;
+  Stream<Response<List<Appointment>>> get stream => _timelineController.stream;
 
   TimelineBloc(this._appointment) {
-    _timelineRepository = TimelineRepository();
     _appointmentsRepository = AppointmentsRepository();
-    _timelineController = StreamController<Response<List<Timeline>>>();
+    _timelineController = StreamController<Response<List<Appointment>>>();
     fetchTimeline();
   }
 
   void fetchTimeline() async {
     sink.add(Response.loading('Fetching Timeline'));
     try {
-      final list = await _timelineRepository.getTimelines(_appointment);
+      final list = await _appointmentsRepository
+          .getAppointments(_appointment.doctor.mobileNo);
       sink.add(Response.completed(list));
     } catch (e) {
       sink.add(Response.error(e.toString()));

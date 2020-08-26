@@ -25,6 +25,15 @@ class AppointmentsRepository {
         .toList();
   }
 
+  Future<List<Appointment>> getAppointments(String doctorMobileNo) async {
+    final data = await _api.post('/patient/get/appointments', true, {
+      'doctor_mobile_no': doctorMobileNo,
+    });
+    return data['appointments']
+        .map<Appointment>((json) => Appointment.fromJson(json))
+        .toList();
+  }
+
   Future<int> createAppointment(
       String scheduleId, String mobileNo, DateTime dateTime) async {
     final data = await _api.post('/patient/post/appointment', true, {

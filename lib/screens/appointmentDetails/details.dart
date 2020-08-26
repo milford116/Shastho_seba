@@ -8,7 +8,6 @@ import '../../widgets/error.dart';
 import '../../widgets/dialogs.dart';
 import '../../routes.dart';
 import '../../models/appointment.dart';
-import '../../models/timeline.dart';
 import '../../blocs/timeline.dart';
 import '../../networking/response.dart';
 import 'tile.dart';
@@ -35,6 +34,25 @@ class AppointmentDetails extends StatelessWidget {
         drawer: SafeArea(
           child: MyDrawer(Selected.none),
         ),
+        floatingActionButton: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            FloatingActionButton(
+              child: Icon(Icons.exit_to_app),
+              onPressed: () {
+                Navigator.pushNamed(
+                  context,
+                  chamberScreen,
+                  arguments: appointment,
+                );
+              },
+            ),
+            Text(
+              'Chamber',
+              style: TextStyle(color: Colors.white),
+            ),
+          ],
+        ),
         body: SafeArea(
           child: ChangeNotifierProvider(
             create: (context) => TimelineBloc(appointment),
@@ -44,7 +62,7 @@ class AppointmentDetails extends StatelessWidget {
                 stream: timelineBloc.stream,
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
-                    Response<List<Timeline>> response = snapshot.data;
+                    Response<List<Appointment>> response = snapshot.data;
                     switch (response.status) {
                       case Status.LOADING:
                         return Center(
@@ -56,19 +74,20 @@ class AppointmentDetails extends StatelessWidget {
                             Expanded(
                               child: ListView.builder(
                                 padding: EdgeInsets.only(
-                                    left: 10.0, right: 10.0, top: 20.0),
+                                    left: 5.0, right: 5.0, top: 10.0),
                                 itemCount: response.data.length,
                                 itemBuilder: (context, index) {
-                                  Timeline timeline = response.data[index];
+                                  Appointment _appointment =
+                                      response.data[index];
                                   return Container(
                                     margin: EdgeInsets.only(bottom: 15.0),
                                     child: Tile(
-                                      timeline: timeline,
+                                      appointment: _appointment,
                                       onCancelAppointment: () =>
                                           _cancelAppointment(
                                         context,
                                         timelineBloc,
-                                        timeline.appointmentId,
+                                        _appointment.id,
                                         response.data.length == 1,
                                       ),
                                       onViewTransactions: () async {
@@ -76,9 +95,8 @@ class AppointmentDetails extends StatelessWidget {
                                           context,
                                           transactionsScreen,
                                           arguments: {
-                                            'appointmentId':
-                                                timeline.appointmentId,
-                                            'due': timeline.due,
+                                            'appointmentId': _appointment.id,
+                                            'due': _appointment.due,
                                           },
                                         );
                                         timelineBloc.fetchTimeline();
@@ -88,10 +106,9 @@ class AppointmentDetails extends StatelessWidget {
                                           context,
                                           showPrescriptionScreen,
                                           arguments: {
-                                            'appointmentId':
-                                                timeline.appointmentId,
+                                            'appointmentId': _appointment.id,
                                             'appointmentDate':
-                                                timeline.prescriptionCreatedAt,
+                                                _appointment.dateTime,
                                             'doctorName':
                                                 appointment.doctor.name,
                                             'doctorDesignation':
@@ -105,29 +122,6 @@ class AppointmentDetails extends StatelessWidget {
                                   );
                                 },
                               ),
-                            ),
-                            ButtonBar(
-                              alignment: MainAxisAlignment.spaceAround,
-                              children: <Widget>[
-                                FlatButton.icon(
-                                  onPressed: () {},
-                                  icon: Icon(Icons.file_upload),
-                                  label: Text('Upload Report'),
-                                  color: blue,
-                                ),
-                                FlatButton.icon(
-                                  onPressed: () {
-                                    Navigator.pushNamed(
-                                      context,
-                                      chamberScreen,
-                                      arguments: appointment,
-                                    );
-                                  },
-                                  icon: Icon(Icons.exit_to_app),
-                                  label: Text('Enter Chamber'),
-                                  color: blue,
-                                ),
-                              ],
                             ),
                           ],
                         );

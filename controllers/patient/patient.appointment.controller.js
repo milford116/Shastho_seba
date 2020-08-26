@@ -110,6 +110,7 @@ exports.postAppointment = async function (req, res) {
 					appointment.patientId = patient_detail._id;
 					appointment.status = 0;
 					appointment.appointment_date_time = date;
+					appointment.due = schedule_details.fee;
 
 					if (max_collection.length != 0) {
 						appointment.serial_no = parseInt(max_collection[0].serial_no) + parseInt(1);

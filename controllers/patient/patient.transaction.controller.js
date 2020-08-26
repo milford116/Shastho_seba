@@ -1,8 +1,6 @@
 const mongoose = require("mongoose");
 const transaction = require("../../models/transaction.model");
 const transactionModel = mongoose.model("transaction");
-const timeline = require("../../models/timeline.model");
-const timelineModel = mongoose.model("timeline");
 const appointment = require("../../models/appointment.model");
 const appointmentModel = mongoose.model("appointment");
 const error_message = require("../../error.messages");
@@ -74,15 +72,14 @@ exports.addTransaction = async function (req, res) {
         if (err) {
             res.status(INTERNAL_SERVER_ERROR).json(error_message.INTERNAL_SERVER_ERROR);
         } else {
-            var timeline_deatils = await timelineModel.findOne({ appointment_id: req.body.appointment_id }).exec();
+            var appointment_deatils = await appointmentModel.findOne({ _id: req.body.appointment_id }).exec();
 
             let data = {
-                due: timeline_deatils.due - req.body.amount,
-                transaction_createdAt: Date.now(),
+                due: appointment_deatils.due - req.body.amount,
+                status: 1,
             };
 
-            await appointmentModel.findOneAndUpdate({ _id: req.body.appointment_id }, { status: 1 }).exec();
-            await timelineModel.findOneAndUpdate({ appointment_id: req.body.appointment_id }, data).exec();
+            await appointmentModel.findOneAndUpdate({ _id: req.body.appointment_id }, data).exec();
             res.status(SUCCESS).json(error_message.SUCCESS);
         }
     });

@@ -274,6 +274,68 @@ exports.getPastAppointment = async function (req, res) {
 
 /**
  * @swagger
+ * /patient/get/appointments:
+ *   get:
+ *     deprecated: false
+ *     security:
+ *       - bearerAuth: []
+ *     tags:
+ *       - Appointment
+ *     summary: Gets the appointments of a patient
+ *     responses:
+ *       200:
+ *         description: success
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 appointments:
+ *                   type: array
+ *                   items:
+ *                     $ref: '#/components/schemas/appointment'
+ *       500:
+ *         description: Internal Server Error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *       401:
+ *         description: Unauthorized
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ */
+exports.getAppointments = async function (req, res) {
+
+	let patient = await patientModel.findOne({ mobile_no: req.mobile_no });
+
+	let doctor = await doctorModel.findOne({ mobile_no: req.body.doctor_mobile_no });
+
+	var query = {
+		patientId: patient._id,
+		doctorId: doctor._id,
+	};
+
+	let appointments = await appointmentModel
+		.find(query)
+		.sort({ appointment_date_time: 1 })
+		.exec();
+
+	if (appointments) res.status(SUCCESS).json({ appointments });
+	else res.status(DATA_NOT_FOUND).json(error_message.DATA_NOT_FOUND);
+};
+
+
+/**
+ * @swagger
  * /patient/get/future/appointment:
  *   get:
  *     deprecated: false

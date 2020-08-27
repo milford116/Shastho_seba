@@ -28,7 +28,17 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
           elevation: 0.0,
           backgroundColor: lightBlue,
           centerTitle: true,
-          title: Text('Feedback'),
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(Icons.feedback),
+              Text(
+                'Feedback',
+                style: L,
+              ),
+            ],
+          ),
         ),
         drawer: SafeArea(
           child: MyDrawer(Selected.feedback),

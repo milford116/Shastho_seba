@@ -29,7 +29,17 @@ class ProfileScreen extends StatelessWidget {
           elevation: 0.0,
           backgroundColor: lightBlue,
           centerTitle: true,
-          title: Text('My Profile'),
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(Icons.person),
+              Text(
+                'My Profile',
+                style: L,
+              ),
+            ],
+          ),
         ),
         drawer: SafeArea(
           child: MyDrawer(Selected.profile),
@@ -119,7 +129,7 @@ class ProfileScreen extends StatelessWidget {
                                         padding:
                                             const EdgeInsets.only(bottom: 8.0),
                                         child: Text(
-                                          'Sex: ${patient.sex}',
+                                          'Gender: ${patient.sex}',
                                           style: M,
                                         ),
                                       ),

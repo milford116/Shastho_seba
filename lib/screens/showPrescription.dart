@@ -50,7 +50,7 @@ class ShowPrescriptionScreen extends StatelessWidget {
         ),
       ),
       child: Scaffold(
-        backgroundColor: Colors.transparent,
+        //backgroundColor: Colors.transparent,
         appBar: AppBar(
           elevation: 0.0,
           backgroundColor: lightBlue,
@@ -122,43 +122,25 @@ class ShowPrescriptionScreen extends StatelessWidget {
                                 ),
                                 Divider(
                                   color: blue,
-                                  thickness: 4.0,
-                                ),
-                                SizedBox(
-                                  height: 10.0,
+                                  thickness: 2.0,
                                 ),
                                 Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: <Widget>[
                                     Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: <Widget>[
-                                        Row(
-                                          children: <Widget>[
-                                            Text(
-                                              'Patient Name: ',
-                                              style: M.copyWith(
-                                                  fontWeight: FontWeight.bold),
-                                            ),
-                                            Text(
-                                              prescription.patientName,
-                                              style: M,
-                                            ),
-                                          ],
+                                        Text(
+                                          'Patient Name: ',
+                                          style: M.copyWith(
+                                              fontWeight: FontWeight.bold),
                                         ),
-                                        Row(
-                                          children: <Widget>[
-                                            Text(
-                                              'Age: ',
-                                              style: M.copyWith(
-                                                  fontWeight: FontWeight.bold),
-                                            ),
-                                            Text(
-                                              prescription.patientAge,
-                                              style: M,
-                                            ),
-                                          ],
+                                        Expanded(
+                                          child: Text(
+                                            '${prescription.patientName}',
+                                            style: M,
+                                          ),
                                         ),
                                       ],
                                     ),
@@ -176,11 +158,23 @@ class ShowPrescriptionScreen extends StatelessWidget {
                                           prescription.patientSex,
                                           style: M,
                                         ),
+                                        SizedBox(
+                                          width: 20.0,
+                                        ),
+                                        Text(
+                                          'Age: ',
+                                          style: M.copyWith(
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                        Text(
+                                          prescription.patientAge,
+                                          style: M,
+                                        ),
                                       ],
                                     ),
                                     Divider(
                                       color: blue,
-                                      thickness: 4.0,
+                                      thickness: 2.0,
                                     ),
                                   ],
                                 ),
@@ -257,11 +251,11 @@ class ShowPrescriptionScreen extends StatelessWidget {
                                           Table(
                                             border: TableBorder(
                                               horizontalInside: BorderSide(
-                                                color: Colors.white,
+                                                color: blue,
                                                 width: 2.0,
                                               ),
                                               verticalInside: BorderSide(
-                                                color: Colors.white,
+                                                color: blue,
                                                 width: 2.0,
                                               ),
                                             ),
@@ -425,7 +419,7 @@ class ShowPrescriptionScreen extends StatelessWidget {
                                               .toList(),
                                           Divider(
                                             color: blue,
-                                            thickness: 4.0,
+                                            thickness: 2.0,
                                           ),
                                         ],
                                       ),

@@ -20,7 +20,17 @@ class HomeScreen extends StatelessWidget {
           elevation: 0.0,
           backgroundColor: lightBlue,
           centerTitle: true,
-          title: Text('Home'),
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(Icons.home),
+              Text(
+                'Home',
+                style: L,
+              ),
+            ],
+          ),
         ),
         drawer: SafeArea(
           child: MyDrawer(Selected.home),
@@ -34,7 +44,7 @@ class HomeScreen extends StatelessWidget {
               crossAxisCount: 2,
               children: <Widget>[
                 _Tile(
-                  title: 'Appointments Today',
+                  title: 'Today Appointments',
                   icon: Icons.schedule,
                   route: appointmentsTodayScreen,
                 ),

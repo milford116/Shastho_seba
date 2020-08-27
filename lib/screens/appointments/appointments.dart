@@ -61,7 +61,17 @@ class _AppointmentsScreenState extends State<AppointmentsScreen>
           elevation: 0.0,
           backgroundColor: lightBlue,
           centerTitle: true,
-          title: Text('Appointments'),
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(Icons.insert_invitation),
+              Text(
+                'Appointments',
+                style: L,
+              ),
+            ],
+          ),
           bottom: TabBar(
             controller: _tabController,
             tabs: _myTabs,

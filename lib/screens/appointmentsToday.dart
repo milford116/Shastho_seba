@@ -28,7 +28,17 @@ class AppointmentsTodayScreen extends StatelessWidget {
           elevation: 0.0,
           backgroundColor: lightBlue,
           centerTitle: true,
-          title: Text('Appointments Today'),
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(Icons.schedule),
+              Text(
+                'Today Appointments',
+                style: L,
+              ),
+            ],
+          ),
         ),
         drawer: SafeArea(
           child: MyDrawer(Selected.appointmentsToday),

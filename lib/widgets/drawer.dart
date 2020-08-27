@@ -51,7 +51,7 @@ class MyDrawer extends StatelessWidget {
               thickness: 2.0,
             ),
             _Tile(
-              title: 'Appointments Today',
+              title: 'Today Appointments',
               icon: Icons.schedule,
               selected: selected == Selected.appointmentsToday,
               route: appointmentsTodayScreen,

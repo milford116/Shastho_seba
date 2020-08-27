@@ -21,7 +21,17 @@ class FindDoctorsScreen extends StatelessWidget {
           elevation: 0.0,
           backgroundColor: lightBlue,
           centerTitle: true,
-          title: Text('Find Doctors'),
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(Icons.search),
+              Text(
+                'Find Doctors',
+                style: L,
+              ),
+            ],
+          ),
         ),
         drawer: SafeArea(
           child: MyDrawer(Selected.findDoctors),

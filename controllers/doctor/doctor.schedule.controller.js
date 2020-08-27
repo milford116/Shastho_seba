@@ -32,11 +32,14 @@ const error_message = require("../../error.messages");
  *                 description: sunday = 1, monday = 2 and so on
  *               fee:
  *                 type: number
+ *               limit:
+ *                 type: number
  *             required:
  *               - time-start
  *               - time_end
  *               - day
  *               - fee
+ *               - limit
  *     responses:
  *       200:
  *         description: success
@@ -112,6 +115,7 @@ exports.addSchedule = async function (req, res) {
 			new_schedule.time_end = en;
 			new_schedule.day = req.body.day;
 			new_schedule.fee = req.body.fee;
+			new_schedule.limit = req.body.limit;
 
 			new_schedule.save((err, docs) => {
 				if (err) {
@@ -208,12 +212,15 @@ exports.getSchedule = async function (req, res) {
  *                 description: monday = 1 and so on
  *               fee:
  *                 type: number
+ *               limit:
+ *                 type: number
  *             required:
  *               - id
  *               - time_start
  *               - time_end
  *               - day
  *               - fee
+ *               - limit
  *     responses:
  *       200:
  *         description: success
@@ -270,6 +277,7 @@ exports.editSchedule = async function (req, res) {
 		time_end: en,
 		day: req.body.day,
 		fee: req.body.fee,
+		limit: req.body.limit,
 	};
 
 	let clash = await scheduleModel.find(query).exec();

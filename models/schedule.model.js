@@ -22,12 +22,16 @@ mongoose.pluralize(null);
  *           type: string
  *           format: date-time
  *           default: current-date
+ *         limit:
+ *           type: number
+ *           description: the maximum amount of patients the doctor will meet
  *       required:
  *         - doc_mobile_no
  *         - time_start
  *         - time_end
  *         - day
  *         - fee
+ *         - limit
  */
 var scheduleSchema = new mongoose.Schema({
 	doc_mobile_no: {
@@ -47,6 +51,10 @@ var scheduleSchema = new mongoose.Schema({
 		required: true,
 	},
 	fee: {
+		type: Number,
+		required: true,
+	},
+	limit: {
 		type: Number,
 		required: true,
 	},

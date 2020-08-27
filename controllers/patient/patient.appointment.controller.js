@@ -275,7 +275,7 @@ exports.getPastAppointment = async function (req, res) {
 /**
  * @swagger
  * /patient/get/appointments:
- *   get:
+ *   post:
  *     deprecated: false
  *     security:
  *       - bearerAuth: []

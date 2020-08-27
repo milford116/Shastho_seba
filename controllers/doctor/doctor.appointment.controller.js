@@ -268,3 +268,64 @@ exports.appointmentInRange = async function (req, res) {
 	let appointments = await appointmentModel.find(query).populate("patientId", "mobile_no date_of_birth sex name image_link").sort({createdAt: 1}).exec();
 	res.status(SUCCESS).json({appointments});
 };
+
+/**
+ * @swagger
+ * /doctor/get/appointments:
+ *   post:
+ *     deprecated: false
+ *     security:
+ *       - bearerAuth: []
+ *     tags:
+ *       - Appointment
+ *     summary: Gets the appointments of a doctor with a patient
+ *     responses:
+ *       200:
+ *         description: success
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 appointments:
+ *                   type: array
+ *                   items:
+ *                     $ref: '#/components/schemas/appointment'
+ *       500:
+ *         description: Internal Server Error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *       401:
+ *         description: Unauthorized
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ */
+exports.getAppointments = async function (req, res) {
+
+	let doctor = await doctorModel.findOne({ mobile_no: req.mobile_no });
+
+	let patient = await patientModel.findOne({ mobile_no: req.body.patient_mobile_no });
+
+	var query = {
+		patientId: patient._id,
+		doctorId: doctor._id,
+	};
+
+	let appointments = await appointmentModel
+		.find(query)
+		.sort({ appointment_date_time: 1 })
+		.exec();
+
+	if (appointments) res.status(SUCCESS).json({ appointments });
+	else res.status(DATA_NOT_FOUND).json(error_message.DATA_NOT_FOUND);
+};

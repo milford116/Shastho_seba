@@ -157,7 +157,7 @@ class AppointmentCard extends StatelessWidget {
                     mainAxisSize: MainAxisSize.min,
                     children: <Widget>[
                       Text(
-                        _appointment.doctor.name,
+                        'Dr. ${_appointment.doctor.name}',
                         style: XL,
                       ),
                       SizedBox(

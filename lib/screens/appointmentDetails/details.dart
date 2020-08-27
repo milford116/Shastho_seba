@@ -29,7 +29,7 @@ class AppointmentDetails extends StatelessWidget {
           elevation: 0.0,
           backgroundColor: lightBlue,
           centerTitle: true,
-          title: Text(appointment.doctor.name),
+          title: Text('Dr. ${appointment.doctor.name}'),
         ),
         drawer: SafeArea(
           child: MyDrawer(Selected.none),

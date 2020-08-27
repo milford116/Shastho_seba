@@ -472,14 +472,14 @@ class ShowPrescriptionScreen extends StatelessWidget {
     pdf.addPage(
       pdfLib.MultiPage(
         build: (context) => [
-          pdfLib.Text(doctorName),
+          pdfLib.Text('Dr. ${doctorName}'),
           pdfLib.Text(
               '${doctorDesignation},                                                                                             Date: ${date}'),
           pdfLib.Text('${doctorInstitution}.'),
           pdfLib.Text('\n\n\n\n'),
           pdfLib.Text('Patient Name: ${prescription.patientName}'),
           pdfLib.Text(
-              'Patient Age: ${prescription.patientAge}     Patient Gender: ${prescription.patientSex}'),
+              'Gender: ${prescription.patientSex}      Age: ${prescription.patientAge}'),
           pdfLib.Text('\n\n\n'),
           pdfLib.Center(
             child: pdfLib.Text('Symptoms'),
@@ -516,10 +516,10 @@ class ShowPrescriptionScreen extends StatelessWidget {
     //Get directory path
     String path = directory.path;
     //Create an empty file to write PDF data
-    File file = File('$path/Report.pdf');
+    File file = File('$path/Prescription_${date}_Dr.${doctorName}.pdf');
     //Write PDF data
     await file.writeAsBytes(bytes, flush: true);
     //Open the PDF document in mobile
-    OpenFile.open('$path/Report.pdf');
+    OpenFile.open('$path/Prescription_${date}_Dr.${doctorName}.pdf');
   }
 }

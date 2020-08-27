@@ -136,8 +136,7 @@ class DoctorList extends StatelessWidget {
                                                         MainAxisSize.min,
                                                     children: <Widget>[
                                                       Text(
-                                                        response
-                                                            .data[index].name,
+                                                        'Dr. ${response.data[index].name}',
                                                         style: M.copyWith(
                                                             fontWeight:
                                                                 FontWeight

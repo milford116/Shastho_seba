@@ -32,7 +32,7 @@ class DoctorProfileScreen extends StatelessWidget {
           elevation: 0.0,
           backgroundColor: lightBlue,
           centerTitle: true,
-          title: Text(doctor.name),
+          title: Text('Dr. ${doctor.name}'),
         ),
         drawer: SafeArea(
           child: MyDrawer(Selected.none),
@@ -65,7 +65,7 @@ class DoctorProfileScreen extends StatelessWidget {
                         height: 10.0,
                       ),
                       Text(
-                        doctor.name,
+                        'Dr. ${doctor.name}',
                         style: L,
                         textAlign: TextAlign.center,
                       ),

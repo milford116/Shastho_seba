@@ -47,6 +47,8 @@ router.post("/doctor/get/prevPrescription", validatorMiddleWare(doctorValidator.
 
 router.post("/doctor/get/timeline", doctorMiddleware.middleware, timelineController.getTimeline);
 
+router.post("/doctor/get/appointments", doctorMiddleware.middleware, appointmentController.getAppointments);
+
 router.post("/doctor/post/feedback", doctorMiddleware.middleware, feedbackController.postFeedback);
 
 router.post("/doctor/get/prescription",doctorMiddleware.middleware, prescriptionController.getPrescription);

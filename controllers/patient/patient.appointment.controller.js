@@ -108,7 +108,7 @@ exports.postAppointment = async function (req, res) {
 					appointment.schedule_id = req.body.schedule_id;
 					appointment.doctorId = docs._id;
 					appointment.patientId = patient_detail._id;
-					appointment.status = 0;
+					appointment.status = 1;
 					appointment.appointment_date_time = date;
 					appointment.due = schedule_details.fee;
 
@@ -271,6 +271,68 @@ exports.getPastAppointment = async function (req, res) {
 	if (appointments) res.status(SUCCESS).json({ appointments });
 	else res.status(DATA_NOT_FOUND).json(error_message.DATA_NOT_FOUND);
 };
+
+/**
+ * @swagger
+ * /patient/get/appointments:
+ *   post:
+ *     deprecated: false
+ *     security:
+ *       - bearerAuth: []
+ *     tags:
+ *       - Appointment
+ *     summary: Gets the appointments of a patient
+ *     responses:
+ *       200:
+ *         description: success
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 appointments:
+ *                   type: array
+ *                   items:
+ *                     $ref: '#/components/schemas/appointment'
+ *       500:
+ *         description: Internal Server Error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *       401:
+ *         description: Unauthorized
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ */
+exports.getAppointments = async function (req, res) {
+
+	let patient = await patientModel.findOne({ mobile_no: req.mobile_no });
+
+	let doctor = await doctorModel.findOne({ mobile_no: req.body.doctor_mobile_no });
+
+	var query = {
+		patientId: patient._id,
+		doctorId: doctor._id,
+	};
+
+	let appointments = await appointmentModel
+		.find(query)
+		.sort({ appointment_date_time: 1 })
+		.exec();
+
+	if (appointments) res.status(SUCCESS).json({ appointments });
+	else res.status(DATA_NOT_FOUND).json(error_message.DATA_NOT_FOUND);
+};
+
 
 /**
  * @swagger

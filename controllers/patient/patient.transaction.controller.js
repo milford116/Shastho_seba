@@ -76,7 +76,6 @@ exports.addTransaction = async function (req, res) {
 
             let data = {
                 due: appointment_deatils.due - req.body.amount,
-                status: 1,
             };
 
             await appointmentModel.findOneAndUpdate({ _id: req.body.appointment_id }, data).exec();

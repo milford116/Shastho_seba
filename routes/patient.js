@@ -19,6 +19,7 @@ router.post("/patient/post/logout", patientMiddleware.middleware, patientControl
 router.post("/patient/upload/profile_picture", patientMiddleware.middleware, patientController.upload.single("file"), patientController.uploadDP);
 
 router.post("/patient/post/appointment", patientMiddleware.middleware, appointmentController.postAppointment);
+router.post("/patient/get/appointments", patientMiddleware.middleware, appointmentController.getAppointments);
 router.get("/patient/get/today/appointment", patientMiddleware.middleware, appointmentController.getAppointment);
 router.get("/patient/get/past/appointment", patientMiddleware.middleware, appointmentController.getPastAppointment);
 router.get("/patient/get/future/appointment", patientMiddleware.middleware, appointmentController.getFutureAppointment);

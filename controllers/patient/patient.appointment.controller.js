@@ -108,7 +108,7 @@ exports.postAppointment = async function (req, res) {
 					appointment.schedule_id = req.body.schedule_id;
 					appointment.doctorId = docs._id;
 					appointment.patientId = patient_detail._id;
-					appointment.status = 0;
+					appointment.status = 1;
 					appointment.appointment_date_time = date;
 					appointment.due = schedule_details.fee;
 

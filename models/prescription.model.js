@@ -39,6 +39,9 @@ mongoose.pluralize(null);
  *                 type: string
  *               dose:
  *                 type: string
+ *               direction:
+ *                 type: string
+ *                 description: whether to use the med before/after having food or use the oinments after/before bath
  *               day:
  *                 type: string
  *       required:
@@ -98,6 +101,12 @@ var prescriptionSchema = new mongoose.Schema({
 				type: String,
 				required: true,
 			},
+
+			direction: {
+				type: String,
+				required: true,
+			},
+
 			day: {
 				type: String,
 				required: true,

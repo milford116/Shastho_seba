@@ -158,9 +158,7 @@ class ShowPrescriptionScreen extends StatelessWidget {
                                           prescription.patientSex,
                                           style: M,
                                         ),
-                                        SizedBox(
-                                          width: 20.0,
-                                        ),
+                                        Spacer(),
                                         Text(
                                           'Age: ',
                                           style: M.copyWith(
@@ -263,7 +261,8 @@ class ShowPrescriptionScreen extends StatelessWidget {
                                                 TableCellVerticalAlignment
                                                     .middle,
                                             columnWidths: {
-                                              0: FlexColumnWidth(2.0)
+                                              0: FlexColumnWidth(3.0),
+                                              1: FlexColumnWidth(3.0),
                                             },
                                             children: <TableRow>[
                                               TableRow(
@@ -292,7 +291,7 @@ class ShowPrescriptionScreen extends StatelessWidget {
                                                     padding: EdgeInsets.all(
                                                         cellPadding),
                                                     child: Text(
-                                                      'Duration\n(Days)',
+                                                      'Days',
                                                       style: M,
                                                       textAlign:
                                                           TextAlign.center,

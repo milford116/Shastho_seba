@@ -177,7 +177,7 @@ class ShowPrescriptionScreen extends StatelessWidget {
                                   ],
                                 ),
                                 SizedBox(
-                                  height: 20.0,
+                                  height: 10.0,
                                 ),
                                 Align(
                                   alignment: Alignment.topLeft,
@@ -196,249 +196,226 @@ class ShowPrescriptionScreen extends StatelessWidget {
                                   height: 5.0,
                                 ),
                                 Expanded(
-                                  child: Column(
+                                  child: ListView(
+                                    shrinkWrap: true,
                                     children: <Widget>[
-                                      ListView(
-                                        shrinkWrap: true,
-                                        children: <Widget>[
-                                          Align(
-                                            alignment: Alignment.topCenter,
-                                            child: Text(
-                                              'Symptoms',
-                                              style: L.copyWith(
-                                                  fontWeight: FontWeight.bold),
-                                            ),
-                                          ),
-                                          SizedBox(
-                                            height: 5.0,
-                                          ),
-                                          ...prescription.symptoms
-                                              .asMap()
-                                              .map<int, Widget>(
-                                                (index, symptom) {
-                                                  return MapEntry(
-                                                    index,
-                                                    Padding(
-                                                      padding:
-                                                          const EdgeInsets.only(
-                                                              bottom: 5.0),
-                                                      child: Text(
-                                                        '${index + 1}. $symptom',
-                                                        style: M,
-                                                      ),
-                                                    ),
-                                                  );
-                                                },
-                                              )
-                                              .values
-                                              .toList(),
-                                          SizedBox(
-                                            height: 5.0,
-                                          ),
-                                          Align(
-                                            alignment: Alignment.topCenter,
-                                            child: Text(
-                                              'Medicines',
-                                              style: L.copyWith(
-                                                  fontWeight: FontWeight.bold),
-                                            ),
-                                          ),
-                                          SizedBox(
-                                            height: 5.0,
-                                          ),
-                                          Table(
-                                            border: TableBorder(
-                                              horizontalInside: BorderSide(
-                                                color: blue,
-                                                width: 2.0,
-                                              ),
-                                              verticalInside: BorderSide(
-                                                color: blue,
-                                                width: 2.0,
-                                              ),
-                                            ),
-                                            defaultVerticalAlignment:
-                                                TableCellVerticalAlignment
-                                                    .middle,
-                                            columnWidths: {
-                                              0: FlexColumnWidth(3.0),
-                                              1: FlexColumnWidth(3.0),
-                                            },
-                                            children: <TableRow>[
-                                              TableRow(
-                                                children: <Widget>[
-                                                  Container(
-                                                    padding: EdgeInsets.all(
-                                                        cellPadding),
-                                                    child: Text(
-                                                      'Name',
-                                                      style: M,
-                                                      textAlign:
-                                                          TextAlign.center,
-                                                    ),
-                                                  ),
-                                                  Container(
-                                                    padding: EdgeInsets.all(
-                                                        cellPadding),
-                                                    child: Text(
-                                                      'Dose',
-                                                      style: M,
-                                                      textAlign:
-                                                          TextAlign.center,
-                                                    ),
-                                                  ),
-                                                  Container(
-                                                    padding: EdgeInsets.all(
-                                                        cellPadding),
-                                                    child: Text(
-                                                      'Days',
-                                                      style: M,
-                                                      textAlign:
-                                                          TextAlign.center,
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                              ...prescription.medicine
-                                                  .asMap()
-                                                  .map<int, TableRow>(
-                                                      (index, medicine) {
-                                                    return MapEntry(
-                                                      index,
-                                                      TableRow(
-                                                        children: <Widget>[
-                                                          Container(
-                                                            padding:
-                                                                EdgeInsets.all(
-                                                                    cellPadding),
-                                                            child: Text(
-                                                              '${index + 1}. ${medicine.name}',
-                                                              style: M,
-                                                            ),
-                                                          ),
-                                                          Container(
-                                                            padding:
-                                                                EdgeInsets.all(
-                                                                    cellPadding),
-                                                            child: Text(
-                                                              medicine.dose,
-                                                              style: M,
-                                                              textAlign:
-                                                                  TextAlign
-                                                                      .center,
-                                                            ),
-                                                          ),
-                                                          Container(
-                                                            padding:
-                                                                EdgeInsets.all(
-                                                                    cellPadding),
-                                                            child: Text(
-                                                              medicine.day,
-                                                              style: M,
-                                                              textAlign:
-                                                                  TextAlign
-                                                                      .center,
-                                                            ),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    );
-                                                  })
-                                                  .values
-                                                  .toList(),
-                                            ],
-                                          ),
-                                          SizedBox(
-                                            height: 5.0,
-                                          ),
-                                          Align(
-                                            alignment: Alignment.topCenter,
-                                            child: Text(
-                                              'Tests',
-                                              style: L.copyWith(
-                                                  fontWeight: FontWeight.bold),
-                                            ),
-                                          ),
-                                          SizedBox(
-                                            height: 5.0,
-                                          ),
-                                          ...prescription.tests
-                                              .asMap()
-                                              .map<int, Widget>(
-                                                (index, test) {
-                                                  return MapEntry(
-                                                    index,
-                                                    Padding(
-                                                      padding:
-                                                          const EdgeInsets.only(
-                                                              bottom: 5.0),
-                                                      child: Text(
-                                                        '${index + 1}. $test',
-                                                        style: M,
-                                                      ),
-                                                    ),
-                                                  );
-                                                },
-                                              )
-                                              .values
-                                              .toList(),
-                                          SizedBox(
-                                            height: 5.0,
-                                          ),
-                                          Align(
-                                            alignment: Alignment.topCenter,
-                                            child: Text(
-                                              'Special Advices',
-                                              style: L.copyWith(
-                                                  fontWeight: FontWeight.bold),
-                                            ),
-                                          ),
-                                          SizedBox(
-                                            height: 5.0,
-                                          ),
-                                          ...prescription.specialAdvice
-                                              .asMap()
-                                              .map<int, Widget>(
-                                                (index, advice) {
-                                                  return MapEntry(
-                                                    index,
-                                                    Padding(
-                                                      padding:
-                                                          const EdgeInsets.only(
-                                                              bottom: 5.0),
-                                                      child: Text(
-                                                        '${index + 1}. $advice',
-                                                        style: M,
-                                                      ),
-                                                    ),
-                                                  );
-                                                },
-                                              )
-                                              .values
-                                              .toList(),
-                                          Divider(
-                                            color: blue,
-                                            thickness: 2.0,
-                                          ),
-                                        ],
-                                      ),
-                                      Expanded(
-                                        child: Align(
-                                          alignment: Alignment.bottomCenter,
-                                          child: FlatButton(
-                                            child: Text(
-                                              'Download PDF',
-                                              style: TextStyle(
-                                                  color: Colors.white),
-                                            ),
-                                            color: Colors.blue,
-                                            onPressed: () =>
-                                                _generatePdfAndView(context),
+                                      Align(
+                                        alignment: Alignment.topCenter,
+                                        child: Text(
+                                          'Symptoms',
+                                          style: L.copyWith(
+                                            fontWeight: FontWeight.bold,
                                           ),
                                         ),
                                       ),
+                                      SizedBox(
+                                        height: 5.0,
+                                      ),
+                                      ...prescription.symptoms
+                                          .asMap()
+                                          .map<int, Widget>(
+                                            (index, symptom) {
+                                              return MapEntry(
+                                                index,
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          bottom: 5.0),
+                                                  child: Text(
+                                                    '${index + 1}. $symptom',
+                                                    style: M,
+                                                  ),
+                                                ),
+                                              );
+                                            },
+                                          )
+                                          .values
+                                          .toList(),
+                                      SizedBox(
+                                        height: 5.0,
+                                      ),
+                                      Align(
+                                        alignment: Alignment.topCenter,
+                                        child: Text(
+                                          'Medicines',
+                                          style: L.copyWith(
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        height: 10.0,
+                                      ),
+                                      Table(
+                                        border: TableBorder(
+                                          horizontalInside: BorderSide(
+                                            color: blue,
+                                            width: 2.0,
+                                          ),
+                                          verticalInside: BorderSide(
+                                            color: blue,
+                                            width: 2.0,
+                                          ),
+                                        ),
+                                        defaultVerticalAlignment:
+                                            TableCellVerticalAlignment.middle,
+                                        columnWidths: {
+                                          0: FlexColumnWidth(3.0),
+                                          1: FlexColumnWidth(3.0),
+                                        },
+                                        children: <TableRow>[
+                                          TableRow(
+                                            children: <Widget>[
+                                              Container(
+                                                padding:
+                                                    EdgeInsets.all(cellPadding),
+                                                child: Text(
+                                                  'Name',
+                                                  style: M,
+                                                  textAlign: TextAlign.center,
+                                                ),
+                                              ),
+                                              Container(
+                                                padding:
+                                                    EdgeInsets.all(cellPadding),
+                                                child: Text(
+                                                  'Dose',
+                                                  style: M,
+                                                  textAlign: TextAlign.center,
+                                                ),
+                                              ),
+                                              Container(
+                                                padding:
+                                                    EdgeInsets.all(cellPadding),
+                                                child: Text(
+                                                  'Days',
+                                                  style: M,
+                                                  textAlign: TextAlign.center,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                          ...prescription.medicine
+                                              .asMap()
+                                              .map<int, TableRow>(
+                                                  (index, medicine) {
+                                                return MapEntry(
+                                                  index,
+                                                  TableRow(
+                                                    children: <Widget>[
+                                                      Container(
+                                                        padding: EdgeInsets.all(
+                                                            cellPadding),
+                                                        child: Text(
+                                                          '${index + 1}. ${medicine.name}',
+                                                          style: M,
+                                                        ),
+                                                      ),
+                                                      Container(
+                                                        padding: EdgeInsets.all(
+                                                            cellPadding),
+                                                        child: Text(
+                                                          medicine.dose,
+                                                          style: M,
+                                                          textAlign:
+                                                              TextAlign.center,
+                                                        ),
+                                                      ),
+                                                      Container(
+                                                        padding: EdgeInsets.all(
+                                                            cellPadding),
+                                                        child: Text(
+                                                          medicine.day,
+                                                          style: M,
+                                                          textAlign:
+                                                              TextAlign.center,
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                );
+                                              })
+                                              .values
+                                              .toList(),
+                                        ],
+                                      ),
+                                      SizedBox(
+                                        height: 10.0,
+                                      ),
+                                      Align(
+                                        alignment: Alignment.topCenter,
+                                        child: Text(
+                                          'Tests',
+                                          style: L.copyWith(
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        height: 5.0,
+                                      ),
+                                      ...prescription.tests
+                                          .asMap()
+                                          .map<int, Widget>(
+                                            (index, test) {
+                                              return MapEntry(
+                                                index,
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          bottom: 5.0),
+                                                  child: Text(
+                                                    '${index + 1}. $test',
+                                                    style: M,
+                                                  ),
+                                                ),
+                                              );
+                                            },
+                                          )
+                                          .values
+                                          .toList(),
+                                      SizedBox(
+                                        height: 5.0,
+                                      ),
+                                      Align(
+                                        alignment: Alignment.topCenter,
+                                        child: Text(
+                                          'Special Advices',
+                                          style: L.copyWith(
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        height: 5.0,
+                                      ),
+                                      ...prescription.specialAdvice
+                                          .asMap()
+                                          .map<int, Widget>(
+                                            (index, advice) {
+                                              return MapEntry(
+                                                index,
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          bottom: 5.0),
+                                                  child: Text(
+                                                    '${index + 1}. $advice',
+                                                    style: M,
+                                                  ),
+                                                ),
+                                              );
+                                            },
+                                          )
+                                          .values
+                                          .toList(),
                                     ],
                                   ),
+                                ),
+                                FlatButton(
+                                  child: Text(
+                                    'Download PDF',
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                  color: Colors.blue,
+                                  onPressed: () => _generatePdfAndView(context),
                                 ),
                               ],
                             ),
@@ -515,10 +492,12 @@ class ShowPrescriptionScreen extends StatelessWidget {
     //Get directory path
     String path = directory.path;
     //Create an empty file to write PDF data
-    File file = File('$path/Prescription_${date}_Dr.${doctorName}.pdf');
+    File file =
+        File('$path/${prescription.patientName}_${date}_Dr.${doctorName}.pdf');
     //Write PDF data
     await file.writeAsBytes(bytes, flush: true);
     //Open the PDF document in mobile
-    OpenFile.open('$path/Prescription_${date}_Dr.${doctorName}.pdf');
+    OpenFile.open(
+        '$path/${prescription.patientName}_${date}_Dr.${doctorName}.pdf');
   }
 }

@@ -321,7 +321,7 @@ void _addTransaction(BuildContext context, TransactionBloc transactionBloc,
             TextField(
               controller: transaction,
               decoration: InputDecoration(
-                labelText: 'Transaction ID',
+                labelText: 'Bkash Trx ID',
                 icon: Icon(Icons.phone_android),
               ),
             ),

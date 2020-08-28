@@ -112,32 +112,36 @@ exports.postAppointment = async function (req, res) {
 					appointment.appointment_date_time = date;
 					appointment.due = schedule_details.fee;
 
-					if (max_collection.length != 0) {
-						appointment.serial_no = parseInt(max_collection[0].serial_no) + parseInt(1);
+					if (max_collection == schedule_details.limit) {
+						res.status(BAD_REQUEST).json(error_message.BAD_REQUEST);
 					} else {
-						appointment.serial_no = 1;
-					}
-
-					appointment.save(async (err, docs) => {
-						if (err) {
-							res.status(INTERNAL_SERVER_ERROR).json(error_message.INTERNAL_SERVER_ERROR);
+						if (max_collection.length != 0) {
+							appointment.serial_no = parseInt(max_collection[0].serial_no) + parseInt(1);
 						} else {
-							var ret = {
-								serial_no: appointment.serial_no,
-							};
-
-							let timeline_data = new timelineModel();
-							timeline_data.doctor_mobile_no = req.body.doc_mobile_no;
-							timeline_data.patient_mobile_no = req.mobile_no;
-							timeline_data.appointment_id = docs._id;
-							timeline_data.appointment_date = date;
-							timeline_data.appointment_createdAt = Date.now();
-							timeline_data.due = schedule_details.fee;
-
-							await timeline_data.save();
-							res.status(SUCCESS).json(ret);
+							appointment.serial_no = 1;
 						}
-					});
+
+						appointment.save(async (err, docs) => {
+							if (err) {
+								res.status(INTERNAL_SERVER_ERROR).json(error_message.INTERNAL_SERVER_ERROR);
+							} else {
+								var ret = {
+									serial_no: appointment.serial_no,
+								};
+
+								let timeline_data = new timelineModel();
+								timeline_data.doctor_mobile_no = req.body.doc_mobile_no;
+								timeline_data.patient_mobile_no = req.mobile_no;
+								timeline_data.appointment_id = docs._id;
+								timeline_data.appointment_date = date;
+								timeline_data.appointment_createdAt = Date.now();
+								timeline_data.due = schedule_details.fee;
+
+								await timeline_data.save();
+								res.status(SUCCESS).json(ret);
+							}
+						});
+					}
 				}
 			});
 		}

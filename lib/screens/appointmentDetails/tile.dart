@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../utils.dart';
 import '../../models/appointment.dart';
@@ -21,6 +22,12 @@ class Tile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final String assetName = 'images/icons/taka.svg';
+    final Widget svg = SvgPicture.asset(
+      assetName,
+      height: 5,
+      width: 5,
+    );
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
@@ -100,18 +107,15 @@ class Tile extends StatelessWidget {
                     Column(
                       children: [
                         Container(
+                          padding: EdgeInsets.all(5.0),
                           height: _iconSize,
                           width: _iconSize,
                           decoration: BoxDecoration(
                               shape: BoxShape.circle, color: Colors.white),
                           child: FittedBox(
-                            child: IconButton(
-                              icon: Icon(
-                                Icons.attach_money,
-                                size: _iconSize - 5,
-                              ),
-                              color: blue,
-                              onPressed: onViewTransactions,
+                            child: GestureDetector(
+                              onTap: onViewTransactions,
+                              child: svg,
                             ),
                           ),
                         ),

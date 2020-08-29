@@ -14,6 +14,7 @@ const express = require("express");
 const router = express.Router();
 
 router.post("/doctor/post/login", validatorMiddleWare(doctorValidator.login), doctorController.login);
+router.get("/doctor/logout", doctorMiddleware.middleware, doctorController.logout);
 router.post("/doctor/post/register", validatorMiddleWare(doctorValidator.registration), doctorController.registration);
 router.post("/doctor/post/reference", validatorMiddleWare(doctorValidator.referrer), doctorMiddleware.middleware, doctorController.reference);
 router.post("/doctor/edit/profile", doctorMiddleware.middleware, doctorController.editDoctor);
@@ -51,6 +52,6 @@ router.post("/doctor/get/appointments", doctorMiddleware.middleware, appointment
 
 router.post("/doctor/post/feedback", doctorMiddleware.middleware, feedbackController.postFeedback);
 
-router.post("/doctor/get/prescription",doctorMiddleware.middleware, prescriptionController.getPrescription);
+router.post("/doctor/get/prescription", doctorMiddleware.middleware, prescriptionController.getPrescription);
 
 module.exports = router;

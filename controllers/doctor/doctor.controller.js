@@ -591,3 +591,69 @@ exports.getProfile = async function (req, res) {
 		}
 	});
 };
+
+/**
+ * @swagger
+ * /doctor/logout:
+ *   get:
+ *     deprecated: false
+ *     security:
+ *       - bearerAuth: []
+ *     tags:
+ *       - Doctor
+ *     summary: Logs out a doctor
+ *     responses:
+ *       200:
+ *         description: success
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *       500:
+ *         description: Internal Server Error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *       401:
+ *         description: Unauthorized
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *       404:
+ *         description: Data Not Found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ */
+exports.logout = async function (req, res) {
+	doctorModel.findOne({mobile_no: req.mobile_no}, (err, docs) => {
+		if (err) {
+			res.status(INTERNAL_SERVER_ERROR).json(error_message.INTERNAL_SERVER_ERROR);
+		} else if (!docs) {
+			res.status(DATA_NOT_FOUND).json(error_message.DATA_NOT_FOUND);
+		} else {
+			doctorModel.updateOne({mobile_no: req.mobile_no}, {$unset: {session_token: null}}, (err, docs) => {
+				if (err) {
+					res.status(INTERNAL_SERVER_ERROR).json(error_message.INTERNAL_SERVER_ERROR);
+				} else {
+					res.status(SUCCESS).json(error_message.SUCCESS);
+				}
+			});
+		}
+	});
+};

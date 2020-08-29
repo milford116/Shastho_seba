@@ -5,3 +5,6 @@ total users   user spawn/second  time
 1000          10                 11:48-11:51
 1000          20                 7:20-7:25
 2000          50                 7:27-7:40
+
+
+10054 error - server is congested, so refused connection

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 import '../utils.dart';
 import '../routes.dart';
+import '../repositories/patient.dart';
+import 'dialogs.dart';
 
 enum Selected {
   home,
@@ -119,7 +121,7 @@ class MyDrawer extends StatelessWidget {
                 color: Colors.white,
                 size: 30,
               ),
-              onTap: () {},
+              onTap: () => _logOut(context),
             ),
             Divider(
               color: Colors.white,
@@ -166,5 +168,23 @@ class _Tile extends StatelessWidget {
         },
       ),
     );
+  }
+}
+
+void _logOut(BuildContext context) async {
+  PatientRepository patientRepository = PatientRepository();
+  bool confirmation =
+      await confirmationDialog(context, 'Are you sure you want to log out?');
+  if (!confirmation) {
+    return;
+  }
+  try {
+    showProgressDialog(context, 'Logging Out');
+    await patientRepository.logOut();
+    hideProgressDialog();
+    Navigator.pushNamedAndRemoveUntil(context, loginScreen, (route) => false);
+  } catch (e) {
+    hideProgressDialog();
+    failureDialog(context, e.toString());
   }
 }

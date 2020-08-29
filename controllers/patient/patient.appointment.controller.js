@@ -113,7 +113,7 @@ exports.postAppointment = async function (req, res) {
 					appointment.due = schedule_details.fee;
 
 					if (max_collection == schedule_details.limit) {
-						res.status(BAD_REQUEST).json(error_message.BAD_REQUEST);
+						res.status(BAD_REQUEST).json({ message: "Sorry! This slot has already been filled. Try another slot." });
 					} else {
 						if (max_collection.length != 0) {
 							appointment.serial_no = parseInt(max_collection[0].serial_no) + parseInt(1);

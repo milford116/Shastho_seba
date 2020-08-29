@@ -73,8 +73,8 @@ class AppointmentDetails extends StatelessWidget {
                           children: <Widget>[
                             Expanded(
                               child: ListView.builder(
-                                padding: EdgeInsets.only(
-                                    left: 5.0, right: 5.0, top: 10.0),
+                                padding:
+                                    EdgeInsets.fromLTRB(5.0, 10.0, 5.0, 75.0),
                                 itemCount: response.data.length,
                                 itemBuilder: (context, index) {
                                   Appointment _appointment =
@@ -109,12 +109,7 @@ class AppointmentDetails extends StatelessWidget {
                                             'appointmentId': _appointment.id,
                                             'appointmentDate':
                                                 _appointment.dateTime,
-                                            'doctorName':
-                                                appointment.doctor.name,
-                                            'doctorDesignation':
-                                                appointment.doctor.designation,
-                                            'doctorInstitution':
-                                                appointment.doctor.institution,
+                                            'doctor': appointment.doctor,
                                           },
                                         );
                                       },

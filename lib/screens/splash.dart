@@ -1,8 +1,8 @@
 import 'dart:async';
-import 'package:Shastho_Sheba/utils.dart';
 import 'package:flutter/material.dart';
 
 import '../routes.dart';
+import '../utils.dart';
 
 class SplashScreen extends StatefulWidget {
   @override

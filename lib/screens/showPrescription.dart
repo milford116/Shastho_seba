@@ -12,6 +12,7 @@ import '../widgets/drawer.dart';
 import '../networking/response.dart';
 import '../blocs/prescription.dart';
 import '../models/prescription.dart';
+import '../models/doctor.dart';
 import '../widgets/loading.dart';
 import '../widgets/error.dart';
 
@@ -24,23 +25,16 @@ class ShowPrescriptionScreen extends StatelessWidget {
     width: 28.0,
     color: blue,
   );
-  Prescription prescription;
-  String doctorName;
-  String doctorDesignation;
-  String doctorInstitution;
-  String date;
   @override
   Widget build(BuildContext context) {
     Map<String, dynamic> map = ModalRoute.of(context).settings.arguments;
 
     String appointmentID = map['appointmentId'];
     DateTime appointmentDate = map['appointmentDate'];
-    doctorName = map['doctorName'];
-    doctorDesignation = map['doctorDesignation'];
-    doctorInstitution = map['doctorInstitution'];
+    Doctor doctor = map['doctor'];
 
     DateFormat dateFormatter = DateFormat('dd-MM-yyyy');
-    date = dateFormatter.format(appointmentDate);
+    String date = dateFormatter.format(appointmentDate);
 
     return Container(
       decoration: BoxDecoration(
@@ -79,7 +73,7 @@ class ShowPrescriptionScreen extends StatelessWidget {
                           );
                           break;
                         case Status.COMPLETED:
-                          prescription = response.data;
+                          Prescription prescription = response.data;
                           return Padding(
                             padding: const EdgeInsets.fromLTRB(
                                 10.0, 10.0, 10.0, 0.0),
@@ -94,17 +88,17 @@ class ShowPrescriptionScreen extends StatelessWidget {
                                           CrossAxisAlignment.start,
                                       children: <Widget>[
                                         Text(
-                                          'Dr. ${doctorName}',
+                                          'Dr. ${doctor.name}',
                                           style: M.copyWith(
                                               fontWeight: FontWeight.bold),
                                         ),
                                         Text(
-                                          doctorDesignation,
+                                          doctor.designation,
                                           style: M.copyWith(
                                               fontWeight: FontWeight.bold),
                                         ),
                                         Text(
-                                          doctorInstitution,
+                                          doctor.institution,
                                           style: M.copyWith(
                                               fontWeight: FontWeight.bold),
                                         ),
@@ -415,7 +409,12 @@ class ShowPrescriptionScreen extends StatelessWidget {
                                     style: TextStyle(color: Colors.white),
                                   ),
                                   color: Colors.blue,
-                                  onPressed: () => _generatePdfAndView(context),
+                                  onPressed: () => _generatePdfAndView(
+                                    context,
+                                    doctor: doctor,
+                                    prescription: prescription,
+                                    date: date,
+                                  ),
                                 ),
                               ],
                             ),
@@ -442,16 +441,21 @@ class ShowPrescriptionScreen extends StatelessWidget {
     );
   }
 
-  _generatePdfAndView(context) async {
+  void _generatePdfAndView(
+    BuildContext context, {
+    Doctor doctor,
+    Prescription prescription,
+    String date,
+  }) async {
     final pdfLib.Document pdf = pdfLib.Document(deflate: zlib.encode);
 
     pdf.addPage(
       pdfLib.MultiPage(
         build: (context) => [
-          pdfLib.Text('Dr. ${doctorName}'),
+          pdfLib.Text('Dr. ${doctor.name}'),
           pdfLib.Text(
-              '${doctorDesignation},                                                                                             Date: ${date}'),
-          pdfLib.Text('${doctorInstitution}.'),
+              '${doctor.designation},                                                                                             Date: $date'),
+          pdfLib.Text('${doctor.institution}.'),
           pdfLib.Text('\n\n\n\n'),
           pdfLib.Text('Patient Name: ${prescription.patientName}'),
           pdfLib.Text(
@@ -460,7 +464,7 @@ class ShowPrescriptionScreen extends StatelessWidget {
           pdfLib.Center(
             child: pdfLib.Text('Symptoms'),
           ),
-          ...prescription.symptoms.map((e) => pdfLib.Text('* ${e}')),
+          ...prescription.symptoms.map((e) => pdfLib.Text('* $e')),
           pdfLib.Text('\n\n\n'),
           pdfLib.Center(
             child: pdfLib.Text('Medicine List'),
@@ -480,7 +484,7 @@ class ShowPrescriptionScreen extends StatelessWidget {
           pdfLib.Center(
             child: pdfLib.Text('Special Advices'),
           ),
-          ...prescription.specialAdvice.map((e) => pdfLib.Text('* ${e}')),
+          ...prescription.specialAdvice.map((e) => pdfLib.Text('* $e')),
         ],
       ),
     );
@@ -493,11 +497,11 @@ class ShowPrescriptionScreen extends StatelessWidget {
     String path = directory.path;
     //Create an empty file to write PDF data
     File file =
-        File('$path/${prescription.patientName}_${date}_Dr.${doctorName}.pdf');
+        File('$path/${prescription.patientName}_${date}_Dr.${doctor.name}.pdf');
     //Write PDF data
     await file.writeAsBytes(bytes, flush: true);
     //Open the PDF document in mobile
     OpenFile.open(
-        '$path/${prescription.patientName}_${date}_Dr.${doctorName}.pdf');
+        '$path/${prescription.patientName}_${date}_Dr.${doctor.name}.pdf');
   }
 }

@@ -134,7 +134,7 @@ var prescriptionSchema = new mongoose.Schema({
 
 			direction: {
 				type: String,
-				required: true,
+				required: false,
 			},
 
 			day: {

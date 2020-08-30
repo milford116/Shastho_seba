@@ -18,6 +18,16 @@ mongoose.pluralize(null);
  *           type: string
  *         patient_sex:
  *           type: string
+ *         patient_weight:
+ *           type: string
+ *         patient_bp:
+ *           type: string
+ *         patient_temperature:
+ *           type: string
+ *         patient_blood_sugar:
+ *           type: string
+ *         patient_pulse_count:
+ *           type: string
  *         symptoms:
  *           type: array
  *           items:
@@ -71,6 +81,26 @@ var prescriptionSchema = new mongoose.Schema({
 	patient_sex: {
 		type: String,
 		required: true,
+	},
+	patient_weight: {
+		type: String,
+		required: false,
+	},
+	patient_bp: {
+		type: String,
+		required: false,
+	},
+	patient_temperature: {
+		type: String,
+		required: false,
+	},
+	patient_pulse_count: {
+		type: String,
+		required: false,
+	},
+	patient_blood_sugar: {
+		type: String,
+		required: false,
 	},
 	symptoms: [
 		{

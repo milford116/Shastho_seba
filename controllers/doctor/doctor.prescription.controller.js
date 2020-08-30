@@ -52,6 +52,16 @@ exports.upload = upload;
  *                 type: string
  *               patient_sex:
  *                 type: string
+ *               patient_weight:
+ *                 type: string
+ *               patient_bp:
+ *                 type: string
+ *               patient_blood_sugar:
+ *                 type: string
+ *               patient_temperature:
+ *                 type: string
+ *               patient_pulse_count:
+ *                 type: string
  *               symptoms:
  *                 type: array
  *                 items:
@@ -126,6 +136,12 @@ exports.postPrescription = async function (req, res) {
 	if (req.body.tests) newPrescription.tests = req.body.tests;
 	if (req.body.special_advice) newPrescription.special_advice = req.body.special_advice;
 	if (req.body.medicine) newPrescription.medicine = req.body.medicine;
+
+	if (req.body.patient_weight) newPrescription.patient_weight = req.body.patient_weight;
+	if (req.body.patient_bp) newPrescription.patient_bp = req.body.patient_bp;
+	if (req.body.patient_pulse_count) newPrescription.patient_pulse_count = req.body.patient_pulse_count;
+	if (req.body.patient_blood_sugar) newPrescription.patient_blood_sugar = req.body.patient_blood_sugar;
+	if (req.body.patient_temperature) newPrescription.patient_temperature = req.body.patient_temperature;
 
 	const url = req.protocol + "://" + req.get("host");
 	if (req.filename) newPrescription.prescription_img = url + "/prescription/" + req.filename;

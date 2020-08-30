@@ -7,6 +7,7 @@ import '../widgets/drawer.dart';
 class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    String message = ModalRoute.of(context).settings.arguments;
     return Container(
       decoration: BoxDecoration(
         image: DecorationImage(
@@ -36,40 +37,54 @@ class HomeScreen extends StatelessWidget {
           child: MyDrawer(Selected.home),
         ),
         body: SafeArea(
-          child: Center(
-            child: GridView.count(
-              // padding: EdgeInsets.symmetric(horizontal: 20.0),
-              childAspectRatio: 1.5,
-              shrinkWrap: true,
-              crossAxisCount: 2,
-              children: <Widget>[
-                _Tile(
-                  title: 'Today Appointments',
-                  icon: Icons.schedule,
-                  route: appointmentsTodayScreen,
+          child: Builder(
+            builder: (context) {
+              if (message != null) {
+                WidgetsBinding.instance.addPostFrameCallback(
+                  (_) => Scaffold.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text(message),
+                      duration: Duration(seconds: 2),
+                    ),
+                  ),
+                );
+              }
+              return Center(
+                child: GridView.count(
+                  // padding: EdgeInsets.symmetric(horizontal: 20.0),
+                  childAspectRatio: 1.5,
+                  shrinkWrap: true,
+                  crossAxisCount: 2,
+                  children: <Widget>[
+                    _Tile(
+                      title: 'Today Appointments',
+                      icon: Icons.schedule,
+                      route: appointmentsTodayScreen,
+                    ),
+                    _Tile(
+                      title: 'Find Doctors',
+                      icon: Icons.search,
+                      route: findDoctorsScreen,
+                    ),
+                    _Tile(
+                      title: 'Appointments',
+                      icon: Icons.insert_invitation,
+                      route: appointmentsScreen,
+                    ),
+                    _Tile(
+                      title: 'Profile',
+                      icon: Icons.person,
+                      route: profileScreen,
+                    ),
+                    _Tile(
+                      title: 'Feedback',
+                      icon: Icons.feedback,
+                      route: feedbackScreen,
+                    ),
+                  ],
                 ),
-                _Tile(
-                  title: 'Find Doctors',
-                  icon: Icons.search,
-                  route: findDoctorsScreen,
-                ),
-                _Tile(
-                  title: 'Appointments',
-                  icon: Icons.insert_invitation,
-                  route: appointmentsScreen,
-                ),
-                _Tile(
-                  title: 'Profile',
-                  icon: Icons.person,
-                  route: profileScreen,
-                ),
-                _Tile(
-                  title: 'Feedback',
-                  icon: Icons.feedback,
-                  route: feedbackScreen,
-                ),
-              ],
-            ),
+              );
+            },
           ),
         ),
       ),

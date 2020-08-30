@@ -15,8 +15,4 @@ class PatientRepository {
         await _api.uploadImage('/patient/upload/profile_picture', image);
     return Patient.fromJson(data['patient']);
   }
-
-  Future<void> logOut() async {
-    await _api.post('/patient/post/logout', true, {});
-  }
 }

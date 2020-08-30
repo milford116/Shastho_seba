@@ -33,6 +33,10 @@ class MyApp extends StatelessWidget {
           subtitle1: TextStyle(color: blue),
           headline6: TextStyle(color: blue),
         ),
+        snackBarTheme: SnackBarThemeData(
+          backgroundColor: lightBlue,
+          actionTextColor: Colors.white,
+        ),
       ),
       initialRoute: splashScreen,
       routes: {

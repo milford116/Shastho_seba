@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../utils.dart';
 import '../routes.dart';
-import '../repositories/patient.dart';
+import '../repositories/authentication.dart';
 import 'dialogs.dart';
 
 enum Selected {
@@ -172,7 +172,8 @@ class _Tile extends StatelessWidget {
 }
 
 void _logOut(BuildContext context) async {
-  PatientRepository patientRepository = PatientRepository();
+  AuthenticationRepository authenticationRepository =
+      AuthenticationRepository();
   bool confirmation =
       await confirmationDialog(context, 'Are you sure you want to log out?');
   if (!confirmation) {
@@ -180,7 +181,7 @@ void _logOut(BuildContext context) async {
   }
   try {
     showProgressDialog(context, 'Logging Out');
-    await patientRepository.logOut();
+    await authenticationRepository.logOut();
     hideProgressDialog();
     Navigator.pushNamedAndRemoveUntil(context, loginScreen, (route) => false);
   } catch (e) {

@@ -10,6 +10,7 @@ import '../widgets/loading.dart';
 class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    String message = ModalRoute.of(context).settings.arguments;
     return Container(
       decoration: BoxDecoration(
         image: DecorationImage(
@@ -32,6 +33,16 @@ class LoginScreen extends StatelessWidget {
               child: Builder(
                 builder: (context) {
                   LoginBloc loginBloc = Provider.of<LoginBloc>(context);
+                  if (message != null) {
+                    WidgetsBinding.instance.addPostFrameCallback(
+                      (_) => Scaffold.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(message),
+                          duration: Duration(seconds: 2),
+                        ),
+                      ),
+                    );
+                  }
                   return StreamBuilder(
                     stream: loginBloc.stream,
                     builder: (context, snapshot) {

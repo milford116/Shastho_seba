@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 
@@ -27,12 +26,8 @@ class LoginBloc extends ChangeNotifier implements BaseBloc {
   void login() async {
     sink.add(Response.loading("Logging In"));
     try {
-      String jwt =
-          await _authenticationRepository.login(mobileNo.text, pass.text);
+      await _authenticationRepository.login(mobileNo.text, pass.text);
       sink.add(Response.completed(''));
-      SharedPreferences sharedPreferences =
-          await SharedPreferences.getInstance();
-      sharedPreferences.setString('jwt', jwt);
     } catch (e) {
       sink.add(Response.error(e.toString()));
     }

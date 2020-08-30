@@ -23,23 +23,23 @@ exports.FORBIDDEN = {
 };
 
 exports.noRef = {
-	message: "you need to be reffered by someone already registered",
+	message: "You need to be reffered by someone already registered",
 };
 
 exports.duplicateAcc = {
-	message: "an account with this phone no. already exists",
+	message: "An account with this phone number already exists",
 };
 
 exports.noUserFound = {
-	message: "no user with the given phone no. found",
+	message: "No user with the given phone number found",
 };
 
 exports.passwordMismatch = {
-	message: "wrong password",
+	message: "Wrong password",
 };
 
 exports.noScheduleFound = {
-	message: "no such schedule found",
+	message: "No such schedule found",
 };
 
 exports.jwtErr = {

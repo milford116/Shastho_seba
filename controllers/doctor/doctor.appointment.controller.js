@@ -71,7 +71,7 @@ exports.updateAppointment = async function (req, res) {
 		if (err) {
 			res.status(INTERNAL_SERVER_ERROR).json(error_message.INTERNAL_SERVER_ERROR);
 		} else if (!docs) {
-			res.status(DATA_NOT_FOUND).json("no appointment found");
+			res.status(DATA_NOT_FOUND).json({messaage: "No such appointment found"});
 		} else {
 			let ret = {
 				appointment_detail: docs,
@@ -311,21 +311,16 @@ exports.appointmentInRange = async function (req, res) {
  *                   type: string
  */
 exports.getAppointments = async function (req, res) {
-
-	let doctor = await doctorModel.findOne({ mobile_no: req.mobile_no });
-
-	let patient = await patientModel.findOne({ mobile_no: req.body.patient_mobile_no });
+	let doctor = await doctorModel.findOne({mobile_no: req.mobile_no});
+	let patient = await patientModel.findOne({mobile_no: req.body.patient_mobile_no});
 
 	var query = {
 		patientId: patient._id,
 		doctorId: doctor._id,
 	};
 
-	let appointments = await appointmentModel
-		.find(query)
-		.sort({ appointment_date_time: 1 })
-		.exec();
+	let appointments = await appointmentModel.find(query).sort({appointment_date_time: 1}).exec();
 
-	if (appointments) res.status(SUCCESS).json({ appointments });
-	else res.status(DATA_NOT_FOUND).json(error_message.DATA_NOT_FOUND);
+	if (appointments) res.status(SUCCESS).json({appointments});
+	else res.status(DATA_NOT_FOUND).json({message: "No appointments found"});
 };

@@ -3,7 +3,7 @@ const dotenv = require("dotenv");
 const doctor = require("../models/doctor.model");
 const mongoose = require("mongoose");
 const doctorModel = mongoose.model("doctor");
-const {SUCCESS, INTERNAL_SERVER_ERROR, BAD_REQUEST, DATA_NOT_FOUND} = require("../errors");
+const {INTERNAL_SERVER_ERROR, BAD_REQUEST, DATA_NOT_FOUND} = require("../errors");
 const error_message = require("../error.messages");
 
 exports.middleware = async function (req, res, next) {
@@ -17,7 +17,7 @@ exports.middleware = async function (req, res, next) {
 					if (err) {
 						res.status(INTERNAL_SERVER_ERROR).send(error_message.INTERNAL_SERVER_ERROR);
 					} else if (!docs) {
-						res.status(BAD_REQUEST).send(error_message.BAD_REQUEST);
+						res.status(DATA_NOT_FOUND).send(error_message.noUserFound);
 					} else {
 						req.mobile_no = docs.mobile_no;
 						req._id = docs._id;
@@ -28,6 +28,6 @@ exports.middleware = async function (req, res, next) {
 			}
 		});
 	} else {
-		res.status(BAD_REQUEST).send("Bad request");
+		res.status(BAD_REQUEST).send({message: "no request header sent"});
 	}
 };

@@ -356,7 +356,7 @@ exports.deleteSchedule = async function (req, res) {
 	let id = req.params.id;
 	let schedule = await scheduleModel.findById(id);
 
-	if (!schedule) res.status(DATA_NOT_FOUND).json(error_message.DATA_NOT_FOUND);
+	if (!schedule) res.status(DATA_NOT_FOUND).json(error_message.noScheduleFound);
 	else {
 		scheduleModel.deleteOne({_id: id}, (err, docs) => {
 			if (err) res.status(INTERNAL_SERVER_ERROR).json(error_message.INTERNAL_SERVER_ERROR);
@@ -416,5 +416,6 @@ exports.todaysSchedule = async function (req, res) {
 	};
 
 	let schedules = await scheduleModel.find(query).exec();
-	res.status(SUCCESS).json({schedules});
+	if (schedule) res.status(SUCCESS).json({schedules});
+	else res.status(INTERNAL_SERVER_ERROR).json({message: "Error while fetching schedule"});
 };

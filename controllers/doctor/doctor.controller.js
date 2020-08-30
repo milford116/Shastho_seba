@@ -115,7 +115,7 @@ exports.registration = async function (req, res) {
 
 					bcrypt.hash(req.body.password, parseInt(process.env.SALT_ROUNDS, 10), (err, hash) => {
 						if (err) {
-							res.status(INTERNAL_SERVER_ERROR).json(error_message.INTERNAL_SERVER_ERROR);
+							res.status(INTERNAL_SERVER_ERROR).json(error_message.jwtErr);
 						} else {
 							new_doctor.password = hash;
 							new_doctor.save((err, docs) => {
@@ -205,7 +205,7 @@ exports.login = async function (req, res) {
 		} else {
 			bcrypt.compare(req.body.password, docs.password, (err, result) => {
 				if (err) {
-					res.status(INTERNAL_SERVER_ERROR).json(error_message.INTERNAL_SERVER_ERROR);
+					res.status(INTERNAL_SERVER_ERROR).json(error_message.jwtErr);
 				} else if (!result) {
 					res.status(BAD_REQUEST).json(error_message.passwordMismatch);
 				} else {
@@ -214,7 +214,6 @@ exports.login = async function (req, res) {
 					};
 
 					const doctor_detail = docs;
-
 					const token = jwt.sign(payload, process.env.SECRET);
 
 					doctorModel.updateOne({mobile_no: req.body.mobile_no}, {session_token: token}, (err, docs) => {
@@ -299,7 +298,7 @@ exports.reference = async function (req, res) {
 
 			new_reference.save((err, docs) => {
 				if (err) {
-					res.status(INTERNAL_SERVER_ERROR).json(error_message.INTERNAL_SERVER_ERROR);
+					res.status(INTERNAL_SERVER_ERROR).json({message: "Unable to reffer"});
 				} else {
 					res.status(SUCCESS).json(error_message.SUCCESS);
 				}
@@ -468,7 +467,7 @@ exports.editDoctor = async function (req, res) {
 	let updates = req.body.newDoctor;
 	doctorModel.findOneAndUpdate({mobile_no: req.mobile_no}, updates, {new: true}, (err, docs) => {
 		if (err) {
-			res.status(INTERNAL_SERVER_ERROR).json(error_message.INTERNAL_SERVER_ERROR);
+			res.status(INTERNAL_SERVER_ERROR).json({message: "Error occurred while saving"});
 		} else {
 			let ret = {
 				doctor: docs,
@@ -535,7 +534,7 @@ exports.uploadDP = async function (req, res) {
 	const imageName = url + "/profilePicture/doctor/" + req.fileName;
 
 	doctorModel.findOneAndUpdate({mobile_no: req.mobile_no}, {image: imageName}, {new: true}, (err, docs) => {
-		if (err) res.status(INTERNAL_SERVER_ERROR).json(error_message.INTERNAL_SERVER_ERROR);
+		if (err) res.status(INTERNAL_SERVER_ERROR).json({message: "Error while uploading picture"});
 		else res.status(SUCCESS).json({doctor: docs});
 	});
 };
@@ -581,7 +580,7 @@ exports.uploadDP = async function (req, res) {
  */
 exports.getProfile = async function (req, res) {
 	doctorModel.findOne({mobile_no: req.mobile_no}, (err, docs) => {
-		if (err) res.status(INTERNAL_SERVER_ERROR).json(error_message.INTERNAL_SERVER_ERROR);
+		if (err) res.status(INTERNAL_SERVER_ERROR).json({message: "Unable to fetch profile"});
 		else {
 			let ret = {
 				doctor: docs,
@@ -645,11 +644,11 @@ exports.logout = async function (req, res) {
 		if (err) {
 			res.status(INTERNAL_SERVER_ERROR).json(error_message.INTERNAL_SERVER_ERROR);
 		} else if (!docs) {
-			res.status(DATA_NOT_FOUND).json(error_message.DATA_NOT_FOUND);
+			res.status(DATA_NOT_FOUND).json(error_message.noUserFound);
 		} else {
 			doctorModel.updateOne({mobile_no: req.mobile_no}, {$unset: {session_token: null}}, (err, docs) => {
 				if (err) {
-					res.status(INTERNAL_SERVER_ERROR).json(error_message.INTERNAL_SERVER_ERROR);
+					res.status(INTERNAL_SERVER_ERROR).json({message: "Error occurred while logging out"});
 				} else {
 					res.status(SUCCESS).json(error_message.SUCCESS);
 				}

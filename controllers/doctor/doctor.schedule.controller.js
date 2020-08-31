@@ -410,6 +410,8 @@ exports.todaysSchedule = async function (req, res) {
 	var date = new Date();
 	date.setHours(date.getHours() + 6);
 
+	console.log(date.getDay());
+
 	var query = {
 		doc_mobile_no: req.mobile_no,
 		day: date.getDay() === 0 ? 7 : date.getDay(),

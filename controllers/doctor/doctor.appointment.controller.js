@@ -257,6 +257,9 @@ exports.appointmentInRange = async function (req, res) {
 	var st = new Date();
 	var en = new Date();
 
+	st.setHours(st.getHours() + 6);
+	en.setHours(en.getHours() + 6);
+
 	st.setUTCHours(0, 0, 0, 0);
 	en.setUTCHours(23, 59, 59, 999);
 
@@ -271,7 +274,7 @@ exports.appointmentInRange = async function (req, res) {
 
 /**
  * @swagger
- * /doctor/get/appointments:
+ * /doctor/get/appointmentsWithPatient:
  *   post:
  *     deprecated: true
  *     security:

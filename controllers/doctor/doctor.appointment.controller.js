@@ -273,12 +273,23 @@ exports.appointmentInRange = async function (req, res) {
  * @swagger
  * /doctor/get/appointments:
  *   post:
- *     deprecated: false
+ *     deprecated: true
  *     security:
  *       - bearerAuth: []
  *     tags:
  *       - Appointment
  *     summary: Gets the appointments of a doctor with a patient
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               patient_mobile_no:
+ *                 type: string
+ *             required:
+ *               - patient_mobile_no
  *     responses:
  *       200:
  *         description: success

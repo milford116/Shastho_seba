@@ -547,24 +547,26 @@ class ShowPrescriptionScreen extends StatelessWidget {
   }) async {
     final pdfLib.Document pdf = pdfLib.Document(deflate: zlib.encode);
 
+    List<String> temp = doctor.name.split(" ");
+    String docFirstName = temp[0];
+
     pdf.addPage(
       pdfLib.MultiPage(
         build: (context) => [
           pdfLib.Text('Dr. ${doctor.name}'),
           pdfLib.Text(
-              '${doctor.designation},                                                                                             Date: $date'),
+              '${doctor.designation},                                                                                               Date: $date'),
           pdfLib.Text('${doctor.institution}.'),
           pdfLib.Text('\n\n\n\n'),
           pdfLib.Text('Patient Name: ${prescription.patientName}'),
           pdfLib.Text(
               'Gender: ${prescription.patientSex}      Age: ${prescription.patientAge}'),
           pdfLib.Text('\n\n\n'),
-          pdfLib.Text('Weight(Kg): ${patientWeight}'),
-          pdfLib.Text('Body Temperature: ${patientTemp}'),
-          pdfLib.Text('Pulse Count: ${patientPulseCount}'),
-          pdfLib.Text('Blood Pressure: ${patientBP}'),
-          pdfLib.Text('Blood Sugar Level: ${patientBloodSugar}'),
-          pdfLib.Text('\n\n\n'),
+          pdfLib.Text(
+              'Weight(Kg): ${patientWeight}                     Body Temperature: ${patientTemp}                       Pulse Count: ${patientPulseCount}'),
+          pdfLib.Text(
+              'Blood Pressure: ${patientBP}                 Blood Sugar Level: ${patientBloodSugar}'),
+          pdfLib.Text('\n\n\n\n'),
           pdfLib.Center(
             child: pdfLib.Text('Symptoms'),
           ),
@@ -600,12 +602,12 @@ class ShowPrescriptionScreen extends StatelessWidget {
     //Get directory path
     String path = directory.path;
     //Create an empty file to write PDF data
-    File file =
-        File('$path/${prescription.patientName}_${date}_Dr.${doctor.name}.pdf');
+    File file = File(
+        '$path/P_Dr. ${docFirstName}_${date}_${prescription.patientName}.pdf');
     //Write PDF data
     await file.writeAsBytes(bytes, flush: true);
     //Open the PDF document in mobile
     OpenFile.open(
-        '$path/${prescription.patientName}_${date}_Dr.${doctor.name}.pdf');
+        '$path/P_Dr. ${docFirstName}_${date}_${prescription.patientName}.pdf');
   }
 }

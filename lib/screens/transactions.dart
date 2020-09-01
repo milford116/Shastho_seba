@@ -76,7 +76,8 @@ class TransactionsScreen extends StatelessWidget {
                                                 vertical: 5.0),
                                             child: Text(
                                               'Date',
-                                              style: M,
+                                              style: M.copyWith(
+                                                  fontWeight: FontWeight.bold),
                                               textAlign: TextAlign.center,
                                             ),
                                           ),
@@ -85,7 +86,8 @@ class TransactionsScreen extends StatelessWidget {
                                                 vertical: 5.0),
                                             child: Text(
                                               'Bkash Trx ID',
-                                              style: M,
+                                              style: M.copyWith(
+                                                  fontWeight: FontWeight.bold),
                                               textAlign: TextAlign.center,
                                             ),
                                           ),
@@ -94,7 +96,8 @@ class TransactionsScreen extends StatelessWidget {
                                                 vertical: 7.0),
                                             child: Text(
                                               'Amount',
-                                              style: M,
+                                              style: M.copyWith(
+                                                  fontWeight: FontWeight.bold),
                                               textAlign: TextAlign.center,
                                             ),
                                           ),

@@ -57,7 +57,7 @@ class HomeScreen extends StatelessWidget {
                   crossAxisCount: 2,
                   children: <Widget>[
                     _Tile(
-                      title: 'Today Appointments',
+                      title: 'Appointments Today ',
                       icon: Icons.schedule,
                       route: appointmentsTodayScreen,
                     ),

@@ -42,6 +42,7 @@ class PreviousAppointments extends StatelessWidget {
                                 appointmentsBloc.streamController.add(value);
                               },
                               decoration: InputDecoration(
+                                contentPadding: EdgeInsets.all(15.0),
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(30.0),
                                 ),

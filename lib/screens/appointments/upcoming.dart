@@ -37,62 +37,74 @@ class UpcomingAppointments extends StatelessWidget {
                       return Padding(
                         padding: const EdgeInsets.only(
                             top: 10.0, left: 5.0, right: 5.0),
-                        child: ListView.builder(
-                          padding: EdgeInsets.only(top: 20.0),
-                          itemCount: response.data.length,
-                          itemBuilder: (context, index) {
-                            DateTime date = response.data[index].dateTime;
-                            DateFormat timeFormat = DateFormat('hh:mm\na');
-                            DateFormat dateFormat = DateFormat('MMM dd\nyyyy');
-                            return Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(vertical: 5.0),
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(30.0),
-                                  color: lightBlue,
-                                ),
-                                child: ListTile(
-                                  contentPadding:
-                                      EdgeInsets.only(left: 3.0, right: 8.0),
-                                  onTap: () {
-                                    Navigator.of(context).pushNamed(
-                                      appointmentDetailsScreen,
-                                      arguments: response.data[index],
-                                    );
-                                  },
-                                  leading: Container(
-                                    decoration: BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      color: Colors.white,
+                        child: response.data.length == 0
+                            ? Center(
+                                child: Text(
+                                'You have no upcoming appointments',
+                                style: L,
+                              ))
+                            : ListView.builder(
+                                padding: EdgeInsets.only(top: 20.0),
+                                itemCount: response.data.length,
+                                itemBuilder: (context, index) {
+                                  DateTime date = response.data[index].dateTime;
+                                  DateFormat timeFormat =
+                                      DateFormat('hh:mm\na');
+                                  DateFormat dateFormat =
+                                      DateFormat('MMM dd\nyyyy');
+                                  return Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 5.0),
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        borderRadius:
+                                            BorderRadius.circular(30.0),
+                                        color: lightBlue,
+                                      ),
+                                      child: ListTile(
+                                        contentPadding: EdgeInsets.only(
+                                            left: 3.0, right: 8.0),
+                                        onTap: () {
+                                          Navigator.of(context).pushNamed(
+                                            appointmentDetailsScreen,
+                                            arguments: response.data[index],
+                                          );
+                                        },
+                                        leading: Container(
+                                          decoration: BoxDecoration(
+                                            shape: BoxShape.circle,
+                                            color: Colors.white,
+                                          ),
+                                          padding: EdgeInsets.all(10.0),
+                                          child: Text(
+                                            dateFormat.format(date),
+                                            textAlign: TextAlign.center,
+                                            style: XS,
+                                          ),
+                                        ),
+                                        title: Center(
+                                          child: Text(
+                                            'Dr. ${response.data[index].doctor.name}',
+                                            style:
+                                                TextStyle(color: Colors.white),
+                                          ),
+                                        ),
+                                        trailing: Padding(
+                                          padding:
+                                              const EdgeInsets.only(right: 5.0),
+                                          child: Text(
+                                            timeFormat.format(response
+                                                .data[index].schedule.start),
+                                            textAlign: TextAlign.center,
+                                            style: XS.copyWith(
+                                                color: Colors.white),
+                                          ),
+                                        ),
+                                      ),
                                     ),
-                                    padding: EdgeInsets.all(10.0),
-                                    child: Text(
-                                      dateFormat.format(date),
-                                      textAlign: TextAlign.center,
-                                      style: XS,
-                                    ),
-                                  ),
-                                  title: Center(
-                                    child: Text(
-                                      'Dr. ${response.data[index].doctor.name}',
-                                      style: TextStyle(color: Colors.white),
-                                    ),
-                                  ),
-                                  trailing: Padding(
-                                    padding: const EdgeInsets.only(right: 5.0),
-                                    child: Text(
-                                      timeFormat.format(
-                                          response.data[index].schedule.start),
-                                      textAlign: TextAlign.center,
-                                      style: XS.copyWith(color: Colors.white),
-                                    ),
-                                  ),
-                                ),
+                                  );
+                                },
                               ),
-                            );
-                          },
-                        ),
                       );
                     case Status.ERROR:
                       return Center(

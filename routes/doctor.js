@@ -15,6 +15,7 @@ const router = express.Router();
 
 router.post("/doctor/post/login", validatorMiddleWare(doctorValidator.login), doctorController.login);
 router.get("/doctor/logout", doctorMiddleware.middleware, doctorController.logout);
+router.post("/doctor/verify/token", doctorController.verifyToken);
 router.post("/doctor/post/register", validatorMiddleWare(doctorValidator.registration), doctorController.registration);
 router.post("/doctor/post/reference", validatorMiddleWare(doctorValidator.referrer), doctorMiddleware.middleware, doctorController.reference);
 router.post("/doctor/edit/profile", doctorMiddleware.middleware, doctorController.editDoctor);

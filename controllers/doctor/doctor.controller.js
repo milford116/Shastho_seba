@@ -656,3 +656,20 @@ exports.logout = async function (req, res) {
 		}
 	});
 };
+
+exports.verifyToken = async function (req, res) {
+	doctorModel.findOne({ session_token: req.body.token }, (err, docs) => {
+		if (err) {
+			res.status(INTERNAL_SERVER_ERROR).json(error_message.INTERNAL_SERVER_ERROR);
+		} else if (docs) {
+			let ret = {
+				name: docs.name,
+				mobile_no: docs.mobile_no,
+			};
+
+			res.status(SUCCESS).json(ret);
+		} else {
+			res.status(BAD_REQUEST).json(error_message.BAD_REQUEST);
+		}
+	});
+};

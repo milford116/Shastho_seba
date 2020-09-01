@@ -9,4 +9,6 @@ total users   user spawn/second  time
 1000          5                  7:59-8:27
 
 
+the 8 test cases are in their respective folders.
 10054 error - server is congested, so refused connection
+tested using locust(https://locust.io/)

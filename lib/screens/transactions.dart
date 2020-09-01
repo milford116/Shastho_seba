@@ -76,7 +76,7 @@ class TransactionsScreen extends StatelessWidget {
                                                 vertical: 5.0),
                                             child: Text(
                                               'Date',
-                                              style: L,
+                                              style: M,
                                               textAlign: TextAlign.center,
                                             ),
                                           ),
@@ -85,7 +85,7 @@ class TransactionsScreen extends StatelessWidget {
                                                 vertical: 5.0),
                                             child: Text(
                                               'Bkash Trx ID',
-                                              style: L,
+                                              style: M,
                                               textAlign: TextAlign.center,
                                             ),
                                           ),
@@ -94,7 +94,7 @@ class TransactionsScreen extends StatelessWidget {
                                                 vertical: 7.0),
                                             child: Text(
                                               'Amount',
-                                              style: L,
+                                              style: M,
                                               textAlign: TextAlign.center,
                                             ),
                                           ),

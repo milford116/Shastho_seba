@@ -265,13 +265,14 @@ exports.getPastAppointment = async function (req, res) {
 
 	var query = {
 		patientId: patient._id,
-		status: {$lt: 3},
+		// status: {$lt: 3},
 		appointment_date_time: {$lte: date},
 	};
 
 	let appointments = await appointmentModel
 		.find(query)
 		.sort({appointment_date_time: -1})
+		.populate("schedule_id", "time_start time_end")
 		.populate("doctorId", "name designation institution reg_number mobile_no email image specialization about_me")
 		.exec();
 

@@ -25,6 +25,11 @@ class ShowPrescriptionScreen extends StatelessWidget {
     width: 28.0,
     color: blue,
   );
+  String patientBP = "N/A";
+  String patientWeight = "N/A";
+  String patientTemp = "N/A";
+  String patientPulseCount = "N/A";
+  String patientBloodSugar = "N/A";
   @override
   Widget build(BuildContext context) {
     Map<String, dynamic> map = ModalRoute.of(context).settings.arguments;
@@ -44,7 +49,6 @@ class ShowPrescriptionScreen extends StatelessWidget {
         ),
       ),
       child: Scaffold(
-        //backgroundColor: Colors.transparent,
         appBar: AppBar(
           elevation: 0.0,
           backgroundColor: lightBlue,
@@ -74,125 +78,219 @@ class ShowPrescriptionScreen extends StatelessWidget {
                           break;
                         case Status.COMPLETED:
                           Prescription prescription = response.data;
+
+                          if (prescription.patientBP != null)
+                            patientBP = prescription.patientBP;
+                          if (prescription.patientWeight != null)
+                            patientWeight = prescription.patientWeight;
+                          if (prescription.patientTemp != null)
+                            patientTemp = prescription.patientTemp;
+                          if (prescription.patientPulseCount != null)
+                            patientPulseCount = prescription.patientPulseCount;
+                          if (prescription.patientBloodSugar != null)
+                            patientBloodSugar = prescription.patientBloodSugar;
+
                           return Padding(
                             padding: const EdgeInsets.fromLTRB(
                                 10.0, 10.0, 10.0, 0.0),
                             child: Column(
                               children: <Widget>[
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: <Widget>[
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: <Widget>[
-                                        Text(
-                                          'Dr. ${doctor.name}',
-                                          style: M.copyWith(
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                        Text(
-                                          doctor.designation,
-                                          style: M.copyWith(
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                        Text(
-                                          doctor.institution,
-                                          style: M.copyWith(
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                      ],
-                                    ),
-                                    Column(
-                                      children: <Widget>[
-                                        Text(
-                                            'Date: ${dateFormatter.format(appointmentDate)}',
-                                            style: M.copyWith(
-                                                fontWeight: FontWeight.bold)),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                                Divider(
-                                  color: blue,
-                                  thickness: 2.0,
-                                ),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: <Widget>[
-                                    Row(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: <Widget>[
-                                        Text(
-                                          'Patient Name: ',
-                                          style: M.copyWith(
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                        Expanded(
-                                          child: Text(
-                                            '${prescription.patientName}',
-                                            style: M,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    SizedBox(
-                                      height: 5.0,
-                                    ),
-                                    Row(
-                                      children: <Widget>[
-                                        Text(
-                                          'Gender: ',
-                                          style: M.copyWith(
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                        Text(
-                                          prescription.patientSex,
-                                          style: M,
-                                        ),
-                                        Spacer(),
-                                        Text(
-                                          'Age: ',
-                                          style: M.copyWith(
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                        Text(
-                                          prescription.patientAge,
-                                          style: M,
-                                        ),
-                                      ],
-                                    ),
-                                    Divider(
-                                      color: blue,
-                                      thickness: 2.0,
-                                    ),
-                                  ],
-                                ),
-                                SizedBox(
-                                  height: 10.0,
-                                ),
-                                Align(
-                                  alignment: Alignment.topLeft,
-                                  child: Row(
-                                    children: <Widget>[
-                                      svg,
-                                      Text(
-                                        'Rx',
-                                        style: XL.copyWith(
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: 5.0,
-                                ),
                                 Expanded(
                                   child: ListView(
                                     shrinkWrap: true,
                                     children: <Widget>[
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: <Widget>[
+                                          Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: <Widget>[
+                                              Text(
+                                                'Dr. ${doctor.name}',
+                                                style: M.copyWith(
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                              Text(
+                                                doctor.designation,
+                                                style: M.copyWith(
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                              Text(
+                                                doctor.institution,
+                                                style: M.copyWith(
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                            ],
+                                          ),
+                                          Column(
+                                            children: <Widget>[
+                                              Text(
+                                                  'Date: ${dateFormatter.format(appointmentDate)}',
+                                                  style: M.copyWith(
+                                                      fontWeight:
+                                                          FontWeight.bold)),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                      Divider(
+                                        color: blue,
+                                        thickness: 2.0,
+                                      ),
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: <Widget>[
+                                          Row(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: <Widget>[
+                                              Text(
+                                                'Patient Name: ',
+                                                style: M.copyWith(
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                              Expanded(
+                                                child: Text(
+                                                  '${prescription.patientName}',
+                                                  style: M,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                          SizedBox(
+                                            height: 5.0,
+                                          ),
+                                          Row(
+                                            children: <Widget>[
+                                              Text(
+                                                'Gender: ',
+                                                style: M.copyWith(
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                              Text(
+                                                prescription.patientSex,
+                                                style: M,
+                                              ),
+                                              Spacer(),
+                                              Text(
+                                                'Age: ',
+                                                style: M.copyWith(
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                              Text(
+                                                prescription.patientAge,
+                                                style: M,
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                      Divider(
+                                        color: blue,
+                                        thickness: 2.0,
+                                      ),
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: <Widget>[
+                                          Row(
+                                            children: <Widget>[
+                                              Text(
+                                                'Weight(Kg): ',
+                                                style: M.copyWith(
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                              Text(
+                                                patientWeight,
+                                                style: M,
+                                              ),
+                                              Spacer(),
+                                              Text(
+                                                'Body Temperature: ',
+                                                style: M.copyWith(
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                              Text(
+                                                patientTemp,
+                                                style: M,
+                                              ),
+                                            ],
+                                          ),
+                                          Row(
+                                            children: <Widget>[
+                                              Text(
+                                                'Pulse Count: ',
+                                                style: M.copyWith(
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                              Text(
+                                                patientPulseCount,
+                                                style: M,
+                                              ),
+                                              Spacer(),
+                                              Text(
+                                                'Blood Pressure: ',
+                                                style: M.copyWith(
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                              Text(
+                                                patientBP,
+                                                style: M,
+                                              ),
+                                            ],
+                                          ),
+                                          Row(
+                                            children: <Widget>[
+                                              Text(
+                                                'Blood Sugar Level: ',
+                                                style: M.copyWith(
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                              Text(
+                                                patientBloodSugar,
+                                                style: M,
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                      Divider(
+                                        color: blue,
+                                        thickness: 2.0,
+                                      ),
+                                      SizedBox(
+                                        height: 10.0,
+                                      ),
+                                      Align(
+                                        alignment: Alignment.topLeft,
+                                        child: Row(
+                                          children: <Widget>[
+                                            svg,
+                                            Text(
+                                              'Rx',
+                                              style: XL.copyWith(
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        height: 5.0,
+                                      ),
                                       Align(
                                         alignment: Alignment.topCenter,
                                         child: Text(
@@ -460,6 +558,12 @@ class ShowPrescriptionScreen extends StatelessWidget {
           pdfLib.Text('Patient Name: ${prescription.patientName}'),
           pdfLib.Text(
               'Gender: ${prescription.patientSex}      Age: ${prescription.patientAge}'),
+          pdfLib.Text('\n\n\n'),
+          pdfLib.Text('Weight(Kg): ${patientWeight}'),
+          pdfLib.Text('Body Temperature: ${patientTemp}'),
+          pdfLib.Text('Pulse Count: ${patientPulseCount}'),
+          pdfLib.Text('Blood Pressure: ${patientBP}'),
+          pdfLib.Text('Blood Sugar Level: ${patientBloodSugar}'),
           pdfLib.Text('\n\n\n'),
           pdfLib.Center(
             child: pdfLib.Text('Symptoms'),

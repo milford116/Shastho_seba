@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_webrtc/webrtc.dart';
+import 'package:flutter_ringtone_player/flutter_ringtone_player.dart';
 
 import '../utils.dart';
 import '../routes.dart';
@@ -52,7 +53,9 @@ class VideoCallScreen extends StatelessWidget {
 class _RingingScreen extends StatelessWidget {
   final Appointment _appointment;
 
-  _RingingScreen(this._appointment);
+  _RingingScreen(this._appointment) {
+    FlutterRingtonePlayer.playRingtone();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -79,7 +82,6 @@ class _RingingScreen extends StatelessWidget {
                   child: CircleAvatar(
                     radius: 73,
                     backgroundColor: Colors.transparent,
-                    // child: ShowImage(_appointment.doctor.image, 65.0),
                     child: ShowImage(_appointment.doctor.image),
                   ),
                 ),
@@ -111,6 +113,7 @@ class _RingingScreen extends StatelessWidget {
                       color: lightMint,
                       shape: CircleBorder(),
                       onPressed: () {
+                        FlutterRingtonePlayer.stop();
                         videoCallBloc.receiveCall();
                       },
                     ),

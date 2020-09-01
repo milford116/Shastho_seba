@@ -39,11 +39,11 @@ dependencies:
   stream_transform: ^1.2.0
   transparent_image: ^1.0.0
   progress_dialog: ^1.2.4
-  syncfusion_flutter_pdf: ^18.1.42-beta
   path_provider: ^1.6.5
   open_file: ^3.0.1
   pdf: ^1.11.0
   flutter_full_pdf_viewer: ^1.0.6
+  flutter_ringtone_player: ^2.0.0
 
 dev_dependencies:
   flutter_test:

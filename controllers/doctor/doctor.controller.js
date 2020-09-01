@@ -657,19 +657,71 @@ exports.logout = async function (req, res) {
 	});
 };
 
+/**
+ * @swagger
+ * /doctor/verify/token:
+ *   post:
+ *     deprecated: false
+ *     security:
+ *       - bearerAuth: []
+ *     tags:
+ *       - Doctor
+ *     summary: verifies the jwt of a doctor
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               session_token:
+ *                 type: string
+ *             required:
+ *               - session_token
+ *     responses:
+ *       200:
+ *         description: success
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 token:
+ *                   type: string
+ *                   description: jwt token
+ *                 admin:
+ *                   ref: '#/components/schemas/Admin'
+ *       500:
+ *         description: Internal Server Error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *       404:
+ *         description: Data Not Found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ */
 exports.verifyToken = async function (req, res) {
-	doctorModel.findOne({ session_token: req.body.token }, (err, docs) => {
+	doctorModel.findOne({session_token: req.body.token}, (err, docs) => {
 		if (err) {
 			res.status(INTERNAL_SERVER_ERROR).json(error_message.INTERNAL_SERVER_ERROR);
 		} else if (docs) {
 			let ret = {
-				name: docs.name,
-				mobile_no: docs.mobile_no,
+				doctor: docs,
 			};
 
 			res.status(SUCCESS).json(ret);
 		} else {
-			res.status(BAD_REQUEST).json(error_message.BAD_REQUEST);
+			res.status(DATA_NOT_FOUND).json({message: "Session token not found"});
 		}
 	});
 };

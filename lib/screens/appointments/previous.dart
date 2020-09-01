@@ -54,60 +54,69 @@ class PreviousAppointments extends StatelessWidget {
                               ),
                             ),
                             Expanded(
-                              child: ListView.builder(
-                                shrinkWrap: true,
-                                padding: EdgeInsets.only(top: 20.0),
-                                itemCount: response.data.length,
-                                itemBuilder: (context, index) {
-                                  return Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        vertical: 5.0),
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                        borderRadius:
-                                            BorderRadius.circular(30.0),
-                                        color: lightBlue,
-                                      ),
-                                      child: ListTile(
-                                        contentPadding:
-                                            EdgeInsets.only(left: 5.0),
-                                        onTap: () {
-                                          Navigator.of(context).pushNamed(
-                                            appointmentDetailsScreen,
-                                            arguments: response.data[index],
-                                          );
-                                        },
-                                        leading: CircleAvatar(
-                                          radius: 25,
-                                          backgroundColor: Colors.white,
-                                          child: CircleAvatar(
-                                            radius: 23,
-                                            backgroundColor: Colors.transparent,
-                                            // child: ShowImage(
-                                            //     response
-                                            //         .data[index].doctor.image,
-                                            //     15.0),
-                                            child: ShowImage(
-                                              response.data[index].doctor.image,
+                              child: response.data.length == 0
+                                  ? Center(
+                                      child: Text(
+                                      'You have no previous appointments',
+                                      style: L,
+                                    ))
+                                  : ListView.builder(
+                                      shrinkWrap: true,
+                                      padding: EdgeInsets.only(top: 20.0),
+                                      itemCount: response.data.length,
+                                      itemBuilder: (context, index) {
+                                        return Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              vertical: 5.0),
+                                          child: Container(
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(30.0),
+                                              color: lightBlue,
+                                            ),
+                                            child: ListTile(
+                                              contentPadding:
+                                                  EdgeInsets.only(left: 5.0),
+                                              onTap: () {
+                                                Navigator.of(context).pushNamed(
+                                                  appointmentDetailsScreen,
+                                                  arguments:
+                                                      response.data[index],
+                                                );
+                                              },
+                                              leading: CircleAvatar(
+                                                radius: 25,
+                                                backgroundColor: Colors.white,
+                                                child: CircleAvatar(
+                                                  radius: 23,
+                                                  backgroundColor:
+                                                      Colors.transparent,
+                                                  // child: ShowImage(
+                                                  //     response
+                                                  //         .data[index].doctor.image,
+                                                  //     15.0),
+                                                  child: ShowImage(
+                                                    response.data[index].doctor
+                                                        .image,
+                                                  ),
+                                                ),
+                                              ),
+                                              title: Center(
+                                                child: Text(
+                                                  'Dr. ${response.data[index].doctor.name}',
+                                                  style: TextStyle(
+                                                      color: Colors.white),
+                                                ),
+                                              ),
+                                              trailing: Opacity(
+                                                opacity: 0.0,
+                                                child: Icon(Icons.person_pin),
+                                              ),
                                             ),
                                           ),
-                                        ),
-                                        title: Center(
-                                          child: Text(
-                                            'Dr. ${response.data[index].doctor.name}',
-                                            style:
-                                                TextStyle(color: Colors.white),
-                                          ),
-                                        ),
-                                        trailing: Opacity(
-                                          opacity: 0.0,
-                                          child: Icon(Icons.person_pin),
-                                        ),
-                                      ),
+                                        );
+                                      },
                                     ),
-                                  );
-                                },
-                              ),
                             ),
                           ],
                         ),

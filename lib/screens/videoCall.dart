@@ -139,19 +139,58 @@ class _VideoCall extends StatelessWidget {
       backgroundColor: Colors.transparent,
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: ButtonBar(
+        alignment: MainAxisAlignment.spaceAround,
         children: [
-          FlatButton(
-            padding: EdgeInsets.all(20.0),
-            child: Icon(
-              Icons.call_end,
-              color: red,
-              size: 30.0,
+          Container(
+            height: 50.0,
+            width: 50.0,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: lightBlue,
             ),
-            color: lightRed,
-            shape: CircleBorder(),
-            onPressed: () {
-              videoCallBloc.endCall();
-            },
+            child: FittedBox(
+              child: IconButton(
+                icon: Icon(
+                  videoCallBloc.video ? Icons.videocam : Icons.videocam_off,
+                ),
+                color: blue,
+                onPressed: videoCallBloc.toggleVideo,
+              ),
+            ),
+          ),
+          Container(
+            height: 50.0,
+            width: 50.0,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: lightMint,
+            ),
+            child: FittedBox(
+              child: IconButton(
+                icon: Icon(
+                  videoCallBloc.audio ? Icons.mic : Icons.mic_off,
+                ),
+                color: mint,
+                onPressed: videoCallBloc.muteAudio,
+              ),
+            ),
+          ),
+          Container(
+            height: 50.0,
+            width: 50.0,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: lightRed,
+            ),
+            child: FittedBox(
+              child: IconButton(
+                icon: Icon(
+                  Icons.call_end,
+                ),
+                color: red,
+                onPressed: videoCallBloc.endCall,
+              ),
+            ),
           ),
         ],
       ),

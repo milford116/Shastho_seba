@@ -122,6 +122,18 @@ class Signaling {
     });
   }
 
+  void mute(bool mute) {
+    _localStream
+        .getAudioTracks()
+        .forEach((element) => element.setMicrophoneMute(mute));
+  }
+
+  void toggleVideo(bool toggle) {
+    _localStream
+        .getVideoTracks()
+        .forEach((element) => element.enabled = toggle);
+  }
+
   void endCall(String chamberId) {
     _close(chamberId);
     onSendMessage({

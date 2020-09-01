@@ -15,6 +15,7 @@ class VideoCallBloc extends ChangeNotifier implements BaseBloc {
   RTCVideoRenderer localRenderer = RTCVideoRenderer();
   RTCVideoRenderer remoteRenderer = RTCVideoRenderer();
   Appointment _appointment;
+  bool audio = true, video = true;
 
   StreamSink<Response<CallState>> get sink => _videoCallController.sink;
 
@@ -52,6 +53,18 @@ class VideoCallBloc extends ChangeNotifier implements BaseBloc {
   void receiveCall() {
     _signaling.receiveCall();
     sink.add(Response.completed(CallState.Connected));
+  }
+
+  void muteAudio() {
+    _signaling.mute(audio);
+    audio = !audio;
+    notifyListeners();
+  }
+
+  void toggleVideo() {
+    _signaling.toggleVideo(!video);
+    video = !video;
+    notifyListeners();
   }
 
   void endCall() {

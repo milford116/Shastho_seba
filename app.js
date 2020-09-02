@@ -40,18 +40,18 @@ app.use(express.static("storage"));
 app.use(doctorRoutes);
 app.use(patientRoutes);
 
-const httpsOptions = {
-	key: fs.readFileSync("./certificates/key.pem"),
-	cert: fs.readFileSync("./certificates/cert.pem"),
-};
+// const httpsOptions = {
+// 	key: fs.readFileSync("./certificates/key.pem"),
+// 	cert: fs.readFileSync("./certificates/cert.pem"),
+// };
 
-const server = https.createServer(httpsOptions, app);
-server.listen(process.env.PORT, () => console.log("https server started at port ", process.env.PORT));
+// const server = https.createServer(httpsOptions, app);
+// server.listen(process.env.PORT, () => console.log("https server started at port ", process.env.PORT));
 
-// const server = app.listen(process.env.PORT, () => {
-// 	medicine.populateMedicine();
-// 	console.log("Server started at port " + process.env.PORT);
-// });
+const server = app.listen(process.env.PORT, () => {
+	medicine.populateMedicine();
+	console.log("Server started at port " + process.env.PORT);
+});
 
 const chamber = require("./chamber");
 chamber.handleSocketIO(server);

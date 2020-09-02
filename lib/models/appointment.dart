@@ -20,7 +20,7 @@ class Appointment {
   final DateTime createdAt;
   final AppointmentStatus status;
   final int serialNo;
-  final double due;
+  double due;
 
   Appointment({
     this.id,

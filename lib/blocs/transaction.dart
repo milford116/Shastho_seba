@@ -23,6 +23,8 @@ class TransactionBloc extends ChangeNotifier implements BaseBloc {
 
   double get fee => total + _due;
 
+  double get due => _due;
+
   TransactionBloc(this._appointmentId, this._due) {
     _transactionRepository = TransactionRepository();
     _transactionController = StreamController<Response<List<Transaction>>>();

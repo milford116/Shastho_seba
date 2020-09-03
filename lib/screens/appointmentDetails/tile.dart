@@ -48,36 +48,36 @@ class Tile extends StatelessWidget {
         ),
         Expanded(
           child: Container(
-            padding: EdgeInsets.all(8.0),
+            padding: EdgeInsets.all(3.0),
             decoration: BoxDecoration(
               color: lightBlue,
               borderRadius: BorderRadius.only(
-                topRight: Radius.circular(5.0),
-                bottomLeft: Radius.circular(5.0),
+                topRight: Radius.circular(15.0),
+                bottomLeft: Radius.circular(15.0),
               ),
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    RichText(
-                      text: TextSpan(
-                        children: [
-                          TextSpan(text: 'You have '),
-                          TextSpan(
-                            text: '${appointment.due}',
-                            style: TextStyle(
-                              color: appointment.due > 0 ? red : mint,
+                if (appointment.status == AppointmentStatus.NotVerified)
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      RichText(
+                        text: TextSpan(
+                          children: [
+                            TextSpan(text: 'You have '),
+                            TextSpan(
+                              text: '${appointment.due}',
+                              style: TextStyle(
+                                color: appointment.due > 0 ? red : mint,
+                              ),
                             ),
-                          ),
-                          TextSpan(text: '/- due.'),
-                        ],
-                        style: M.copyWith(color: Colors.white),
+                            TextSpan(text: '/- due.'),
+                          ],
+                          style: M.copyWith(color: Colors.white),
+                        ),
                       ),
-                    ),
-                    if (appointment.status == AppointmentStatus.NoPayment)
                       Container(
                         height: _iconSize,
                         width: _iconSize,
@@ -96,8 +96,8 @@ class Tile extends StatelessWidget {
                           ),
                         ),
                       ),
-                  ],
-                ),
+                    ],
+                  ),
                 SizedBox(
                   height: 10.0,
                 ),

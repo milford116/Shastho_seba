@@ -34,7 +34,7 @@ class AppointmentsTodayScreen extends StatelessWidget {
             children: [
               Icon(Icons.schedule),
               Text(
-                'Today Appointments',
+                'Appointments Today',
                 style: L,
               ),
             ],

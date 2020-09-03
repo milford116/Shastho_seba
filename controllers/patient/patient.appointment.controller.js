@@ -12,7 +12,7 @@ const scheduleModel = mongoose.model("schedule");
 const patientModel = mongoose.model("patient");
 const timelineModel = mongoose.model("timeline");
 
-const {SUCCESS, INTERNAL_SERVER_ERROR, BAD_REQUEST, DATA_NOT_FOUND} = require("../../errors");
+const { SUCCESS, INTERNAL_SERVER_ERROR, BAD_REQUEST, DATA_NOT_FOUND } = require("../../errors");
 const error_message = require("../../error.messages");
 
 /**
@@ -73,7 +73,7 @@ const error_message = require("../../error.messages");
  *                   type: string
  */
 exports.postAppointment = async function (req, res) {
-	doctorModel.findOne({mobile_no: req.body.doc_mobile_no}, async (err, docs) => {
+	doctorModel.findOne({ mobile_no: req.body.doc_mobile_no }, async (err, docs) => {
 		if (err) {
 			res.status(INTERNAL_SERVER_ERROR).json(error_message.INTERNAL_SERVER_ERROR);
 		} else if (!docs) {
@@ -85,7 +85,7 @@ exports.postAppointment = async function (req, res) {
 			var query1 = {
 				schedule_id: req.body.schedule_id,
 				patientId: req._id,
-				status: {$lt: 3},
+				status: { $lt: 3 },
 				appointment_date_time: date,
 			};
 
@@ -93,16 +93,16 @@ exports.postAppointment = async function (req, res) {
 				if (err) {
 					res.status(INTERNAL_SERVER_ERROR).json(error_message.INTERNAL_SERVER_ERROR);
 				} else if (doc) {
-					res.status(BAD_REQUEST).json({message: "Appointment already exists"});
+					res.status(BAD_REQUEST).json({ message: "Appointment already exists" });
 				} else {
 					var query2 = {
 						schedule_id: req.body.schedule_id,
 						appointment_date_time: date,
 					};
 
-					var schedule_details = await scheduleModel.findOne({_id: req.body.schedule_id}).exec();
-					var max_collection = await appointmentModel.find(query2).sort({serial_no: -1}).limit(1).exec();
-					var patient_detail = await patientModel.findOne({mobile_no: req.mobile_no}).exec();
+					var schedule_details = await scheduleModel.findOne({ _id: req.body.schedule_id }).exec();
+					var max_collection = await appointmentModel.find(query2).sort({ serial_no: -1 }).limit(1).exec();
+					var patient_detail = await patientModel.findOne({ mobile_no: req.mobile_no }).exec();
 
 					var appointment = new appointmentModel();
 					appointment.schedule_id = req.body.schedule_id;
@@ -113,7 +113,7 @@ exports.postAppointment = async function (req, res) {
 					appointment.due = schedule_details.fee;
 
 					if (max_collection == schedule_details.limit) {
-						res.status(BAD_REQUEST).json({message: "Sorry! This slot has already been filled. Try another slot."});
+						res.status(BAD_REQUEST).json({ message: "Sorry! This slot has already been filled. Try another slot." });
 					} else {
 						if (max_collection.length != 0) {
 							appointment.serial_no = parseInt(max_collection[0].serial_no) + parseInt(1);
@@ -194,11 +194,11 @@ exports.getAppointment = async function (req, res) {
 	date.setHours(date.getHours() + 6);
 	date.setUTCHours(0, 0, 0, 0);
 
-	let patient = await patientModel.findOne({mobile_no: req.mobile_no}, {_id: 1});
+	let patient = await patientModel.findOne({ mobile_no: req.mobile_no }, { _id: 1 });
 
 	var query = {
 		patientId: patient._id,
-		status: {$lt: 3},
+		status: { $lt: 3 },
 		appointment_date_time: date,
 	};
 
@@ -209,7 +209,7 @@ exports.getAppointment = async function (req, res) {
 		.exec();
 
 	if (appointments) {
-		res.status(SUCCESS).json({appointments});
+		res.status(SUCCESS).json({ appointments });
 	} else {
 		res.status(DATA_NOT_FOUND).json(error_message.DATA_NOT_FOUND);
 	}
@@ -261,22 +261,22 @@ exports.getPastAppointment = async function (req, res) {
 	date.setHours(date.getHours() + 6);
 	date.setUTCHours(0, 0, 0, 0);
 
-	let patient = await patientModel.findOne({mobile_no: req.mobile_no}, {_id: 1});
+	let patient = await patientModel.findOne({ mobile_no: req.mobile_no }, { _id: 1 });
 
 	var query = {
 		patientId: patient._id,
-		// status: {$lt: 3},
-		appointment_date_time: {$lte: date},
+		status: { $gte: 3 },
+		appointment_date_time: { $lte: date },
 	};
 
 	let appointments = await appointmentModel
 		.find(query)
-		.sort({appointment_date_time: -1})
+		.sort({ appointment_date_time: -1 })
 		.populate("schedule_id", "time_start time_end")
 		.populate("doctorId", "name designation institution reg_number mobile_no email image specialization about_me")
 		.exec();
 
-	if (appointments) res.status(SUCCESS).json({appointments});
+	if (appointments) res.status(SUCCESS).json({ appointments });
 	else res.status(DATA_NOT_FOUND).json(error_message.DATA_NOT_FOUND);
 };
 
@@ -322,18 +322,18 @@ exports.getPastAppointment = async function (req, res) {
  *                   type: string
  */
 exports.getAppointments = async function (req, res) {
-	let patient = await patientModel.findOne({mobile_no: req.mobile_no});
+	let patient = await patientModel.findOne({ mobile_no: req.mobile_no });
 
-	let doctor = await doctorModel.findOne({mobile_no: req.body.doctor_mobile_no});
+	let doctor = await doctorModel.findOne({ mobile_no: req.body.doctor_mobile_no });
 
 	var query = {
 		patientId: patient._id,
 		doctorId: doctor._id,
 	};
 
-	let appointments = await appointmentModel.find(query).sort({appointment_date_time: 1}).exec();
+	let appointments = await appointmentModel.find(query).sort({ appointment_date_time: 1 }).exec();
 
-	if (appointments) res.status(SUCCESS).json({appointments});
+	if (appointments) res.status(SUCCESS).json({ appointments });
 	else res.status(DATA_NOT_FOUND).json(error_message.DATA_NOT_FOUND);
 };
 
@@ -383,21 +383,21 @@ exports.getFutureAppointment = async function (req, res) {
 	date.setHours(date.getHours() + 6);
 	date.setUTCHours(0, 0, 0, 0);
 
-	let patient = await patientModel.findOne({mobile_no: req.mobile_no});
+	let patient = await patientModel.findOne({ mobile_no: req.mobile_no });
 
 	var query = {
 		patientId: patient._id,
-		appointment_date_time: {$gt: date},
+		appointment_date_time: { $gt: date },
 	};
 
 	let appointments = await appointmentModel
 		.find(query)
-		.sort({appointment_date_time: 1})
+		.sort({ appointment_date_time: 1 })
 		.populate("schedule_id", "time_start time_end")
 		.populate("doctorId", "name designation institution reg_number mobile_no email image specialization about_me")
 		.exec();
 
-	if (appointments) res.status(SUCCESS).json({appointments});
+	if (appointments) res.status(SUCCESS).json({ appointments });
 	else res.status(DATA_NOT_FOUND).json(error_message.DATA_NOT_FOUND);
 };
 
@@ -461,13 +461,13 @@ exports.getFutureAppointment = async function (req, res) {
  *                   type: string
  */
 exports.cancelAppointment = async function (req, res) {
-	appointmentModel.deleteOne({_id: req.body.id}, async (err, docs) => {
+	appointmentModel.deleteOne({ _id: req.body.id }, async (err, docs) => {
 		if (err) {
 			res.status(INTERNAL_SERVER_ERROR).json(error_message.INTERNAL_SERVER_ERROR);
 		} else if (docs.deletedCount === 0) {
 			res.status(BAD_REQUEST).json(error_message.BAD_REQUEST);
 		} else {
-			await timelineModel.findOneAndDelete({appointment_id: req.body.id}).exec();
+			await timelineModel.findOneAndDelete({ appointment_id: req.body.id }).exec();
 			res.status(SUCCESS).json(error_message.SUCCESS);
 		}
 	});

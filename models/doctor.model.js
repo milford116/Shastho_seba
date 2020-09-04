@@ -21,7 +21,7 @@ mongoose.pluralize(null);
  *           type: string
  *           uniqueItems: true
  *         email:
- *           type: boolean
+ *           type: string
  *         session_token:
  *           type: string
  *         image:
@@ -42,7 +42,7 @@ mongoose.pluralize(null);
  *         - reg_number
  *         - mobile_no
  *         - email
- *         - session_token
+ *         - password
  *         - referrer
  *         - specialization
  */

@@ -12,6 +12,7 @@ dotenv.config();
 
 const doctorRoutes = require("./routes/doctor");
 const patientRoutes = require("./routes/patient");
+const adminRoutes = require("./routes/admin");
 
 mongoose.set("useCreateIndex", true);
 
@@ -39,6 +40,7 @@ swagger(app);
 app.use(express.static("storage"));
 app.use(doctorRoutes);
 app.use(patientRoutes);
+app.use(adminRoutes);
 
 // const httpsOptions = {
 // 	key: fs.readFileSync("./certificates/key.pem"),

@@ -11,7 +11,7 @@ exports.middleware = async function (req, res, next) {
 		const token = req.headers.authorization.split(" ")[1];
 		jwt.verify(token, process.env.SECRET, (err, decode) => {
 			if (err) {
-				res.status(BAD_REQUEST).send(error_message.jwtErr);
+				res.status(INTERNAL_SERVER_ERROR).send({message: "unable to process jwt"});
 			} else {
 				adminModel.findOne({phone: decode.phone}, (err, docs) => {
 					if (err) {

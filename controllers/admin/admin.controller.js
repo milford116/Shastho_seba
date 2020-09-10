@@ -91,3 +91,10 @@ exports.changePassword = async function (req, res) {
 		}
 	});
 };
+
+exports.logout = async function (req, res) {
+	adminModel.updateOne({phone: req.phone}, {session_token: null}, (err, docs) => {
+		if (err) res.status(INTERNAL_SERVER_ERROR).json(error_message.INTERNAL_SERVER_ERROR);
+		else res.status(SUCCESS).json(error_message.SUCCESS);
+	});
+};

@@ -3,7 +3,6 @@ const helperFunctions = require("./util/helper");
 exports.handleSocketIO = async function (server) {
 	// socket
 	const io = require("socket.io")(server);
-	let hashmap = {};
 
 	// called everytime a socket tries to connect
 	io.use(async (socket, next) => {

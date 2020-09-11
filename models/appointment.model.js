@@ -39,11 +39,6 @@ var appointmentSchema = new mongoose.Schema(
 			type: Number,
 			required: true,
 		},
-		schedule_id: {
-			type: mongoose.Schema.Types.ObjectId,
-			required: true,
-			ref: "schedule",
-		},
 		doctorId: {
 			type: mongoose.Schema.Types.ObjectId,
 			required: true,

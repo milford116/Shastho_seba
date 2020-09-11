@@ -80,11 +80,10 @@ exports.postAppointment = async function (req, res) {
 			res.status(BAD_REQUEST).json(error_message.BAD_REQUEST);
 		} else {
 			var date = new Date(req.body.appointment_date_time);
-			date.setUTCHours(0, 0, 0, 0);
 
 			var query1 = {
-				schedule_id: req.body.schedule_id,
 				patientId: req._id,
+				doctorId: docs._id,
 				status: { $lt: 3 },
 				appointment_date_time: date,
 			};
@@ -96,7 +95,7 @@ exports.postAppointment = async function (req, res) {
 					res.status(BAD_REQUEST).json({ message: "Appointment already exists" });
 				} else {
 					var query2 = {
-						schedule_id: req.body.schedule_id,
+						doctorId: docs._id,
 						appointment_date_time: date,
 					};
 
@@ -105,7 +104,6 @@ exports.postAppointment = async function (req, res) {
 					var patient_detail = await patientModel.findOne({ mobile_no: req.mobile_no }).exec();
 
 					var appointment = new appointmentModel();
-					appointment.schedule_id = req.body.schedule_id;
 					appointment.doctorId = docs._id;
 					appointment.patientId = patient_detail._id;
 					appointment.status = 1;
@@ -129,15 +127,6 @@ exports.postAppointment = async function (req, res) {
 									serial_no: appointment.serial_no,
 								};
 
-								let timeline_data = new timelineModel();
-								timeline_data.doctor_mobile_no = req.body.doc_mobile_no;
-								timeline_data.patient_mobile_no = req.mobile_no;
-								timeline_data.appointment_id = docs._id;
-								timeline_data.appointment_date = date;
-								timeline_data.appointment_createdAt = Date.now();
-								timeline_data.due = schedule_details.fee;
-
-								await timeline_data.save();
 								res.status(SUCCESS).json(ret);
 							}
 						});

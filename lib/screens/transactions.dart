@@ -16,7 +16,6 @@ class TransactionsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     Map<String, dynamic> map = ModalRoute.of(context).settings.arguments;
     String appointmentId = map['appointmentId'];
-    double due = map['due'];
     return Container(
       decoration: BoxDecoration(
         image: DecorationImage(
@@ -37,269 +36,284 @@ class TransactionsScreen extends StatelessWidget {
         ),
         body: SafeArea(
           child: ChangeNotifierProvider(
-            create: (context) => TransactionBloc(appointmentId, due),
+            create: (context) => TransactionBloc(appointmentId, map['due']),
             builder: (context, child) {
               TransactionBloc transactionBloc =
                   Provider.of<TransactionBloc>(context);
-              return StreamBuilder(
-                stream: transactionBloc.stream,
-                builder: (context, snapshot) {
-                  if (snapshot.hasData) {
-                    Response<List<Transaction>> response = snapshot.data;
-                    switch (response.status) {
-                      case Status.LOADING:
-                        return Center(
-                          child: Loading(response.message),
-                        );
-                      case Status.COMPLETED:
-                        double due =
-                            transactionBloc.fee - transactionBloc.total;
-                        Color dueColor = due > 0 ? red : mint;
-                        return Stack(
-                          children: [
-                            ListView(
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.fromLTRB(
-                                      10.0, 15.0, 10.0, 0.0),
-                                  child: Table(
-                                    columnWidths: {
-                                      0: FlexColumnWidth(3),
-                                      1: FlexColumnWidth(5),
-                                      2: FlexColumnWidth(2),
-                                    },
-                                    children: <TableRow>[
-                                      TableRow(
-                                        children: <Widget>[
-                                          Container(
-                                            padding: EdgeInsets.symmetric(
-                                                vertical: 5.0),
-                                            child: Text(
-                                              'Date',
-                                              style: M.copyWith(
-                                                  fontWeight: FontWeight.bold),
-                                              textAlign: TextAlign.center,
-                                            ),
-                                          ),
-                                          Container(
-                                            padding: EdgeInsets.symmetric(
-                                                vertical: 5.0),
-                                            child: Text(
-                                              'Bkash Trx ID',
-                                              style: M.copyWith(
-                                                  fontWeight: FontWeight.bold),
-                                              textAlign: TextAlign.center,
-                                            ),
-                                          ),
-                                          Container(
-                                            padding: EdgeInsets.symmetric(
-                                                vertical: 7.0),
-                                            child: Text(
-                                              'Amount',
-                                              style: M.copyWith(
-                                                  fontWeight: FontWeight.bold),
-                                              textAlign: TextAlign.center,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                Padding(
-                                  padding:
-                                      EdgeInsets.symmetric(horizontal: 10.0),
-                                  child: Table(
-                                    columnWidths: response.data.length == 0
-                                        ? {0: FlexColumnWidth(8)}
-                                        : {
-                                            0: FlexColumnWidth(3),
-                                            1: FlexColumnWidth(5),
-                                            2: FlexColumnWidth(2),
-                                          },
-                                    children: response.data.length == 0
-                                        ? <TableRow>[
-                                            TableRow(children: [
-                                              Container(
-                                                padding:
-                                                    const EdgeInsets.symmetric(
-                                                        vertical: 5.0),
-                                                child: Text(
-                                                  'You have not added any transactions',
-                                                  textAlign: TextAlign.center,
-                                                ),
-                                              ),
-                                            ]),
-                                          ]
-                                        : response.data
-                                            .asMap()
-                                            .map(
-                                              (index, transaction) => MapEntry(
-                                                index,
-                                                TableRow(children: <Widget>[
-                                                  Container(
-                                                    padding:
-                                                        EdgeInsets.symmetric(
-                                                            vertical: 5.0),
-                                                    child: Text(
-                                                      '${index + 1}. ' +
-                                                          DateFormat.yMd()
-                                                              .format(transaction
-                                                                  .createdAt),
-                                                      style: M,
-                                                    ),
-                                                  ),
-                                                  Container(
-                                                    padding:
-                                                        EdgeInsets.symmetric(
-                                                            vertical: 5.0),
-                                                    child: Text(
-                                                      transaction.transactionId,
-                                                      style: M,
-                                                      textAlign:
-                                                          TextAlign.center,
-                                                    ),
-                                                  ),
-                                                  Container(
-                                                    padding:
-                                                        EdgeInsets.symmetric(
-                                                            vertical: 5.0),
-                                                    child: Text(
-                                                      transaction.amount
-                                                              .toString() +
-                                                          '/-',
-                                                      style: M,
-                                                      textAlign:
-                                                          TextAlign.center,
-                                                    ),
-                                                  ),
-                                                ]),
-                                              ),
-                                            )
-                                            .values
-                                            .toList(),
-                                  ),
-                                ),
-                                Padding(
-                                  padding:
-                                      EdgeInsets.symmetric(horizontal: 10.0),
-                                  child: Table(
-                                    columnWidths: {0: FlexColumnWidth(4)},
-                                    children: [
-                                      TableRow(
-                                        decoration: BoxDecoration(
-                                          border: Border(
-                                              top: BorderSide(color: blue)),
-                                        ),
-                                        children: <Widget>[
-                                          Container(
-                                            padding: EdgeInsets.symmetric(
-                                                vertical: 3.0),
-                                            child: Text(
-                                              'Total:',
-                                              style: M.copyWith(
-                                                  fontWeight: FontWeight.bold),
-                                              textAlign: TextAlign.end,
-                                            ),
-                                          ),
-                                          Container(
-                                            padding: EdgeInsets.symmetric(
-                                                vertical: 3.0),
-                                            child: Text(
-                                              transactionBloc.total.toString() +
-                                                  '/-',
-                                              style: M.copyWith(
-                                                  fontWeight: FontWeight.bold),
-                                              textAlign: TextAlign.center,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                      TableRow(
-                                        decoration: BoxDecoration(
-                                          border: Border(
-                                              bottom: BorderSide(color: blue)),
-                                        ),
-                                        children: <Widget>[
-                                          Container(
-                                            padding: EdgeInsets.symmetric(
-                                                vertical: 3.0),
-                                            child: Text(
-                                              'Fee:',
-                                              style: M.copyWith(
-                                                  fontWeight: FontWeight.bold),
-                                              textAlign: TextAlign.end,
-                                            ),
-                                          ),
-                                          Container(
-                                            padding: EdgeInsets.symmetric(
-                                                vertical: 3.0),
-                                            child: Text(
-                                              transactionBloc.fee.toString() +
-                                                  '/-',
-                                              style: M.copyWith(
-                                                  fontWeight: FontWeight.bold),
-                                              textAlign: TextAlign.center,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                      TableRow(
-                                        children: <Widget>[
-                                          Container(
-                                            padding: EdgeInsets.symmetric(
-                                                vertical: 3.0),
-                                            child: Text(
-                                              'Due:',
-                                              style: M.copyWith(
-                                                  fontWeight: FontWeight.bold),
-                                              textAlign: TextAlign.end,
-                                            ),
-                                          ),
-                                          Container(
-                                            padding: EdgeInsets.symmetric(
-                                                vertical: 3.0),
-                                            child: Text(
-                                              '$due/-',
-                                              style: M.copyWith(
-                                                fontWeight: FontWeight.bold,
-                                                color: dueColor,
-                                              ),
-                                              textAlign: TextAlign.center,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
-                            Positioned(
-                              right: 10.0,
-                              bottom: 10.0,
-                              child: FloatingActionButton(
-                                onPressed: () => _addTransaction(
-                                  context,
-                                  transactionBloc,
-                                  appointmentId,
-                                ),
-                                child: Icon(Icons.add),
-                              ),
-                            ),
-                          ],
-                        );
-                      case Status.ERROR:
-                        return Center(
-                          child: Error(
-                            message: response.message,
-                            onPressed: transactionBloc.fetchTransactions,
-                          ),
-                        );
-                    }
-                  }
-                  return Container();
+              return WillPopScope(
+                onWillPop: () async {
+                  Navigator.pop<double>(context, transactionBloc.due);
+                  return false;
                 },
+                child: StreamBuilder(
+                  stream: transactionBloc.stream,
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      Response<List<Transaction>> response = snapshot.data;
+                      switch (response.status) {
+                        case Status.LOADING:
+                          return Center(
+                            child: Loading(response.message),
+                          );
+                        case Status.COMPLETED:
+                          Color dueColor = transactionBloc.due > 0 ? red : mint;
+                          return Stack(
+                            children: [
+                              ListView(
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.fromLTRB(
+                                        10.0, 15.0, 10.0, 0.0),
+                                    child: Table(
+                                      columnWidths: {
+                                        0: FlexColumnWidth(3),
+                                        1: FlexColumnWidth(5),
+                                        2: FlexColumnWidth(2),
+                                      },
+                                      children: <TableRow>[
+                                        TableRow(
+                                          children: <Widget>[
+                                            Container(
+                                              padding: EdgeInsets.symmetric(
+                                                  vertical: 5.0),
+                                              child: Text(
+                                                'Date',
+                                                style: M.copyWith(
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                                textAlign: TextAlign.center,
+                                              ),
+                                            ),
+                                            Container(
+                                              padding: EdgeInsets.symmetric(
+                                                  vertical: 5.0),
+                                              child: Text(
+                                                'Bkash Trx ID',
+                                                style: M.copyWith(
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                                textAlign: TextAlign.center,
+                                              ),
+                                            ),
+                                            Container(
+                                              padding: EdgeInsets.symmetric(
+                                                  vertical: 7.0),
+                                              child: Text(
+                                                'Amount',
+                                                style: M.copyWith(
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                                textAlign: TextAlign.center,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding:
+                                        EdgeInsets.symmetric(horizontal: 10.0),
+                                    child: Table(
+                                      columnWidths: response.data.length == 0
+                                          ? {0: FlexColumnWidth(8)}
+                                          : {
+                                              0: FlexColumnWidth(3),
+                                              1: FlexColumnWidth(5),
+                                              2: FlexColumnWidth(2),
+                                            },
+                                      children: response.data.length == 0
+                                          ? <TableRow>[
+                                              TableRow(children: [
+                                                Container(
+                                                  padding: const EdgeInsets
+                                                      .symmetric(vertical: 5.0),
+                                                  child: Text(
+                                                    'You have not added any transactions',
+                                                    textAlign: TextAlign.center,
+                                                  ),
+                                                ),
+                                              ]),
+                                            ]
+                                          : response.data
+                                              .asMap()
+                                              .map(
+                                                (index, transaction) =>
+                                                    MapEntry(
+                                                  index,
+                                                  TableRow(children: <Widget>[
+                                                    Container(
+                                                      padding:
+                                                          EdgeInsets.symmetric(
+                                                              vertical: 5.0),
+                                                      child: Text(
+                                                        '${index + 1}. ' +
+                                                            DateFormat.yMd()
+                                                                .format(transaction
+                                                                    .createdAt),
+                                                        style: M,
+                                                      ),
+                                                    ),
+                                                    Container(
+                                                      padding:
+                                                          EdgeInsets.symmetric(
+                                                              vertical: 5.0),
+                                                      child: Text(
+                                                        transaction
+                                                            .transactionId,
+                                                        style: M,
+                                                        textAlign:
+                                                            TextAlign.center,
+                                                      ),
+                                                    ),
+                                                    Container(
+                                                      padding:
+                                                          EdgeInsets.symmetric(
+                                                              vertical: 5.0),
+                                                      child: Text(
+                                                        transaction.amount
+                                                                .toString() +
+                                                            '/-',
+                                                        style: M,
+                                                        textAlign:
+                                                            TextAlign.center,
+                                                      ),
+                                                    ),
+                                                  ]),
+                                                ),
+                                              )
+                                              .values
+                                              .toList(),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding:
+                                        EdgeInsets.symmetric(horizontal: 10.0),
+                                    child: Table(
+                                      columnWidths: {0: FlexColumnWidth(4)},
+                                      children: [
+                                        TableRow(
+                                          decoration: BoxDecoration(
+                                            border: Border(
+                                                top: BorderSide(color: blue)),
+                                          ),
+                                          children: <Widget>[
+                                            Container(
+                                              padding: EdgeInsets.symmetric(
+                                                  vertical: 3.0),
+                                              child: Text(
+                                                'Total:',
+                                                style: M.copyWith(
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                                textAlign: TextAlign.end,
+                                              ),
+                                            ),
+                                            Container(
+                                              padding: EdgeInsets.symmetric(
+                                                  vertical: 3.0),
+                                              child: Text(
+                                                transactionBloc.total
+                                                        .toString() +
+                                                    '/-',
+                                                style: M.copyWith(
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                                textAlign: TextAlign.center,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        TableRow(
+                                          decoration: BoxDecoration(
+                                            border: Border(
+                                                bottom:
+                                                    BorderSide(color: blue)),
+                                          ),
+                                          children: <Widget>[
+                                            Container(
+                                              padding: EdgeInsets.symmetric(
+                                                  vertical: 3.0),
+                                              child: Text(
+                                                'Fee:',
+                                                style: M.copyWith(
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                                textAlign: TextAlign.end,
+                                              ),
+                                            ),
+                                            Container(
+                                              padding: EdgeInsets.symmetric(
+                                                  vertical: 3.0),
+                                              child: Text(
+                                                transactionBloc.fee.toString() +
+                                                    '/-',
+                                                style: M.copyWith(
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                                textAlign: TextAlign.center,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        TableRow(
+                                          children: <Widget>[
+                                            Container(
+                                              padding: EdgeInsets.symmetric(
+                                                  vertical: 3.0),
+                                              child: Text(
+                                                'Due:',
+                                                style: M.copyWith(
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                                textAlign: TextAlign.end,
+                                              ),
+                                            ),
+                                            Container(
+                                              padding: EdgeInsets.symmetric(
+                                                  vertical: 3.0),
+                                              child: Text(
+                                                '${transactionBloc.due}/-',
+                                                style: M.copyWith(
+                                                  fontWeight: FontWeight.bold,
+                                                  color: dueColor,
+                                                ),
+                                                textAlign: TextAlign.center,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              Positioned(
+                                right: 10.0,
+                                bottom: 10.0,
+                                child: FloatingActionButton(
+                                  onPressed: () => _addTransaction(
+                                    context,
+                                    transactionBloc,
+                                    appointmentId,
+                                  ),
+                                  child: Icon(Icons.add),
+                                ),
+                              ),
+                            ],
+                          );
+                        case Status.ERROR:
+                          return Center(
+                            child: Error(
+                              message: response.message,
+                              onPressed: transactionBloc.fetchTransactions,
+                            ),
+                          );
+                      }
+                    }
+                    return Container();
+                  },
+                ),
               );
             },
           ),

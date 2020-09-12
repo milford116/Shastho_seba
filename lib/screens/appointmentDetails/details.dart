@@ -91,7 +91,7 @@ class AppointmentDetails extends StatelessWidget {
                                         response.data.length == 1,
                                       ),
                                       onViewTransactions: () async {
-                                        await Navigator.pushNamed(
+                                        var due = await Navigator.pushNamed(
                                           context,
                                           transactionsScreen,
                                           arguments: {
@@ -99,7 +99,8 @@ class AppointmentDetails extends StatelessWidget {
                                             'due': _appointment.due,
                                           },
                                         );
-                                        timelineBloc.fetchTimeline();
+                                        timelineBloc.updateDue(
+                                            due, _appointment.id);
                                       },
                                       onShowPrescription: () {
                                         Navigator.pushNamed(

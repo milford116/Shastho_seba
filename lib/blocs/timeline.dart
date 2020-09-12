@@ -11,6 +11,7 @@ class TimelineBloc extends ChangeNotifier implements BaseBloc {
   AppointmentsRepository _appointmentsRepository;
   StreamController _timelineController;
   Appointment _appointment;
+  List<Appointment> _list;
 
   StreamSink<Response<List<Appointment>>> get sink => _timelineController.sink;
 
@@ -25,9 +26,9 @@ class TimelineBloc extends ChangeNotifier implements BaseBloc {
   void fetchTimeline() async {
     sink.add(Response.loading('Fetching Timeline'));
     try {
-      final list = await _appointmentsRepository
+      _list = await _appointmentsRepository
           .getAppointments(_appointment.doctor.mobileNo);
-      sink.add(Response.completed(list));
+      sink.add(Response.completed(_list));
     } catch (e) {
       sink.add(Response.error(e.toString()));
     }
@@ -35,6 +36,11 @@ class TimelineBloc extends ChangeNotifier implements BaseBloc {
 
   Future<void> cancelAppointment(String appointmentId) async {
     await _appointmentsRepository.cancelAppointment(appointmentId);
+  }
+
+  void updateDue(double due, String appointmentId) {
+    _list.firstWhere((element) => element.id == appointmentId).due = due;
+    notifyListeners();
   }
 
   @override

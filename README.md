@@ -1,4 +1,4 @@
-# doktor
+# ShasthoSeba_Backend_V1
 
 1. Make sure you have node js installed.
 2. Open the project folder and type `npm install` in terminal

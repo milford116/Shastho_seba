@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:translator/translator.dart';
 
 import '../../utils.dart';
 import '../../routes.dart';
 import '../../widgets/drawer.dart';
 
 class FindDoctorsScreen extends StatelessWidget {
+  GoogleTranslator translator = GoogleTranslator();
   @override
   Widget build(BuildContext context) {
     return Container(

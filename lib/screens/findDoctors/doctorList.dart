@@ -15,6 +15,7 @@ class DoctorList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final String specialityName = ModalRoute.of(context).settings.arguments;
+    print(specialityName);
     return Container(
       decoration: BoxDecoration(
         image: DecorationImage(

@@ -12,4 +12,13 @@ class ScheduleRepository {
         .map<Schedule>((json) => Schedule.fromJson(json))
         .toList();
   }
+
+  Future<List<Schedule>> getScheduletoday() async {
+    final data = await _api.get('/doctor/get/schedulenew', true);
+    // print('here');
+    // print(data);
+    return data['schedules']
+        .map<Schedule>((json) => Schedule.fromJson(json))
+        .toList();
+  }
 }

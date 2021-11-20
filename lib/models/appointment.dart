@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'schedule.dart';
 import 'doctor.dart';
 import 'patient.dart';
@@ -42,7 +44,8 @@ class Appointment {
   }
 
   Appointment.fromJson(Map<String, dynamic> json)
-      : id = json['_id'],
+      : id = json['_id'].toString(),
+        
         status = map[json['status']],
         serialNo = json['serial_no'],
         due = _parseDouble(json['due']),

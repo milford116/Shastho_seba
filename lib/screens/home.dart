@@ -72,6 +72,11 @@ class _HomeScreenState extends State<HomeScreen> {
                         route: appointmentsTodayScreen,
                       ),
                       _Tile(
+                        title: 'Schedules Today ',
+                        icon: Icons.schedule,
+                        route: scheduleScreen,
+                      ),
+                      _Tile(
                         title: 'Find Doctors',
                         icon: Icons.search,
                         route: findDoctorsScreen,

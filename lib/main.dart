@@ -16,6 +16,7 @@ import 'screens/chamber/chamber.dart';
 import 'screens/videoCall.dart';
 import 'screens/profile.dart';
 import 'screens/transactions.dart';
+import 'screens/Schedule.dart';
 import 'routes.dart';
 import 'utils.dart';
 
@@ -56,6 +57,7 @@ class MyApp extends StatelessWidget {
         videoCallScreen: (context) => VideoCallScreen(),
         profileScreen: (context) => ProfileScreen(),
         transactionsScreen: (context) => TransactionsScreen(),
+        scheduleScreen:(context)=> Schedulescreen()
       },
     );
   }

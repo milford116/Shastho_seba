@@ -55,6 +55,7 @@ class AppointmentsTodayScreen extends StatelessWidget {
                   builder: (context, snapshot) {
                     if (snapshot.hasData) {
                       Response<List<Appointment>> response = snapshot.data;
+                     // print(response);
                       switch (response.status) {
                         case Status.LOADING:
                           return Center(

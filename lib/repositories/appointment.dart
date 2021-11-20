@@ -1,3 +1,5 @@
+import 'package:Shastho_Sheba/models/schedule.dart';
+
 import '../networking/api.dart';
 import '../models/appointment.dart';
 
@@ -20,10 +22,20 @@ class AppointmentsRepository {
 
   Future<List<Appointment>> todayAppointments() async {
     final data = await _api.get('/patient/get/today/appointment', true);
+    // print(data);
     return data['appointments']
         .map<Appointment>((json) => Appointment.fromJson(json))
         .toList();
   }
+
+  // Future<List<Schedule>> allappointment() async {
+  //   final data = await _api.get('/doctor/get/schedulenew', true);
+  //   // print('frnt');
+  //   //print(data['schedules']);
+  //   return data['schedules']
+  //       .map<Schedule>((json) => Schedule.fromJson(json))
+  //       .toList();
+  // }
 
   Future<List<Appointment>> getAppointments(String doctorMobileNo) async {
     final data = await _api.post('/patient/get/appointments', true, {

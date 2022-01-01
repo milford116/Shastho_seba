@@ -17,11 +17,15 @@ class ChamberBloc extends ChangeNotifier implements BaseBloc {
 
   bool get doctorStatus => _doctorStatus;
 
-  ChamberBloc(Appointment appointment) {
-    messenger = Messenger(api.baseUrl, this);
-    messenger.init(appointment);
-  }
+  // ChamberBloc(Appointment appointment) {
+  //   messenger = Messenger(api.baseUrl, this);
+  //   messenger.init(appointment);
+  // }
 
+ChamberBloc(String id) {
+    messenger = Messenger(api.baseUrl, this);
+    messenger.init(id);
+  }
   @override
   void dispose() {
     messenger.dispose();

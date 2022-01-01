@@ -16,7 +16,7 @@ class Messenger {
 
   Messenger(this._url, this._chamberBloc);
 
-  void init(Appointment appointment) async {
+  void init(String id) async {
     _socket = io(_url, <String, dynamic>{
       'transports': ['websocket'],
       'autoConnect': false,
@@ -39,7 +39,7 @@ class Messenger {
           {
             'token': 'Bearer ' + jwt,
             'type': 'patient',
-            'chamberId': appointment.id,
+            'chamberId': id,
           },
         );
       },

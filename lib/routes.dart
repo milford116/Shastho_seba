@@ -16,3 +16,5 @@ String videoCallScreen = '/videoCall';
 String profileScreen = '/profile';
 String transactionsScreen = '/transactions';
 String scheduleScreen = '/schedules';
+String schdoctorScreen = '/schdoctor';
+String chambernewScreen = '/chambernew';

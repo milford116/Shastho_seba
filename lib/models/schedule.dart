@@ -1,9 +1,13 @@
+import 'package:Shastho_Sheba/models/doctor.dart';
+
 class Schedule {
   final String id;
   final int weekDay;
   final DateTime start;
   final DateTime end;
   final double fee;
+  final String doc_mobile_no;
+  //Doctor doctor;
   static Map<int, String> _map = {
     1: 'Monday',
     2: 'Tuesday',
@@ -14,7 +18,7 @@ class Schedule {
     7: 'Sunday'
   };
 
-  Schedule({this.id, this.weekDay, this.start, this.end, this.fee});
+  Schedule({this.id, this.weekDay, this.start, this.end, this.fee,this.doc_mobile_no});
 
   static double _parseDouble(dynamic value) {
     if (value is int) {
@@ -32,6 +36,10 @@ class Schedule {
             ? DateTime.parse(json['time_start'])
             : DateTime.now(),
         fee = _parseDouble(json['fee']),
+        doc_mobile_no=json['doc_mobile_no'],
+
+        //  doctor = Doctor.fromJson(json['doc_mobile_no']),
+
         end = json['time_end'] != null
             ? DateTime.parse(json['time_end'])
             : DateTime.now();

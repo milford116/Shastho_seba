@@ -1,3 +1,6 @@
+import 'package:Shastho_Sheba/models/Schedoctor.dart';
+import 'package:Shastho_Sheba/models/doctor.dart';
+
 import '../networking/api.dart';
 import '../models/schedule.dart';
 
@@ -15,10 +18,28 @@ class ScheduleRepository {
 
   Future<List<Schedule>> getScheduletoday() async {
     final data = await _api.get('/doctor/get/schedulenew', true);
-    // print('here');
-    // print(data);
-    return data['schedules']
+    //print('here');
+
+    // list.add( data['doctor']
+    //     .map<Schedoctor>((json) => Schedoctor.fromJson(json))
+    //     .toList());
+    var list = data['schedules']
         .map<Schedule>((json) => Schedule.fromJson(json))
         .toList();
+   
+
+    return list;
+  }
+   Future<List<Doctor>> getdoctor() async {
+    final data = await _api.get('/doctor/get/name', true);
+    print('here');
+
+    
+    var list = data['doctor']
+        .map<Doctor>((json) => Doctor.fromJson(json))
+        .toList();
+   
+
+    return list;
   }
 }

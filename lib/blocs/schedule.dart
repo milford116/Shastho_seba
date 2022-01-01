@@ -23,20 +23,20 @@ class ScheduleTodayBloc extends ChangeNotifier implements BaseBloc {
     _scheduleRepository = ScheduleRepository();
 
     _scheduleController = StreamController<Response<List<Schedule>>>();
-    fetchTodayschedule();
+    //fetchTodayschedule();
   }
 
-  void fetchTodayschedule() async {
-    sink.add(Response.loading('Fetching schedules'));
-    try {
-      final list = await _scheduleRepository.getScheduletoday();
-      print('in sink');
-      print(list);
-      sink.add(Response.completed(list));
-    } catch (e) {
-      sink.add(Response.error(e.toString()));
-    }
-  }
+  // void fetchTodayschedule() async {
+  //   sink.add(Response.loading('Fetching schedules'));
+  //   try {
+  //     final list = await _scheduleRepository.getScheduletoday();
+  //    // print('in sink');
+  //     //print(list);
+  //     sink.add(Response.completed(list));
+  //   } catch (e) {
+  //     sink.add(Response.error(e.toString()));
+  //   }
+  // }
 
   @override
   void dispose() {

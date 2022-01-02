@@ -1,4 +1,5 @@
 import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 
@@ -27,6 +28,8 @@ class AppointmentsTodayBloc extends ChangeNotifier implements BaseBloc {
     sink.add(Response.loading('Fetching Appointments'));
     try {
       final list = await _appointmentsRepository.todayAppointments();
+      // print('in sink');
+      // print(list);
       sink.add(Response.completed(list));
     } catch (e) {
       sink.add(Response.error(e.toString()));

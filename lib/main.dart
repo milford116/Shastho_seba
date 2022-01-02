@@ -1,3 +1,4 @@
+import 'package:Shastho_Sheba/screens/chamber/chambernew.dart';
 import 'package:flutter/material.dart';
 
 import 'screens/splash.dart';
@@ -16,6 +17,8 @@ import 'screens/chamber/chamber.dart';
 import 'screens/videoCall.dart';
 import 'screens/profile.dart';
 import 'screens/transactions.dart';
+import 'screens/Schedule.dart';
+import 'screens/schdoctor.dart';
 import 'routes.dart';
 import 'utils.dart';
 
@@ -52,10 +55,13 @@ class MyApp extends StatelessWidget {
         findDoctorsScreen: (context) => FindDoctorsScreen(),
         specialityWiseDoctorListScreen: (context) => DoctorList(),
         doctorProfileScreen: (context) => DoctorProfileScreen(),
-        chamberScreen: (context) => ChamberScreen(),
+        //chamberScreen: (context) => ChamberScreen(),
         videoCallScreen: (context) => VideoCallScreen(),
         profileScreen: (context) => ProfileScreen(),
         transactionsScreen: (context) => TransactionsScreen(),
+        scheduleScreen: (context) => Schedulescreen(),
+        schdoctorScreen: (context) => Schdoctor(),
+        chambernewScreen:(context) => ChambernewScreen()
       },
     );
   }

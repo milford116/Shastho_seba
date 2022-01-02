@@ -17,9 +17,9 @@ class VideoCallScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     Map<String, dynamic> args = ModalRoute.of(context).settings.arguments;
     Messenger messenger = args['messenger'];
-    Appointment appointment = args['appointment'];
+    String id = args['appointment'];
     return ChangeNotifierProvider(
-      create: (context) => VideoCallBloc(messenger.signaling, appointment),
+      create: (context) => VideoCallBloc(messenger.signaling, id),
       builder: (context, child) {
         VideoCallBloc videoCallBloc = Provider.of<VideoCallBloc>(context);
         return StreamBuilder(
@@ -29,7 +29,7 @@ class VideoCallScreen extends StatelessWidget {
               Response<CallState> response = snapshot.data;
               switch (response.data) {
                 case CallState.Ringing:
-                  return _RingingScreen(appointment);
+                  return _RingingScreen();
                 case CallState.Connected:
                   return _VideoCall();
                 case CallState.EndCall:
@@ -51,9 +51,9 @@ class VideoCallScreen extends StatelessWidget {
 }
 
 class _RingingScreen extends StatelessWidget {
-  final Appointment _appointment;
+  
 
-  _RingingScreen(this._appointment) {
+  _RingingScreen() {
     FlutterRingtonePlayer.playRingtone();
   }
 
@@ -79,26 +79,16 @@ class _RingingScreen extends StatelessWidget {
                 CircleAvatar(
                   minRadius: 75.0,
                   backgroundColor: Colors.white,
-                  child: CircleAvatar(
-                    radius: 73,
-                    backgroundColor: Colors.transparent,
-                    child: ShowImage(_appointment.doctor.image),
-                  ),
+                  
                 ),
                 SizedBox(
                   height: 25.0,
                 ),
                 Text(
-                  _appointment.doctor.name,
+                  'wait to receive call',
                   style: XL.copyWith(fontWeight: FontWeight.bold),
                 ),
-                SizedBox(
-                  height: 10.0,
-                ),
-                Text(
-                  'is calling you',
-                  style: L,
-                ),
+               
                 Expanded(child: SizedBox()),
                 ButtonBar(
                   alignment: MainAxisAlignment.center,

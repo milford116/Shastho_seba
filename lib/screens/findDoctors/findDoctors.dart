@@ -1,13 +1,39 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:translator/translator.dart';
 
 import '../../utils.dart';
 import '../../routes.dart';
 import '../../widgets/drawer.dart';
+class FindDoctorsScreen extends StatefulWidget {
+  @override
+  _Screenstate createState() => _Screenstate();
+}
 
-class FindDoctorsScreen extends StatelessWidget {
+class _Screenstate extends State<FindDoctorsScreen> {
+  GoogleTranslator translator = new GoogleTranslator();
+  String out;
+  
+  void trans()
+  {
+    
+    translator.translate('find doctor', to: 'bn')   //translating to hi = hindi
+      .then((output) 
+      {
+          setState(() {
+           out=output.toString();                          //placing the translated text to the String to be used
+          });
+          
+      });
+  }
+
+
   @override
   Widget build(BuildContext context) {
+    //final out = await trans();
+    //print(out);
+
+    trans();
     return Container(
       decoration: BoxDecoration(
         image: DecorationImage(
@@ -27,7 +53,7 @@ class FindDoctorsScreen extends StatelessWidget {
             children: [
               Icon(Icons.search),
               Text(
-                'Find Doctors',
+                'ডাক্তার খুঁজুন',
                 style: L,
               ),
             ],
@@ -104,24 +130,25 @@ class _Tile extends StatelessWidget {
 }
 
 List<Speciality> specialities = [
-  Speciality(name: 'Emergency', icon: emergency),
-  Speciality(name: 'Medicine', icon: pill),
-  Speciality(name: 'Dermatology', icon: dermatologist),
-  Speciality(name: 'Diabetes', icon: diabetes),
-  Speciality(name: 'Burn & Plastic', icon: burnandplastic),
-  Speciality(name: 'Opthalmology', icon: eye),
-  Speciality(name: 'Cardiology', icon: heart),
-  Speciality(name: 'Nefrology', icon: kidney),
-  Speciality(name: 'Hepatology', icon: liver),
-  Speciality(name: 'Pulmonology', icon: lungs),
-  Speciality(name: 'Neurology', icon: neuron),
-  Speciality(name: 'Otolaryngology', icon: nose),
-  Speciality(name: 'Nutrition', icon: nutritionist),
-  Speciality(name: 'Orthopaedic', icon: orthopedic),
-  Speciality(name: 'Pediatric', icon: pediatric),
-  Speciality(name: 'Maternity', icon: pregnant),
-  Speciality(name: 'Psychology', icon: psychiartry),
-  Speciality(name: 'Radiology', icon: radiotherapy),
-  Speciality(name: 'Gastroenterology', icon: stomach),
-  Speciality(name: 'Dental', icon: tooth),
+
+  Speciality(name: 'এমারজেন্সি', icon: emergency),
+  Speciality(name: 'মেডিসিন', icon: pill),
+  Speciality(name: 'ত্বক', icon: dermatologist),
+  Speciality(name: 'ডায়াবেটিস', icon: diabetes),
+  Speciality(name: 'বার্ন অ্যান্ড প্লাস্টিক', icon: burnandplastic),
+  Speciality(name: 'অপথালমোলোজি', icon: eye),
+  Speciality(name: 'হৃদরোগ', icon: heart),
+  Speciality(name: 'নেফ্রলজি', icon: kidney),
+  Speciality(name: 'হেপাটোলোজি', icon: liver),
+  Speciality(name: 'পালমোলজি', icon: lungs),
+  Speciality(name: 'নিউরোলজি', icon: neuron),
+  Speciality(name: 'নাক,কান ,গলা', icon: nose),
+  Speciality(name: 'পুষ্টি', icon: nutritionist),
+  Speciality(name: 'অর্থোপেডিক', icon: orthopedic),
+  Speciality(name: 'শিশু ', icon: pediatric),
+  Speciality(name: 'ম্যাটারনিটি', icon: pregnant),
+  Speciality(name: 'সাইকোলজি', icon: psychiartry),
+  Speciality(name: 'রেডিওলোজী', icon: radiotherapy),
+  Speciality(name: ' গেস্ট্রোলজি', icon: stomach),
+  Speciality(name: 'দন্ত', icon: tooth),
 ];

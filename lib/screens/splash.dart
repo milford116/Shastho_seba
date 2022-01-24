@@ -18,7 +18,7 @@ class _SplashScreenState extends State<SplashScreen> {
   void _goToLoginScreen() {
     if (status == true) {
       Navigator.of(context)
-          .pushReplacementNamed(loginScreen, arguments: message);
+          .pushReplacementNamed(intermediaryLogScreen, arguments: message);
     }
     status = true;
   }

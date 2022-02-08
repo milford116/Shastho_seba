@@ -1,4 +1,5 @@
 import 'package:Shastho_Sheba/models/doctor.dart';
+import 'package:Shastho_Sheba/repositories/appointment.dart';
 import 'package:Shastho_Sheba/repositories/doctor.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -9,6 +10,8 @@ import '../../routes.dart';
 class Schdoctor extends StatelessWidget {
   @override
   DoctorsRepository _doctorsRepository = DoctorsRepository();
+  AppointmentsRepository _appointmentsRepository= AppointmentsRepository();
+  var scheduleid;
   Future<List<Doctor>> fetchdoctor(String name) async {
     final list = await _doctorsRepository.doctorlist(60, 0, name);
 
@@ -138,7 +141,21 @@ class Schdoctor extends StatelessWidget {
         children: <Widget>[
           Text('Chamber')
         ],
-      ),)
+      ),),
+                                                // TextButton(
+                                                //   style: TextButton.styleFrom(
+                                                //     padding: const EdgeInsets.all(16.0),
+                                                //     primary: Colors.white,
+                                                //     backgroundColor: Colors.blueAccent,
+                                                //     textStyle: const TextStyle(fontSize: 20),
+                                                //   ),
+                                                //   onPressed: () {
+                                                //    _appointmentsRepository.createAppointment(
+                                                //        map['schedule_id'] ,
+                                                //        doctor_no, DateTime.now());
+                                                //   },
+                                                //   child: const Text('click'),
+                                                // ),
                                               ],
                                             ),
                                           ),

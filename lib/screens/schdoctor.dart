@@ -1,6 +1,6 @@
-import 'package:Shastho_Sheba/models/doctor.dart';
-import 'package:Shastho_Sheba/repositories/appointment.dart';
-import 'package:Shastho_Sheba/repositories/doctor.dart';
+import 'package:shastho_sheba/models/doctor.dart';
+import 'package:shastho_sheba/repositories/appointment.dart';
+import 'package:shastho_sheba/repositories/doctor.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../../widgets/image.dart';

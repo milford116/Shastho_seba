@@ -1,6 +1,6 @@
 import 'dart:async';
-import 'package:Shastho_Sheba/models/prescription.dart';
-import 'package:Shastho_Sheba/repositories/prescription.dart';
+import 'package:shastho_sheba/models/prescription.dart';
+import 'package:shastho_sheba/repositories/prescription.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 

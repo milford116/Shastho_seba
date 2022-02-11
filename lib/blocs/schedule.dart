@@ -1,6 +1,6 @@
 import 'dart:async';
-import 'package:Shastho_Sheba/models/schedule.dart';
-import 'package:Shastho_Sheba/repositories/schedule.dart';
+import 'package:shastho_sheba/models/schedule.dart';
+import 'package:shastho_sheba/repositories/schedule.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 

@@ -596,7 +596,7 @@ class ShowPrescriptionScreen extends StatelessWidget {
     );
 
     //Save the document
-    var bytes = pdf.save();
+    var bytes = await pdf.save();
     //Get external storage directory
     Directory directory = await getExternalStorageDirectory();
     //Get directory path

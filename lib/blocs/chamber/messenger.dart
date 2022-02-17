@@ -33,6 +33,7 @@ class Messenger {
         SharedPreferences sharedPreferences =
             await SharedPreferences.getInstance();
         String jwt = sharedPreferences.getString('jwt');
+        print(jwt);
         print('join');
         _socket.emit(
           'join',
@@ -56,6 +57,7 @@ class Messenger {
     };
 
     _socket.on('connection', (data) {
+      _chamberBloc.doctorStatus = true;
       print('connection');
     });
 

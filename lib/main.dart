@@ -19,6 +19,9 @@ import 'screens/profile.dart';
 import 'screens/transactions.dart';
 import 'screens/Schedule.dart';
 import 'screens/schdoctor.dart';
+import 'screens/inter_reg.dart';
+import 'screens/intermediary_login.dart';
+import 'screens/patient_nav.dart';
 import 'routes.dart';
 import 'utils.dart';
 
@@ -61,7 +64,10 @@ class MyApp extends StatelessWidget {
         transactionsScreen: (context) => TransactionsScreen(),
         scheduleScreen: (context) => Schedulescreen(),
         schdoctorScreen: (context) => Schdoctor(),
-        chambernewScreen:(context) => ChambernewScreen()
+        chambernewScreen:(context) => ChambernewScreen(),
+        intermediaryRegScreen:(context)=> Intermed_reg(),
+        intermediaryLogScreen:(context) => Intermed_login(),
+        patientnavScreen :(context) => Patient_Nav()
       },
     );
   }

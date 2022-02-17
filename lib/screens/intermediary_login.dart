@@ -3,11 +3,11 @@ import 'package:provider/provider.dart';
 
 import '../utils.dart';
 import '../routes.dart';
-import '../blocs/login.dart';
+import '../blocs/intermediaryLogBloc.dart';
 import '../networking/response.dart';
 import '../widgets/loading.dart';
 
-class LoginScreen extends StatelessWidget {
+class Intermed_login extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     String message = ModalRoute.of(context).settings.arguments;
@@ -24,15 +24,15 @@ class LoginScreen extends StatelessWidget {
           elevation: 0.0,
           backgroundColor: lightBlue,
           centerTitle: true,
-          title: Text('Login'),
+          title: Text('Intermediary-Login'),
         ),
         body: SafeArea(
           child: Center(
             child: ChangeNotifierProvider(
-              create: (context) => LoginBloc(),
+              create: (context) => InterLoginBloc(),
               child: Builder(
                 builder: (context) {
-                  LoginBloc loginBloc = Provider.of<LoginBloc>(context);
+                  InterLoginBloc loginBloc = Provider.of<InterLoginBloc>(context);
                   if (message != null) {
                     WidgetsBinding.instance.addPostFrameCallback(
                       (_) => Scaffold.of(context).showSnackBar(
@@ -54,7 +54,7 @@ class LoginScreen extends StatelessWidget {
                           case Status.COMPLETED:
                             WidgetsBinding.instance.addPostFrameCallback(
                               (_) => Navigator.pushReplacementNamed(
-                                  context, homeScreen),
+                                  context, patientnavScreen),
                             );
                             break;
                           case Status.ERROR:
@@ -78,7 +78,7 @@ class LoginScreen extends StatelessWidget {
 class _LoginForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    LoginBloc loginBloc = Provider.of<LoginBloc>(context);
+    InterLoginBloc loginBloc = Provider.of<InterLoginBloc>(context);
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20.0),
       child: Form(
@@ -88,14 +88,21 @@ class _LoginForm extends StatelessWidget {
           children: <Widget>[
             Expanded(child: SizedBox()),
             TextFormField(
-              controller: loginBloc.token,
+              controller: loginBloc.mobileNo,
               decoration: InputDecoration(
-                labelText: 'Token',
-                icon: Icon(Icons.lock),
+                labelText: 'Mobile No.',
+                icon: Icon(Icons.phone_android),
                 errorText: loginBloc.errorMessage,
               ),
             ),
-           
+            TextFormField(
+              controller: loginBloc.pass,
+              obscureText: true,
+              decoration: InputDecoration(
+                labelText: 'Password',
+                icon: Icon(Icons.lock),
+              ),
+            ),
             ButtonBar(
               alignment: MainAxisAlignment.end,
               children: <Widget>[
@@ -132,7 +139,7 @@ class _LoginForm extends StatelessWidget {
                     ),
                     color: blue,
                     onPressed: () {
-                      Navigator.pushNamed(context, registrationScreen);
+                      Navigator.pushNamed(context, intermediaryRegScreen);
                     },
                   ),
                 ],

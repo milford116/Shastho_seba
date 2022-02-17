@@ -18,3 +18,6 @@ String transactionsScreen = '/transactions';
 String scheduleScreen = '/schedules';
 String schdoctorScreen = '/schdoctor';
 String chambernewScreen = '/chambernew';
+String intermediaryRegScreen = '/intermed_reg';
+String intermediaryLogScreen = '/intermed_log';
+String patientnavScreen = '/patient_nav';

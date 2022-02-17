@@ -6,20 +6,19 @@ import 'baseBloc.dart';
 import '../networking/response.dart';
 import '../repositories/authentication.dart';
 
-class LoginBloc extends ChangeNotifier implements BaseBloc {
+class InterLoginBloc extends ChangeNotifier implements BaseBloc {
   AuthenticationRepository _authenticationRepository;
   StreamController _loginController;
   final formKey = GlobalKey<FormState>();
-  // final mobileNo = TextEditingController();
-  // final pass = TextEditingController();
-  final token = TextEditingController();
+  final mobileNo = TextEditingController();
+  final pass = TextEditingController();
   String errorMessage;
 
   StreamSink<Response<String>> get sink => _loginController.sink;
 
   Stream<Response<String>> get stream => _loginController.stream;
 
-  LoginBloc() {
+  InterLoginBloc() {
     _authenticationRepository = AuthenticationRepository();
     _loginController = StreamController<Response<String>>();
   }
@@ -27,8 +26,7 @@ class LoginBloc extends ChangeNotifier implements BaseBloc {
   void login() async {
     sink.add(Response.loading("Logging In"));
     try {
-      await _authenticationRepository.login(token.text);
-      print(token.runtimeType);
+      await _authenticationRepository.interlogin(mobileNo.text, pass.text);
       sink.add(Response.completed(''));
     } catch (e) {
       sink.add(Response.error(e.toString()));
@@ -38,7 +36,8 @@ class LoginBloc extends ChangeNotifier implements BaseBloc {
   @override
   void dispose() {
     _loginController?.close();
-    token.dispose();
+    mobileNo.dispose();
+    pass.dispose();
     super.dispose();
   }
 }

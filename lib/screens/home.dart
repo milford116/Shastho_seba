@@ -35,7 +35,7 @@ class _HomeScreenState extends State<HomeScreen> {
             children: [
               Icon(Icons.home),
               Text(
-                'Home',
+                'হোম',
                 style: L,
               ),
             ],
@@ -67,7 +67,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     crossAxisCount: 2,
                     children: <Widget>[
                       _Tile(
-                        title: 'Appointments Today ',
+                        title: 'আজকের অ্যাপয়েণ্টমেন্ট',
                         icon: Icons.schedule,
                         route: appointmentsTodayScreen,
                       ),
@@ -78,21 +78,22 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       _Tile(
                         title: 'Find Doctors',
+
                         icon: Icons.search,
                         route: findDoctorsScreen,
                       ),
                       _Tile(
-                        title: 'Appointments',
+                        title: 'অ্যাপয়েন্টমেন্ট',
                         icon: Icons.insert_invitation,
                         route: appointmentsScreen,
                       ),
                       _Tile(
-                        title: 'Profile',
+                        title: 'প্রোফাইল',
                         icon: Icons.person,
                         route: profileScreen,
                       ),
                       _Tile(
-                        title: 'Feedback',
+                        title: 'নিজের মতামত',
                         icon: Icons.feedback,
                         route: feedbackScreen,
                       ),

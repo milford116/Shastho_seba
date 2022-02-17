@@ -1,4 +1,4 @@
-import 'package:Shastho_Sheba/screens/chamber/chambernew.dart';
+import 'package:shastho_sheba/screens/chamber/chambernew.dart';
 import 'package:flutter/material.dart';
 
 import 'screens/splash.dart';

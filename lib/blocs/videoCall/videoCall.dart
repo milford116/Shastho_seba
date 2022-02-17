@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter_webrtc/webrtc.dart';
+import 'package:flutter_webrtc/flutter_webrtc.dart';
 
 import 'callState.dart';
 import '../chamber/signaling.dart';
@@ -48,7 +48,7 @@ class VideoCallBloc extends ChangeNotifier implements BaseBloc {
   void _initRenderders() {
     localRenderer.initialize();
     remoteRenderer.initialize();
-    remoteRenderer.objectFit = RTCVideoViewObjectFit.RTCVideoViewObjectFitCover;
+    // remoteRenderer.objectFit = RTCVideoViewObjectFit.RTCVideoViewObjectFitCover;
   }
 
   void receiveCall() {

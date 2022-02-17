@@ -1,9 +1,19 @@
-import 'package:flutter_webrtc/rtc_ice_candidate.dart';
-import 'package:flutter_webrtc/rtc_peerconnection.dart';
-import 'package:flutter_webrtc/rtc_peerconnection_factory.dart';
-import 'package:flutter_webrtc/media_stream.dart';
-import 'package:flutter_webrtc/get_user_media.dart';
-import 'package:flutter_webrtc/rtc_session_description.dart';
+// import 'package:flutter_webrtc/rtc_ice_candidate.dart';
+// import 'package:flutter_webrtc/rtc_peerconnection.dart';
+// import 'package:flutter_webrtc/rtc_peerconnection_factory.dart';
+// import 'package:flutter_webrtc/media_stream.dart';
+// import 'package:flutter_webrtc/get_user_media.dart';
+// import 'package:flutter_webrtc/rtc_session_description.dart';
+
+import 'dart:convert';
+import 'dart:async';
+import 'package:flutter_webrtc/flutter_webrtc.dart';
+import '../../utils/device_info.dart'
+if (dart.library.js) '../../utils/device_info_web.dart';
+
+import '../../utils/websocket.dart'
+if (dart.library.js) '../../utils/websocket_web.dart';
+import '../../utils/turn.dart' if (dart.library.js) '../../utils/turn_web.dart';
 
 enum SignalingState {
   CallStateNew,
@@ -34,7 +44,13 @@ class Signaling {
 
   Map<String, dynamic> _iceServers = {
     'iceServers': [
-       {'url': 'stun:stun.l.google.com:19302'},
+
+       // {'url': 'stun:124.64.206.224:8800'},
+       {'url':'turn:numb.viagenie.ca',
+        'username':'elizaan199834@gmail.com',
+         'credential':'fluttercd8'},
+
+      // {'url': 'stun:stun.l.google.com:19302'},
       // {
       //   'url': 'turn:numb.viagenie.ca',
       //   'username': 'haidertameem@gmail.com',
@@ -130,10 +146,20 @@ class Signaling {
   }
 
   void mute(bool mute) {
+
+
     _localStream
         .getAudioTracks()
-        .forEach((element) => element.setMicrophoneMute(mute));
+        .forEach((element) => element.enabled = !element.enabled);
+
   }
+
+  // void muteMic() {
+  //   if (_localStream != null) {
+  //     bool enabled = _localStream!.getAudioTracks()[0].enabled;
+  //     _localStream!.getAudioTracks()[0].enabled = !enabled;
+  //   }
+  // }
 
   void toggleVideo(bool toggle) {
     _localStream
@@ -175,17 +201,40 @@ class Signaling {
         'chamberId': chamberId,
         'type': 'candidate',
         'candidate': {
-          'sdpMLineIndex': candidate.sdpMlineIndex,
+          'sdpMLineIndex': candidate.sdpMLineIndex,
           'sdpMid': candidate.sdpMid,
           'candidate': candidate.candidate,
         },
       });
     };
 
+    // pc.onIceCandidate = (candidate) async {
+    //   if (candidate == null) {
+    //     print('onIceCandidate: complete!');
+    //     return;
+    //   }
+    //   // This delay is needed to allow enough time to try an ICE candidate
+    //   // before skipping to the next one. 1 second is just an heuristic value
+    //   // and should be thoroughly tested in your own environment.
+    //   await Future.delayed(
+    //       const Duration(seconds: 1),
+    //           () => _send('candidate', {
+    //         'to': peerId,
+    //         'from': _selfId,
+    //         'candidate': {
+    //           'sdpMLineIndex': candidate.sdpMlineIndex,
+    //           'sdpMid': candidate.sdpMid,
+    //           'candidate': candidate.candidate,
+    //         },
+    //         'session_id': sessionId,
+    //       }));
+    // };
+
     pc.onIceConnectionState = (state) {};
 
     pc.onAddStream = (stream) {
       if (this.onAddRemoteStream != null) this.onAddRemoteStream(stream);
+
       //_remoteStreams.add(stream);
     };
 
@@ -212,8 +261,11 @@ class Signaling {
     //     'optional': [],
     //   }
     // };
-
-    MediaStream stream = await navigator.getUserMedia(mediaConstraints);
+    // MediaStream stream = userScreen
+    //     ? await navigator.mediaDevices.getDisplayMedia(mediaConstraints)
+    //     : await navigator.mediaDevices.getUserMedia(mediaConstraints);
+    // onLocalStream?.call(stream);
+    MediaStream stream = await navigator.mediaDevices.getUserMedia(mediaConstraints);
     if (this.onLocalStream != null) {
       this.onLocalStream(stream);
     }

@@ -1,5 +1,5 @@
-import 'package:shastho_sheba/models/Schedoctor.dart';
-import 'package:shastho_sheba/models/doctor.dart';
+import 'package:Shastho_Sheba/models/Schedoctor.dart';
+import 'package:Shastho_Sheba/models/doctor.dart';
 
 import '../networking/api.dart';
 import '../models/schedule.dart';

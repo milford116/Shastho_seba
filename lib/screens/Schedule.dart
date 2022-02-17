@@ -1,8 +1,8 @@
-import 'package:shastho_sheba/blocs/schedule.dart';
-import 'package:shastho_sheba/models/Schedoctor.dart';
-import 'package:shastho_sheba/models/doctor.dart';
-import 'package:shastho_sheba/models/schedule.dart';
-import 'package:shastho_sheba/repositories/schedule.dart';
+import 'package:Shastho_Sheba/blocs/schedule.dart';
+import 'package:Shastho_Sheba/models/Schedoctor.dart';
+import 'package:Shastho_Sheba/models/doctor.dart';
+import 'package:Shastho_Sheba/models/schedule.dart';
+import 'package:Shastho_Sheba/repositories/schedule.dart';
 import 'package:flutter/cupertino.dart';
 import '../utils.dart';
 import 'package:flutter/material.dart';
@@ -164,14 +164,14 @@ class ScheduleCard extends StatelessWidget {
                           height: 30.0,
                         ),
                         Text(
-                          'Time_start: ${formatter.format(_schedule.start.toUtc())}',
+                          'Time_start: ${formatter.format(_schedule.start)}',
                           style: M,
                         ),
                         SizedBox(
                           height: 10.0,
                         ),
                         Text(
-                          'Time_end:${formatter.format(_schedule.end.toUtc())}',
+                          'Time_end:${formatter.format(_schedule.end)}',
                           style: M,
                         ),
                         SizedBox(

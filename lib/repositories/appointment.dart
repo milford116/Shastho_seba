@@ -1,4 +1,4 @@
-import 'package:shastho_sheba/models/schedule.dart';
+import 'package:Shastho_Sheba/models/schedule.dart';
 
 import '../networking/api.dart';
 import '../models/appointment.dart';

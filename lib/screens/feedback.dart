@@ -1,4 +1,4 @@
-import 'package:Shastho_Sheba/blocs/feedback.dart';
+import 'package:shastho_sheba/blocs/feedback.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

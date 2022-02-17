@@ -1,4 +1,4 @@
-import 'package:shastho_sheba/models/doctor.dart';
+import 'package:Shastho_Sheba/models/doctor.dart';
 
 class Schedule {
   final String id;

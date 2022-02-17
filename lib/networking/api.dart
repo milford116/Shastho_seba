@@ -22,7 +22,7 @@ class Api {
       });
     }
     return _response(await http.get(
-      Uri.parse(baseUrl + url),
+      baseUrl + url,
       headers: headers,
     ));
   }
@@ -38,7 +38,7 @@ class Api {
       });
     }
     return _response(await http.post(
-      Uri.parse(baseUrl + url),
+      baseUrl + url,
       headers: headers,
       body: jsonEncode(object),
     ));

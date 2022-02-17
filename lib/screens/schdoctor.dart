@@ -1,5 +1,4 @@
 import 'package:shastho_sheba/models/doctor.dart';
-import 'package:shastho_sheba/repositories/appointment.dart';
 import 'package:shastho_sheba/repositories/doctor.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -10,8 +9,6 @@ import '../../routes.dart';
 class Schdoctor extends StatelessWidget {
   @override
   DoctorsRepository _doctorsRepository = DoctorsRepository();
-  AppointmentsRepository _appointmentsRepository= AppointmentsRepository();
-  var scheduleid;
   Future<List<Doctor>> fetchdoctor(String name) async {
     final list = await _doctorsRepository.doctorlist(60, 0, name);
 
@@ -69,7 +66,7 @@ class Schdoctor extends StatelessWidget {
                               itemBuilder: (context, index) {
                                 return Padding(
                                   padding:
-                                      const EdgeInsets.symmetric(vertical: 5.0),
+                                  const EdgeInsets.symmetric(vertical: 5.0),
                                   child: Card(
                                     elevation: 0.1,
                                     shadowColor: Colors.black12,
@@ -78,7 +75,7 @@ class Schdoctor extends StatelessWidget {
                                       padding: EdgeInsets.all(5.0),
                                       decoration: BoxDecoration(
                                         borderRadius:
-                                            BorderRadius.circular(5.0),
+                                        BorderRadius.circular(5.0),
                                         color: Colors.transparent,
                                         border: Border.all(
                                           color: blue,
@@ -93,7 +90,7 @@ class Schdoctor extends StatelessWidget {
                                             child: CircleAvatar(
                                               radius: 38.0,
                                               backgroundColor:
-                                                  Colors.transparent,
+                                              Colors.transparent,
                                               // child: ShowImage(
                                               //   response
                                               //       .data[index].image,
@@ -110,14 +107,14 @@ class Schdoctor extends StatelessWidget {
                                           Expanded(
                                             child: Column(
                                               crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
+                                              CrossAxisAlignment.start,
                                               mainAxisSize: MainAxisSize.min,
                                               children: <Widget>[
                                                 Text(
                                                   'Dr. ${response[index].name}',
                                                   style: M.copyWith(
                                                       fontWeight:
-                                                          FontWeight.bold),
+                                                      FontWeight.bold),
                                                 ),
                                                 Text(
                                                   response[index].designation,
@@ -128,34 +125,20 @@ class Schdoctor extends StatelessWidget {
                                                   style: M,
                                                 ),
                                                 FlatButton(
-                                                    onPressed: () {
-                                                      Navigator.pushNamed(
-                                                        context,
-                                                        chambernewScreen,
-                                                        arguments:
-                                                            map['schedule_id'],
-                                                      );
-                                                    },
-                                                    child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: <Widget>[
-          Text('Chamber')
-        ],
-      ),),
-                                                // TextButton(
-                                                //   style: TextButton.styleFrom(
-                                                //     padding: const EdgeInsets.all(16.0),
-                                                //     primary: Colors.white,
-                                                //     backgroundColor: Colors.blueAccent,
-                                                //     textStyle: const TextStyle(fontSize: 20),
-                                                //   ),
-                                                //   onPressed: () {
-                                                //    _appointmentsRepository.createAppointment(
-                                                //        map['schedule_id'] ,
-                                                //        doctor_no, DateTime.now());
-                                                //   },
-                                                //   child: const Text('click'),
-                                                // ),
+                                                  onPressed: () {
+                                                    Navigator.pushNamed(
+                                                      context,
+                                                      chambernewScreen,
+                                                      arguments:
+                                                      map['schedule_id'],
+                                                    );
+                                                  },
+                                                  child: Column(
+                                                    mainAxisSize: MainAxisSize.min,
+                                                    children: <Widget>[
+                                                      Text('Chamber')
+                                                    ],
+                                                  ),)
                                               ],
                                             ),
                                           ),

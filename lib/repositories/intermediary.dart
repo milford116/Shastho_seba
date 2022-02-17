@@ -1,5 +1,5 @@
 import 'dart:io';
-import 'package:Shastho_Sheba/models/intermediary.dart';
+import 'package:shastho_sheba/models/intermediary.dart';
 
 import '../networking/api.dart';
 

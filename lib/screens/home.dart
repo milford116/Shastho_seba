@@ -35,7 +35,7 @@ class _HomeScreenState extends State<HomeScreen> {
             children: [
               Icon(Icons.home),
               Text(
-                'হোম',
+                'Home',
                 style: L,
               ),
             ],
@@ -49,7 +49,7 @@ class _HomeScreenState extends State<HomeScreen> {
             builder: (context) {
               if (message != null) {
                 WidgetsBinding.instance.addPostFrameCallback(
-                  (_) => Scaffold.of(context).showSnackBar(
+                      (_) => Scaffold.of(context).showSnackBar(
                     SnackBar(
                       content: Text(message),
                       duration: Duration(seconds: 2),
@@ -67,7 +67,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     crossAxisCount: 2,
                     children: <Widget>[
                       _Tile(
-                        title: 'আজকের অ্যাপয়েণ্টমেন্ট',
+                        title: 'Appointments Today ',
                         icon: Icons.schedule,
                         route: appointmentsTodayScreen,
                       ),
@@ -78,22 +78,21 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       _Tile(
                         title: 'Find Doctors',
-
                         icon: Icons.search,
                         route: findDoctorsScreen,
                       ),
                       _Tile(
-                        title: 'অ্যাপয়েন্টমেন্ট',
+                        title: 'Appointments',
                         icon: Icons.insert_invitation,
                         route: appointmentsScreen,
                       ),
                       _Tile(
-                        title: 'প্রোফাইল',
+                        title: 'Profile',
                         icon: Icons.person,
                         route: profileScreen,
                       ),
                       _Tile(
-                        title: 'নিজের মতামত',
+                        title: 'Feedback',
                         icon: Icons.feedback,
                         route: feedbackScreen,
                       ),

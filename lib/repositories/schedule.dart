@@ -17,7 +17,7 @@ class ScheduleRepository {
   }
 
   Future<List<Schedule>> getScheduletoday() async {
-    final data = await _api.get('/doctor/get/schedulenew', true);
+    final data = await _api.get('/patient/get/schedulenew', true);
     //print('here');
 
     // list.add( data['doctor']

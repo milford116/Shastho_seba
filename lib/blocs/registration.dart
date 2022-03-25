@@ -43,6 +43,7 @@ class RegistrationBloc extends ChangeNotifier implements BaseBloc {
     _authenticationRepository = AuthenticationRepository();
     _registrationController = StreamController<Response<String>>();
     validator = Validator(pass);
+    //validator = Validator();
   }
 
   void register() async {
@@ -52,7 +53,7 @@ class RegistrationBloc extends ChangeNotifier implements BaseBloc {
         mobileNo: mobileNo.text,
         dob: selectedDate,
         sex: sex,
-        password: pass.text,
+        // password: pass.text,
       );
       sink.add(Response.loading('Please Wait'));
       try {
@@ -68,7 +69,7 @@ class RegistrationBloc extends ChangeNotifier implements BaseBloc {
   void dispose() {
     _registrationController?.close();
     dob.dispose();
-    pass.dispose();
+    // pass.dispose();
     name.dispose();
     mobileNo.dispose();
     super.dispose();
@@ -87,12 +88,12 @@ class Validator {
     return null;
   }
 
-  String mobileNoValidator(String value) {
-    if (value.isEmpty) {
-      return "Please enter your Mobile Number";
-    }
-    return null;
-  }
+  // String mobileNoValidator(String value) {
+  //   if (value.isEmpty) {
+  //     return "Please enter your Mobile Number";
+  //   }
+  //   return null;
+  // }
 
   String dobValidator(String value) {
     if (value.isEmpty) {
@@ -101,17 +102,17 @@ class Validator {
     return null;
   }
 
-  String passwordValidator(String value) {
-    if (value.isEmpty) {
-      return "Please provide a password";
-    }
-    return null;
-  }
+  // String passwordValidator(String value) {
+  //   if (value.isEmpty) {
+  //     return "Please provide a password";
+  //   }
+  //   return null;
+  // }
 
-  String confirmPasswordValidator(String value) {
-    if (value != pass.text) {
-      return 'Password does not match';
-    }
-    return null;
-  }
+  // String confirmPasswordValidator(String value) {
+  //   if (value != pass.text) {
+  //     return 'Password does not match';
+  //   }
+  //   return null;
+  // }
 }

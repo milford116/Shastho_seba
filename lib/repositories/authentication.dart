@@ -25,11 +25,11 @@ class AuthenticationRepository {
     }
     final data =
         await _api.post('/patient/verify/token', false, {'token': jwt});
-    return data['mobile_no'];
+    return data['patient_token'];
   }
 
   Future<void> register(Patient patient) async {
-    await _api.post('/patient/post/register', false, patient);
+    await _api.post('/patient/post/register', true, patient);
   }
 
   Future<void> logOut() async {

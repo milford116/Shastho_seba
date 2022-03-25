@@ -1,4 +1,5 @@
 import 'package:shastho_sheba/models/doctor.dart';
+import 'package:shastho_sheba/repositories/appointment.dart';
 import 'package:shastho_sheba/repositories/doctor.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -9,6 +10,7 @@ import '../../routes.dart';
 class Schdoctor extends StatelessWidget {
   @override
   DoctorsRepository _doctorsRepository = DoctorsRepository();
+  AppointmentsRepository _appointmentsRepository=AppointmentsRepository();
   Future<List<Doctor>> fetchdoctor(String name) async {
     final list = await _doctorsRepository.doctorlist(60, 0, name);
 
@@ -19,6 +21,8 @@ class Schdoctor extends StatelessWidget {
     Map<String, dynamic> map = ModalRoute.of(context).settings.arguments;
     final String doctor_no = map['title'];
     print(doctor_no);
+    // final DateTime time=DateTime.now();
+    // print(time);
 
     return Container(
       decoration: BoxDecoration(
@@ -132,6 +136,8 @@ class Schdoctor extends StatelessWidget {
                                                       arguments:
                                                       map['schedule_id'],
                                                     );
+                                                    _appointmentsRepository.createAppointment
+                                                      (map['schedule_id'], doctor_no, DateTime.now());
                                                   },
                                                   child: Column(
                                                     mainAxisSize: MainAxisSize.min,

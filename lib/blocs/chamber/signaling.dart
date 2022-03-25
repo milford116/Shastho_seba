@@ -46,9 +46,13 @@ class Signaling {
     'iceServers': [
 
        // {'url': 'stun:124.64.206.224:8800'},
-       {'url':'turn:numb.viagenie.ca',
-        'username':'elizaan199834@gmail.com',
-         'credential':'fluttercd8'},
+       // {'url':'turn:numb.viagenie.ca',
+       //  'username':'elizaan199834@gmail.com',
+       //   'credential':'fluttercd8'},
+      {'url':'turn:turn.shasthosheba.live:3478',
+        'username':'shastho_sheba',
+        'credential':'shastho_sheba12'},
+
 
       // {'url': 'stun:stun.l.google.com:19302'},
       // {

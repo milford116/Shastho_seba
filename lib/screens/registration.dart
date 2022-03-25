@@ -22,7 +22,7 @@ class Registration extends StatelessWidget {
           elevation: 0.0,
           backgroundColor: lightBlue,
           centerTitle: true,
-          title: Text('Registration'),
+          title: Text('Patient Registration'),
         ),
         body: SafeArea(
           child: Center(
@@ -152,7 +152,7 @@ class _RegistrationForm extends StatelessWidget {
                   labelText: 'Mobile No',
                   icon: Icon(Icons.phone_android),
                 ),
-                validator: registrationBloc.validator.mobileNoValidator,
+                // validator: registrationBloc.validator.mobileNoValidator,
               ),
               SizedBox(
                 height: 20.0,
@@ -191,29 +191,29 @@ class _RegistrationForm extends StatelessWidget {
               SizedBox(
                 height: 20.0,
               ),
-              TextFormField(
-                controller: registrationBloc.pass,
-                obscureText: true,
-                decoration: InputDecoration(
-                  labelText: 'Password',
-                  icon: Icon(Icons.lock),
-                ),
-                validator: registrationBloc.validator.passwordValidator,
-              ),
-              SizedBox(
-                height: 20.0,
-              ),
-              TextFormField(
-                obscureText: true,
-                decoration: InputDecoration(
-                  labelText: 'Confirm Password',
-                  icon: Icon(Icons.lock),
-                ),
-                validator: registrationBloc.validator.confirmPasswordValidator,
-              ),
-              SizedBox(
-                height: 50.0,
-              ),
+              // TextFormField(
+              //   controller: registrationBloc.pass,
+              //   obscureText: true,
+              //   decoration: InputDecoration(
+              //     labelText: 'Password',
+              //     icon: Icon(Icons.lock),
+              //   ),
+              //   validator: registrationBloc.validator.passwordValidator,
+              // ),
+              // SizedBox(
+              //   height: 20.0,
+              // ),
+              // TextFormField(
+              //   obscureText: true,
+              //   decoration: InputDecoration(
+              //     labelText: 'Confirm Password',
+              //     icon: Icon(Icons.lock),
+              //   ),
+              //   validator: registrationBloc.validator.confirmPasswordValidator,
+              // ),
+              // SizedBox(
+              //   height: 50.0,
+              // ),
               FlatButton(
                 child: Text(
                   'Register',

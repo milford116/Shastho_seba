@@ -7,6 +7,7 @@ class Schedule {
   final DateTime end;
   final double fee;
   final String doc_mobile_no;
+  final String doc_name;
   //Doctor doctor;
   static Map<int, String> _map = {
     1: 'Monday',
@@ -18,7 +19,7 @@ class Schedule {
     7: 'Sunday'
   };
 
-  Schedule({this.id, this.weekDay, this.start, this.end, this.fee,this.doc_mobile_no});
+  Schedule({this.id, this.weekDay, this.start, this.end, this.fee,this.doc_mobile_no, this.doc_name});
 
   static double _parseDouble(dynamic value) {
     if (value is int) {
@@ -37,6 +38,7 @@ class Schedule {
             : DateTime.now(),
         fee = _parseDouble(json['fee']),
         doc_mobile_no=json['doc_mobile_no'],
+        doc_name =json['doc_name'],
 
         //  doctor = Doctor.fromJson(json['doc_mobile_no']),
 

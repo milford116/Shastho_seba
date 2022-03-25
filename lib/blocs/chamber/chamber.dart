@@ -23,6 +23,7 @@ class ChamberBloc extends ChangeNotifier implements BaseBloc {
   // }
 
 ChamberBloc(String id) {
+    print(id);
     messenger = Messenger(api.baseUrl, this);
     messenger.init(id);
   }

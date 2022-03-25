@@ -43,7 +43,7 @@ class Schedulescreen extends StatelessWidget {
           ),
         ),
         body: SafeArea(
-         
+
           child: FutureBuilder<List<Schedule>>(
               future: fetchschedule(),
               builder: (BuildContext context, AsyncSnapshot snapshot) {
@@ -87,7 +87,7 @@ class Schedulescreen extends StatelessWidget {
                               itemBuilder: (context, index) {
                                 return Padding(
                                   padding:
-                                      const EdgeInsets.symmetric(vertical: 5.0),
+                                  const EdgeInsets.symmetric(vertical: 5.0),
                                   child: ScheduleCard(
                                     response[index],
                                   ),
@@ -140,12 +140,13 @@ class ScheduleCard extends StatelessWidget {
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                 _Tile(
-                        title: _schedule.doc_mobile_no,
-                        s:_schedule.id,
-                        route: schdoctorScreen,
-                      ),
-                
+                _Tile(
+                  title: _schedule.doc_mobile_no,
+                  s:_schedule.id,
+                  name: _schedule.doc_name,
+                  route: schdoctorScreen,
+                ),
+
 
                 SizedBox(
                   width: 20.0,
@@ -191,30 +192,31 @@ class _Tile extends StatelessWidget {
   final String title;
   final String s;
   final String route;
+  final String name;
 
-  _Tile({this.title, this.s, this.route});
+  _Tile({this.title, this.s, this.route, this.name});
 
   @override
   Widget build(BuildContext context) {
     return FlatButton(
       onPressed: () {
-       // Navigator.of(context).pushNamed(route);
-      
+        // Navigator.of(context).pushNamed(route);
+
         Navigator.pushNamed(
           context,
           schdoctorScreen,
           arguments: {'title':this.title,
-          'schedule_id':this.s},
+            'schedule_id':this.s},
         );
-      
+
       },
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           Text(
-           s,
-           style: L.copyWith(color:Colors.green), 
-           textAlign: TextAlign.center,
+            name,
+            style: L.copyWith(color:Colors.green),
+            textAlign: TextAlign.center,
           ),
           // Text(
           //   title,

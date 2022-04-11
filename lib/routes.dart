@@ -1,6 +1,4 @@
 String splashScreen = '/splash';
-String loginScreen = '/login';
-String registrationScreen = '/registration';
 String homeScreen = '/home';
 String appointmentsTodayScreen = '/appointmentsToday';
 String scheduletoday = '/scheduletoday';
@@ -20,4 +18,6 @@ String schdoctorScreen = '/schdoctor';
 String chambernewScreen = '/chambernew';
 String intermediaryRegScreen = '/intermed_reg';
 String intermediaryLogScreen = '/intermed_log';
+String patientLogScreen = '/login';
+String patientRegScreen = '/registration';
 String patientnavScreen = '/patient_nav';

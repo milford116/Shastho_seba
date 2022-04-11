@@ -132,7 +132,7 @@ class _LoginForm extends StatelessWidget {
                     ),
                     color: blue,
                     onPressed: () {
-                      Navigator.pushNamed(context, registrationScreen);
+                      Navigator.pushNamed(context, patientRegScreen);
                     },
                   ),
                 ],

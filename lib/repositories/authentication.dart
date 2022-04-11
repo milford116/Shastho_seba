@@ -33,9 +33,10 @@ class AuthenticationRepository {
   }
 
   Future<void> logOut() async {
-    await _api.post('/patient/post/logout', true, {});
+    final data = await _api.post('/patient/post/logout', true, {});
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     sharedPreferences.remove('jwt');
+    sharedPreferences.setString('jwt', data['token']);
   }
 
   // for intermediary part
@@ -45,6 +46,7 @@ class AuthenticationRepository {
         {'mobile_no': mobileNo, 'password': password});
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     sharedPreferences.setString('jwt', data['token']);
+
   }
 
   Future<String> intercheckPreviousLogin() async {

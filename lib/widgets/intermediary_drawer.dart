@@ -6,10 +6,10 @@ import '../repositories/authentication.dart';
 import 'dialogs.dart';
 
 enum Selected {
-  home,
-  appointmentsToday,
+  patientTokenList,
+  patientRegister,
+  patientLogin,
   findDoctors,
-  appointments,
   feedback,
   profile,
   none,
@@ -43,20 +43,32 @@ class MyDrawer extends StatelessWidget {
               thickness: 2.0,
             ),
             _Tile(
-              title: 'Home',
+              title: 'Patient Token List',
               icon: Icons.home,
-              selected: selected == Selected.home,
-              route: homeScreen,
+              selected: selected == Selected.patientTokenList,
+              route: patientnavScreen,
+            ),
+
+
+            Divider(
+              color: Colors.white,
+              thickness: 2.0,
+            ),
+            _Tile(
+              title: 'Patient Login',
+              icon: Icons.person,
+              selected: selected == Selected.patientLogin,
+              route: patientLogScreen,
             ),
             Divider(
               color: Colors.white,
               thickness: 2.0,
             ),
             _Tile(
-              title: 'Appointments Today',
-              icon: Icons.schedule,
-              selected: selected == Selected.appointmentsToday,
-              route: appointmentsTodayScreen,
+              title: 'Patient Register',
+              icon: Icons.person,
+              selected: selected == Selected.patientRegister,
+              route: patientRegScreen,
             ),
             Divider(
               color: Colors.white,
@@ -72,16 +84,7 @@ class MyDrawer extends StatelessWidget {
               color: Colors.white,
               thickness: 2.0,
             ),
-            _Tile(
-              title: 'Appointments',
-              icon: Icons.insert_invitation,
-              selected: selected == Selected.appointments,
-              route: appointmentsScreen,
-            ),
-            Divider(
-              color: Colors.white,
-              thickness: 2.0,
-            ),
+
             _Tile(
               title: 'Profile',
               icon: Icons.person,
@@ -173,17 +176,17 @@ class _Tile extends StatelessWidget {
 
 void _logOut(BuildContext context) async {
   AuthenticationRepository authenticationRepository =
-      AuthenticationRepository();
+  AuthenticationRepository();
   bool confirmation =
-      await confirmationDialog(context, 'Are you sure you want to log out?');
+  await confirmationDialog(context, 'Are you sure you want to log out?');
   if (!confirmation) {
     return;
   }
   try {
     showProgressDialog(context, 'Logging Out');
-    await authenticationRepository.logOut();
+    await authenticationRepository.interlogOut();
     hideProgressDialog();
-    Navigator.pushNamedAndRemoveUntil(context, patientnavScreen, (route) => false);
+    Navigator.pushNamedAndRemoveUntil(context, intermediaryLogScreen, (route) => false);
   } catch (e) {
     hideProgressDialog();
     failureDialog(context, e.toString());

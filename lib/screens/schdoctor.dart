@@ -6,6 +6,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import '../../widgets/image.dart';
 import '../../utils.dart';
 import '../../routes.dart';
+import '../networking/response.dart';
 
 class Schdoctor extends StatelessWidget {
   @override
@@ -129,15 +130,16 @@ class Schdoctor extends StatelessWidget {
                                                   style: M,
                                                 ),
                                                 FlatButton(
-                                                  onPressed: () {
+                                                  onPressed: () async {
                                                     Navigator.pushNamed(
                                                       context,
                                                       chambernewScreen,
                                                       arguments:
                                                       map['schedule_id'],
                                                     );
-                                                    _appointmentsRepository.createAppointment
-                                                      (map['schedule_id'], doctor_no, DateTime.now());
+                                                    int sn = await _appointmentsRepository.createAppointment
+                                                      (map['schedule_id'], doctor_no, DateTime.now()) ;
+                                                    print(sn);
                                                   },
                                                   child: Column(
                                                     mainAxisSize: MainAxisSize.min,

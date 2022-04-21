@@ -53,6 +53,9 @@ class AppointmentsRepository {
       'doc_mobile_no': mobileNo,
       'appointment_date_time': dateTime.toString(),
     });
+
+    print('inside of api');
+    print(data['serial_no']);
     return data['serial_no'];
   }
 

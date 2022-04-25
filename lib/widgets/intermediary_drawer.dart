@@ -11,7 +11,7 @@ enum Selected {
   patientLogin,
   findDoctors,
   feedback,
-  profile,
+  interprofile,
   none,
 }
 
@@ -88,8 +88,8 @@ class MyDrawer extends StatelessWidget {
             _Tile(
               title: 'Profile',
               icon: Icons.person,
-              selected: selected == Selected.profile,
-              route: profileScreen,
+              selected: selected == Selected.interprofile,
+              route: intermediaryScreen,
             ),
             Divider(
               color: Colors.white,
@@ -164,8 +164,8 @@ class _Tile extends StatelessWidget {
         ),
         onTap: () {
           Navigator.of(context)
-              .pushNamedAndRemoveUntil(homeScreen, (_) => false);
-          if (route != homeScreen) {
+              .pushNamedAndRemoveUntil(patientnavScreen, (_) => false);
+          if (route != patientnavScreen) {
             Navigator.of(context).pushNamed(route);
           }
         },

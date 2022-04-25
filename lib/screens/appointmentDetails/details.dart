@@ -34,25 +34,25 @@ class AppointmentDetails extends StatelessWidget {
         drawer: SafeArea(
           child: MyDrawer(Selected.none),
         ),
-        floatingActionButton: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            FloatingActionButton(
-              child: Icon(Icons.exit_to_app),
-              onPressed: () {
-                Navigator.pushNamed(
-                  context,
-                  chamberScreen,
-                  arguments: appointment,
-                );
-              },
-            ),
-            Text(
-              'Chamber',
-              style: TextStyle(color: Colors.white),
-            ),
-          ],
-        ),
+        // floatingActionButton: Column(
+        //   mainAxisSize: MainAxisSize.min,
+        //   children: [
+        //     FloatingActionButton(
+        //       child: Icon(Icons.exit_to_app),
+        //       onPressed: () {
+        //         Navigator.pushNamed(
+        //           context,
+        //           chamberScreen,
+        //           arguments: appointment,
+        //         );
+        //       },
+        //     ),
+        //     Text(
+        //       'Chamber',
+        //       style: TextStyle(color: Colors.white),
+        //     ),
+        //   ],
+        // ),
         body: SafeArea(
           child: ChangeNotifierProvider(
             create: (context) => TimelineBloc(appointment),
@@ -90,18 +90,18 @@ class AppointmentDetails extends StatelessWidget {
                                         _appointment.id,
                                         response.data.length == 1,
                                       ),
-                                      onViewTransactions: () async {
-                                        var due = await Navigator.pushNamed(
-                                          context,
-                                          transactionsScreen,
-                                          arguments: {
-                                            'appointmentId': _appointment.id,
-                                            'due': _appointment.due,
-                                          },
-                                        );
-                                        timelineBloc.updateDue(
-                                            due, _appointment.id);
-                                      },
+                                      // onViewTransactions: () async {
+                                      //   var due = await Navigator.pushNamed(
+                                      //     context,
+                                      //     transactionsScreen,
+                                      //     arguments: {
+                                      //       'appointmentId': _appointment.id,
+                                      //       'due': _appointment.due,
+                                      //     },
+                                      //   );
+                                      //   timelineBloc.updateDue(
+                                      //       due, _appointment.id);
+                                      // },
                                       onShowPrescription: () {
                                         Navigator.pushNamed(
                                           context,

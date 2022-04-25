@@ -22,12 +22,12 @@ class Tile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final String assetName = 'images/icons/taka.svg';
-    final Widget svg = SvgPicture.asset(
-      assetName,
-      height: 5,
-      width: 5,
-    );
+    // final String assetName = 'images/icons/taka.svg';
+    // final Widget svg = SvgPicture.asset(
+    //   assetName,
+    //   height: 5,
+    //   width: 5,
+    // );
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
@@ -106,25 +106,25 @@ class Tile extends StatelessWidget {
                   children: [
                     Column(
                       children: [
-                        Container(
-                          padding: EdgeInsets.all(5.0),
-                          height: _iconSize,
-                          width: _iconSize,
-                          decoration: BoxDecoration(
-                              shape: BoxShape.circle, color: Colors.white),
-                          child: FittedBox(
-                            child: GestureDetector(
-                              onTap: onViewTransactions,
-                              child: svg,
-                            ),
-                          ),
-                        ),
-                        Text(
-                          'Transactions',
-                          style: XS.copyWith(
-                            color: Colors.white,
-                          ),
-                        ),
+                        // Container(
+                        //   padding: EdgeInsets.all(5.0),
+                        //   height: _iconSize,
+                        //   width: _iconSize,
+                        //   decoration: BoxDecoration(
+                        //       shape: BoxShape.circle, color: Colors.white),
+                        //   child: FittedBox(
+                        //     child: GestureDetector(
+                        //       onTap: onViewTransactions,
+                        //       child: svg,
+                        //     ),
+                        //   ),
+                        // ),
+                        // Text(
+                        //   'Transactions',
+                        //   style: XS.copyWith(
+                        //     color: Colors.white,
+                        //   ),
+                        // ),
                       ],
                     ),
                     if (appointment.status == AppointmentStatus.Finished)

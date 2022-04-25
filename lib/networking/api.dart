@@ -17,7 +17,10 @@ class Api {
     };
     if (authorization) {
       SharedPreferences prefs = await SharedPreferences.getInstance();
+      print("authorized?");
+      print(prefs.getString('jwt'));
       headers.addAll({
+
         'Authorization': 'Bearer ' + prefs.getString('jwt'),
       });
     }

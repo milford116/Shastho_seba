@@ -6,6 +6,7 @@ class Patient {
   final String sex;
   // final String password;
   final String image;
+  final String patient_token;
 
   Patient(
       {this.id,
@@ -14,7 +15,9 @@ class Patient {
       this.dob,
       this.sex,
       // this.password,
-      this.image});
+      this.image,
+      this.patient_token
+      });
 
   Patient.fromJson(Map<String, dynamic> json)
       : id = json['_id'],
@@ -22,7 +25,8 @@ class Patient {
         mobileNo = json['mobile_no'],
         dob = DateTime.parse(json['date_of_birth']),
         image = json['image_link'].toString(),
-        sex = json['sex'];
+        sex = json['sex'],
+        patient_token = json['patient_token'];
         // password = json['password'];
 
   Map<String, dynamic> toJson() => {
@@ -31,6 +35,7 @@ class Patient {
         'date_of_birth': dob.toString(),
         'sex': sex,
         'image': image,
+         'patient_token':patient_token,
         // 'password': password
       };
 }

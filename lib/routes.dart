@@ -12,6 +12,7 @@ String doctorProfileScreen = '/doctorProfile';
 String chamberScreen = '/chamber';
 String videoCallScreen = '/videoCall';
 String profileScreen = '/profile';
+String intermediaryScreen ='/intermediaryProfile';
 String transactionsScreen = '/transactions';
 String scheduleScreen = '/schedules';
 String schdoctorScreen = '/schdoctor';

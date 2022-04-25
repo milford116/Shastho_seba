@@ -14,6 +14,7 @@ import 'screens/findDoctors/findDoctors.dart';
 import 'screens/findDoctors/doctorProfile.dart';
 import 'screens/showPrescription.dart';
 import 'screens/chamber/chamber.dart';
+import 'screens/intermediaryProfile.dart';
 import 'screens/videoCall.dart';
 import 'screens/profile.dart';
 import 'screens/transactions.dart';
@@ -67,7 +68,8 @@ class MyApp extends StatelessWidget {
         chambernewScreen:(context) => ChambernewScreen(),
         intermediaryRegScreen:(context)=> Intermed_reg(),
         intermediaryLogScreen:(context) => Intermed_login(),
-        patientnavScreen :(context) => Patient_Nav()
+        patientnavScreen :(context) => Patient_Nav(),
+        intermediaryScreen :(context) => IntermediaryScreen(),
       },
     );
   }

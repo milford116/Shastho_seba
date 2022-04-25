@@ -7,6 +7,7 @@ class PatientRepository {
 
   Future<Patient> getDetails() async {
     final data = await _api.get('/patient/get/details', true);
+    print(data['patient']);
     return Patient.fromJson(data['patient']);
   }
 
@@ -15,4 +16,5 @@ class PatientRepository {
         await _api.uploadImage('/patient/upload/profile_picture', image);
     return Patient.fromJson(data['patient']);
   }
+
 }

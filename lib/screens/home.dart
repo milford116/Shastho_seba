@@ -66,11 +66,11 @@ class _HomeScreenState extends State<HomeScreen> {
                     shrinkWrap: true,
                     crossAxisCount: 2,
                     children: <Widget>[
-                      _Tile(
-                        title: 'Appointments Today ',
-                        icon: Icons.schedule,
-                        route: appointmentsTodayScreen,
-                      ),
+                      // _Tile(
+                      //   title: 'Appointments Today ',
+                      //   icon: Icons.schedule,
+                      //   route: appointmentsTodayScreen,
+                      // ),
                       _Tile(
                         title: 'Schedules Today ',
                         icon: Icons.schedule,

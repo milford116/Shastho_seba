@@ -18,7 +18,7 @@ class _AppointmentsScreenState extends State<AppointmentsScreen>
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Icon(Icons.history),
-          Text('Previous'),
+          Text('Prescriptions'),
         ],
       ),
     ),
@@ -27,7 +27,7 @@ class _AppointmentsScreenState extends State<AppointmentsScreen>
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Icon(Icons.trending_up),
-          Text('Upcoming'),
+          Text('Upcoming Appointments'),
         ],
       ),
     )
@@ -67,7 +67,7 @@ class _AppointmentsScreenState extends State<AppointmentsScreen>
             children: [
               Icon(Icons.insert_invitation),
               Text(
-                'Appointments',
+                'Prescriptions',
                 style: L,
               ),
             ],

@@ -82,7 +82,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         route: findDoctorsScreen,
                       ),
                       _Tile(
-                        title: 'Appointments',
+                        title: 'Prescriptions',
                         icon: Icons.insert_invitation,
                         route: appointmentsScreen,
                       ),

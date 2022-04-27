@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:intl/intl.dart';
 
 import '../../utils.dart';
 import '../../routes.dart';
@@ -9,8 +10,12 @@ import '../../models/appointment.dart';
 import '../../widgets/loading.dart';
 import '../../widgets/error.dart';
 import '../../widgets/image.dart';
+import '../appointmentDetails/tile.dart';
 
 class PreviousAppointments extends StatelessWidget {
+
+  final double _iconSize = 35.0;
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -65,6 +70,9 @@ class PreviousAppointments extends StatelessWidget {
                                       padding: EdgeInsets.only(top: 20.0),
                                       itemCount: response.data.length,
                                       itemBuilder: (context, index) {
+                                        DateTime date = response.data[index].dateTime;
+                                        DateFormat timeFormat = DateFormat('hh:mm\na');
+                                        DateFormat dateFormat = DateFormat('MMM dd\nyyyy');
                                         return Padding(
                                           padding: const EdgeInsets.symmetric(
                                               vertical: 5.0),
@@ -79,39 +87,99 @@ class PreviousAppointments extends StatelessWidget {
                                                   EdgeInsets.only(left: 5.0),
                                               onTap: () {
                                                 Navigator.of(context).pushNamed(
-                                                  appointmentDetailsScreen,
+                                                  doctorProfileScreen,
                                                   arguments:
-                                                      response.data[index],
+                                                      response.data[index].doctor,
                                                 );
                                               },
-                                              leading: CircleAvatar(
-                                                radius: 25,
-                                                backgroundColor: Colors.white,
-                                                child: CircleAvatar(
-                                                  radius: 23,
-                                                  backgroundColor:
-                                                      Colors.transparent,
-                                                  // child: ShowImage(
-                                                  //     response
-                                                  //         .data[index].doctor.image,
-                                                  //     15.0),
-                                                  child: ShowImage(
-                                                    response.data[index].doctor
-                                                        .image,
-                                                  ),
+                                              leading: Container(
+                                                decoration: BoxDecoration(
+                                                  shape: BoxShape.circle,
+                                                  color: Colors.white,
+                                                ),
+                                                padding: EdgeInsets.all(10.0),
+                                                child: Text(
+                                                  dateFormat.format(date),
+                                                  textAlign: TextAlign.center,
+                                                  style: XS,
                                                 ),
                                               ),
                                               title: Center(
-                                                child: Text(
-                                                  'Dr. ${response.data[index].doctor.name}',
-                                                  style: TextStyle(
-                                                      color: Colors.white),
+
+                                                child: Row(
+                                                  children: [
+
+                                                    // if (response.data[index].status == AppointmentStatus.Finished)
+                                                    //   SizedBox(
+                                                    //     width: 5.0,
+                                                    //   ),
+                                                    if (response.data[index].status == AppointmentStatus.Finished)
+                                                      Column(
+                                                        children: [
+                                                          Container(
+                                                            height: _iconSize,
+                                                            width: _iconSize,
+                                                            decoration: BoxDecoration(
+                                                              shape: BoxShape.circle,
+                                                              color: Colors.white,
+                                                            ),
+                                                            child: FittedBox(
+                                                              child: IconButton(
+                                                                icon: Icon(
+                                                                  Icons.content_paste,
+                                                                  size: _iconSize - 5,
+                                                                ),
+                                                                color: blue,
+                                                                onPressed:  () {
+                                                                  Navigator.pushNamed(
+                                                                    context,
+                                                                    showPrescriptionScreen,
+                                                                    arguments: {
+                                                                      'appointmentId': response.data[index].id,
+                                                                      'appointmentDate':
+                                                                      response.data[index].dateTime,
+                                                                      'doctor': response.data[index].doctor,
+                                                                    },
+                                                                  );},
+
+
+                                                              ),
+                                                            ),
+                                                          ),
+                                                          Text(
+                                                            'Prescription',
+                                                            style: XS.copyWith(color: Colors.white),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    SizedBox(
+                                                      width: 5.0,
+                                                    ),
+                                                    Text(
+                                                      'Dr. ${response.data[index].doctor.name}',
+                                                      style: TextStyle(
+                                                          color: Colors.white),
+                                                    ),
+
+
+
+                                                  ],
                                                 ),
                                               ),
-                                              trailing: Opacity(
-                                                opacity: 0.0,
-                                                child: Icon(Icons.person_pin),
+                                              trailing: Padding(
+                                                padding:
+                                                const EdgeInsets.only(right: 10.0),
+                                                child: Text(
+                                                  timeFormat.format(date),
+                                                  //response.data[index].schedule.start
+                                                  textAlign: TextAlign.center,
+                                                  style: XS.copyWith(color: Colors.white),
+                                                ),
                                               ),
+                                              // Opacity(
+                                              //   opacity: 0.0,
+                                              //   child: Icon(Icons.person_pin),
+                                              // ),
                                             ),
                                           ),
                                         );

@@ -7,7 +7,6 @@ import 'dialogs.dart';
 
 enum Selected {
   home,
-  appointmentsToday,
   findDoctors,
   appointments,
   feedback,
@@ -53,16 +52,6 @@ class MyDrawer extends StatelessWidget {
               thickness: 2.0,
             ),
             _Tile(
-              title: 'Appointments Today',
-              icon: Icons.schedule,
-              selected: selected == Selected.appointmentsToday,
-              route: appointmentsTodayScreen,
-            ),
-            Divider(
-              color: Colors.white,
-              thickness: 2.0,
-            ),
-            _Tile(
               title: 'Find Doctors',
               icon: Icons.search,
               selected: selected == Selected.findDoctors,
@@ -73,7 +62,7 @@ class MyDrawer extends StatelessWidget {
               thickness: 2.0,
             ),
             _Tile(
-              title: 'Appointments',
+              title: 'Prescriptions',
               icon: Icons.insert_invitation,
               selected: selected == Selected.appointments,
               route: appointmentsScreen,

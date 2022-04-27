@@ -82,6 +82,7 @@ class DoctorProfileScreen extends StatelessWidget {
                       SizedBox(
                         height: 10.0,
                       ),
+                      if(doctor.aboutMe!=null)
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 10.0),
                         child: Text(
@@ -145,16 +146,16 @@ class DoctorProfileScreen extends StatelessWidget {
                                             textAlign: TextAlign.center,
                                           ),
                                         ),
-                                        Container(
-                                          padding: EdgeInsets.symmetric(
-                                              vertical: 8.0),
-                                          child: Text(
-                                            'Fee',
-                                            style: M.copyWith(
-                                                fontWeight: FontWeight.bold),
-                                            textAlign: TextAlign.center,
-                                          ),
-                                        ),
+                                        // Container(
+                                        //   padding: EdgeInsets.symmetric(
+                                        //       vertical: 8.0),
+                                        //   child: Text(
+                                        //     'Fee',
+                                        //     style: M.copyWith(
+                                        //         fontWeight: FontWeight.bold),
+                                        //     textAlign: TextAlign.center,
+                                        //   ),
+                                        // ),
                                       ],
                                     ),
                                     ...response.data.entries
@@ -181,19 +182,19 @@ class DoctorProfileScreen extends StatelessWidget {
                                                       .toList(),
                                                 ),
                                               ),
-                                              Container(
-                                                padding: cellPadding,
-                                                child: Column(
-                                                  children: mapEntry.value
-                                                      .map<Text>(
-                                                        (s) => Text(
-                                                          '${s.fee.toInt().toString()}/-',
-                                                          style: M,
-                                                        ),
-                                                      )
-                                                      .toList(),
-                                                ),
-                                              ),
+                                              // Container(
+                                              //   padding: cellPadding,
+                                              //   child: Column(
+                                              //     children: mapEntry.value
+                                              //         .map<Text>(
+                                              //           (s) => Text(
+                                              //             '${s.fee.toInt().toString()}/-',
+                                              //             style: M,
+                                              //           ),
+                                              //         )
+                                              //         .toList(),
+                                              //   ),
+                                              // ),
                                             ],
                                           ),
                                         )

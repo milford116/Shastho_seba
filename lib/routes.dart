@@ -1,6 +1,6 @@
 String splashScreen = '/splash';
 String homeScreen = '/home';
-String appointmentsTodayScreen = '/appointmentsToday';
+// String appointmentsTodayScreen = '/appointmentsToday';
 String scheduletoday = '/scheduletoday';
 String findDoctorsScreen = '/findDoctors';
 String appointmentsScreen = '/appointments';

@@ -8,7 +8,6 @@ import 'screens/registration.dart';
 import 'screens/feedback.dart';
 import 'screens/appointments/appointments.dart';
 import 'screens/appointmentDetails/details.dart';
-import 'screens/appointmentsToday.dart';
 import 'screens/findDoctors/doctorList.dart';
 import 'screens/findDoctors/findDoctors.dart';
 import 'screens/findDoctors/doctorProfile.dart';
@@ -54,7 +53,7 @@ class MyApp extends StatelessWidget {
         feedbackScreen: (context) => FeedbackScreen(),
         appointmentsScreen: (context) => AppointmentsScreen(),
         appointmentDetailsScreen: (context) => AppointmentDetails(),
-        appointmentsTodayScreen: (context) => AppointmentsTodayScreen(),
+        // appointmentsTodayScreen: (context) => AppointmentsTodayScreen(),
         showPrescriptionScreen: (context) => ShowPrescriptionScreen(),
         findDoctorsScreen: (context) => FindDoctorsScreen(),
         specialityWiseDoctorListScreen: (context) => DoctorList(),

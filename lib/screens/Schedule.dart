@@ -127,65 +127,86 @@ class ScheduleCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     //  print(_schedule.doctor.name);
-    return Card(
-        elevation: 0.0,
-        color: Colors.transparent,
-        child: Container(
-          padding: EdgeInsets.all(10.0),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(8.0),
-            border: Border.all(color: blue, width: 1.5),
-          ),
+    return FlatButton(
+      onPressed: () {
+        // Navigator.of(context).pushNamed(route);
+
+        Navigator.pushNamed(
+          context,
+          schdoctorScreen,
+          arguments: {'title':_schedule.doc_mobile_no,
+            'schedule_id':_schedule.id},
+        );
+
+      },
+      child: Card(
+          elevation: 0.0,
+          color: Colors.transparent,
           child: Container(
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                _Tile(
-                  title: _schedule.doc_mobile_no,
-                  s:_schedule.id,
-                  name: _schedule.doc_name,
-                  route: schdoctorScreen,
-                ),
+            padding: EdgeInsets.all(10.0),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(8.0),
+              border: Border.all(color: blue, width: 1.5),
+            ),
+            child: Container(
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
 
-
-                SizedBox(
-                  width: 20.0,
-                ),
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: 25.0),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: <Widget>[
-                        Text(
-                          '${_schedule.day}',
-                          style: XL,
-                        ),
-                        SizedBox(
-                          height: 30.0,
-                        ),
-                        Text(
-                          'Time_start: ${formatter.format(_schedule.start.toUtc())}',
-                          style: M,
-                        ),
-                        SizedBox(
-                          height: 10.0,
-                        ),
-                        Text(
-                          'Time_end:${formatter.format(_schedule.end.toUtc())}',
-                          style: M,
-                        ),
-                        SizedBox(
-                          height: 10.0,
-                        ),
-                      ],
+                  Center(
+                    child: Text(
+                      'Dr. ${_schedule.doc_name}',
+                      style: L.copyWith(color:Colors.green),
+                      // textAlign: TextAlign.center,
                     ),
                   ),
-                ),
-              ],
+                  // _Tile(
+                  //   title: _schedule.doc_mobile_no,
+                  //   s:_schedule.id,
+                  //   name: _schedule.doc_name,
+                  //   route: schdoctorScreen,
+                  // ),
+
+
+                  SizedBox(
+                    width: 10.0,
+                  ),
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 25.0),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: <Widget>[
+                          Text(
+                            '${_schedule.day}',
+                            style: XL,
+                          ),
+                          SizedBox(
+                            height: 30.0,
+                          ),
+                          Text(
+                            'Time_start: ${formatter.format(_schedule.start.toUtc())}',
+                            style: M,
+                          ),
+                          SizedBox(
+                            height: 10.0,
+                          ),
+                          Text(
+                            'Time_end: ${formatter.format(_schedule.end.toUtc())}',
+                            style: M,
+                          ),
+                          SizedBox(
+                            height: 10.0,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
-          ),
-        ));
+          )),
+    );
   }
 }
 class _Tile extends StatelessWidget {
@@ -198,33 +219,18 @@ class _Tile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FlatButton(
-      onPressed: () {
-        // Navigator.of(context).pushNamed(route);
-
-        Navigator.pushNamed(
-          context,
-          schdoctorScreen,
-          arguments: {'title':this.title,
-            'schedule_id':this.s},
-        );
-
-      },
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: <Widget>[
-          Text(
-            name,
+    return Text(
+            'Dr. $name',
             style: L.copyWith(color:Colors.green),
             textAlign: TextAlign.center,
-          ),
+
           // Text(
           //   title,
           //   style: L.copyWith(color: blue),
           //   textAlign: TextAlign.center,
           // ),
-        ],
-      ),
+      //   ],
+      // ),
     );
   }
 }

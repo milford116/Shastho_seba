@@ -22,6 +22,9 @@ class Schedulescreen extends StatelessWidget {
     return list;
   }
 
+  int noSchedule = 0;
+
+
   Widget build(BuildContext context) {
     return Container(
       child: Scaffold(
@@ -59,22 +62,15 @@ class Schedulescreen extends StatelessWidget {
                 if (snapshot != null) {
                   if (snapshot.hasData) {
                     final response = snapshot.data;
-                    // print(response);
-                    //switch (response.status) {
-                    // case Status.LOADING:
-                    //   return Center(
-                    //     child: Loading(response.message),
-                    //   );
-                    //   break;
-                    // case Status.COMPLETED:
-                    //   if (response.data.length == 0) {
-                    //     return Center(
-                    //       child: Text(
-                    //         'You have no appointments today',
-                    //         style: L,
-                    //       ),
-                    //     );
-                    //   }
+                    print(TimeOfDay.now());
+                      if (response == null) {
+                        return Center(
+                          child: Text(
+                            'No Schedule at This Moment',
+                            style: L,
+                          ),
+                        );
+                      }
                     return Padding(
                       padding: const EdgeInsets.only(
                           top: 3.0, left: 5.0, right: 5.0),
@@ -85,30 +81,46 @@ class Schedulescreen extends StatelessWidget {
                               shrinkWrap: true,
                               itemCount: response.length,
                               itemBuilder: (context, index) {
+                                print('start');
+                                print(response[index].start);
+                                print('end');
+                                print(response[index].end);
+
                                 return Padding(
                                   padding:
                                   const EdgeInsets.symmetric(vertical: 5.0),
-                                  child: ScheduleCard(
-                                    response[index],
-                                  ),
+                                  // child: ScheduleCard(
+                                  //   response[index],
+                                  //
+                                  // ),
+
+                                  // child: DateTime.now().isAfter(response[index].start) && DateTime.now().isBefore(response[index].end) ? ScheduleCard(
+                                  //   response[index],
+                                  //
+                                  // ) :
+                                    child: ((TimeOfDay.now().hour > response[index].start.hour) || ((TimeOfDay.now().hour == response[index].start.hour) && (TimeOfDay.now().minute >= response[index].start.minute))) && ((TimeOfDay.now().hour < response[index].end.hour) || ((TimeOfDay.now().hour == response[index].end.hour) && (TimeOfDay.now().minute <= response[index].end.minute))) ? ScheduleCard(
+                                      response[index],
+
+                                    ) : null
                                 );
                               },
                             ),
+
                           ),
                         ],
                       ),
                     );
 
-                    // case Status.ERROR:
-                    //   return Center(
-                    //     child: Error(
-                    //       message: response.message,
-                    //       onPressed: () =>
-                    //           scheduleTodayBloc.fetchTodayschedule(),
-                    //     ),
-                    //   );
-                    //  }
+
                   }
+                }
+                if(noSchedule>=1) {
+                  Center(
+                    child: Text(
+                      "No schedule at this moment",
+                      style: L,
+                    ),
+                  );
                 }
                 return Container();
               }),
@@ -139,6 +151,7 @@ class ScheduleCard extends StatelessWidget {
         );
 
       },
+
       child: Card(
           elevation: 0.0,
           color: Colors.transparent,
@@ -205,7 +218,8 @@ class ScheduleCard extends StatelessWidget {
                 ],
               ),
             ),
-          )),
+          ),
+      )
     );
   }
 }

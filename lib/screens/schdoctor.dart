@@ -72,85 +72,81 @@ class Schdoctor extends StatelessWidget {
                                 return Padding(
                                   padding:
                                   const EdgeInsets.symmetric(vertical: 5.0),
-                                  child: Card(
-                                    elevation: 0.1,
-                                    shadowColor: Colors.black12,
-                                    color: Colors.transparent,
-                                    child: Container(
-                                      padding: EdgeInsets.all(5.0),
-                                      decoration: BoxDecoration(
-                                        borderRadius:
-                                        BorderRadius.circular(5.0),
-                                        color: Colors.transparent,
-                                        border: Border.all(
-                                          color: blue,
-                                          width: 1.0,
+                                  child: FlatButton(
+                                    onPressed: () async {
+                                      Navigator.pushNamed(
+                                        context,
+                                        chambernewScreen,
+                                        arguments:
+                                        map['schedule_id'],
+                                      );
+                                      int sn = await _appointmentsRepository.createAppointment
+                                        (map['schedule_id'], doctor_no, DateTime.now()) ;
+                                      print(sn);
+                                    },
+                                    child: Card(
+                                      elevation: 0.1,
+                                      shadowColor: Colors.black12,
+                                      color: Colors.transparent,
+                                      child: Container(
+                                        padding: EdgeInsets.all(5.0),
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                          BorderRadius.circular(5.0),
+                                          color: Colors.transparent,
+                                          border: Border.all(
+                                            color: blue,
+                                            width: 1.0,
+                                          ),
                                         ),
-                                      ),
-                                      child: Row(
-                                        children: [
-                                          CircleAvatar(
-                                            radius: 40.0,
-                                            backgroundColor: Colors.white,
-                                            child: CircleAvatar(
-                                              radius: 38.0,
-                                              backgroundColor:
-                                              Colors.transparent,
-                                              // child: ShowImage(
-                                              //   response
-                                              //       .data[index].image,
-                                              //   30.0,
-                                              // ),
-                                              child: ShowImage(
-                                                response[index].image,
+                                        child: Row(
+                                          children: [
+                                            CircleAvatar(
+                                              radius: 40.0,
+                                              backgroundColor: Colors.white,
+                                              child: CircleAvatar(
+                                                radius: 38.0,
+                                                backgroundColor:
+                                                Colors.transparent,
+                                                child: ShowImage(
+                                                  response[index].image,
+                                                ),
                                               ),
                                             ),
-                                          ),
-                                          SizedBox(
-                                            width: 15.0,
-                                          ),
-                                          Expanded(
-                                            child: Column(
-                                              crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                              mainAxisSize: MainAxisSize.min,
-                                              children: <Widget>[
-                                                Text(
-                                                  'Dr. ${response[index].name}',
-                                                  style: M.copyWith(
-                                                      fontWeight:
-                                                      FontWeight.bold),
-                                                ),
-                                                Text(
-                                                  response[index].designation,
-                                                  style: M,
-                                                ),
-                                                Text(
-                                                  response[index].institution,
-                                                  style: M,
-                                                ),
-                                                FlatButton(
-                                                  onPressed: () async {
-                                                    Navigator.pushNamed(
-                                                      context,
-                                                      chambernewScreen,
-                                                      arguments:
-                                                      map['schedule_id'],
-                                                    );
-                                                    int sn = await _appointmentsRepository.createAppointment
-                                                      (map['schedule_id'], doctor_no, DateTime.now()) ;
-                                                    print(sn);
-                                                  },
-                                                  child: Column(
-                                                    mainAxisSize: MainAxisSize.min,
-                                                    children: <Widget>[
-                                                      Text('Chamber')
-                                                    ],
-                                                  ),)
-                                              ],
+                                            SizedBox(
+                                              width: 15.0,
                                             ),
-                                          ),
-                                        ],
+                                            Expanded(
+                                              child: Column(
+                                                crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                                mainAxisSize: MainAxisSize.min,
+                                                children: <Widget>[
+                                                  Text(
+                                                    'Dr. ${response[index].name}',
+                                                    style: M.copyWith(
+                                                        fontWeight:
+                                                        FontWeight.bold),
+                                                  ),
+                                                  Text(
+                                                    response[index].designation,
+                                                    style: M,
+                                                  ),
+                                                  Text(
+                                                    response[index].institution,
+                                                    style: M,
+                                                  ),
+                                                  Text(
+                                                      'Go to the Chamber',
+                                                       style: S.copyWith(
+                                                           fontWeight:
+                                                           FontWeight.bold),
+                                                  )
+                                                ],
+                                              ),
+                                            ),
+                                          ],
+                                        ),
                                       ),
                                     ),
                                   ),

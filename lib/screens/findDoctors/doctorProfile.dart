@@ -214,26 +214,26 @@ class DoctorProfileScreen extends StatelessWidget {
                           return Container();
                         },
                       ),
-                      SizedBox(
-                        height: 15.0,
-                      ),
-                      ButtonBar(
-                        alignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          FlatButton.icon(
-                            onPressed: () => _takeAppointment(context),
-                            icon: Icon(
-                              Icons.add_circle,
-                              color: Colors.white,
-                            ),
-                            color: blue,
-                            label: Text(
-                              'Take An Appointment',
-                              style: TextStyle(color: Colors.white),
-                            ),
-                          ),
-                        ],
-                      ),
+                      // SizedBox(
+                      //   height: 15.0,
+                      // ),
+                      // ButtonBar(
+                      //   alignment: MainAxisAlignment.center,
+                      //   children: <Widget>[
+                      //     FlatButton.icon(
+                      //       onPressed: () => _takeAppointment(context),
+                      //       icon: Icon(
+                      //         Icons.add_circle,
+                      //         color: Colors.white,
+                      //       ),
+                      //       color: blue,
+                      //       label: Text(
+                      //         'Take An Appointment',
+                      //         style: TextStyle(color: Colors.white),
+                      //       ),
+                      //     ),
+                      //   ],
+                      // ),
                     ],
                   ),
                 );

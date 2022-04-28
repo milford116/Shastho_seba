@@ -12,39 +12,39 @@ class AppointmentsScreen extends StatefulWidget {
 
 class _AppointmentsScreenState extends State<AppointmentsScreen>
     with SingleTickerProviderStateMixin {
-  List<Tab> _myTabs = <Tab>[
-    Tab(
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Icon(Icons.history),
-          Text('Prescriptions'),
-        ],
-      ),
-    ),
-    Tab(
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Icon(Icons.trending_up),
-          Text('Upcoming Appointments'),
-        ],
-      ),
-    )
-  ];
-  TabController _tabController;
-
-  @override
-  void initState() {
-    super.initState();
-    _tabController = TabController(length: _myTabs.length, vsync: this);
-  }
-
-  @override
-  void dispose() {
-    _tabController.dispose();
-    super.dispose();
-  }
+  // List<Tab> _myTabs = <Tab>[
+  //   Tab(
+  //     child: Row(
+  //       mainAxisAlignment: MainAxisAlignment.center,
+  //       children: <Widget>[
+  //         Icon(Icons.history),
+  //         Text('Prescriptions'),
+  //       ],
+  //     ),
+  //   ),
+  //   Tab(
+  //     child: Row(
+  //       mainAxisAlignment: MainAxisAlignment.center,
+  //       children: <Widget>[
+  //         Icon(Icons.trending_up),
+  //         Text('Future Appointments'),
+  //       ],
+  //     ),
+  //   )
+  // ];
+  // TabController _tabController;
+  //
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   _tabController = TabController(length: _myTabs.length, vsync: this);
+  // }
+  //
+  // @override
+  // void dispose() {
+  //   _tabController.dispose();
+  //   super.dispose();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -72,28 +72,29 @@ class _AppointmentsScreenState extends State<AppointmentsScreen>
               ),
             ],
           ),
-          bottom: TabBar(
-            controller: _tabController,
-            tabs: _myTabs,
-            indicatorSize: TabBarIndicatorSize.label,
-            indicator: BoxDecoration(
-              color: Colors.white,
-            ),
-            labelColor: blue,
-            unselectedLabelColor: Colors.white,
-          ),
+          // bottom: TabBar(
+          //   controller: _tabController,
+          //   tabs: _myTabs,
+          //   indicatorSize: TabBarIndicatorSize.label,
+          //   indicator: BoxDecoration(
+          //     color: Colors.white,
+          //   ),
+          //   labelColor: blue,
+          //   unselectedLabelColor: Colors.white,
+          // ),
         ),
         drawer: SafeArea(
           child: MyDrawer(Selected.appointments),
         ),
         body: SafeArea(
-          child: TabBarView(
-            controller: _tabController,
-            children: [
-              PreviousAppointments(),
-              UpcomingAppointments(),
-            ],
-          ),
+          child: PreviousAppointments(),
+          // child: TabBarView(
+          //   controller: _tabController,
+          //   children: [
+          //     PreviousAppointments(),
+          //     // UpcomingAppointments(),
+          //   ],
+          // ),
         ),
       ),
     );
